@@ -11,6 +11,7 @@ int milestone_three();
 int milestone_four();
 
 
+
 /* Goal main-funtion! */
 int mani(int narg, char **argv);
 
@@ -42,19 +43,14 @@ int main(int narg, char **argv){
      // Set up and solve the background
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, Omegak, Neff, TCMB);
     cosmo.solve();
+    cosmo.solve_time();
     cosmo.info();
     
     // Output background evolution quantities
     cosmo.output("cosmology.txt");
 
+    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
 
-
-    // std::cout << "Success!" << std::endl;
-
-    // std::ofstream f;
-    // f.open(OUTPUT_PATH+"dummy.txt");
-    // f << "helo\n";
-    // f.close();
 
     return 0;
 }

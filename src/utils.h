@@ -49,8 +49,9 @@ extern struct ConstantsAndUnits {
   const double k_max = 0.3     / Mpc;
   
   // Min and max x-value
-  const double x_start = log(1e-8);
+  const double x_start = -14.;
   const double x_end   = 0.0;
+
 
   // Include polarization and/or neutrinos?
   const bool polarization  = true;
@@ -130,8 +131,8 @@ FUNS(exp); FUNS(log); FUNS(cos); FUNS(sin); FUNS(tan); FUNS(fabs); FUNS(atan);
 
 
 // Data paths
-const std::string INPUT_PATH  = "../input/data/";
-const std::string OUTPUT_PATH = "../output/data/";
+const std::string INPUT_PATH  = "../data/input/";
+const std::string OUTPUT_PATH = "../data/output/";
 
 
 

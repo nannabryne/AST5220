@@ -26,9 +26,11 @@ class BackgroundCosmology{
     // Start and end of x-integration (can be changed)
     double x_start = Constants.x_start;
     double x_end   = Constants.x_end;
+  
 
     // Splines to be made
     Spline eta_of_x_spline{"eta"};
+    Spline t_of_x_spline{"eta"};
  
   public:
 
@@ -72,9 +74,17 @@ class BackgroundCosmology{
     double get_Neff() const;
     double get_TCMB(double x = 0.0) const;
 
+    double t_of_x(double x) const;
+    double r_of_Chi(double Chi) const;
+    double Chi_of_x(double x) const;
+    double dA_of_x(double x) const;
+    double dL_of_x(double x) const;
+    void solve_time();
+
     // Distance measures
     double get_luminosity_distance_of_x(double x) const;
     double get_comoving_distance_of_x(double x) const;
+
 
 };
 
