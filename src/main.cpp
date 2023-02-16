@@ -22,7 +22,7 @@ int main(int narg, char **argv){
     // Parameters
     //=========================================================================
 
-    // Background parameters
+    // Background parameters (today)
     double h           = 0.67;
     double Omegab      = 0.05;
     double OmegaCDM    = 0.267;
@@ -49,7 +49,7 @@ int main(int narg, char **argv){
     // Output background evolution quantities
     cosmo.output("cosmology.txt");
 
-    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting2.txt");
 
 
     return 0;

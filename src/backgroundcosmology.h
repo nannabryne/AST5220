@@ -11,16 +11,16 @@ class BackgroundCosmology{
    
     // Cosmological parameters
     double h;                       // Little h = H0/(100km/s/Mpc)
-    double Omegab;                  // Baryon density today
-    double OmegaCDM;                // CDM density today
-    double OmegaLambda;             // Dark energy density today
+    double Omegab0;                  // Baryon density today
+    double OmegaCDM0;                // CDM density today
+    double OmegaLambda0;             // Dark energy density today
     double Neff;                    // Effective number of relativistic species (3.046 or 0 if ignoring neutrinos)
-    double TCMB;                    // Temperature of the CMB today in Kelvin
+    double TCMB0;                    // Temperature of the CMB today in Kelvin
    
     // Derived parameters
-    double Omegar;                  // Photon density today (follows from TCMB)
-    double Omeganu;                 // Neutrino density today (follows from TCMB and Neff)
-    double Omegak;                  // Curvature density = 1 - OmegaM - Omegar - Omeganu - OmegaLambda
+    double Omegar0;                  // Photon density today (follows from TCMB0)
+    double Omeganu0;                 // Neutrino density today (follows from TCMB0 and Neff)
+    double Omegak0;                  // Curvature density = 1 - OmegaM - Omegar0 - Omeganu0 - OmegaLambda0
     double H0;                      // The Hubble parameter today H0 = 100h km/s/Mpc
 
     // Start and end of x-integration (can be changed)
@@ -38,11 +38,11 @@ class BackgroundCosmology{
     BackgroundCosmology() = delete;
     BackgroundCosmology(
         double h, 
-        double Omegab, 
-        double OmegaCDM, 
-        double Omegak,
+        double Omegab0, 
+        double OmegaCDM0, 
+        double Omegak0,
         double Neff, 
-        double TCMB
+        double TCMB0
         );
 
     // Print some useful info about the class

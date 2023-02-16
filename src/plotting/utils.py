@@ -31,12 +31,12 @@ FIGS_PATH       = CURRENT_PATH + "../../figs/"
 # FIGS_PATH       = OUTPUT_PATH / pl.Path("/figures")
 
 def read_ASCII(filename, skiprows=0):
-    # file = DATA_PATH / pl.Path(filename.strip(".txt")+".txt")
-    file = OUTPUT_PATH + filename
     if not filename.endswith(".txt"):
-        file += ".txt"
-    # print(file)
-    data =  np.loadtxt(file, skiprows=skiprows)
+        filename += ".txt"
+    try: 
+        data = np.loadtxt(OUTPUT_PATH + filename)
+    except FileNotFoundError:
+        data = np.loadtxt(INPUT_PATH + filename)
     return np.asarray(data)
     
 
