@@ -1,2 +1,7 @@
-# AST5220
-My work in AST5220 Cosmology II
+# TITLE
+### Project in AST5220 Cosmology II (autumn 2023)
+
+
+
+## Milestone I
+> Something about where to find etc.
