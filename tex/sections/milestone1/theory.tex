@@ -1,0 +1,47 @@
+
+
+We assume the constituents of the universe to be cold dark matter (CDM), baryons (b), photons (\textgamma), neutrinos (\textnu),\footnote{For the sake of consistency --- will not consider neutrinos \textcolor{red}{fixxx}} and a cosmological constant (\textLambda) \textcolor{red}{dark energy comment?}. We leave the curvature ($k$) as a variable for now. The density parameter $\Omega_{\mathrm{i}}$ associated with cosmological component $\mathrm{i} \in \left\{ \mathrm{CDM},\, \mathrm{b},\, \gamma,\, \nu,\, \Lambda,\, k \right\}$ can be written in terms of the \dots
+\begin{equation}
+    \Omega_\mathrm{i} \!\left(a\right) = \frac{\Omega_{\mathrm{i}0}}{a^{3(1+\omega_\mathrm{i})} H^2(a)/H_0^2},\quad \Omega_{\mathrm{i}0} \equiv \Omega_{\mathrm{i}}\!\left(a\!=\!a_0 \right)
+\end{equation}
+blah blah
+As a notational relief, we introduce the parameters associated with total matter (M) and total radiation (R):
+\begin{subequations}\label{sec1:theory:eq:density_params_idk}
+    \begin{align}
+        \OmgM[] &= \Omega_{\mathrm{CDM}} + \Omega_{\mathrm{b}} \label{sec1:theory:eq:xxx1} \\
+        \OmgR[] &= \Omega_{\gamma } + \Omega_{\nu } \label{sec1:theory:eq:xxx2}
+    \end{align}
+\end{subequations}
+
+
+
+The FLRW line element is given by
+\begin{equation}\label{sec1:theory:eq:FLRW}
+    \begin{split}
+        \D s^2 &= -\D t^2 + a^2(t) \delta_{ij} \D x^i \D x^j  \\
+                &= a^2(t) \left( -\D \eta^2 + \delta_{ij} \D x^i \D x^j \right) 
+    \end{split}
+\end{equation}
+
+
+
+
+
+\begin{subequations}\label{sec1:theory:eq:Hubble_of_a}
+    \begin{align}
+        H(a) &= H_0 \sqrt{\OmgM a^{-3} + \OmgR a^{-4}  + \Omgk a^{-2} + \OmgL} \label{sec1:theory:eq:regular_Hubble} \\
+        \mathcal{H}(a) &= H_0 \sqrt{\OmgM a^{-1} + \OmgR a^{-2}  + \Omgk + \OmgL a^{2}} \label{sec1:theory:eq:primed_Hubble}
+    \end{align}
+\end{subequations}
+
+
+We will use the logarithmic scale factor $x\equiv\ln{a}$ as our main time variable, allowing us to rewrite the above equations by the substitution $a=e^x$. 
+
+We have the relations
+\begin{equation}
+    \frac{\D t}{\D \eta} = a, \quad \frac{\D x}{\D t} = H, \quad \frac{\D x}{\D \eta} = \mathcal{H} 
+\end{equation}
+and the operators
+\begin{equation}
+    \frac{\D}{\D t} = H \frac{\D}{\D x}, \quad \frac{\D}{\D \eta} = \mathcal{H} \frac{\D}{\D x}
+\end{equation}

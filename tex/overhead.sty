@@ -24,10 +24,10 @@
 \usepackage[caption=false]{subfig}
 \usepackage{bbold}
 
-\graphicspath{{../output/figures}}
+\graphicspath{{../figs/}}
 
 
-% Clean this up at some point:
+% Clever referencing:
 \usepackage[capitalize]{cleveref}
 \crefdefaultlabelformat{\textbf{#2}}
 \crefname{eq}{Eq.}{Eq.}
@@ -46,51 +46,55 @@
 \renewcommand*\aa@pageof{, page \thepage{} of \pageref*{LastPage}}
 \makeatother
 
-%\newcommand{\Table}[1]{Table \ref{table:#1}}
-%\newcommand{\Fig}[1]{Figure \ref{fig:#1}}
-%\newcommand{\Eq}[1]{eq. (\ref{eq:#1})}
-%\newcommand{\Sec}[1]{section \ref{sec:#1}}
-
-
-\definecolor{codegray}{gray}{0.9}
-\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
-
-
-\newcommand{\unitC}{ $^\circ$C}
-\newcommand{\degs}{$^\circ$}
-\newcommand{\pwr}[1]{$^{#1}$} %power
-\newcommand{\idx}[1]{$_{#1}$} %index
-\newcommand{\stdf}[1]{$\cross 10^{#1}$} %standard form
-\newcommand{\unit}[1]{\text{ {#1}}}
-\newcommand{\about}{$\sim$}
-\newcommand{\ds}{\text{d}}
 
 \renewcommand{\vec}{\mathbf}
-\newcommand{\svec}{\boldsymbol}
-\renewcommand{\phi}{\varphi}
-\renewcommand{\epsilon}{\varepsilon}
-\renewcommand{\kappa}{\varkappa}
-\renewcommand{\rho}{\varrho}
-
-\newcommand{\F}{\mathscr{F}} %Fourier
-\newcommand{\Sun}{_\odot} %Sun mark
-\newcommand{\Sk}{\mathcal{S}} %S-function
-
-\newcommand{\hatx}{ \vec{\hat{e}_x} } %unit vec x
-\newcommand{\haty}{ \vec{\hat{e}_y} } %unit vec y
-\newcommand{\hatz}{ \vec{\hat{e}_z} } %unit vec z
-
-\newcommand{\lap}{\nabla^2 } %Laplacian
-\newcommand{\dal}{\Box } %d'Alembertian
-
-\newcommand{\bnabla}{\boldsymbol{\nabla}}
+\newcommand{\D}{\mathrm{d}}
 
 
-\newcommand{\TT}{^\intercal} % transpose
-\newcommand{\RR}[1][]{\mathbb{R}^{#1}} %real numbers
-\newcommand{\II}[1][]{\mathbb{1}_{#1}} %identity matrix
+
+% Density parameters:
+\newcommand{\OmgM}[1][0]{\Omega_{\mathrm{M}#1}}	% total matter 
+\newcommand{\OmgR}[1][0]{\Omega_{\mathrm{R}#1}}	% total radiation
+\newcommand{\OmgL}[1][0]{\Omega_{\Lambda#1}} 	% dark energy
+% \newcommand{\Omgk}[1][0]{\Omega_{\mathrm{k}#1}}	% curvature
+\newcommand{\Omgk}[1][0]{\Omega_{k #1}}	% curvature
+% \definecolor{codegray}{gray}{0.9}
+% \newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
 
 
+% \newcommand{\unitC}{ $^\circ$C}
+% \newcommand{\degs}{$^\circ$}
+% \newcommand{\pwr}[1]{$^{#1}$} %power
+% \newcommand{\idx}[1]{$_{#1}$} %index
+% \newcommand{\stdf}[1]{$\cross 10^{#1}$} %standard form
+% \newcommand{\unit}[1]{\text{ {#1}}}
+% \newcommand{\about}{$\sim$}
+
+
+
+% \newcommand{\svec}{\boldsymbol}
+% \renewcommand{\phi}{\varphi}
+% \renewcommand{\epsilon}{\varepsilon}
+% \renewcommand{\kappa}{\varkappa}
+% \renewcommand{\rho}{\varrho}
+
+% \newcommand{\F}{\mathscr{F}} %Fourier
+% \newcommand{\Sun}{_\odot} %Sun mark
+% \newcommand{\Sk}{\mathcal{S}} %S-function
+
+% \newcommand{\hatx}{ \vec{\hat{e}_x} } %unit vec x
+% \newcommand{\haty}{ \vec{\hat{e}_y} } %unit vec y
+% \newcommand{\hatz}{ \vec{\hat{e}_z} } %unit vec z
+
+% \newcommand{\lap}{\nabla^2 } %Laplacian
+% \newcommand{\dal}{\Box } %d'Alembertian
+
+% \newcommand{\bnabla}{\boldsymbol{\nabla}}
+
+
+% \newcommand{\TT}{^\intercal} % transpose
+% \newcommand{\RR}[1][]{\mathbb{R}^{#1}} %real numbers
+% \newcommand{\II}[1][]{\mathbb{1}_{#1}} %identity matrix
 
 
 
