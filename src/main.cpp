@@ -27,7 +27,7 @@ int main(int narg, char **argv){
     double Omegab      = 0.05;
     double OmegaCDM    = 0.267;
     double Omegak      = 0.0;
-    double Neff        = 3.046;
+    double Neff        = 0.0;
     double TCMB        = 2.7255;
 
     // Recombination parameters
@@ -41,15 +41,20 @@ int main(int narg, char **argv){
     // miletone_one();
 
      // Set up and solve the background
+
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, Omegak, Neff, TCMB);
     cosmo.solve();
-    cosmo.solve_time();
     cosmo.info();
     
     // Output background evolution quantities
     cosmo.output("cosmology.txt");
 
-    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting2.txt");
+
+    // Utils::StartTiming("MCMC");
+    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    // std::cout << "\n\n\n\n";
+    // Utils::EndTiming("MCMC");
+    // std::cout << "\n\n";
 
 
     return 0;

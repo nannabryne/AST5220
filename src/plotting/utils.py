@@ -54,7 +54,9 @@ def read_ASCII2(filename, skiprows=0):
 
 
 def save(filename, pdf=True):
-    file = FIGS_PATH + filename.strip(".pdf")+".pdf"
+    if not filename.endswith(".pdf"):
+        filename += ".pdf"
+    file = FIGS_PATH + filename
     plt.savefig(file)
 
 

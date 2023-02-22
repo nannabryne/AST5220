@@ -90,7 +90,7 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   std::normal_distribution<double> ndist(0.0,1.0);      // normal distribution with stdv. 1
   std::uniform_real_distribution<double> udist(0.0,1.0);// uniform distribution of numbers between 0 and 1
 
-  //  Define our priors (chi^2 -> Inf if outside these ranges)
+  //  Define our priors (Chi^2 -> Inf if outside these ranges)
 
   const std::array<double, nparam> prior_high {1.5, 1.0, 1.0};  // max{ h,  Omegam,  Omegak}
   const std::array<double, nparam> prior_low {0.5, 0.0, -1.0};  // min{ h,  Omegam,  Omegak}
@@ -109,11 +109,14 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   }
 
   std::array<double, nparam> best_parameters = parameters;  // best-fit as we go along in the chain
-  double chi2_min = std::numeric_limits<double>::max();     // Chi^2 corresponding to the best-fit
+  double Chi2_min = std::numeric_limits<double>::max();     // Chi^2 corresponding to the best-fit
   
-  // The chi^2 function
-  auto comp_chi2 = [&](std::array<double, nparam> & parameters){
-    // Priors: if outside range return huuuuge chi^2
+  /** FIXME
+   * @brief The Chi^2 function
+   * @param parameters 
+  */
+  auto comp_Chi2 = [&](std::array<double, nparam> & parameters){
+    // Priors: if outside range return huuuuge Chi^2
     bool inside_prior = true;
     for(int i = 0; i < nparam; i++){
       if(parameters[i] > prior_high[i]) inside_prior = false;
@@ -121,73 +124,79 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
     }
     if(not inside_prior) return std::numeric_limits<double>::max(); 
 
-    //=========================================================================================
-    //======= Here we set up the cosmology class and solve to get the distance functions ======
-    //=========================================================================================
-    // Set parameters and compute background
-    double param_Omegab   = 0.05;           // Not important as we just sample and are sensitive to Omegam = Omegab+OmegaCDM
-    double param_Neff     = 0.0;            // Not relevant at late times
-    double param_TCMB     = 2.7255;         // Temperature of the CMB
-    double param_h        = parameters[0];
-    double param_OmegaCDM = parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
-    double param_Omegak   = parameters[2];
-    BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_Omegak, param_Neff, param_TCMB);
-    cosmo.solve();
-    //=========================================================================================
+    
+    //  Set parameters and compute background
 
-    // Compute chi^2
-    double chi2 = 0.0;
-    for (size_t i = 0; i < z_obs.size(); i++){
-      double x = -std::log(1.0+z_obs[i]);
-      //======= Here we call your distance function ======
-      double dL = cosmo.get_luminosity_distance_of_x(x) / Gpc; // Luminosity function in units of Gpc
-      //==================================================
-      chi2 += (dL - dL_obs[i]) * (dL - dL_obs[i]) / (err_obs[i] * err_obs[i]);
+    double param_Omegab   = 0.05;                         // unimportant as we just sample and are sensitive to Omegam
+    double param_Neff     = 0.0;                          // irrelevant at late times
+    double param_TCMB     = 2.7255;                       // temperature of the CMB
+    double param_h        = parameters[0];                //
+    double param_OmegaCDM = parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
+    double param_Omegak   = parameters[2];                //
+    
+    BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_Omegak, param_Neff, param_TCMB);
+    //  solve to get the distance function:
+    cosmo.solve_conformal_time();
+
+
+    //  Compute Chi^2
+
+    double Chi2 = 0.0;
+    double num;  // square root of numerator (attempt to avoid unnecessary FLOPs)
+    for (size_t i=0; i<z_obs.size(); i++){
+      double x = -std::log(1.0+z_obs[i]);   // x = -ln(1+z)
+      double dL = cosmo.get_luminosity_distance_of_x(x) / Gpc; // luminosity function in units of Gpc
+      num = dL - dL_obs[i];
+      Chi2 += num*num / (err_obs[i] * err_obs[i]);
     }
-    return chi2;
+    return Chi2;
   };
 
-  // Generic Metropolis MCMC algorithm. This requires no changes
+  //  Generic Metropolis MCMC algorithm
+
   int steps = 0;
   int nsample = 0;
-  double oldchi2 = std::numeric_limits<double>::max();
+  double oldChi2 = std::numeric_limits<double>::max();
   std::ofstream out(OUTPUT_PATH + result_filename.c_str());
-  out << "#          Chi2            h           Omegam           Omegak               Acceptrate\n";
+  // out << "#          Chi2            h           Omegam           Omegak               Acceptrate\n";
+  out << "#          Chi2            h           Omegam           Omegak          \n";
+  
   while(nsample < maxsteps){
     steps++;
     
-    // Generate new set of parameters
+    // generate new set of parameters:
     std::array<double, nparam> new_parameters;
     for(int i = 0; i < nparam; i++)
       new_parameters[i] = parameters[i] + ndist(gen) * stepsize[i];
 
-    // Compute chi^2
-    double chi2 = 0.0;
+    // compute Chi^2:
+    double Chi2 = 0.0;
     try {
-      chi2 = comp_chi2(new_parameters);
+      Chi2 = comp_Chi2(new_parameters);
     } catch(...){
-      chi2 = std::numeric_limits<double>::max();
+      Chi2 = std::numeric_limits<double>::max();
     }
 
-    // Always accept sample if lower chi^2
-    bool accept_step = chi2 < oldchi2;
+    //  Evaluate step
+
+    bool accept_step = Chi2 < oldChi2;  // always accept sample if lower Chi^2
     if(not accept_step){
-      // Metropolis step - draw random number and accept if low enough
-      if(std::exp(-(chi2-oldchi2)/2.0) > udist(gen)){
+      //  Metropolis step - draw random number and accept if low enough
+      if(std::exp(-(Chi2-oldChi2)/2.0) > udist(gen)){
         accept_step = true;
       }
     }
 
-    // If the step is accepted change parameters to new parameters and update the old chi^2 value
-    if(accept_step){
+    if(accept_step){ 
+      // if step is accepted, change parameters to new parameters and update the old Chi^2 value
       nsample++;
-      oldchi2 = chi2;
+      oldChi2 = Chi2;
       parameters = new_parameters;
 
-      // Write sample to file and screen
+      // write sample to file and screen:
       std::cout << "#          Chi2            h           Omegam           Omegak               Acceptrate\n";
-      std::cout << std::setw(15) << chi2 << " ";
-      out       << std::setw(15) << chi2 << " ";
+      std::cout << std::setw(15) << Chi2 << " ";
+      out       << std::setw(15) << Chi2 << " ";
       for(int i = 0; i < nparam; i++){
         std::cout << std::setw(15) << parameters[i] << " ";
         out << std::setw(15) << parameters[i] << " ";
@@ -195,17 +204,17 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
       out << "\n";
       std::cout << std::setw(15) << " " << nsample/double(steps)*100.0 << "%\n";
       
-      // Record new best-fit 
-      if(chi2 < chi2_min){
-        chi2_min = chi2;
+      // record new best-fit:
+      if(Chi2 < Chi2_min){
+        Chi2_min = Chi2;
         best_parameters = parameters;
       }
     }
   }
 
   // Print best-fit
-  std::cout << "Minimum Chi^2 found " << chi2_min << " ";
-  for(int i = 0; i < nparam; i++)
+  std::cout << "Minimum Chi^2 found " << Chi2_min << " ";
+  for(int i=0; i<nparam; i++)
     std::cout << best_parameters[i] << " ";
   std::cout << "\n";
 }

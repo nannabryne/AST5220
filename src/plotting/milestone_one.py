@@ -1,206 +1,170 @@
 from utils import *
+import plotsrc_milestone_one as PLOT
 
 const = ConstantsAndUnits()
 
 
 
-'''
-Pt 1) Test code
-'''
+# var_labels = {
+#     "x":            r"$x$",
+#     "eta":          r"$\eta$",
+#     "t":            r"$t$",
+#     "Hp":           r"$\mathcal{H}$", 
+#     "dHpdx":        r"$\mathcal{H}'$",
+#     "ddHpdxx":      r"$\mathcal{H}''$",
+#     "OmegaM":       r"$\Omega_\mathrm{M}$",
+#     "OmegaLambda":  r"$\Omega_\Lambda$",
+#     "OmegaR":       r"$\Omega_\mathrm{R}$"
+# }
 
-data = read_ASCII("cosmology")
+# SI_unit_labels = {
+#     "eta":  "m",
+#     "t":    r"s",
+#     "Hp":   r"$\mathrm{s}^{-1}$"
+# }
+# SI_unit_labels["dHdx"] = SI_unit_labels["Hp"]
+# SI_unit_labels["ddHdxx"] = SI_unit_labels["Hp"]
 
+SI2sensible = {
+    "eta":  1/const.c,
+    "Hp":   const.Mpc/(100*const.km/const.s),
+    "dL":   1/const.Mpc * 1e-3
+}
+SI2sensible["dHpdx"] = SI2sensible["Hp"]
+SI2sensible["ddHpdxx"] = SI2sensible["Hp"]
 
-x = data[:,0]
-eta = data[:,1]
-t = data[:,2]
-Hp = data[:,3]
-dHpdx = data[:,4]
-ddHpdxx = data[:,5]
-Omegam = data[:,6]+data[:,7]
-OmegaLambda = data[:,8]
-Omegar = data[:,9]
-# dL = data[:,12]/const.Mpc *1e-3
+Gyr2sec =  1e9 * 365*24*60*60
+sec2Gyr = 1/Gyr2sec
 
-z = np.exp(-x)-1
-Chi = eta[np.argmin(np.abs(x))] - eta
+Hubble_conv_fac = const.Mpc/(100*const.km/const.s)
+inv_Hubble_conv_fac = 1/Hubble_conv_fac
 
-dL = Chi*np.exp(-x) /const.Mpc *1e-3
-
-jump = 50
-x_RM = x[np.argmin(np.abs(Omegam-Omegar)[jump:])+jump]
-x_MDE = x[np.argmin(np.abs(Omegam-OmegaLambda)[jump:])+jump]
-x_acc = x[np.argmin(np.abs(dHpdx)[jump:])+jump]
-x_0 = x[np.argmin(np.abs(x)[jump:])+jump]
-
-
-
-
-
-def mark_milestones(ax):
-    ax.axvline(x_RM, ls="--", lw=1, color="orangered")
-    ax.axvline(x_MDE, ls="--", lw=1, color="olive")
-    ax.axvline(x_acc, ls="--", lw=1, color="firebrick")
-
-
-def various_Hubble():
-    fig, ax = plt.subplots()
-
-    ax.plot(x, ddHpdxx/Hp, label=r"$\mathcal{H}''(x)/\mathcal{H}(x)$")
-    ax.plot(x, dHpdx/Hp, label=r"$\mathcal{H}'(x)/\mathcal{H}(x)$")
-    ax.plot(x, eta*Hp/const.c, label=r"$\eta(x)\mathcal{H}(x)/c$")
-    mark_milestones(ax)
-
-    # ax.set_xlim(np.min(x), 0)
-
-    ax.legend()
-
-    plt.show()
-
-def cosmological_parameters():
-    fig, ax = plt.subplots()
-    ax.plot(x, Omegam, label=r"$\Omega_\mathrm{m}$")
-    ax.plot(x, OmegaLambda, label=r"$\Omega_\Lambda$")
-    ax.plot(x, Omegar, label=r"$\Omega_\mathrm{r}$")
-    mark_milestones(ax)
-    ax.legend()
-
-    plt.show()
+# sensible_unit_labels = {
+#     "eta":  "s",
+#     "t":    "s",
+#     "Hp":   "100 km/s / Mpc",
+#     "dL":   "Gpc"
+# }
 
 
+class SimpleCosmo:
 
-def luminosity_distance_vs_redshift():
-    obs_data = read_ASCII("supernovadata", 1)
-    z_obs = obs_data[:,0]
-    dL_obs = obs_data[:,1]
-    err_obs = obs_data[:,2]
+    def __init__(self, filename, use_sensible_units=True):
+        data = read_ASCII(filename)
 
-    fig, ax = plt.subplots()
+        self.x              = data[:,0]
+        self.eta            = data[:,1]
+        self.t              = data[:,2]
+        self.Hp             = data[:,3]
+        self.dHpdx          = data[:,4]
+        self.ddHpdxx        = data[:,5]
+        self.OmegaM         = data[:,6]+data[:,7]    # total matter
+        self.OmegaLambda    = data[:,8]
+        self.OmegaR         = data[:,9]+data[:,10]   # total radiation
+
+        
+        self.z = self.compute_redshift()
+        self.dL = self.compute_luminosity_distance()
+
+        self.locate_milestones()
+
+        self.plot = PLOT.MilestoneI()
+        self.plot.DefineBasics(self.x, self.idx)
+
+        self.eta_c = self.eta/const.c
+        self.t_Gyr = self.t*sec2Gyr
+        self.eta_c_Gyr = self.eta_c*sec2Gyr
+
+        self.dL_Gpc = self.dL/const.Mpc*1e-3
+        
+
+    def locate_milestones(self):
+        jump = 50   # avoid the inflation era
+        self.idx = {
+            "RM":   np.argmin(np.abs(self.OmegaM-self.OmegaR)[jump:])+jump,         # matter-radiation equality
+            "MDE":  np.argmin(np.abs(self.OmegaM-self.OmegaLambda)[jump:])+jump,    # matter-dark energy transition
+            "acc":  np.argmin(np.abs(self.dHpdx)[jump:])+jump,                      # universe starts accelerating
+            "0":    np.argmin(np.abs(self.x)[jump:])+jump                           # today
+        }
+    
+    def compute_luminosity_distance(self):
+        Chi = self.eta[np.argmin(np.abs(self.x))] - self.eta
+        dL = Chi*np.exp(-self.x) 
+        return dL
+
+    def compute_redshift(self):
+        z = np.exp(-self.x)-1
+        return z
 
     
-    ax.errorbar(z_obs, dL_obs, err_obs, c="orangered")
-    ax.plot(z_obs, dL_obs, 'o', c="orangered")
-    ax.set_xscale("log")
-    xlim = ax.get_xlim()
-    ylim = ax.get_ylim()
+    def make_table(self):
+        print("                   x      z       t    ")
+        print("                                [Gyr]")
+        RM_idx = self.idx["RM"]
+        for m in self.idx.keys():
+            idx = self.idx[m]
+            print(f"{m:10s}: {self.x[idx]:6.2f}  {self.z[idx]:6.2f}  {self.t_Gyr[idx]:10.6f}")
 
 
-    ax.plot(z, dL)
-    ax.set_xlim(xlim)
-    ax.set_ylim(ylim)
+    def plot_density_params(self):
+        self.plot.DensityParameters(self.OmegaM, self.OmegaLambda, self.OmegaR)
 
-    ax.set_xlabel(r"$z$")
-    ax.set_ylabel(r"$d_L\, \mathrm[Gpc]$")
+    def plot_misc_functions(self):
+        self.plot.MiscellaneousFunctions(self.eta_c, self.Hp, self.dHpdx, self.ddHpdxx)
 
-    # ax.set_xlim(np.min(z_obs), np.max(z_obs))
-    # ax.set_ylim(np.min(dL_obs), np.max(dL_obs))
+    def plot_time_measures(self):
+        self.plot.TimeMeasures(self.t_Gyr, self.eta_c_Gyr)
+
+    def plot_lum_dist(self, supernova_data):
+        self.plot.LuminosityDistance(supernova_data.z_obs, supernova_data.dL_obs, supernova_data.err_obs, self.z, self.dL_Gpc)
+
+
+class SupernovaFitting:
+
+    def __init__(self, data_filename, result_filename):
+        obs_data = read_ASCII(data_filename, 1)   
+        self.z_obs = obs_data[:,0]   
+        self.dL_obs = obs_data[:,1]  
+        self.err_obs = obs_data[:,2]
+
+        fit_data = read_ASCII(result_filename, 100)
+        self.Chi2 = fit_data[:,0]
+        self.H0 = fit_data[:,1]*const.H0_over_h
+        self.OmegaM0 = fit_data[:,2]
+        self.Omegak0 = fit_data[:,3]
+
+        self.Omegagamma0 = self.compute_photon_density()
+        self.OmegaLambda0 = self.compute_dark_energy_density()
+
+        self.plot = PLOT.MilestoneI()
+
+    def compute_photon_density(self):
+        Omegagamma = 2*np.pi**2/30 * (const.k_b*2.755)**4 * 8*np.pi*const.G/(3*self.H0*self.H0)
+        return Omegagamma
     
+    def compute_dark_energy_density(self):
+        OmegaLambda = 1 - self.OmegaM0 - self.Omegak0 - self.Omegagamma0
+        return OmegaLambda
 
-    plt.show()
+    def plot_Omega_phase_space(self):
+        self.plot.OmegaM_OmegaLambda(self.OmegaM0, self.OmegaLambda0, self.Chi2)
 
-
-
-def mcmc_result():
-
-    data_sn = read_ASCII("mcmc_fitting2", 100)
-
-    Chi2 = data_sn[:,0]
-    h = data_sn[:,1]
-    Omega_m = data_sn[:,2]
-    Omega_k = data_sn[:,3]
-    H_0 = h*const.H0_over_h
-
-    Chi2min = np.min(Chi2)
-    Omega_r = 2*np.pi**2/30 * (const.k_b*2.755)**4 * 8*np.pi*const.G/(3*H_0*H_0)
-    Omega_Lambda = 1 - Omega_m - Omega_k - Omega_r
-
-    thresh = Chi2<Chi2min+3.53
-    # thresh = Chi2<Chi2min+1
-    # thresh = Chi2<Chi2 + 1
-
-    # Omega_Lambda0, Omega_m0 = np.meshgrid(Omega_m[thresh], Omega_Lambda[thresh])
-    fig, ax = plt.subplots()
-    ax.scatter(Omega_m[thresh], Omega_Lambda[thresh], c=Chi2[thresh])
-
-    ax.plot((0, 1), (1, 0), ls='--', c='k')
-    # ax.set_aspect("equal")
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0,1.4)
-
-    ax.set_xlabel(r"$\Omega_{\mathrm{m}0}$")
-    ax.set_ylabel(r"$\Omega_{\Lambda0}$")
-    # plt.colorbar()
-    # ax.contourf()
-
-    plt.show()
-
-
-    fig, ax = plt.subplots()
-    ax.hist(Omega_Lambda[thresh], 50)
-
-    ax.set_xlabel(r"$\Omega_{\Lambda0}$")
-
-    plt.show()
-
-
-mcmc_result()
-
-# cosmological_parameters()
-
-# various_Hubble()
-
-# luminosity_distance_vs_redshift()
-
-
-
-# fig, ax = plt.subplots()
-# ax.plot(x, eta*Hp/const.c)
-# fig, ax = plt.subplots()
-# ax.plot(x, eta)
-
-# ax.set_yscale("log")
-# fig, ax = plt.subplots()
-# ax.plot(x, Hp)
-# ax.set_yscale("log")
-
-
-# # plt.show()
-# save("test")
-# plt.show()
+    def plot_Hubble_pdf(self):
+        self.plot.HubblePDF(self.H0*Hubble_conv_fac, self.Chi2)
 
 
 
 
 
 
-'''
-Pt 2) Fit to supernova data
-'''
+test = SimpleCosmo("cosmology")
+test.make_table()
+test.plot_density_params()
+test.plot_misc_functions()
+test.plot_time_measures()
+test2 = SupernovaFitting("supernovadata", "mcmc_fitting")
+test.plot_lum_dist(test2)
 
+test2.plot_Omega_phase_space()
+test2.plot_Hubble_pdf()
 
-# data_sn = read_ASCII("mcmc_fitting", 200)
-
-# Chi2 = data_sn[:,0]
-# h = data_sn[:,1]
-# Omega_m = data_sn[:,2]
-# Omega_k = data_sn[:,3]
-
-# Chi2min = np.min(Chi2)
-# Omega_Lambda = 1 - Omega_m - Omega_k
-
-# thresh = Chi2<Chi2+3.53
-
-# Omega_Lambda0, Omega_m0 = np.meshgrid(Omega_m[thresh], Omega_Lambda[thresh])
-# fig, ax = plt.subplots()
-# ax.scatter(Omega_m[thresh], Omega_Lambda[thresh], c=Chi2[thresh])
-# ax.set_aspect("equal")
-# # plt.colorbar()
-# # ax.contourf()
-
-# plt.show()
-
-
-# fig, ax = plt.subplots()
-
-# ax.hist(h, 30)
-# plt.show()
