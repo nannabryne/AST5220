@@ -1,47 +1,44 @@
-
-
-We assume the constituents of the universe to be cold dark matter (CDM), baryons (b), photons (\textgamma), neutrinos (\textnu),\footnote{For the sake of consistency --- will not consider neutrinos \textcolor{red}{fixxx}} and a cosmological constant (\textLambda) \textcolor{red}{dark energy comment?}. We leave the curvature ($k$) as a variable for now. The density parameter $\Omega_{\mathrm{i}}$ associated with cosmological component $\mathrm{i} \in \left\{ \mathrm{CDM},\, \mathrm{b},\, \gamma,\, \nu,\, \Lambda,\, k \right\}$ can be written in terms of the \dots
-\begin{equation}
-    \Omega_\mathrm{i} \!\left(a\right) = \frac{\Omega_{\mathrm{i}0}}{a^{3(1+\omega_\mathrm{i})} H^2(a)/H_0^2},\quad \Omega_{\mathrm{i}0} \equiv \Omega_{\mathrm{i}}\!\left(a\!=\!a_0 \right)
-\end{equation}
-blah blah
-As a notational relief, we introduce the parameters associated with total matter (M) and total radiation (R):
-\begin{subequations}\label{sec1:theory:eq:density_params_idk}
-    \begin{align}
-        \OmgM[] &= \Omega_{\mathrm{CDM}} + \Omega_{\mathrm{b}} \label{sec1:theory:eq:xxx1} \\
-        \OmgR[] &= \Omega_{\gamma } + \Omega_{\nu } \label{sec1:theory:eq:xxx2}
-    \end{align}
-\end{subequations}
-
-
-
-The FLRW line element is given by
-\begin{equation}\label{sec1:theory:eq:FLRW}
+The FRW line element in flat space is given by
+\begin{equation}\label{sec1:theory:eq:FRW}
     \begin{split}
-        \D s^2 &= -\D t^2 + a^2(t) \delta_{ij} \D x^i \D x^j  \\
-                &= a^2(t) \left( -\D \eta^2 + \delta_{ij} \D x^i \D x^j \right) 
+        \D s^2 &= -c^2\D t^2 + a^2(t) \delta_{ij} \D x^i \D x^j && |\, \D \eta \equiv c\D t\, a^{-1}(t) \\%\frac{\D t}{a(t)}  \\
+                &= a^2(t) \left( -\D \eta^2 + \delta_{ij} \D x^i \D x^j \right).
     \end{split}
 \end{equation}
-
-
-
-
-
-\begin{subequations}\label{sec1:theory:eq:Hubble_of_a}
-    \begin{align}
-        H(a) &= H_0 \sqrt{\OmgM a^{-3} + \OmgR a^{-4}  + \Omgk a^{-2} + \OmgL} \label{sec1:theory:eq:regular_Hubble} \\
-        \mathcal{H}(a) &= H_0 \sqrt{\OmgM a^{-1} + \OmgR a^{-2}  + \Omgk + \OmgL a^{2}} \label{sec1:theory:eq:primed_Hubble}
-    \end{align}
-\end{subequations}
-
-
-We will use the logarithmic scale factor $x\equiv\ln{a}$ as our main time variable, allowing us to rewrite the above equations by the substitution $a=e^x$. 
-
-We have the relations
-\begin{equation}
-    \frac{\D t}{\D \eta} = a, \quad \frac{\D x}{\D t} = H, \quad \frac{\D x}{\D \eta} = \mathcal{H} 
+Instead of the scale factor $a$, we will use its logarithm $x\equiv\ln{a}$ as our main time variable. In addition, the cosmic time $t$ and Hubble parameter $H$ ($=\D x/\D t$) will be replaced by the conformal time $\eta$ ($\D \eta = ce^{-x}\D t$) and scaled Hubble parameter $\Hp\equiv aH$ ($=c\D x/\D \eta$). We write the Friedmann equations in terms of our preferred variables, i.e.
+\begin{equation}\label{sec1:theory:eq:Hp_of_x}
+    \Hp(x) = H_0 \sqrt{\OmgM e^{-x} + \OmgR e^{-2x}  + \Omgk + \OmgL e^{2x}},
 \end{equation}
-and the operators
+the components of which are to be discussed shortly. The operator 
 \begin{equation}
-    \frac{\D}{\D t} = H \frac{\D}{\D x}, \quad \frac{\D}{\D \eta} = \mathcal{H} \frac{\D}{\D x}
+    \frac{\D}{\D x} = \frac{c}{\Hp} \frac{\D}{\D \eta} = \frac{1}{H} \frac{\D}{\D t}
 \end{equation}
+will prove useful, giving amongst others the expression
+\begin{equation}\label{sec1:theory:eq:eta_of_x}
+    \eta(x) - \eta(-\infty)= \int_{-\infty}^{x}\D \xi \frac{c}{\Hp(\xi)}.
+\end{equation}
+
+
+%framework
+
+We assume the constituents of the universe to be cold dark matter (CDM), baryons (b), photons (\textgamma), neutrinos (\textnu),\footnote{For the sake of consistency --- will not consider neutrinos \textcolor{red}{fixxx}} and a cosmological constant (\textLambda) \textcolor{red}{dark energy comment?}. We leave the curvature ($k$) as a variable for now. The evolution of the density parameter $\Omega_{s}$ associated with cosmological component $s \in \left\{ \mathrm{CDM},\, \mathrm{b},\, \text{\textgamma},\, \text{\textnu},\, \text{\textLambda},\, k \right\}$ can be described in terms of our preferred variables as
+\begin{equation}\label{sec1:theory:eq:evolution_density_param}
+    \Omega_s(x) = \frac{\Omega_{s0}}{e^{(1+3w_s)x} \Hp^2(x)/H_0^2},\quad \Omega_{s0} \equiv \Omega_{s}(x=x_0),
+\end{equation}
+where $H_0$ is the Hubble constant, $x_0=\ln{a_0}=0$ means \textit{today} and $w_s$ is a constant intrinsic to the species $s$.\footnote{$w_\mathrm{M}=0$, $w_\mathrm{R}=\nicefrac{1}{3}$, $w_\Lambda=-1$ and $w_k=-\nicefrac{1}{3}$.} As a notational relief, we introduce the parameters associated with total matter (M) and total radiation (R) such that
+\begin{equation}\label{sec1:theory:eq:density_params_totals}
+    \OmgM[] = \Omega_{\mathrm{CDM}} + \Omega_{\mathrm{b}} \quad \mathrm{and} 
+        \quad \OmgR[]= \Omega_{\gamma } + \Omega_{\nu }.
+\end{equation}
+
+The observed CMB temperature today $\TCMB=2.755\, \mathrm{K}$ gives today's photon density
+\begin{equation}
+    \Omega_{\gamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k_b \TCMB \right) ^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
+\end{equation}
+and followingly the neutrino density today $\Omega_{\nu 0} \propto N_\mathrm{eff} \Omega_{\gamma 0}$, $N_\mathrm{eff}$ being the effective number of massless neutrinos. However, this paper neglects neutrinos, setting $N_\mathrm{eff}=0$, and so this is not relevant for us. The total density should add up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time where the total matter and radiation densities are equal --- the ``radiation--matter equality'' --- as $\OmgM[](x\!=\!x_\mathrm{RM}) = \OmgR[](x\!=\!x_\mathrm{RM})$. Further, we find the time at which the universe becomes dominated by the cosmological constant --- the ``matter--dark energy transition'' --- as $\OmgL[](x\!=\!x_{\mathrm{M}\Lambda}) = \OmgM[](x\!=\!x_{\mathrm{M}\Lambda})$. 
+
+
+To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\D^2 a / \D t^2 = 0$. It is trivial to show that this condition is equivalent to requiring $\D \Hp/\D x = 0$.\footnote{It is implicit that we require $\Hp(x)$ to increase (and not decrease) at this point.} In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$.
+
+
+\subsubsection{Distance measures}
