@@ -34,23 +34,11 @@ def read_ASCII(filename, skiprows=0):
     if not filename.endswith(".txt"):
         filename += ".txt"
     try: 
-        data = np.loadtxt(OUTPUT_PATH + filename)
+        data = np.loadtxt(OUTPUT_PATH + filename, skiprows=skiprows)
     except FileNotFoundError:
-        data = np.loadtxt(INPUT_PATH + filename)
+        data = np.loadtxt(INPUT_PATH + filename, skiprows=skiprows)
     return np.asarray(data)
     
-
-
-def read_ASCII2(filename, skiprows=0):
-    if not filename.endswith(".txt"):
-        filename += ".txt"
-    try: 
-        data = np.loadtxt(OUTPUT_PATH + filename)
-    except FileNotFoundError:
-        data = np.loadtxt(INPUT_PATH + filename)
-    return np.asarray(data)
-
-
 
 
 def save(filename, pdf=True):
@@ -63,9 +51,11 @@ def save(filename, pdf=True):
 
 
 sns.set_style("darkgrid")
-plt.rcParams["mathtext.fontset"] = "stix"
-plt.rcParams["font.family"] = "STIXGeneral"
+# plt.rcParams["mathtext.fontset"] = "stix"
+plt.rcParams["font.family"] = "sans-serif"#"STIXGeneral"
+plt.rcParams["font.serif"] = ["Times New Roman"]#"STIXGeneral"
 plt.rcParams["text.usetex"] = True
+plt.rcParams['savefig.bbox'] = "tight"
 
 plt.rc("figure", autolayout=True)
 plt.rc("lines", linewidth=2)
@@ -82,7 +72,24 @@ colors = [
 ]
 
 plt.rc("axes", titlesize=18, labelsize=16, prop_cycle=cycler('color', colors))
-plt.rc("legend", fontsize=14, shadow=True)
+plt.rc("legend", fontsize=14, shadow=True, fancybox=True)
+plt.rc("figure", figsize=(10,6))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ConstantsAndUnits:
 

@@ -47,14 +47,14 @@ int main(int narg, char **argv){
     cosmo.info();
     
     // Output background evolution quantities
-    cosmo.output("cosmology.txt");
+    cosmo.output("background_cosmology.txt");
 
 
-    // Utils::StartTiming("MCMC");
-    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
-    // std::cout << "\n\n\n\n";
-    // Utils::EndTiming("MCMC");
-    // std::cout << "\n\n";
+    Utils::StartTiming("MCMC");
+    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    std::cout << "\n\n\n\n";
+    Utils::EndTiming("MCMC");
+    std::cout << "\n\n";
 
 
     return 0;

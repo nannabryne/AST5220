@@ -98,6 +98,7 @@ class MilestoneI:
 
         ax.set_ylabel("Gyrs")
         ax.set_xlabel(r"$x$")
+        ax.set_title("hei")
 
         ax.legend()
 
@@ -133,12 +134,12 @@ class MilestoneI:
             plt.show()
 
 
-    def OmegaM_OmegaLambda(self, Omega_M0, Omega_Lambda0, Chi2):
+    def OmegaM_OmegaLambda(self, Omega_M0, Omega_Lambda0, chi2):
 
-        thresh = Chi2<np.min(Chi2)+3.53
+        thresh = chi2<np.min(chi2)+3.53
 
         fig, ax = plt.subplots()
-        ax.scatter(Omega_M0[thresh], Omega_Lambda0[thresh], c=Chi2[thresh], alpha=0.6, s=5)
+        ax.scatter(Omega_M0[thresh], Omega_Lambda0[thresh], c=chi2[thresh], alpha=0.6, s=5)
 
         ax.plot((0, 1), (1, 0), ls='--', c='k')
         # ax.set_aspect("equal")
@@ -154,8 +155,8 @@ class MilestoneI:
             plt.show()
 
 
-    def HubblePDF(self, H0, Chi2):
-        thresh = Chi2<np.min(Chi2)+3.53
+    def HubblePDF(self, H0, chi2):
+        thresh = chi2<np.min(chi2)+3.53
         fig, ax = plt.subplots()
         ax.hist(H0[thresh], 60)
         ax.set_xlabel(r"$H_0$ [100 km/s / Mpc]")

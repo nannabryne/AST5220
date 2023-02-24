@@ -281,11 +281,11 @@ void BackgroundCosmology::info() const{
 
 
 void BackgroundCosmology::output(const std::string filename) const{
-  const double x_min = -14.0;
-  const double x_max =  0.0;
+  // const double x_min = -14.0;
+  // const double x_max =  0.0;
   const int    n_pts =  400;
   
-  Vector x_array = Utils::linspace(x_min, x_max, n_pts);
+  Vector x_array = Utils::linspace(x_start, x_end, n_pts);
 
   std::ofstream fp(OUTPUT_PATH + filename.c_str());
   auto print_data = [&] (const double x) {

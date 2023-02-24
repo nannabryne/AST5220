@@ -88,8 +88,8 @@ class SimpleCosmo:
         }
     
     def compute_luminosity_distance(self):
-        Chi = self.eta[np.argmin(np.abs(self.x))] - self.eta
-        dL = Chi*np.exp(-self.x) 
+        chi = self.eta[np.argmin(np.abs(self.x))] - self.eta
+        dL = chi*np.exp(-self.x) 
         return dL
 
     def compute_redshift(self):
@@ -112,6 +112,9 @@ class SimpleCosmo:
     def plot_misc_functions(self):
         self.plot.MiscellaneousFunctions(self.eta_c, self.Hp, self.dHpdx, self.ddHpdxx)
 
+    def plot_Hubble(self):
+        self.plot.HubbleParameter(self.Hp*Hubble_conv_fac)
+
     def plot_time_measures(self):
         self.plot.TimeMeasures(self.t_Gyr, self.eta_c_Gyr)
 
@@ -128,7 +131,7 @@ class SupernovaFitting:
         self.err_obs = obs_data[:,2]
 
         fit_data = read_ASCII(result_filename, 100)
-        self.Chi2 = fit_data[:,0]
+        self.chi2 = fit_data[:,0]
         self.H0 = fit_data[:,1]*const.H0_over_h
         self.OmegaM0 = fit_data[:,2]
         self.Omegak0 = fit_data[:,3]
@@ -147,23 +150,27 @@ class SupernovaFitting:
         return OmegaLambda
 
     def plot_Omega_phase_space(self):
-        self.plot.OmegaM_OmegaLambda(self.OmegaM0, self.OmegaLambda0, self.Chi2)
+        self.plot.OmegaM_OmegaLambda(self.OmegaM0, self.OmegaLambda0, self.chi2)
 
     def plot_Hubble_pdf(self):
-        self.plot.HubblePDF(self.H0*Hubble_conv_fac, self.Chi2)
+        self.plot.HubblePDF(self.H0*Hubble_conv_fac, self.chi2)
 
 
 
 
 
 
-test = SimpleCosmo("cosmology")
+test = SimpleCosmo("background_cosmology")
+test.plot.ShowMode("off")
 test.make_table()
 test.plot_density_params()
 test.plot_misc_functions()
+test.plot_Hubble()
 test.plot_time_measures()
 test2 = SupernovaFitting("supernovadata", "mcmc_fitting")
+test2.plot.ShowMode("off")
 test.plot_lum_dist(test2)
+
 
 test2.plot_Omega_phase_space()
 test2.plot_Hubble_pdf()
