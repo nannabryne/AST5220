@@ -1,22 +1,33 @@
 import os
 import sys
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+print("  ")
 import pathlib as pl
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from cycler import cycler
 import seaborn as sns
+import pandas as pd
 import numpy as np
 
 
+print('...')
+# print(fm.get_font_names())
+# import matplotlib
+# matplotlib.font_manager._load_fontmanager(try_read_cache=False)
+# import matplotlib.font_manager
+# import shutil
+# matplotlib.font_manager._rebuild()
+
+# shutil.rmtree()
 
 
-CURRENT_PATH    = os.path.abspath(".") + "/"
-INPUT_PATH      = CURRENT_PATH + "../../input/"
-OUTPUT_PATH     = CURRENT_PATH + "../../output/"
-DATA_PATH       = OUTPUT_PATH + "data/"
-FIGS_PATH       = OUTPUT_PATH + "figures/"
+# CURRENT_PATH    = os.path.abspath(".") + "/"
+# INPUT_PATH      = CURRENT_PATH + "../../input/"
+# OUTPUT_PATH     = CURRENT_PATH + "../../output/"
+# DATA_PATH       = OUTPUT_PATH + "data/"
+# FIGS_PATH       = OUTPUT_PATH + "figures/"
 
 
 CURRENT_PATH    = os.path.abspath(".") + "/"
@@ -50,30 +61,76 @@ def save(filename, pdf=True):
 
 
 
-sns.set_style("darkgrid")
+def reset_matplotlib():
+    plt.rcParams.update(plt.rcParamsDefault)
+
+
+
+custom_params = {
+    "figure.figsize":(12,6), "figure.autolayout":True,
+    "savefig.dpi":300, "savefig.bbox":"tight",
+    "lines.linewidth":2.6, 
+    "text.usetex":True, 
+    "mathtext.fontset":"cm", "font.family":"STIXGeneral",
+    "axes.labelsize":20, "axes.titlesize":22, "axes.titlelocation":"left", "axes.titleweight":"bold",
+    "xtick.labelsize":14, "ytick.labelsize":14,
+    "legend.fontsize":20, "legend.fancybox":True, "legend.frameon":True, "legend.shadow":True,
+    "font.size":16
+    }
+
+
+for param in custom_params.keys():
+    mpl.rcParams[param] = custom_params[param]
+
+
+sns.set_style("darkgrid", rc=custom_params)
+sns.set_palette("hls")
+
+
+
+
+# background = "#313332"
+# face = background
+# title_font = "MathJax_SansSerif"
+
+
+# # reset_matplotlib()
+#STIX MathJax SansSerif
+
+# title_font = fm.FontProperties(["sans-serif"])
+
+# title_props = {"fontweight":"bold", "fontsize":22, "fontfamily":"cursive"}
+
+# sns.set_style("darkgrid", {"axes.facecolor": face})
+# matplotlib.rcParams["figure.figsize"] = (10,6)
+
 # plt.rcParams["mathtext.fontset"] = "stix"
-plt.rcParams["font.family"] = "sans-serif"#"STIXGeneral"
-plt.rcParams["font.serif"] = ["Times New Roman"]#"STIXGeneral"
-plt.rcParams["text.usetex"] = True
-plt.rcParams['savefig.bbox'] = "tight"
-
-plt.rc("figure", autolayout=True)
-plt.rc("lines", linewidth=2)
+# plt.rcParams["font.family"] = "sans-serif"#"STIXGeneral"
+# plt.rcParams["font.serif"] = ["Times New Roman"]#"STIXGeneral"
+# plt.rcParams["text.usetex"] = True
+# plt.rcParams["savefig.bbox"] = "tight"
+# plt.rcParams["figure.autolayout"] = True
 
 
-#FIXME
-colors = [
-    sns.color_palette('husl')[-3],
-    sns.color_palette('husl')[-2],
-    sns.color_palette('husl')[-1],
-    'mediumorchid',
-    sns.color_palette('deep')[-1],
-    sns.color_palette('dark')[-1]
-]
+# plt.rc("axes", **{"titlesize":24, "labelsize":16, "titlelocation":"left", "titleweight":"bold"})
+# plt.rc("figure", autolayout=True)
+# plt.rc("lines", linewidth=2)
 
-plt.rc("axes", titlesize=18, labelsize=16, prop_cycle=cycler('color', colors))
-plt.rc("legend", fontsize=14, shadow=True, fancybox=True)
-plt.rc("figure", figsize=(10,6))
+# sns.set(rc={'figure.figsize':(12, 6), "lines.linewidth":2.2}, font_scale=1.1, font="sans-serif")
+# #FIXME
+# colors = [
+#     sns.color_palette('husl')[-3],
+#     sns.color_palette('husl')[-2],
+#     sns.color_palette('husl')[-1],
+#     'mediumorchid',
+#     sns.color_palette('deep')[-1],
+#     sns.color_palette('dark')[-1]
+# ]
+
+# plt.rc("axes", titlesize=18, labelsize=16, prop_cycle=cycler('color', colors), titlelocation="left", titleweight="bold")
+# plt.rc("axes", titlesize=18, labelsize=16, titlelocation="left", titleweight="bold")
+# plt.rc("legend", fontsize=14, shadow=True, fancybox=True)
+# plt.rc("figure", figsize=(10,6))
 
 
 

@@ -73,6 +73,7 @@ class MilestoneI:
 
     
     def HubbleParameter(self, Hp):
+
         fig, ax = plt.subplots()
 
         ax.plot(self.x, Hp, label=r"$\mathcal{H}(x)$")
@@ -98,7 +99,7 @@ class MilestoneI:
 
         ax.set_ylabel("Gyrs")
         ax.set_xlabel(r"$x$")
-        ax.set_title("hei")
+        ax.set_title("hei", fontweight="bold")
 
         ax.legend()
 
@@ -112,14 +113,15 @@ class MilestoneI:
     def LuminosityDistance(self, z_obs, dL_obs, err_obs, z_comp, dL_comp):
         fig, ax = plt.subplots()
     
-        ax.errorbar(z_obs, dL_obs, err_obs, c="orangered", label=r"$d_L^\mathrm{obs}(z)$")
-        ax.plot(z_obs, dL_obs, 'o',         c="orangered", label=r"$d_L(z)$")
+        ax.errorbar(z_obs, dL_obs, err_obs, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, label=r"$d_L^\mathrm{obs}(z)$")
+        # ax.plot(z_obs, dL_obs, 'o')#,         c="orangered")
         ax.set_xscale("log")
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
+        # ax.plot(10000, 0)
 
 
-        ax.plot(z_comp, dL_comp)
+        ax.plot(z_comp, dL_comp, alpha=.5, label=r"$d_L(z)$")
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
 
@@ -138,16 +140,36 @@ class MilestoneI:
 
         thresh = chi2<np.min(chi2)+3.53
 
-        fig, ax = plt.subplots()
-        ax.scatter(Omega_M0[thresh], Omega_Lambda0[thresh], c=chi2[thresh], alpha=0.6, s=5)
+        # fig, ax = plt.subplots(figsize=(15,6))
+        # fig.set_facecolor("#313332")
+        # ax.patch.set_facecolor("grey")
+        # ax.scatter(Omega_M0[thresh], Omega_Lambda0[thresh], c=chi2[thresh], alpha=0.6, s=5)
 
-        ax.plot((0, 1), (1, 0), ls='--', c='k')
-        # ax.set_aspect("equal")
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0,1.4)
+        # ax.plot((0, 1), (1, 0), ls='--', c='k')
+        # # ax.set_aspect("equal")
+        # ax.set_xlim(0, 1)
+        # ax.set_ylim(0,1.4)
 
-        ax.set_xlabel(r"$\Omega_{\mathrm{M}0}$")
-        ax.set_ylabel(r"$\Omega_{\Lambda0}$")
+        # ax.set_xlabel(r"$\Omega_{\mathrm{M}0}$")
+        # ax.set_ylabel(r"$\Omega_{\Lambda0}$")
+
+        xx, yy, zz = r"$\Omega_{\mathrm{M}0}$", r"$\Omega_{\Lambda 0}$", r"$\chi2$"
+
+        df = pd.DataFrame({xx:Omega_M0[thresh], yy:Omega_Lambda0[thresh], zz:chi2[thresh]})
+        # sns.warn_singular=False
+        
+        g = sns.JointGrid(data=df, x=xx, y=yy)
+        fig = g.figure
+        g.fig.set_figwidth(10)
+        g.fig.set_figheight(6)
+
+        g.plot_joint(sns.scatterplot, alpha=.5, legend=False)
+        g.plot_joint(sns.kdeplot, levels=3)
+        g.plot_marginals(sns.kdeplot)
+        
+
+        fig.tight_layout = True    
+
 
         if self.save:
             save(self.subdir + "omega_phase_space")
@@ -158,8 +180,12 @@ class MilestoneI:
     def HubblePDF(self, H0, chi2):
         thresh = chi2<np.min(chi2)+3.53
         fig, ax = plt.subplots()
-        ax.hist(H0[thresh], 60)
+        # ax.hist(H0[thresh], 60)
+        #
+        sns.histplot(H0[thresh], kde=True, ax=ax)
         ax.set_xlabel(r"$H_0$ [100 km/s / Mpc]")
+        ax.set_title("Posteriori", fontfamily="sans-serif")
+
 
         if self.save:
             save(self.subdir + "hubble_pdf")

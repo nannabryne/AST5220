@@ -161,14 +161,14 @@ class SupernovaFitting:
 
 
 test = SimpleCosmo("background_cosmology")
-test.plot.ShowMode("off")
-test.make_table()
+test.plot.ShowMode("on")
+# test.make_table()
 test.plot_density_params()
-test.plot_misc_functions()
+# test.plot_misc_functions()
 test.plot_Hubble()
 test.plot_time_measures()
 test2 = SupernovaFitting("supernovadata", "mcmc_fitting")
-test2.plot.ShowMode("off")
+test2.plot.ShowMode("on")
 test.plot_lum_dist(test2)
 
 
