@@ -1,0 +1,48 @@
+% --------------------------------------
+% labels: \label{mil1:imp:[type]:[name]}
+% --------------------------------------
+% PAST TENSE
+
+
+The code we wrote included a class in C++ representing the background. In particular, this class requires current values of the density parameters $\Omega_{\mathrm{b}0}$, $\Omega_{\mathrm{CDM}0}$ and $\Omega_{\mathrm{K}0}$, the CMB temperature today ($\TCMB$) and the effective neutrino number ($N_\mathrm{eff}$). In addition, the class needs the ``little'' Hubble constant $h=H_0$~$[100\text{~km}\text{~s}^{-1}\text{~Mpc}^{-1}]$. The remaining density parameters are computed as elaborated in \cref{mil1:sec:theo}. Amongst the class methods are functions for computing $\Hp(x)$, $\D\Hp(x)/\D x$, $\D^2\Hp(x)/\D x^2$ and $\Omega_{s0}(x)$ for some $x$, as well as code that solves the ODEs for $\eta(x)$ and $t(x)$. Another vital method is the one that yields the luminosity distance $d_L(x)$ for some $x$.
+
+% The specifics of our flat ($\OmgK=0$) model was stolen from \citep{Planckdata} with $h=0.67$, $\TCMB=2.7255$ K, $N_\mathrm{eff}=3.046$, $\Omega_{\mathrm{b}0} = 0.05$, and $\Omega_{\mathrm{CDM}0}= 0.267$. 
+
+The specifics of our model was found from fits to \citep{Planckdata}:
+\begin{equation}\label{mil1:imp:eq:fiducials}
+    \begin{split}
+        \text{Hubble constant:}&& h &=0.67 \\
+        \text{CMB temperature:}&& \TCMB &=2.7255\text{~K} \\
+        \text{effective Neutrino number:}&& N_{\mathrm{eff}}&=3.046\\
+        \text{baryon density:}&& \Omega_{\mathrm{b}0}&=0.05\\
+        \text{CDM density:}&& \Omega_{\mathrm{CDM}0}&=0.267\\
+        \text{curvature density:}&& \OmgK&=0
+    \end{split}
+\end{equation}
+This gave the following derived parameters:
+\begin{equation}\label{mil1:imp:eq:derived_fiducials}
+    \begin{split}
+        \text{photon density:}&& \Omega_{\gamma 0}&=5.51 \cross 10^{-5}\\
+        \text{neutrino density:}&& \Omega_{\nu 0}&=3.81 \cross 10^{-5}\\
+        \text{DE density:}&& \OmgL&=0.683
+    \end{split}
+\end{equation}
+We evaluated the various quantities over $x \in [-20, 5]$, the same interval for which we numerically solved the ODEs for $\eta(x)$ and $t(x)$ in \cref{mil1:theo:eq:odes_time}, setting $x_\mathrm{init}=-20$ in \cref{mil1:theo:eq:time_initial_conditions}. 
+
+After controlling our model by comparing numerical results to analytical expressions in limit cases, we turned our attention to the observational data from \citep{supernovadata}. The data set is constructed as follows: for each redshift $z_i$, there is an observed luminosity distance $d_L^\mathrm{obs}(z_i)$ and an associated error $\sigma_\mathrm{err}(z_i)$. % for en krise setning skjerp deg Nanna
+
+Subsequently, we wrote a script to perform an MCMC for the parameters $h$, $\OmgM$ and $\OmgK$. Running said script, we compared the computed luminosity distance $d_L(z)$ from a cosmological model (an instance of the class) to the observed luminosity distance $d_L^\mathrm{obs}(z)$ through the \textchi$^2$-function,
+\begin{equation}
+    \chi^2(h, \OmgM, \OmgK) = \sum_{i=1}^N \frac{ \left( d_L(z_i; h, \OmgM, \OmgK) - d_L^\mathrm{obs}(z_i)\right)^2 }{\sigma_\mathrm{err}^2(z_i)},
+\end{equation}
+where $N=31$ is the number of data points. The best-fit model was considered as the one for which $\chi^2 = \chi^2_\mathrm{min}$, the lowest number found by the algorithm. %The 1\textsigma\,level (68.4\% confidence interval) corresponds to the set of models for which $\chi^2-\chi^2_\mathrm{min}<3.53$, whereas the next level (95.5\% confidence interval) satisfies $\chi^2-\chi^2_\mathrm{min}<8.XX$.
+
+The MCMC analysis was characterised by a maximum of 10\,000 iterations and the following limitations:
+\begin{equation}\label{mil1:imp:eq:mcmc_limits}
+    \begin{split}
+        0.5 \leq&& h &&\leq 1.5 \\
+        0.0 \leq&& \OmgM &&\leq 1.0 \\
+        -1.0 \leq&& \OmgK &&\leq 1.0 
+    \end{split}
+\end{equation}
+They were initialised by sample from a uniform distribution in the respective range. Once the code was executed successfully, we discard the first 200 samples, expecting this to be the approximate burn-in period for of the Metropolis MCMC.

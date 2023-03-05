@@ -3,41 +3,61 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+
+%.............................
+% packages
+%.............................
+
+% Div, idk:
 \usepackage{physics,amssymb}  
-\usepackage{graphicx} 
-\usepackage{float}
+% \usepackage{float}
 \usepackage{xcolor}
 \usepackage{hyperref} 
 \usepackage{array}
-%\usepackage{tikz} 
 \usepackage{listings}   
 \usepackage{url}
 \usepackage{upgreek}
-\usepackage[super]{nth}
 \usepackage{enumitem}
 \usepackage{color,soul}
 \usepackage{stackengine}
 \usepackage{textgreek}
 \usepackage{bookmark}
 \usepackage{mathrsfs}
-\usepackage{nicefrac}
-\usepackage[caption=false]{subfig}
+\usepackage{xfrac} % provides \sfrac
+% \usepackage[caption=false]{subfig}
 \usepackage{bbold}
-
-\graphicspath{{../figs/}}
+\usepackage{relsize}
+\usepackage{txfonts}	% Important for the A&A style!
 
 
 % Clever referencing:
 \usepackage[capitalize]{cleveref}
 \crefdefaultlabelformat{\textbf{#2}}
-\crefname{eq}{Eq.}{Eq.}
-\crefname{sec}{Sec.}{Sec.}
-\crefname{app}{App.}{App.}
-\crefname{fig}{Fig.}{Fig.}
-\crefname{tab}{Tab.}{Tab.}
+\crefname{eq}{Eq.}{Eq.}		% equation
+% \crefname{eqs}{Eqs.}{Eqs.}	% set of equations
+\crefname{sec}{Sec.}{Sec.}	% section
+\crefname{app}{App.}{App.}	% appendix
+\crefname{fig}{Fig.}{Fig.}	% figure
+\crefname{tab}{Tab.}{Tab.}	% table
 \crefdefaultlabelformat{#2#1#3}
 
 
+
+
+% Fig formatting
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[font=small, labelfont=bf]{caption}
+
+\graphicspath{{../figs/}} % fig path
+
+% Table formatting:
+\usepackage{booktabs,dcolumn}
+\newcolumntype{d}[1]{D{.}{.}{#1}} % "decimal" column type
+\renewcommand{\ast}{{}^{\textstyle *}} % for raised "asterisks"
+
+% i do not remember ...
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
@@ -46,6 +66,15 @@
 \renewcommand*\aa@pageof{, page \thepage{} of \pageref*{LastPage}}
 \makeatother
 
+%.............................
+% tex shortcuts
+%.............................
+
+
+% C++
+% \newcommand{\CC}{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
+\newcommand{\CC}{C++}
+
 
 \renewcommand{\vec}{\mathbf}
 \newcommand{\D}{\mathrm{d}}
@@ -53,11 +82,10 @@
 
 
 % Density parameters:
-\newcommand{\OmgM}[1][0]{\Omega_{\mathrm{M}#1}}			% total matter 
-\newcommand{\OmgR}[1][0]{\Omega_{\mathrm{R}#1}}			% total radiation
+\newcommand{\OmgM}[1][0]{\Omega_{\mathrm{m}#1}}			% total matter 
+\newcommand{\OmgR}[1][0]{\Omega_{\mathrm{r}#1}}			% total radiation
 \newcommand{\OmgL}[1][0]{\Omega_{\text{\textLambda}#1}} % dark energy
-% \newcommand{\Omgk}[1][0]{\Omega_{\mathrm{k}#1}}	% curvature
-\newcommand{\Omgk}[1][0]{\Omega_{k #1}}					% curvature
+\newcommand{\OmgK}[1][0]{\Omega_{\mathrm{K}#1}}			% curvature
 \newcommand{\TCMB}[1][0]{T_{\mathrm{CMB}#1}}			% CMB temp
 
 % This project:
@@ -65,16 +93,6 @@
 
 % \definecolor{codegray}{gray}{0.9}
 % \newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
-
-
-% \newcommand{\unitC}{ $^\circ$C}
-% \newcommand{\degs}{$^\circ$}
-% \newcommand{\pwr}[1]{$^{#1}$} %power
-% \newcommand{\idx}[1]{$_{#1}$} %index
-% \newcommand{\stdf}[1]{$\cross 10^{#1}$} %standard form
-% \newcommand{\unit}[1]{\text{ {#1}}}
-% \newcommand{\about}{$\sim$}
-
 
 
 % \newcommand{\svec}{\boldsymbol}
@@ -102,26 +120,30 @@
 % \newcommand{\II}[1][]{\mathbb{1}_{#1}} %identity matrix
 
 
+%.............................
+% colours, fixme!
+%.............................
 
-\hypersetup{
-    colorlinks,
-    linkcolor={orange!50!black},
-    citecolor={blue!50!black},
-    urlcolor={magenta!70!black}}
+
+% \hypersetup{
+%     colorlinks,
+%     linkcolor={orange!50!black},
+%     citecolor={blue!50!black},
+%     urlcolor={magenta!70!black}}
     
-\lstset{ %
-	inputpath=,
-	backgroundcolor=\color{white!88!black},
-	basicstyle={\ttfamily\scriptsize},
-	commentstyle=\color{magenta},
-	language=Python,
-	morekeywords={True,False},
-	tabsize=4,
-	stringstyle=\color{green!55!black},
-	frame=single,
-	keywordstyle=\color{blue},
-	showstringspaces=false,
-	columns=fullflexible,
-	keepspaces=true}  
+% \lstset{ %
+% 	inputpath=,
+% 	backgroundcolor=\color{white!88!black},
+% 	basicstyle={\ttfamily\scriptsize},
+% 	commentstyle=\color{magenta},
+% 	language=Python,
+% 	morekeywords={True,False},
+% 	tabsize=4,
+% 	stringstyle=\color{green!55!black},
+% 	frame=single,
+% 	keywordstyle=\color{blue},
+% 	showstringspaces=false,
+% 	columns=fullflexible,
+% 	keepspaces=true}  
 
 

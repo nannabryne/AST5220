@@ -1,0 +1,71 @@
+
+
+% ----------------------------------------------------
+% labels: \label{app:hubble_derivatives:[type]:[name]}
+% ----------------------------------------------------
+
+
+
+Revisit the general form of the first Friedmann equation from \cref{mil1:theo:sec:approximations}, i.e.
+\begin{equation}\label{app:hubble_derivatives:eq:Hp_of_x}
+    \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}e^{-(1+3w_s)x}},
+\end{equation}
+where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$) and $w_s$ represents the species' equation of state parameter. As a shorthand notation, we introduce $\Xi_m = \Xi_m(x)$ given by
+\begin{equation}\label{app:hubble_derivatives:eq:Xi_of_x}
+    \Xi_{m}(x)\equiv \sum_{s} (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x} \,; \quad m\in\mathbb{N},
+\end{equation}\label{app:hubble_derivatives:dHp_dx}
+s.t. $\D^n \Xi_m/\D x^n = \Xi_{m+n}$. Now $\Hp = H_0\sqrt{\Xi_0}$ and its first derivative becomes
+\begin{equation}
+    \frac{\D \Hp}{\D x} = H_0 \frac{\Xi_1}{2\sqrt{\Xi_0}}.
+\end{equation}
+The second derivative is obtained through the quotient rule, i.e.
+\begin{equation}\label{app:hubble_derivatives:eq:ddHp_dxx}
+    \begin{split}
+    \frac{\D^2 \Hp}{\D x^2} &= \frac{H_0}{2} \frac{\Xi_2\sqrt{\Xi_0} - \Xi_1\frac{\Xi_1}{2\sqrt{\Xi_0}}}{\Xi_0} \\
+    % &= H_0\frac{1} {2\sqrt{\Xi_0}}\left(  \Xi_2- \frac{\Xi_1^2}{2\Xi_0} \right).
+    &= H_0\frac{\Xi_1} {2\sqrt{\Xi_0}}\left(  \frac{\Xi_2}{\Xi_1}- \frac{\Xi_1}{2\Xi_0} \right).
+    \end{split}
+\end{equation}
+
+
+Now that we have these expressions, let us look at some special cases. Assume that the universe only consists of the substance $s$. Then
+\begin{equation}
+    \Xi_m = (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x}.
+\end{equation}
+We obtain the following:
+\begin{subequations}
+    \begin{align}
+        \frac{1}{\Hp} \frac{\D \Hp}{\D x} &= \frac{\Xi_1}{2\Xi_0} &&= - \frac{1}{2}(1+3w_s) \\
+        \frac{1}{\Hp} \frac{\D^2 \Hp}{\D x^2} &= \frac{\Xi_1}{2\Xi_0} \left( \frac{\Xi_2}{\Xi_1}- \frac{\Xi_1}{2\Xi_0}  \right) &&=+ \frac{3}{4}(1+3w_s)^2
+    \end{align}
+\end{subequations}
+As for the conformal time, we get an expression that is ill-defined for some cases:
+\begin{equation}
+    \begin{split}
+        \frac{\eta \Hp}{c} &= \Hp \int_{-\infty}^{x} \D x'\, \frac{1}{\Hp} \\
+            &= e^{\frac{x}{2}(1+3w_s)} \int_{-\infty}^{x} \D x' \,e^{-\frac{x'}{2}(1+3w_s)} \\
+            &= \begin{cases}
+                \frac{2}{1+3w_s} \quad& w_s > \sfrac{1}{3} \\
+                \infty & w_s \leq -\sfrac{1}{3}
+            \end{cases}
+    \end{split}
+\end{equation}
+
+We have gathered a set of analytical predictions for different eras in the history of the universe. The detailed result is presented in \cref{app:hubble_derivatives:tab:eras_approx}. Note, however, that to compare this last expression to the numerical result does not actually make sense for later times as $\eta(x)$ depends on the historic composition as well.
+
+\begin{table}[ht]
+    \setlength\tabcolsep{0pt} % let LaTeX figure out amount of inter-column whitespace
+    \caption{Analytical predictions for single-substance universes.}
+    \label[tab]{app:hubble_derivatives:tab:eras_approx}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l *{5}{c}}
+        \toprule
+        % & \multicolumn{3}{c}{Time of event} \\
+        & \multicolumn{1}{c}{$w_s$}&\multicolumn{1}{c}{$\Hp/H_0$} & \multicolumn{1}{c}{$\frac{1}{\Hp}\frac{\D \Hp}{\D x}$} & \multicolumn{1}{c}{$\frac{1}{\Hp}\frac{\D^2 \Hp}{\D x^2}$} & \multicolumn{1}{c}{$\frac{\eta \Hp}{c}$} \\
+        \midrule
+        Radiation-dominated & $\sfrac{1}{3}$ &$\sqrt{\OmgR} e^{-x}$ & $-1$ & 1 & 1 \\
+        Matter-dominated    & $0$           &$\sqrt{\OmgM} e^{-\sfrac{1}{2}x}$ & $-\sfrac{1}{2}$ & $\sfrac{1}{4}$ & 2 \\
+        DE-dominated        & $-1$          &$\sqrt{\OmgL} e^{x}$ & $1 $& 1 & $\infty$ \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
+
