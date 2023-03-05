@@ -26,8 +26,8 @@ int main(int narg, char **argv){
     double h           = 0.67;
     double Omegab      = 0.05;
     double OmegaCDM    = 0.267;
-    double Omegak      = 0.0;
-    double Neff        = 0.0;
+    double OmegaK      = 0.0;
+    double Neff        = 3.046;
     double TCMB        = 2.7255;
 
     // Recombination parameters
@@ -38,23 +38,30 @@ int main(int narg, char **argv){
     double n_s         = 0.965;
     double kpivot_mpc  = 0.05;
 
-    // miletone_one();
 
-     // Set up and solve the background
+    //  ----------------------
+    //  Milestone I
+    //  ----------------------
 
-    BackgroundCosmology cosmo(h, Omegab, OmegaCDM, Omegak, Neff, TCMB);
-    cosmo.solve();
+    // Set up and solve the background
+
+    BackgroundCosmology cosmo(h, Omegab, OmegaCDM, OmegaK, Neff, TCMB);
     cosmo.info();
+    cosmo.solve(1e5);
+    
     
     // Output background evolution quantities
     cosmo.output("background_cosmology.txt");
 
 
-    Utils::StartTiming("MCMC");
-    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
-    std::cout << "\n\n\n\n";
-    Utils::EndTiming("MCMC");
-    std::cout << "\n\n";
+    // Utils::StartTiming("MCMC");
+    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    // std::cout << "\n\n";
+    // Utils::EndTiming("MCMC");
+    // std::cout << "\n\n";
+
+    // Minimum chi^2 found 29.2803 0.701725 0.25613 0.0765251
+    // Elapsed time for [MCMC]: 215.309 sec
 
 
     return 0;

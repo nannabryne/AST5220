@@ -1,26 +1,17 @@
 import os
 import sys
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-print("  ")
 import pathlib as pl
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 from cycler import cycler
 import seaborn as sns
+
 import pandas as pd
 import numpy as np
+import scipy as sp
 
-
-print('...')
-# print(fm.get_font_names())
-# import matplotlib
-# matplotlib.font_manager._load_fontmanager(try_read_cache=False)
-# import matplotlib.font_manager
-# import shutil
-# matplotlib.font_manager._rebuild()
-
-# shutil.rmtree()
 
 
 # CURRENT_PATH    = os.path.abspath(".") + "/"
@@ -52,11 +43,14 @@ def read_ASCII(filename, skiprows=0):
     
 
 
-def save(filename, pdf=True):
+def save(filename, temp=True):
     if not filename.endswith(".pdf"):
         filename += ".pdf"
     file = FIGS_PATH + filename
     plt.savefig(file)
+    if temp:
+        file = FIGS_PATH + filename.replace(".pdf", ".png")
+        plt.savefig(file)
 
 
 
@@ -65,26 +59,75 @@ def reset_matplotlib():
     plt.rcParams.update(plt.rcParamsDefault)
 
 
-
-custom_params = {
-    "figure.figsize":(12,6), "figure.autolayout":True,
-    "savefig.dpi":300, "savefig.bbox":"tight",
-    "lines.linewidth":2.6, 
-    "text.usetex":True, 
-    "mathtext.fontset":"cm", "font.family":"STIXGeneral",
-    "axes.labelsize":20, "axes.titlesize":22, "axes.titlelocation":"left", "axes.titleweight":"bold",
-    "xtick.labelsize":14, "ytick.labelsize":14,
-    "legend.fontsize":20, "legend.fancybox":True, "legend.frameon":True, "legend.shadow":True,
-    "font.size":16
-    }
+darkMode = False 
 
 
-for param in custom_params.keys():
-    mpl.rcParams[param] = custom_params[param]
+# COLOURS = ["#5d00ff", "#ef495e", "#ffa500", "#9989f2", "#c0c066", "#133bfc", "#cd7e26"]
+
+# subCOLOURS = ["", "", "#FBAB18"]
+
+# COLOURS = ['#d73027','#fc8d59','#fee090','#ffffbf','#e0f3f8','#91bfdb','#4575b4']
+COLOURS = ['#E24A33', '#348ABD', '#988ED5', '#777777', '#FBC15E', '#8EBA42', '#FFB5B8']
+subCOLOURS = ["#DA8F84", "#83B5D2", "#CDC8EC", "w", "#F3C77C", "#B9D092", "#F7DBDC"]
 
 
-sns.set_style("darkgrid", rc=custom_params)
-sns.set_palette("hls")
+# print(plt.style.library["fivethirtyeight"])
+
+
+def _set_params():
+    # face = plt.style.library["ggplot"]["axes.facecolor"]
+    face = "#D4CCCD"
+    custom_params = {
+        "figure.figsize":(10,5), "figure.autolayout":True,
+        "savefig.dpi":300, "savefig.bbox":"tight",
+        "lines.linewidth":2.8, 
+        "text.usetex":True, 
+        "mathtext.fontset":"cm", "font.family":"STIXGeneral",
+        "axes.labelsize":22, "axes.titlesize":22, "axes.titlelocation":"left", "axes.titleweight":"bold", 
+        "axes.prop_cycle":cycler('color', COLOURS),
+        # "axes.facecolor":face,
+        "xtick.labelsize":16, "ytick.labelsize":16,
+        "legend.fontsize":20, "legend.fancybox":True, "legend.frameon":True, "legend.shadow":True, 
+        "font.size":18
+        }
+    
+    if darkMode:
+        custom_params["axes.facecolor"] = "#313332"
+        custom_params["grid.color"] = "#616667"#"#BFBFBF"
+        custom_params["legend.labelcolor"] = "w"
+
+    for param in custom_params.keys():
+        mpl.rcParams[param] = custom_params[param]
+
+    sns.set_style("darkgrid", rc=custom_params)
+    # sns.set_palette("hls")
+
+_set_params()
+
+
+
+
+def plot_colours():
+    
+    fig, ax = plt.subplots()
+    x = np.linspace(0, 5*np.pi, 100)
+    for i in range(len(COLOURS)):
+        c = COLOURS[i].strip("#")
+        ax.plot(x, np.sin(x+i*np.pi*0.3)*x-i*1.5, label=f"{i}: {c}")
+    ax.legend()
+    plt.show()
+
+# plot_colours()
+
+
+
+
+
+
+
+
+""" not ready to delete this """
+
 
 
 

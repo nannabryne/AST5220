@@ -43,6 +43,7 @@ extern struct ConstantsAndUnits {
   const double epsilon_0   = 13.605693122994 * eV;        // Ionization energy for the ground state of hydrogen
   const double xhi0        = 24.587387 * eV;              // Ionization energy for neutral Helium
   const double xhi1        = 4.0 * epsilon_0;             // Ionization energy for singly ionized Helium
+  const double s_per_Gyr   = 3600.*24*365 * 1e9;          // Seconds in a Gigayear
   
   // Min and max k-value
   const double k_min = 0.00005 / Mpc;
@@ -50,7 +51,7 @@ extern struct ConstantsAndUnits {
   
   // Min and max x-value
   const double x_start = -20.;
-  const double x_end   = 5.0;
+  const double x_end   = 5.;
 
 
   // Include polarization and/or neutrinos?

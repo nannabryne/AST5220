@@ -5,25 +5,6 @@ const = ConstantsAndUnits()
 
 
 
-# var_labels = {
-#     "x":            r"$x$",
-#     "eta":          r"$\eta$",
-#     "t":            r"$t$",
-#     "Hp":           r"$\mathcal{H}$", 
-#     "dHpdx":        r"$\mathcal{H}'$",
-#     "ddHpdxx":      r"$\mathcal{H}''$",
-#     "OmegaM":       r"$\Omega_\mathrm{M}$",
-#     "OmegaLambda":  r"$\Omega_\Lambda$",
-#     "OmegaR":       r"$\Omega_\mathrm{R}$"
-# }
-
-# SI_unit_labels = {
-#     "eta":  "m",
-#     "t":    r"s",
-#     "Hp":   r"$\mathrm{s}^{-1}$"
-# }
-# SI_unit_labels["dHdx"] = SI_unit_labels["Hp"]
-# SI_unit_labels["ddHdxx"] = SI_unit_labels["Hp"]
 
 SI2sensible = {
     "eta":  1/const.c,
@@ -39,17 +20,10 @@ sec2Gyr = 1/Gyr2sec
 Hubble_conv_fac = const.Mpc/(100*const.km/const.s)
 inv_Hubble_conv_fac = 1/Hubble_conv_fac
 
-# sensible_unit_labels = {
-#     "eta":  "s",
-#     "t":    "s",
-#     "Hp":   "100 km/s / Mpc",
-#     "dL":   "Gpc"
-# }
-
 
 class SimpleCosmo:
 
-    def __init__(self, filename, use_sensible_units=True):
+    def __init__(self, filename):
         data = read_ASCII(filename)
 
         self.x              = data[:,0]
@@ -79,12 +53,16 @@ class SimpleCosmo:
         
 
     def locate_milestones(self):
-        jump = 50   # avoid the inflation era
-        self.idx = {
-            "RM":   np.argmin(np.abs(self.OmegaM-self.OmegaR)[jump:])+jump,         # matter-radiation equality
-            "MDE":  np.argmin(np.abs(self.OmegaM-self.OmegaLambda)[jump:])+jump,    # matter-dark energy transition
-            "acc":  np.argmin(np.abs(self.dHpdx)[jump:])+jump,                      # universe starts accelerating
-            "0":    np.argmin(np.abs(self.x)[jump:])+jump                           # today
+
+        OmgM = np.where((self.OmegaM<0.98) & (self.OmegaM>0.02), self.OmegaM, 34)
+        OmgR = np.where((self.OmegaR<0.98) & (self.OmegaR>0.02), self.OmegaR, 12)
+        OmgL = np.where((self.OmegaLambda<0.98) & (self.OmegaLambda>0.02), self.OmegaLambda, 43)
+
+        self.idx =  {
+            "RM":   np.nanargmin(np.abs(OmgM-OmgR)),    # matter-radiation equality
+            "MDE":  np.nanargmin(np.abs(OmgL-OmgM)),    # matter-dark energy transition
+            "acc":  np.nanargmin(np.abs(self.dHpdx)),   # universe starts accelerating
+            "0":    np.nanargmin(np.abs(self.x))        # today
         }
     
     def compute_luminosity_distance(self):
@@ -110,10 +88,9 @@ class SimpleCosmo:
         self.plot.DensityParameters(self.OmegaM, self.OmegaLambda, self.OmegaR)
 
     def plot_misc_functions(self):
-        self.plot.MiscellaneousFunctions(self.eta_c, self.Hp, self.dHpdx, self.ddHpdxx)
-
-    def plot_Hubble(self):
-        self.plot.HubbleParameter(self.Hp*Hubble_conv_fac)
+        self.plot.HubbleDerivatives(self.Hp, self.dHpdx, self.ddHpdxx)
+        self.plot.ConformalTime_HubbleParametter(self.eta_c, self.Hp)
+        self.plot.HubbleParameter(self.Hp*Hubble_conv_fac, self.OmegaR[self.idx["0"]], self.OmegaM[self.idx["0"]], self.OmegaLambda[self.idx["0"]])
 
     def plot_time_measures(self):
         self.plot.TimeMeasures(self.t_Gyr, self.eta_c_Gyr)
@@ -130,7 +107,7 @@ class SupernovaFitting:
         self.dL_obs = obs_data[:,1]  
         self.err_obs = obs_data[:,2]
 
-        fit_data = read_ASCII(result_filename, 100)
+        fit_data = read_ASCII(result_filename, 200)
         self.chi2 = fit_data[:,0]
         self.H0 = fit_data[:,1]*const.H0_over_h
         self.OmegaM0 = fit_data[:,2]
@@ -151,9 +128,10 @@ class SupernovaFitting:
 
     def plot_Omega_phase_space(self):
         self.plot.OmegaM_OmegaLambda(self.OmegaM0, self.OmegaLambda0, self.chi2)
+        self.plot.OmegaK_PDF(self.Omegak0)
 
     def plot_Hubble_pdf(self):
-        self.plot.HubblePDF(self.H0*Hubble_conv_fac, self.chi2)
+        self.plot.HubblePDF(self.H0*Hubble_conv_fac)
 
 
 
@@ -161,17 +139,15 @@ class SupernovaFitting:
 
 
 test = SimpleCosmo("background_cosmology")
-test.plot.ShowMode("on")
-# test.make_table()
-test.plot_density_params()
-# test.plot_misc_functions()
-test.plot_Hubble()
-test.plot_time_measures()
 test2 = SupernovaFitting("supernovadata", "mcmc_fitting")
-test2.plot.ShowMode("on")
+test.plot.ShowMode("off")
+test2.plot.ShowMode("off")
+
+test.plot_density_params()
+test.plot_misc_functions()
+test.plot_time_measures()
+
 test.plot_lum_dist(test2)
-
-
 test2.plot_Omega_phase_space()
 test2.plot_Hubble_pdf()
 

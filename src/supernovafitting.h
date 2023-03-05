@@ -1,25 +1,12 @@
-//====================================================================================================
-//
-// Method to be used with code template to allow you to do MCMC and get constraints from supernova data
-// 
-// Things needed to be done to use this:
-// * Check that line 109-116 is how you set up your background class and do the solving
-// * Edit line 124 with the call to your luminosity function method (mine is called get_luminosity_distance_of_x). 
-//   As written here this assumes that the luminosity distance is returned in meters from this method
-// * Include this file in Main.cpp: #include "SupernovaFitting.h"
-// * Call the function below in main: mcmc_fit_to_supernova_data("supernovadata.txt", "results.txt");
-//
-// The input [supernovadata] is the path to the file supernovadata.txt. The output file with all the samples is [result_filename]
-// This runs for [maxsteps] steps before ending. You can reduce maxsteps or just kill the run if it takes too long
-//
+
 // How to analyze the resulting chains:
 // * Load the chains and skip the first few hundred samples (the burnin of the chains). E.g. loadtxt(file,skiprows=200) in python
 // * Find the minimum chi2 and the corresponding best-fit parameters (you can use np.argmin to get index of the minvalue in python)
-// * Select all samples of Omegam and OmegaLambda (computed from Omegam and Omegak) that satisfy chi2 < chi2_min + 3.53 
+// * Select all samples of Omegam and OmegaLambda (computed from Omegam and OmegaK) that satisfy chi2 < chi2_min + 3.53 
 //   (e.g. Omegam[chi2 < chi2min + 3.53] in python)
 // * Scatterplotting these gives you the 1sigma (68.4%) confidence region
 // * Find the standard deviation of the samples to get the 1sigma confidence region of the parameters (assuming the posterior is a gaussian)
-// * Make and plot a histogram of the samples for the different parameters (Omegam, Omegak, OmegaLambda, H0)
+// * Make and plot a histogram of the samples for the different parameters (Omegam, OmegaK, OmegaLambda, H0)
 // * You can also compute the mean and standard deviation of the chain values and use this to overplot a gaussian with the same mean and variance for comparison.
 //
 //====================================================================================================
@@ -41,9 +28,9 @@ INPUT_PATH and OUTPUT_PATH specified in "utils.h"
 
 
 /**
- * @brief Perform Monte Carlo Markov Chain via the Metropolis algorithm to fit the parameters h, Ω_m amd Ω_k
+ * @brief Perform Monte Carlo Markov Chain via the Metropolis algorithm to fit the parameters h, Ω_m amd Ω_K
  * @param supernovadata_filename name of file in input-directory containing observational data: {z, d_L[Gpc], err[Gpc]}
- * @param result_filename name of file in output-directory for which to store the result: {χ^2, h, Ω_m, Ω_k}
+ * @param result_filename name of file in output-directory for which to store the result: {χ^2, h, Ω_m, Ω_K}
 */
 void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string result_filename){
 
@@ -92,17 +79,14 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
 
   //  Define our priors (chi^2 -> Inf if outside these ranges)
 
-  const std::array<double, nparam> prior_high {1.5, 1.0, 1.0};  // max{ h,  Omegam,  Omegak}
-  const std::array<double, nparam> prior_low {0.5, 0.0, -1.0};  // min{ h,  Omegam,  Omegak}
+  const std::array<double, nparam> prior_high {1.5, 1.0, 1.0};  // max{h,  Omegam,  OmegaK}
+  const std::array<double, nparam> prior_low {0.5, 0.0, -1.0};  // min{h,  Omegam,  OmegaK}
   
   //  Set starting point for chain and step size
 
-  std::array<double, nparam> parameters{0.7, 0.25, 0.0};  // { h,  Omegam,  Omegak}
-  std::array<double, nparam> stepsize{0.007, 0.05, 0.05}; // {dh, dOmegam, dOmegak}
+  std::array<double, nparam> parameters{0.7, 0.25, 0.0};  // { h,  Omegam,  OmegaK}
+  std::array<double, nparam> stepsize{0.007, 0.05, 0.05}; // {dh, dOmegam, dOmegaK}
 
-  /* old params ...*/
-  // std::array<double, nparam> parameters{0.7, 0.3, -0.5};
-  // std::array<double, nparam> stepsize{0.005, 0.05, 0.05};
 
   for(int i = 0; i < nparam; i++){
     parameters[i] = prior_low[i] + (prior_high[i]-prior_low[i])*udist(gen);
@@ -111,9 +95,9 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   std::array<double, nparam> best_parameters = parameters;  // best-fit as we go along in the chain
   double chi2_min = std::numeric_limits<double>::max();     // chi^2 corresponding to the best-fit
   
-  /** FIXME
+  /** 
    * @brief The chi^2 function
-   * @param parameters 
+   * @param parameters the parameters we want to fit
   */
   auto comp_chi2 = [&](std::array<double, nparam> & parameters){
     // Priors: if outside range return huuuuge chi^2
@@ -132,9 +116,9 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
     double param_TCMB     = 2.7255;                       // temperature of the CMB
     double param_h        = parameters[0];                //
     double param_OmegaCDM = parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
-    double param_Omegak   = parameters[2];                //
+    double param_OmegaK   = parameters[2];                //
     
-    BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_Omegak, param_Neff, param_TCMB);
+    BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_OmegaK, param_Neff, param_TCMB);
     //  solve to get the distance function:
     cosmo.solve_conformal_time();
 
@@ -158,8 +142,8 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   int nsample = 0;
   double oldchi2 = std::numeric_limits<double>::max();
   std::ofstream out(OUTPUT_PATH + result_filename.c_str());
-  // out << "#          chi2            h           Omegam           Omegak               Acceptrate\n";
-  out << "#          chi2            h           Omegam           Omegak          \n";
+  // out << "#          chi2            h           Omegam           OmegaK               Acceptrate\n";
+  out << "#          chi2            h           Omegam           OmegaK          \n";
   
   while(nsample < maxsteps){
     steps++;
@@ -194,7 +178,7 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
       parameters = new_parameters;
 
       // write sample to file and screen:
-      std::cout << "#          chi2            h           Omegam           Omegak               Acceptrate\n";
+      std::cout << "#          chi2            h           Omegam           OmegaK               Acceptrate\n";
       std::cout << std::setw(15) << chi2 << " ";
       out       << std::setw(15) << chi2 << " ";
       for(int i = 0; i < nparam; i++){
