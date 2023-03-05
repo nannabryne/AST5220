@@ -4,17 +4,6 @@
 
 
 
-
-int milestone_one();
-int milestone_two();
-int milestone_three();
-int milestone_four();
-
-
-
-/* Goal main-funtion! */
-int mani(int narg, char **argv);
-
 /* Temporary main-function */
 int main(int narg, char **argv){
 
@@ -53,12 +42,13 @@ int main(int narg, char **argv){
     // Output background evolution quantities
     cosmo.output("background_cosmology.txt");
 
+    // MCMC analysis
 
-    // Utils::StartTiming("MCMC");
-    // mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
-    // std::cout << "\n\n";
-    // Utils::EndTiming("MCMC");
-    // std::cout << "\n\n";
+    Utils::StartTiming("MCMC");
+    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    std::cout << "\n\n";
+    Utils::EndTiming("MCMC");
+    std::cout << "\n\n";
 
     // Minimum chi^2 found 29.2803 0.701725 0.25613 0.0765251
     // Elapsed time for [MCMC]: 215.309 sec
@@ -68,25 +58,6 @@ int main(int narg, char **argv){
 }
 
 
-// int milestone_one(){
-//     //=========================================================================
-//     // Module I
-//     //=========================================================================
-
-//     // Set up and solve the background
-//     BackgroundCosmology cosmo(h, OmegaB, OmegaCDM, OmegaK, Neff, TCMB);
-//     cosmo.solve();
-//     cosmo.info();
-    
-//     // Output background evolution quantities
-//     cosmo.output("cosmology.txt");
-
-//     // Do the supernova fits. Uncomment when you are ready to run this
-//     // Make sure you read the comments on the top of src/SupernovaFitting.h
-//     // mcmc_fit_to_supernova_data("data/supernovadata.txt", "results_supernovafitting.txt");
-
-//     return 0;
-// }
 
 
 
@@ -94,46 +65,3 @@ int main(int narg, char **argv){
 
 
 
-
-
-
-
-
-
-
-
-
-int mani(int narg, char **argv){
-
-    std::string keyword;
-    int milestone; 
-
-    // //  Option to do milstone I, II, III and IV
-    // if(narg < 2){
-    //     milestone = 0;
-    // }
-    // else{
-    //     milestone = atoi(argv[1]);
-    // }
-
-    // if(milestone == 1){
-    //     milestone_one();
-    // }
-    // // else if(milestone == 2){
-
-    // // }
-    // // else if(milestone == 3){
-        
-    // // }
-    // // else if(milestone == 4){
-        
-    // // }
-    // else if(milestone == 0){
-    //     milestone_one();
-    //     //milestone_two();
-    //     //...
-    // }
-
-    return 0;
-
-}
