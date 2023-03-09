@@ -28,6 +28,7 @@
 \usepackage{bbold}
 \usepackage{relsize}
 \usepackage{txfonts}	% Important for the A&A style!
+\bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 
 
 % Clever referencing:
@@ -71,28 +72,47 @@
 %.............................
 
 
-% C++
-% \newcommand{\CC}{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
-\newcommand{\CC}{C++}
-
-
-\renewcommand{\vec}{\mathbf}
-\newcommand{\D}{\mathrm{d}}
+% MATH STUFF
+\newcommand{\diff}{\mathrm{d}}
 
 
 
-% Density parameters:
+
+\providecommand*{\eu}{\ensuremath{\mathrm{e}}}  % the number `e'
+\providecommand*{\im}{\ensuremath{\mathrm{i}}}  % the imaginary unit
+
+% single word sub/superscrips:
+\providecommand*{\ped}[1]{\ensuremath{_\mathrm{#1}}}    % pedex
+\providecommand*{\ap}[1]{\ensuremath{^\mathrm{#1}}}     % apex
+\providecommand*{\gped}[1]{\ensuremath{_\text{#1}}}     % greek pedex (fixme)
+
+
+
+% SPECIFIC FOR THIS PROJECT
+
+\newcommand{\Hp}{\mathcal{H}}   % conformal Hubble parameter
+
+
+
+% Density parameters (much used):
 \newcommand{\OmgM}[1][0]{\Omega_{\mathrm{m}#1}}			% total matter 
 \newcommand{\OmgR}[1][0]{\Omega_{\mathrm{r}#1}}			% total radiation
-\newcommand{\OmgL}[1][0]{\Omega_{\text{\textLambda}#1}} % dark energy
+\newcommand{\OmgL}[1][0]{\Omega_{\mathrm{\Lambda}#1}}   % dark energy/cosmological constant
 \newcommand{\OmgK}[1][0]{\Omega_{\mathrm{K}#1}}			% curvature
 \newcommand{\TCMB}[1][0]{T_{\mathrm{CMB}#1}}			% CMB temp
 
 % This project:
-\newcommand{\Hp}{\mathcal{H}}	
 
-% \definecolor{codegray}{gray}{0.9}
-% \newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+
+
+
+
+
+
+
+% ===
+% OLD:
+% ===
 
 
 % \newcommand{\svec}{\boldsymbol}
@@ -105,45 +125,38 @@
 % \newcommand{\Sun}{_\odot} %Sun mark
 % \newcommand{\Sk}{\mathcal{S}} %S-function
 
-% \newcommand{\hatx}{ \vec{\hat{e}_x} } %unit vec x
-% \newcommand{\haty}{ \vec{\hat{e}_y} } %unit vec y
-% \newcommand{\hatz}{ \vec{\hat{e}_z} } %unit vec z
-
-% \newcommand{\lap}{\nabla^2 } %Laplacian
-% \newcommand{\dal}{\Box } %d'Alembertian
-
-% \newcommand{\bnabla}{\boldsymbol{\nabla}}
 
 
-% \newcommand{\TT}{^\intercal} % transpose
-% \newcommand{\RR}[1][]{\mathbb{R}^{#1}} %real numbers
-% \newcommand{\II}[1][]{\mathbb{1}_{#1}} %identity matrix
+% differential operator
+
+% \providecommand{\newoperator}[3]{% 
+%     \newcommand*{#1}{\mathop{#2}#3}}
+% \providecommand{\renewoperator}[3]{% 
+%     \renewcommand*{#1}{\mathop{#2}#3}}
+
+% \makeatletter
+% \providecommand*{\diff}%
+%     {\@ifnextchar^{\DIfF}{\DIfF^{}}} 
+% \def\DIfF^#1{%
+%     \mathop{\mathrm{\mathstrut d}}% 
+%         \nolimits^{#1}\gobblespace}
+% \def\gobblespace{% 
+%         \futurelet\diffarg\opspace}
+% \def\opspace{%
+%         \let\DiffSpace\!%
+%         \ifx\diffarg(%
+%             \let\DiffSpace\relax
+%         \else
+%             \ifx\diffarg[%
+%                \let\DiffSpace\relax
+%             \else
+%                \ifx\diffarg\{%
+%                    \let\DiffSpace\relax
+%                \fi\fi\fi\DiffSpace}
 
 
-%.............................
-% colours, fixme!
-%.............................
-
-
-% \hypersetup{
-%     colorlinks,
-%     linkcolor={orange!50!black},
-%     citecolor={blue!50!black},
-%     urlcolor={magenta!70!black}}
-    
-% \lstset{ %
-% 	inputpath=,
-% 	backgroundcolor=\color{white!88!black},
-% 	basicstyle={\ttfamily\scriptsize},
-% 	commentstyle=\color{magenta},
-% 	language=Python,
-% 	morekeywords={True,False},
-% 	tabsize=4,
-% 	stringstyle=\color{green!55!black},
-% 	frame=single,
-% 	keywordstyle=\color{blue},
-% 	showstringspaces=false,
-% 	columns=fullflexible,
-% 	keepspaces=true}  
-
-
+% \providecommand*{\deriv}[3][]{% 
+%     \frac{\diff^{#1}#2}{\diff #3^{#1}}}
+% \providecommand*{\pderiv}[3][]{% 
+%     \frac{\partial^{#1}#2}%
+%         {\partial #3^{#1}}}

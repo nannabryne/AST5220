@@ -7,72 +7,72 @@
 The FRW line element in flat space is given by
 \begin{equation}\label{mil1:theo:eq:FRW}
     \begin{split}
-        \D s^2 &= -c^2\D t^2 + a^2(t) \delta_{ij} \D x^i \D x^j && |\, \D \eta \equiv c\D t\, a^{-1}(t) \\%\frac{\D t}{a(t)}  \\
-                &= a^2(t) \left( -\D \eta^2 + \delta_{ij} \D x^i \D x^j \right).
+        d s^2 &= -c^2\diff t^2 + a^2(t) \delta_{ij} \diff x^i \diff x^j && |\, \diff \eta \equiv c\diff t\, a^{-1}(t) \\%\frac{\diff t}{a(t)}  \\
+                &= a^2(t) \left( -\diff \eta^2 + \delta_{ij} \diff x^i \diff x^j \right).
     \end{split}
 \end{equation}
-Before we proceed, we substitute $a\to e^x$ (recall: $x=\ln{a}$). The cosmic time $t$ and Hubble parameter $H$ ($=\D x/\D t$) will be replaced by the conformal time $\eta$ ($\D \eta = ce^{-x}\D t$) and conformal Hubble parameter $\Hp\equiv aH$ ($=c\D x/\D \eta$). We write the Friedmann equations in terms of our preferred variables, which for the first one becomes
+Before we proceed, we substitute $a\to \eu^x$ (recall: $x=\ln{a}$). The cosmic time $t$ and Hubble parameter $H$ ($=\diff x/\diff t$) will be replaced by the conformal time $\eta$ ($\diff \eta = c\eu^{-x}\diff t$) and conformal Hubble parameter $\Hp\equiv aH$ ($=c\diff x/\diff \eta$). We write the Friedmann equations in terms of our preferred variables, which for the first one becomes
 \begin{equation}\label{mil1:theo:eq:Hp_of_x}
-    \Hp(x) = H_0 \sqrt{\OmgM e^{-x} + \OmgR e^{-2x}  + \OmgK + \OmgL e^{2x}},
+    \Hp(x) = H_0 \sqrt{\OmgM \eu^{-x} + \OmgR \eu^{-2x}  + \OmgK + \OmgL \eu^{2x}},
 \end{equation}
 the components of which are to be discussed shortly. The operator 
 \begin{equation}
-    \frac{\D}{\D x} = \frac{c}{\Hp} \frac{\D}{\D \eta} = \frac{1}{H} \frac{\D}{\D t}
+    \dv{}{x} = \frac{c}{\Hp} \dv{}{\eta} = \frac{1}{H} \dv{}{t}
 \end{equation}
 proves useful, giving both the ordinary differential equation (ODE) for $\eta(x)$ and $t(x)$,
 \begin{subequations}\label{mil1:theo:eq:odes_time}
     \begin{align}
-        \frac{\D \eta}{\D x} &= \frac{c}{\Hp(x)}\,; &&  \eta(x_\mathrm{init}) = \eta_\mathrm{init} ,\label{mi1:theo:eq:ode_eta_of_x}\\
-        \frac{\D t}{\D x} &= \frac{1}{H} = \frac{e^x}{\Hp(x)}\,; && t(x_\mathrm{init}) = t_\mathrm{init},\label{mi1:theo:eq:ode_t_of_x}
+        \dv{\eta}{x} &= \frac{c}{\Hp(x)}\,; &&  \eta(x\ped{init}) = \eta\ped{init} ,\label{mi1:theo:eq:ode_eta_of_x}\\
+        \dv{t}{x} &= \frac{1}{H} = \frac{\eu^x}{\Hp(x)}\,; && t(x\ped{init}) = t\ped{init},\label{mi1:theo:eq:ode_t_of_x}
     \end{align}
 \end{subequations}
-where, in theory, $x_\mathrm{init}\to -\infty$ and the initial conditions $t_\mathrm{init},\, \eta_\mathrm{init} \to 0$. However, we can solve \cref{mil1:theo:eq:odes_time} analytically in the very early universe and in \cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}).
+where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve \cref{mil1:theo:eq:odes_time} analytically in the very early universe and in \cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}).
 
-Finally, the cosmological redshift $z=e^{-x}-1$ will be used as an auxiliary time variable.
+Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary time variable.
 
 \subsubsection{Density parameters}\label[sec]{mil1:theo:sec:density_params}
-    We assume the constituents of the universe to be cold dark matter (CDM), baryons (b), photons (\textgamma), neutrinos (\textnu) and a cosmological constant (\textLambda). We may regard the curvature (K) as a constituent as well. The evolution of the density parameter $\Omega_{s}$ associated with cosmological component $s \in \left\{ \mathrm{CDM},\, \mathrm{b},\, \text{\textgamma},\, \text{\textnu},\, \text{\textLambda},\, \mathrm{K} \right\}$ can be described in terms of our preferred variables as
+    We assume the constituents of the universe to be cold dark matter (CDM (c)), baryons (b), photons (\textgamma), neutrinos (\textnu) and a cosmological constant (\textLambda). We may regard the curvature (K) as a constituent as well. The evolution of the density parameter $\Omega_{s}$ associated with cosmological component $s \in \left\{ \mathrm{c},\, \mathrm{b},\, \text{\textgamma},\, \text{\textnu},\, \text{\textLambda},\, \mathrm{K} \right\}$ can be described in terms of our preferred variables as
     \begin{equation}\label{mil1:theo:eq:evolution_density_param}
-        \Omega_s(x) = \frac{\Omega_{s0}}{e^{(1+3w_s)x} \Hp^2(x)/H_0^2}\,;\quad \Omega_{s0} \equiv \Omega_{s}(x=x_0),
+        \Omega_s(x) = \frac{\Omega_{s0}}{\eu^{(1+3w_s)x} \Hp^2(x)/H_0^2}\,;\quad \Omega_{s0} \equiv \Omega_{s}(x=x_0),
     \end{equation}
-    where $H_0$ is the Hubble constant, $x_0=\ln{a_0}=0$ means \textit{today} and the \textit{equation of state} parameter $w_s$ is a constant intrinsic to the species $s$. As a notational relief, we introduce the parameters associated with total matter (m) and relativistic particles (r) such that $w_\mathrm{m}=0$, $w_\mathrm{r}=\sfrac{1}{3}$, $w_\Lambda=-1$ and $w_\mathrm{K}=-\sfrac{1}{3}$, and
+    where $H_0$ is the Hubble constant, $x_0=\ln{a_0}=0$ means \textit{today} and the \textit{equation of state} parameter $w_s$ is a constant intrinsic to the species $s$. As a notational relief, we introduce the parameters associated with total matter (m) and relativistic particles (r) such that $w\ped{m}=0$, $w\ped{r}=\sfrac{1}{3}$, $w_\Lambda=-1$ and $w\ped{K}=-\sfrac{1}{3}$, and
     \begin{equation}\label{mil1:theo:eq:density_params_totals}
-        \OmgM[] = \Omega_{\mathrm{CDM}} + \Omega_{\mathrm{b}} \quad \mathrm{and} 
-            \quad \OmgR[]= \Omega_{\gamma } + \Omega_{\nu }.
+        \OmgM[] = \Omega_{\mathrm{c}} + \Omega_{\mathrm{b}} \quad \mathrm{and} 
+            \quad \OmgR[]= \Omega\gped{\textgamma} + \Omega\gped{\textnu}.
     \end{equation}
 
     \cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
     \begin{equation}
-        \Omega_{\gamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k_b \TCMB \right)^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
+        \Omega\gped{\textgamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k_b \TCMB \right)^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
     \end{equation}
     and followingly the neutrino density today 
     \begin{equation}
-        \Omega_{\nu 0} = N_\mathrm{eff} \cdot \frac{7}{8} \left(\frac{4}{11}\right)^{\sfrac{4}{3}} \Omega_{\gamma 0},
+        \Omega\gped{\textnu 0} = N\ped{eff} \cdot \frac{7}{8} \left(\frac{4}{11}\right)^{\sfrac{4}{3}} \Omega\gped{\textgamma 0},
     \end{equation}
-    $N_\mathrm{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal -- the ``radiation-matter equality'' -- as $\OmgM[](x\!=\!x_\mathrm{eq}) = \OmgR[](x\!=\!x_\mathrm{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. 
+    $N\ped{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal -- the ``radiation-matter equality'' -- as $\OmgM[](x\!=\!x\ped{eq}) = \OmgR[](x\!=\!x\ped{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. 
 
 
 \subsubsection{Expansion and analytical approximations}\label[sec]{mil1:theo:sec:approximations}
-    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\D^2 a / \D t^2 = 0$. It is trivial to show that this condition is equivalent to requiring $\D \Hp/\D x|_{x=x_\mathrm{acc}} = 0$. In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x_\mathrm{acc} \sim x_{\Lambda}$).
+    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$).
 
     The first Friedmann equation can be written in the general form
     \begin{equation}\label{mil1:theo:eq:Hp_of_x_general_form}
-        \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}e^{-(1+3w_s)x}},
+        \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}\eu^{-(1+3w_s)x}},
     \end{equation}
-    where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$). In an era where e.g. radiation dominates heavily ($\OmgR[](x)\to 1$), the parameter resembles that of a universe with $\OmgR=1$ and so $\Hp(x)\simeq H_0\sqrt{\OmgR e^{-2x}}$. In more general terms, the conformal Hubble factor during an era dominated by a collection of particles with the same equation of state -- a species $s$ -- is approximated
+    where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$). In an era where e.g. radiation dominates heavily ($\OmgR[](x)\to 1$), the parameter resembles that of a universe with $\OmgR=1$ and so $\Hp(x)\simeq H_0\sqrt{\OmgR \eu^{-2x}}$. In more general terms, the conformal Hubble factor during an era dominated by a collection of particles with the same equation of state -- a species $s$ -- is approximated
     \begin{equation}\label{mil1:theo:eq:Hp_of_x_approximated}
-        \Hp(x) \simeq H_0 \sqrt{\Omega_{s0}} e^{-\frac{x}{2}(1+3w_s)}.
+        \Hp(x) \simeq H_0 \sqrt{\Omega_{s0}} \eu^{-\frac{x}{2}(1+3w_s)}.
     \end{equation}
     If for said species we have $\Omega_{s}(x)\simeq 1$, we get $\Omega_{s'}(x)\ll 1$ for the others, and we expect this to be very close to equality. 
 
     In the very early universe, only relativistic particles were present. Conveniently, this gives nice expressions for the initial conditions for \cref{mil1:theo:eq:odes_time}:
     \begin{equation}\label{mil1:theo:eq:time_initial_conditions}
         \begin{split}
-            \eta_\mathrm{init} &= \frac{c}{\Hp(x_\mathrm{init})} \\
-            t_\mathrm{init} &= \frac{e^{x_\mathrm{init}}}{2 \Hp(x_\mathrm{init})}
+            \eta\ped{init} &= \frac{c}{\Hp(x\ped{init})} \\
+            t\ped{init} &= \frac{\eu^{x\ped{init}}}{2 \Hp(x\ped{init})}
         \end{split}
     \end{equation}
-    The remaining task is then to choose a suitable $x_\mathrm{init} < x_\mathrm{eq}$. 
+    The remaining task is then to choose a suitable $x\ped{init} < x\ped{eq}$. 
 
 
 
@@ -80,11 +80,11 @@ Finally, the cosmological redshift $z=e^{-x}-1$ will be used as an auxiliary tim
 \subsubsection{Distance measures}\label[sec]{mil1:theo:sec:distances}
     Say we want to allow for the possibility of an open ($k=-1$) or closed ($k=+1$) universe, as opposed to the initial flatness ($k=0$) assumption. In spherical coordinates, the FRW line element (\cref{mil1:theo:eq:FRW}) is
     \begin{equation}\label{mil1:theo:eq:FRW_spherical}
-        \D s^2 = e^{2x} \left( -\D\eta^2  + \frac{\D r^2}{1-kr^2} + r^2\D\theta^2+ r^2 \sin^2\!{\theta} \,\D \phi^2 \right),
+        ds^2 = \eu^{2x} \left( -\diff\eta^2  + \frac{\diff r^2}{1-kr^2} + r^2\diff\theta^2+ r^2 \sin^2\!{\theta} \,\diff \phi^2 \right),
     \end{equation}
-    and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\D r<0;\, \D\theta^2 = \D\phi^2 =0$) photon ($\D s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$). \cref{mil1:theo:eq:FRW_spherical} gives
+    and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\diff r<0;\, \diff\theta^2 = \diff\phi^2 =0$) photon ($d s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$). \cref{mil1:theo:eq:FRW_spherical} gives
     \begin{equation}\label{mil1:theo:eq:integral_for_r}
-        \int_r^0 \frac{-\D r'}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\D \eta'
+        \int_r^0 \frac{-\diff r'}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\diff \eta'
     \end{equation}
     of which the right-hand side is the co-moving distance $\chi= \eta_0-\eta$. We evaluate the left integral in \cref{mil1:theo:eq:integral_for_r} and find
     \begin{equation}\label{mil1:theo:eq:r_of_chi}
@@ -95,12 +95,12 @@ Finally, the cosmological redshift $z=e^{-x}-1$ will be used as an auxiliary tim
         \end{cases}.
     \end{equation}
     
-    The angular diameter distance of an object of physical size $D$ and angular size $\theta$ is $d_A= D/\theta$. From \cref{mil1:theo:eq:FRW_spherical} we get $\D D = re^x \D \theta$ and so  
+    The angular diameter distance of an object of physical size $D$ and angular size $\theta$ is $d_A= D/\theta$. From \cref{mil1:theo:eq:FRW_spherical} we get $\diff D = r\eu^x \diff \theta$ and so  
     \begin{equation}\label{mil1:theo:eq:dA_of_x}
-            d_A(x) =r e^x.
+            d_A(x) =r \eu^x.
     \end{equation}
-    The luminosity distance is $d_L= d_Ae^{-2x}$, giving
+    The luminosity distance is $d_L= d_A\eu^{-2x}$, giving
     \begin{equation}\label{mil1:theo:eq:dL_of_x}
-        d_L(x) = re^{-x}.
+        d_L(x) = r\eu^{-x}.
     \end{equation}
 
