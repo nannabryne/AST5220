@@ -121,6 +121,42 @@ def plot_colours():
 
 
 
+class LaTeX:
+    def __init__(self):
+
+        self.Hp = r"$\mathcal{H}$"
+        self.x = r"$x$"
+        self.eta = r"$\eta$"
+        self.tau = r"$\tau$"
+
+        self.X_e = r"X_e"
+        self.Y_p = r"Y_p"
+
+        self.gtilde = r"\tilde{g}"
+
+        self.diff = r"$\mathrm{d}$"
+
+        self.ped = lambda s: fr"_\mathrm{s}"
+        self.ap = lambda s: fr"^\mathrm{s}"
+        self.unit = lambda u: fr"~\mathrm{u}"
+        self.inv = lambda A: fr"%{A}^{-1}"
+
+    def __call__(self, str):
+        str = str.replace("$", "")
+        return fr"${str}$"
+
+    def dv(self, f=None, x=None, n=1):
+        x = x or self.x
+        f = f or self.Hp
+        n = int(n)
+
+        d = self.diff
+        dx = self.diff + x
+        if n>1:
+            d += "^{%i}" %n 
+            dx += "^{%i}" %n 
+        dfdx = d + f + "/" + dx
+        return self(dfdx)
 
 
 

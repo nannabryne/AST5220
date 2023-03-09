@@ -22,6 +22,7 @@ subColours = {
 
 
 
+tex = LaTeX()
 
 def label_gauss(mu, sigma, splitline=False):
     s = r"$\mathcal{N}(\mu\!=\!%.2f,$"%mu
@@ -146,14 +147,13 @@ class MilestoneI:
     def DensityParameters(self, Omega_M, Omega_Lambda, Omega_R):
     
         fig, ax = plt.subplots(figsize=(10,6))
-        
-        ax.plot(self.x, Omega_M,      c=mainColours["M"],  label=r"$\Omega_\mathrm{m}$")
-        ax.plot(self.x, Omega_Lambda, c=mainColours["L"],  label=r"$\Omega_\Lambda$")
-        ax.plot(self.x, Omega_R,      c=mainColours["R"],  label=r"$\Omega_\mathrm{r}$")
+        ax.plot(self.x, Omega_M,      c=mainColours["M"],  label=tex("\Omega" + tex.ped("m")))
+        ax.plot(self.x, Omega_Lambda, c=mainColours["L"],  label=tex("\Omega_\Lambda"))
+        ax.plot(self.x, Omega_R,      c=mainColours["R"],  label=tex("\Omega" + tex.ped("r")))
 
 
         ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper right', ncols=3, borderaxespad=0.)
-        ax.set_xlabel(r"$x$")
+        ax.set_xlabel(tex.x)
         # ax.set_title("Density parameters", fontweight="bold", fontname="sans-serif")
         
         # self._mark_milestones(ax)
@@ -170,8 +170,9 @@ class MilestoneI:
     def HubbleDerivatives(self, Hp, dHp_dx, ddHp_dxx):
         fig, ax = plt.subplots()
 
-        ax.plot(self.x, dHp_dx/Hp,   c="forestgreen", label=r"$\mathcal{H}^{-1}\mathrm{d}\mathcal{H}/\mathrm{d}x$")
-        ax.plot(self.x, ddHp_dxx/Hp, c="dodgerblue", label=r"$\mathcal{H}^{-1}\mathrm{d}^2\mathcal{H}/\mathrm{d}x^2$") 
+        # ax.plot(self.x, dHp_dx/Hp,   c="forestgreen", label=r"$\mathcal{H}^{-1}\mathrm{d}\mathcal{H}/\mathrm{d}x$")
+        ax.plot(self.x, dHp_dx/Hp,   c="forestgreen", label=tex(tex.inv(tex.Hp)+ tex.dv()))
+        ax.plot(self.x, ddHp_dxx/Hp, c="dodgerblue", label=tex(tex.inv(tex.Hp)+ tex.dv(n=2))) 
        
         self._compare_with_analytical(ax, (-1, -.5, 1), ":", label=True)    #dHpdx
         self._compare_with_analytical(ax, (1, .25, 1), "--", label=True)    #ddHpdxx
@@ -182,7 +183,7 @@ class MilestoneI:
         ax.set_ylim(-1.2, 1.4)
         
         # ax.legend(ncols=2)
-        ax.set_xlabel(r"$x$")
+        ax.set_xlabel(tex.x)
 
         # self._mark_milestones(ax)
 
@@ -195,13 +196,13 @@ class MilestoneI:
     
     def ConformalTime_HubbleParametter(self, eta_c, Hp):
         fig, ax = plt.subplots()
-        ax.plot(self.x, eta_c*Hp, c="orangered",label=r"$\mathcal{H}\eta/c$")
+        ax.plot(self.x, eta_c*Hp, c="orangered",label=tex(tex.Hp+"\eta/c"))
         self._colour_eras(ax, vlines=False)
         self._compare_with_analytical(ax, (1, 2, 100), "-.", label=True) # dunno about the last one
         self._mark_acc(ax)
         ax.set_xlim(-16, 4)
         # ax.legend(ncols=2)    
-        ax.set_xlabel(r"$x$")
+        ax.set_xlabel(tex.x)
         ax.set_ylim(0.5, 4.5)
 
         if self.save:
@@ -217,7 +218,7 @@ class MilestoneI:
 
         fig, ax = plt.subplots()
 
-        ax.plot(self.x, Hp, c="royalblue",label=r"$\mathcal{H}$")
+        ax.plot(self.x, Hp, c="royalblue",label=tex.Hp)
         H0 = Hp[self.idx["0"]]
 
         
@@ -230,7 +231,7 @@ class MilestoneI:
         self._compare_with_analytical(ax, (H_AB, H_BC, H_CD), "-.", label=True)
         self._mark_acc(ax)
         ax.set_ylabel(r"100 km s$^{-1}$ Mpc$^{-1}$")
-        ax.set_xlabel(r"$x$")
+        ax.set_xlabel(tex.x)
         # ax.set_xlim(np.min(x), 0)
 
         ax.set_ylim(0.1, 1e5)
@@ -255,8 +256,9 @@ class MilestoneI:
         ax.plot(self.x, eta_c, c="orangered",label=r"$\eta/c$")
 
         ax.set_ylabel("Ga")
-        ax.set_xlabel(r"$x$")
-        self._mark_acc(ax)
+        ax.set_xlabel(tex.x)
+        # self._mark_acc(ax)
+        ax.set_yscale("log")
 
         # c = "slategrey"
         # ax.yaxis.set_tick_params("minor", reset=True, direction="out", length=17, width=.9, top=False, color=c, labelcolor=c)
@@ -266,7 +268,7 @@ class MilestoneI:
 
 
         ax.set_xlim(-12, 2)
-        ax.set_ylim(-2, 65)
+        ax.set_ylim(3e-8, 4e2)
 
         ax.legend()
 
@@ -274,7 +276,7 @@ class MilestoneI:
         # ax2.set_ylim(ax.get_ylim())
         # ax2.spines[["left", "bottom", "top"]].set_visible(False) 
         c = "slategrey"
-        ax.yaxis.set_tick_params("minor", reset=True, direction="out", length=17, width=.9, right=False, color=c, labelcolor=c)
+        ax.yaxis.set_tick_params("minor", reset=True, direction="out", length=17, width=.9, left=False, right=True, color=c, labelcolor=c,  labelleft=False, labelright=True)
         t_0 = t[self.idx["0"]]
         eta_0 = eta_c[self.idx["0"]]
         ax.set_yticks([t_0, eta_0], labels=[r"$t_0$", r"$\eta_0/c$"], minor=True)
@@ -294,7 +296,7 @@ class MilestoneI:
         ax.set_xscale("log")
         # ax.set_yscale("log")
     
-        ax.errorbar(z_obs, dL_obs/z_obs, err_obs/z_obs, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, label=r"$d_L^\mathrm{obs}/z$")
+        ax.errorbar(z_obs, dL_obs/z_obs, err_obs/z_obs, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, label=tex("d_L"+ tex.ap("obs") + "/z"))
         # ax.plot(z_obs, dL_obs, 'o')#,         c="orangered")
         
         xlim = ax.get_xlim()

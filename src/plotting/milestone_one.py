@@ -151,3 +151,4 @@ test.plot_lum_dist(test2)
 test2.plot_Omega_phase_space()
 test2.plot_Hubble_pdf()
 
+plt.show()
