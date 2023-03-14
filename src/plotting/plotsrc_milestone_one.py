@@ -383,7 +383,7 @@ class MilestoneI:
         mu, sigma = norm.fit(Omega_M0)
         OmM_pdf = norm.pdf(MM, mu, sigma)
         pdf, = ax_M.plot(MM, OmM_pdf)
-        ax_M.legend([pdf], [label_gauss(mu, sigma)], **leg_kw)
+        ax_M.legend([pdf], [tex.normal(mu, sigma)], **leg_kw)
         # ax_M.legend([pdf], [r"$\mathcal{N}(%.2f, %.2f)$" %(sigma, mu)], **leg_kw)
         
     
@@ -434,7 +434,7 @@ class MilestoneI:
 
         mu, sigma = norm.fit(Omega_K0)
         xx = np.linspace(*K_lims, 100)
-        ax.plot(xx, sp.stats.norm.pdf(xx, mu, sigma), label=label_gauss(mu, sigma))
+        ax.plot(xx, sp.stats.norm.pdf(xx, mu, sigma), label=tex.normal(mu, sigma))
         ax.axvline(0.0, color=COLOURS[4], lw=1.4, label="fiducial")
         # kw = dict(lw=8, ms=22)
         # org_p, = ax.plot(0, 0, "+", c=COLOURS[4], label="fiducial", **kw)
@@ -461,7 +461,7 @@ class MilestoneI:
         mu, sigma = norm.fit(H0)
         xx = np.linspace(*h_lims, 100)
         # pdf = sp.stats.norm.pdf(H0)
-        ax.plot(xx, sp.stats.norm.pdf(xx, mu, sigma), label=label_gauss(mu, sigma))
+        ax.plot(xx, sp.stats.norm.pdf(xx, mu, sigma), label=tex.normal(mu, sigma))
         ax.axvline(0.67, color=COLOURS[4], lw=1.4, label="fiducial")
         # kw = dict(lw=8, ms=22)
         # org_p, = ax.plot(0.67, 0, "+", c=COLOURS[4], label="fiducial", **kw)

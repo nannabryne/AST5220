@@ -136,14 +136,14 @@ class LaTeX:
 
         self.diff = r"$\mathrm{d}$"
 
-        self.ped = lambda s: fr"_\mathrm{s}"
-        self.ap = lambda s: fr"^\mathrm{s}"
-        self.unit = lambda u: fr"~\mathrm{u}"
-        self.inv = lambda A: fr"%{A}^{-1}"
+        self.ped = lambda s: r"_\mathrm{%s}"%s
+        self.ap = lambda s: r"^\mathrm{%s}"%s
+        self.unit = lambda u: r"~\mathrm{%s}"%u
+        self.inv = lambda A: r"%s^{-1}"%A
 
     def __call__(self, str):
         str = str.replace("$", "")
-        return fr"${str}$"
+        return r"$%s$"%str
 
     def dv(self, f=None, x=None, n=1):
         x = x or self.x
@@ -157,6 +157,14 @@ class LaTeX:
             dx += "^{%i}" %n 
         dfdx = d + f + "/" + dx
         return self(dfdx)
+    
+    def normal(self, mu=0, sigma=1, splitline=False):
+        s = "\mathcal{N}(\mu\!=\!%.2f," %mu
+        if splitline:
+            s += "\n"
+        s += "\,\sigma\!=\!%.2f)" %sigma
+        # s += r"$\,\sigma^2\!=\!%.2f)$"%sigma**2
+        return self(s)
 
 
 
