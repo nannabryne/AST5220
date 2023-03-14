@@ -2,3 +2,41 @@
 % labels: \label{mil2:theo:[type]:[name]}
 % ---------------------------------------
 % PRESENT/FUTURE TENSE
+
+Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. In cosmology, Thomson scattering ($\gamma + e^{-} \getsto \gamma+ e^{-}$) is predominantly responsible for the absorption of photons universe, and we find the optical depth through the ODE in $x$
+\begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
+    \dv{\tau}{x} = - \frac{n_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
+\end{equation}
+where $\sigma\ped{T}$ is the Thomson scattering cross-section and $n_e$ the electron density. A related quantity is the visibility function
+\begin{equation}\label{mil2:theo:eq:gt_of_x}
+    \gt(x)= - \eu^{-\tau(x)} \dv{\tau}{x},
+\end{equation}
+a proper probability distribution since we demand $\int_{-\infty}^{0}\diff x\, \gt(x) = 1$. We define the fractional electron density $X_e\equiv  n_e/(n_e +n\ped{H})$, and since
+
+\textcolor{blue}{........}
+
+\begin{equation}
+    X_e \equiv \frac{n_e}{n_e +n\ped{H}} = \frac{n_e}{n_e + n\ped{b}} \simeq  \frac{n_e}{n\ped{b}} 
+\end{equation}
+
+\begin{equation}
+    n\ped{\element{H}} = \left(1-Y_P\right) n\ped{b} \simeq \frac{\Omega\ped{b0}\rho\ped{cr0}}{m\ped{H}\eu^{3x}}
+\end{equation}
+
+\begin{equation}\label{mil2:theo:eq:Saha}
+    \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e T\ped{b}}{2\pi} \right)^{\sfrac{3}{2}} \eu^{-B_1/k\ped{B}T\ped{b}}
+\end{equation}
+
+% Ionisation rate
+\begin{equation}\label{mil2:theo:eq:Peebles}
+    \dv{X_e}{x} = \frac{C_r(T\ped{b})}{\Hp(x)\eu^{-x}} \left[ \beta(T\ped{b}) \left(1-X_e\right) - n\ped{\element{H}} \alpha^{(2)}(T\ped{b})X_e^2 \right]
+\end{equation}
+
+\begin{subequations}
+    \begin{align}
+        C_r(T\ped{b}) &= \frac{\Lambda_{2s\to 1s}+ \Lambda_{\alpha}}{\Lambda_{2s\to 1s} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \\
+        \beta (T\ped{b}) &= \left(\frac{m_e k\ped{B}T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-B_1/k_b T\ped{b}} \alpha^{(2)}(T\ped{b}) \\
+        \alpha^{(2)}(T\ped{b}) &= \frac{64 \pi}{\sqrt{27\pi}} \frac{e^4}{m_e^2c^3} \sqrt{\frac{B_1}{k_b T\ped{b}}} \phi_2(T\ped{b}) \\
+        \beta^{(2)}(T\ped{b}) &= \beta(T\ped{b})\eu^{3B_1 /4k_b T\ped{b}}
+    \end{align}
+\end{subequations}
