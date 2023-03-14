@@ -63,6 +63,7 @@ void RecombinationHistory::solve_number_density_electrons(){
       //=============================================================================
       //...
       //...
+      Xe, ne = electron_fraction_from_saha_equation(x_array[i]);
 
     } else {
 
@@ -119,6 +120,14 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_saha_equat
   //const double OmegaB      = cosmo->get_OmegaB();
   //...
   //...
+  const double Omegab0  = cosmo->get_Omegab();
+  const double Omegac0  = cosmo->get_OmegaCDM(); // fix??
+  const double Omeganu0  = cosmo->get_Omeganu();
+  const double Omegagamma0  = cosmo->get_Omegagamma();
+  const double H0 = cosmo->get_H0();
+  const double TCMB0 = cosmo->get_TCMB();
+  
+
 
   // Electron fraction and number density
   double Xe = 0.0;
@@ -129,6 +138,16 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_saha_equat
   //=============================================================================
   //...
   //...
+  
+  double rhocr0 = 3*H0*H0 / (8*M_PI*G);
+
+  double AA = m_H / (Omegab0*rhocr0) * std::pow( m_e*TCMB0 / (2*M_PI), 1.5);
+  double func = AA * std::exp(1.5*x - epsilon_0/(k_b * TCMB0)*a);
+  
+
+  Xe = func*(-1. + std::sqrt(1+4/func));
+  ne = Xe * Omegab0*rhocr0/m_H *std::exp(-3*x);
+  
 
   return std::pair<double,double>(Xe, ne);
 }
@@ -155,6 +174,7 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
 
   // Cosmological parameters
   // const double OmegaB      = cosmo->get_OmegaB();
+  
   // ...
   // ...
 
@@ -163,6 +183,11 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
   //=============================================================================
   //...
   //...
+  const double Tb  = cosmo->get_TCMB(x);
+  
+  double beta = pow((m_e*k_b*Tb / (2*M_PI)), 1.5) * exp(-epsilon_0/(k_b*Tb));
+
+  double Cr = (lambda_2s1s+lambda_2s1s)/(lambda_2s1s+lambda_2s1s + beta2);
   
   dXedx[0] = 0.0;
 
@@ -175,7 +200,7 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
 //====================================================
 
 void RecombinationHistory::solve_for_optical_depth_tau(){
-  Utils::StartTiming("opticaldepth");
+  Utils::StartTiming("tau");
 
   // Set up x-arrays to integrate over. We split into three regions as we need extra points in reionisation
   const int npts = 1000;
@@ -183,32 +208,23 @@ void RecombinationHistory::solve_for_optical_depth_tau(){
 
   // The ODE system dtau/dx, dtau_noreion/dx and dtau_baryon/dx
   ODEFunction dtaudx = [&](double x, const double *tau, double *dtaudx){
-
-    //=============================================================================
-    // TODO: Write the expression for dtaudx
-    //=============================================================================
-    //...
-    //...
-
     // Set the derivative for photon optical depth
-    dtaudx[0] = 0.0;
+    dtaudx[0] = -ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
 
     return GSL_SUCCESS;
   };
 
-  //=============================================================================
-  // TODO: Set up and solve the ODE and make tau splines
-  //=============================================================================
-  //...
-  //...
+  //  Set up + solve the ODE and spline
+  Vector tau_ini = 0;  // initial condition
+  ODESolver ode; 
+  ode.solve(dtaudx, x_array, tau_ini);
+  Vector sol = ode.get_data_by_component(0);
+  tau_of_x_spline.create(x_array, sol, "tau");
 
-  //=============================================================================
-  // TODO: Compute visibility functions and spline everything
-  //=============================================================================
-  //...
-  //...
+  //  Compute gt + derivatives and spline
+  gt_of_x_spline.create(x_array, dtaudx, "gt");
 
-  Utils::EndTiming("opticaldepth");
+  Utils::EndTiming("tau");
 }
 
 //====================================================
@@ -220,52 +236,23 @@ double RecombinationHistory::tau_of_x(double x) const{
 }
 
 double RecombinationHistory::dtaudx_of_x(double x) const{
-
-  //=============================================================================
-  // TODO: Implement. Either from the tau-spline tau_of_x_spline.deriv_(x) or 
-  // from a separate spline if you choose to do this
-  //=============================================================================
-  //...
-  //...
-
-  return 0.0;
+  return tau_of_x_spline.deriv_x(x);
 }
 
 double RecombinationHistory::ddtaudxx_of_x(double x) const{
-
-  //=============================================================================
-  // TODO: Implement
-  //=============================================================================
-  //...
-  //...
-
-  return 0.0;
+  return tau_of_x_spline.deriv_xx(x);
 }
 
-double RecombinationHistory::g_tilde_of_x(double x) const{
-  return g_tilde_of_x_spline(x);
+double RecombinationHistory::gt_of_x(double x) const{
+  return gt_of_x_spline(x);
 }
 
-double RecombinationHistory::dgdx_tilde_of_x(double x) const{
-
-  //=============================================================================
-  // TODO: Implement
-  //=============================================================================
-  //...
-  //...
-
-  return 0.0;
+double RecombinationHistory::dgtdx_of_x(double x) const{
+  return gt_of_x_spline.deriv_x(x);
 }
 
-double RecombinationHistory::ddgdxx_tilde_of_x(double x) const{
-
-  //=============================================================================
-  // TODO: Implement
-  //=============================================================================
-  //...
-  //...
-
-  return 0.0;
+double RecombinationHistory::ddgtdxx_of_x(double x) const{
+  return gt_of_x_spline.deriv_xx(x);
 }
 
 double RecombinationHistory::Xe_of_x(double x) const{
@@ -320,10 +307,10 @@ void RecombinationHistory::output(const std::string filename) const{
     fp << ne_of_x(x)           << " ";
     fp << tau_of_x(x)          << " ";
     fp << dtaudx_of_x(x)       << " ";
-    fp << ddtauddx_of_x(x)     << " ";
-    fp << g_tilde_of_x(x)      << " ";
-    fp << dgdx_tilde_of_x(x)   << " ";
-    fp << ddgddx_tilde_of_x(x) << " ";
+    fp << ddtaudxx_of_x(x)     << " ";
+    fp << gt_of_x(x)      << " ";
+    fp << dgtdx_of_x(x)   << " ";
+    fp << ddgtdxx_of_x(x) << " ";
     fp << "\n";
   };
   std::for_each(x_array.begin(), x_array.end(), print_data);

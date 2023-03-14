@@ -4,6 +4,15 @@
 
 
 
+void m2_MCMC(){
+    Utils::StartTiming("MCMC");
+    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    std::cout << "\n\n";
+    Utils::EndTiming("MCMC");
+    std::cout << "\n\n";
+}
+
+
 /* Temporary main-function */
 int main(int narg, char **argv){
 
@@ -20,7 +29,7 @@ int main(int narg, char **argv){
     double TCMB        = 2.7255;
 
     // Recombination parameters
-    double Yp          = 0.245;
+    double Yp          = 0.0;
 
     // Power-spectrum parameters
     double A_s         = 2.1e-9;
@@ -42,16 +51,24 @@ int main(int narg, char **argv){
     // Output background evolution quantities
     cosmo.output("background_cosmology.txt");
 
-    // MCMC analysis
+    if(narg>1){
+        // MCMC analysis
+        if(argv[1]=="MCMC")
+            m2_MCMC();
+    }
+    
+    //  ----------------------
+    //  Milestone II
+    //  ----------------------
 
-    Utils::StartTiming("MCMC");
-    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
-    std::cout << "\n\n";
-    Utils::EndTiming("MCMC");
-    std::cout << "\n\n";
 
-    // Minimum chi^2 found 29.2803 0.701725 0.25613 0.0765251
-    // Elapsed time for [MCMC]: 215.309 sec
+    // Solve the recombination history
+    RecombinationHistory rec(&cosmo, Yp);
+    rec.solve();
+    rec.info();
+
+    // Output recombination quantities
+    rec.output("recombination.txt");
 
 
     return 0;
