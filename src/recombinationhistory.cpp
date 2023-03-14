@@ -231,7 +231,7 @@ double RecombinationHistory::dtaudx_of_x(double x) const{
   return 0.0;
 }
 
-double RecombinationHistory::ddtauddx_of_x(double x) const{
+double RecombinationHistory::ddtaudxx_of_x(double x) const{
 
   //=============================================================================
   // TODO: Implement
@@ -257,7 +257,7 @@ double RecombinationHistory::dgdx_tilde_of_x(double x) const{
   return 0.0;
 }
 
-double RecombinationHistory::ddgddx_tilde_of_x(double x) const{
+double RecombinationHistory::ddgdxx_tilde_of_x(double x) const{
 
   //=============================================================================
   // TODO: Implement
