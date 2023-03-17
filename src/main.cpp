@@ -1,10 +1,11 @@
 #include "utils.h"
 #include "backgroundcosmology.h"
 #include "supernovafitting.h"
+#include "recombinationhistory.h"
 
 
 
-void m2_MCMC(){
+void m1_MCMC(){
     Utils::StartTiming("MCMC");
     mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
     std::cout << "\n\n";
@@ -45,7 +46,7 @@ int main(int narg, char **argv){
 
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, OmegaK, Neff, TCMB);
     cosmo.info();
-    cosmo.solve(1e5);
+    cosmo.solve(1e5, false);
     
     
     // Output background evolution quantities
@@ -54,7 +55,7 @@ int main(int narg, char **argv){
     if(narg>1){
         // MCMC analysis
         if(argv[1]=="MCMC")
-            m2_MCMC();
+            m1_MCMC();
     }
     
     //  ----------------------

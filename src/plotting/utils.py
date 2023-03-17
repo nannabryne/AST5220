@@ -13,24 +13,29 @@ import numpy as np
 import scipy as sp
 
 
-
-# CURRENT_PATH    = os.path.abspath(".") + "/"
-# INPUT_PATH      = CURRENT_PATH + "../../input/"
-# OUTPUT_PATH     = CURRENT_PATH + "../../output/"
-# DATA_PATH       = OUTPUT_PATH + "data/"
-# FIGS_PATH       = OUTPUT_PATH + "figures/"
-
-
 CURRENT_PATH    = os.path.abspath(".") + "/"
 DATA_PATH       = CURRENT_PATH + "../../data/"
 INPUT_PATH      = DATA_PATH + "input/"
 OUTPUT_PATH     = DATA_PATH + "output/"
-FIGS_PATH       = CURRENT_PATH + "../../figs/"
+# FIGS_PATH       = CURRENT_PATH + "../../figs/"
 
 # CURRENT_PATH    = pl.Path(__file__).parent
 # OUTPUT_PATH     = CURRENT_PATH / pl.Path("/output")
 # DATA_PATH       = OUTPUT_PATH / pl.Path("/data")
-# FIGS_PATH       = OUTPUT_PATH / pl.Path("/figures")
+# FIGS_PATH       = OUTPUT_PATH / pl.Path("/digs")
+
+
+def SET_SUBDIR(sub_directory=None):
+    if isinstance(sub_directory, str):
+        subdir = sub_directory.replace("/", "") + "/"
+    else: 
+        subdir = ""
+    global FIGS_PATH
+    FIGS_PATH = CURRENT_PATH + "../../figs/" + subdir
+
+SET_SUBDIR()
+
+
 
 def read_ASCII(filename, skiprows=0):
     if not filename.endswith(".txt"):
@@ -40,7 +45,6 @@ def read_ASCII(filename, skiprows=0):
     except FileNotFoundError:
         data = np.loadtxt(INPUT_PATH + filename, skiprows=skiprows)
     return np.asarray(data)
-    
 
 
 def save(filename, temp=True):
@@ -125,6 +129,7 @@ class LaTeX:
     def __init__(self):
 
         self.Hp = r"$\mathcal{H}$"
+        self.gt = r"$\tilde{g}$"
         self.x = r"$x$"
         self.eta = r"$\eta$"
         self.tau = r"$\tau$"
@@ -250,21 +255,21 @@ class ConstantsAndUnits:
         #Derived units
         self.km          = 1e3 * m;                     # Kilometers
         self.N           = kg*m/(s*s);                  # Newton
-        self.J           = self.N*m;                         # Joule
-        self.W           = self.J/s;                         # Watt
+        self.J           = self.N*m;                    # Joule
+        self.W           = self.J/s;                    # Watt
         self.Mpc         = 3.08567758e22 * m;           # Megaparsec
-        self.eV          = 1.60217653e-19 * self.J;          # Electronvolt
+        self.eV          = 1.60217653e-19 * self.J;     # Electronvolt
         
         #Physical constants    
         self.k_b         = 1.38064852e-23 * self.J/K;        # Bolzmanns constant
-        self.m_e         = 9.10938356e-31 * kg;         # Mass of electron
-        self.m_H         = 1.6735575e-27 * kg;          # Mass of hydrogen atom
-        self.c           = 2.99792458e8 * m/s;          # Speed of light
+        self.m_e         = 9.10938356e-31 * kg;              # Mass of electron
+        self.m_H         = 1.6735575e-27 * kg;               # Mass of hydrogen atom
+        self.c           = 2.99792458e8 * m/s;               # Speed of light
         self.G           = 6.67430e-11 * self.N*m*m/(kg*kg); # Gravitational constant
         self.hbar        = 1.054571817e-34 * self.J*s;       # Reduced Plancks constant
-        self.sigma_T     = 6.6524587158e-29 * m*m;      # Thomas scattering cross-section
-        self.lambda_2s1s = 8.227 / s;                   # Transition time between 2s and 1s in Hydrogen
-        self.H0_over_h   = 100 * self.km/s/self.Mpc;              # H0 / h
+        self.sigma_T     = 6.6524587158e-29 * m*m;           # Thomas scattering cross-section
+        self.Lambda_2s1s = 8.227 / s;                        # Transition time between 2s and 1s in Hydrogen
+        self.H0_over_h   = 100 * self.km/s/self.Mpc;         # H0 / h
         self.epsilon_0   = 13.605693122994 * self.eV;        # Ionization energy for the ground state of hydrogen
         self.xhi0        = 24.587387 * self.eV;              # Ionization energy for neutral Helium
         self.xhi1        = 4.0 * self.epsilon_0;             # Ionization energy for singly ionized Helium

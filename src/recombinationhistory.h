@@ -19,8 +19,8 @@ class RecombinationHistory{
     double Yp;
  
     // The start and end points for recombination arrays (can be modified)
-    const double x_start  = Constants.x_start;
-    const double x_end    = Constants.x_end;
+    const double x_start  = -14;
+    const double x_end    = 2;
     
     // Numbers of points of Xe,ne array (modify as you see fit)
     const int npts_rec_arrays = 4000;
@@ -50,8 +50,18 @@ class RecombinationHistory{
 
     // Splines contained in this class
     Spline log_Xe_of_x_spline{"Xe"};
+    Spline Xe_of_x_spline{"Xe"};
     Spline tau_of_x_spline{"tau"}; 
     Spline gt_of_x_spline{"g"};  
+
+    // "Helper" variables
+    double _8pi = 8*M_PI;             // 8π
+    double _8piG = _8pi*Constants.G;  // 8πG
+    double _hbhb = Constants.hbar*Constants.hbar;   // hbar^2
+    
+    double _H0H0;   // H0^2
+   
+    
 
   public:
 
@@ -80,6 +90,8 @@ class RecombinationHistory{
     double Xe_of_x(double x) const;
     double ne_of_x(double x) const;
     double get_Yp() const;
+
+    double nb_of_x(double x) const;
 };
 
 #endif

@@ -35,7 +35,7 @@ OPTIONS += -D_SPLINE_WARNINGS_ON				#	show warnings if atempting to evaluate a s
 # 	Object files and dependencies:
 #	-	-	-	-	-	-	-	-	-	-	-	-
 
-OBJS_ = main.o utils.o backgroundcosmology.o spline.o ODESolver.o
+OBJS_ = main.o utils.o backgroundcosmology.o recombinationhistory.o spline.o ODESolver.o
 OBJS = $(addprefix $(BUILD_DIR)/, $(OBJS_))
 
 main.o					: backgroundcosmology.h
@@ -43,6 +43,7 @@ spline.o                : spline.h
 ODESolver.o             : ODESolver.h
 utils.o                 : utils.h spline.h ODESolver.h
 backgroundcosmology.o   : backgroundcosmology.h utils.h spline.h ODESolver.h
+recombinationhistory.o  : recombinationhistory.h backgroundcosmology.h
 
 
 
@@ -78,4 +79,4 @@ clean:
 
 # Command to produce all plots (needs fix)
 plots: 	
-	cd plotting && python3 milestone_one.py
+	cd plotting && python3 milestone_two.py

@@ -24,17 +24,6 @@ subColours = {
 
 tex = LaTeX()
 
-def label_gauss(mu, sigma, splitline=False):
-    s = r"$\mathcal{N}(\mu\!=\!%.2f,$"%mu
-    if splitline:
-        s += "\n"
-    s += r"$\,\sigma\!=\!%.2f)$"%sigma
-    # s += r"$\,\sigma^2\!=\!%.2f)$"%sigma**2
-    return s
-
-
-
-
 class MilestoneI:
 
     def __init__(self):
@@ -393,7 +382,7 @@ class MilestoneI:
         pdf, = ax_L.plot(OmL_pdf, LL)
         # leg = ax_L.legend([pdf], [r"$\mathcal{N}(\sigma\!=\!%.2f, \mu\!=\!%.2f)$" %(sigma, mu)], fontsize=14, markerscale=0.7, markerfirst=False)
         # leg = ax_L.legend([pdf], [r"$\mathcal{N}(%.2f,$"%sigma+"\n"+ r"$\, %.2f)$" %mu], borderaxespad=.1, **leg_kw)
-        ax_L.legend([pdf], [label_gauss(mu, sigma, splitline=True)], borderaxespad=.05, **leg_kw)
+        ax_L.legend([pdf], [tex.normal(mu, sigma, splitline=True)], borderaxespad=.05, **leg_kw)
         # text = leg.get_texts()[0]
         # text.set_rotation(-90)
         # reg = leg.get_frame()
