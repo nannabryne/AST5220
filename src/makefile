@@ -1,9 +1,9 @@
-# 	Makefile for project in AST5220 
+#	Makefile for project in AST5220 
 #	-------------------------------
 
 
 SHELL := /bin/bash
-HOME := /uio/hume/student-u29/nannabr
+# HOME := /Users/nannabryne# /uio/hume/student-u29/nannabr
 
 BUILD_DIR := build
 # VPATH=src/
