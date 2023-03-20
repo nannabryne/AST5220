@@ -4,8 +4,6 @@ import plotsrc_milestone_one as PLOT
 const = ConstantsAndUnits()
 
 
-
-
 SI2sensible = {
     "eta":  1/const.c,
     "Hp":   const.Mpc/(100*const.km/const.s),
@@ -38,7 +36,8 @@ class SimpleCosmo:
 
         
         self.z = self.compute_redshift()
-        self.dL = self.compute_luminosity_distance()
+        # self.dL = self.compute_luminosity_distance()
+        self.dL = data[:,12]
 
         self.locate_milestones()
 
@@ -96,7 +95,7 @@ class SimpleCosmo:
         self.plot.TimeMeasures(self.t_Gyr, self.eta_c_Gyr)
 
     def plot_lum_dist(self, supernova_data):
-        self.plot.LuminosityDistance(supernova_data.z_obs, supernova_data.dL_obs, supernova_data.err_obs, self.z, self.dL_Gpc)
+        self.plot.LuminosityDistance(supernova_data.z_obs, supernova_data.dL_obs, supernova_data.err_obs, self.z, self.dL_Gpc, supernova_data.dL_Gpc)
 
 
 class SupernovaFitting:
@@ -117,6 +116,9 @@ class SupernovaFitting:
         self.OmegaLambda0 = self.compute_dark_energy_density()
 
         self.plot = PLOT.MilestoneI()
+
+        self.dL = read_ASCII("revised_background_cosmology")[:,12]
+        self.dL_Gpc = self.dL/const.Mpc*1e-3
 
     def compute_photon_density(self):
         Omegagamma = 2*np.pi**2/30 * (const.k_b*2.755)**4 * 8*np.pi*const.G/(3*self.H0*self.H0)

@@ -19,11 +19,6 @@ INPUT_PATH      = DATA_PATH + "input/"
 OUTPUT_PATH     = DATA_PATH + "output/"
 # FIGS_PATH       = CURRENT_PATH + "../../figs/"
 
-# CURRENT_PATH    = pl.Path(__file__).parent
-# OUTPUT_PATH     = CURRENT_PATH / pl.Path("/output")
-# DATA_PATH       = OUTPUT_PATH / pl.Path("/data")
-# FIGS_PATH       = OUTPUT_PATH / pl.Path("/digs")
-
 
 def SET_SUBDIR(sub_directory=None):
     if isinstance(sub_directory, str):
@@ -137,8 +132,6 @@ class LaTeX:
         self.X_e = r"X_e"
         self.Y_p = r"Y_p"
 
-        self.gtilde = r"\tilde{g}"
-
         self.diff = r"$\mathrm{d}$"
 
         self.ped = lambda s: r"_\mathrm{%s}"%s
@@ -164,12 +157,14 @@ class LaTeX:
         return self(dfdx)
     
     def normal(self, mu=0, sigma=1, splitline=False):
-        s = "\mathcal{N}(\mu\!=\!%.2f," %mu
+        s1 = "\mathcal{N}(\mu\!=\!%.2f," %mu
+        s2 = "\,\sigma\!=\!%.2f)" %sigma
         if splitline:
-            s += "\n"
-        s += "\,\sigma\!=\!%.2f)" %sigma
-        # s += r"$\,\sigma^2\!=\!%.2f)$"%sigma**2
-        return self(s)
+            return self(s1) + "\n" + self(s2)
+            # s += "\n"
+        else:
+        # s += "\,\sigma\!=\!%.2f)" %sigma
+            return self(s1+s2)
 
 
 

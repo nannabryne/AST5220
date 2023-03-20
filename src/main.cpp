@@ -7,10 +7,15 @@
 
 void m1_MCMC(){
     Utils::StartTiming("MCMC");
-    mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    BackgroundCosmology new_cosmo = mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
     std::cout << "\n\n";
     Utils::EndTiming("MCMC");
     std::cout << "\n\n";
+
+    new_cosmo.info();
+    new_cosmo.solve(1e5, false);
+
+    new_cosmo.output("revised_background_cosmology.txt");
 }
 
 
@@ -52,24 +57,26 @@ int main(int narg, char **argv){
     // Output background evolution quantities
     cosmo.output("background_cosmology.txt");
 
-    if(narg>1){
-        // MCMC analysis
-        if(argv[1]=="MCMC")
-            m1_MCMC();
-    }
+    // m1_MCMC();
+
+    // if(narg>1){
+    //     // MCMC analysis
+    //     if(argv[1]=="MCMC")
+    //         m1_MCMC();
+    // }
     
-    //  ----------------------
-    //  Milestone II
-    //  ----------------------
+    // //  ----------------------
+    // //  Milestone II
+    // //  ----------------------
 
 
-    // Solve the recombination history
-    RecombinationHistory rec(&cosmo, Yp);
-    rec.solve();
-    rec.info();
+    // // Solve the recombination history
+    // RecombinationHistory rec(&cosmo, Yp);
+    // rec.solve();
+    // rec.info();
 
-    // Output recombination quantities
-    rec.output("recombination.txt");
+    // // Output recombination quantities
+    // rec.output("recombination.txt");
 
 
     return 0;

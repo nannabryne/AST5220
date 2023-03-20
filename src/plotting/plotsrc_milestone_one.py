@@ -154,7 +154,6 @@ class MilestoneI:
             save(self.subdir + "density_params")
         if self.show:
             plt.show()
-
     
     def HubbleDerivatives(self, Hp, dHp_dx, ddHp_dxx):
         fig, ax = plt.subplots()
@@ -182,7 +181,6 @@ class MilestoneI:
         if self.show:
             plt.show()
 
-    
     def ConformalTime_HubbleParametter(self, eta_c, Hp):
         fig, ax = plt.subplots()
         ax.plot(self.x, eta_c*Hp, c="orangered",label=tex(tex.Hp+"\eta/c"))
@@ -198,10 +196,6 @@ class MilestoneI:
             save(self.subdir + "eta_Hubble")
         if self.show:
             plt.show()
-
-
-        
-
     
     def HubbleParameter(self, Hp, OmegaR0, OmegaM0, OmegaL0):
 
@@ -235,8 +229,6 @@ class MilestoneI:
             save(self.subdir + "hubble_param")
         if self.show:
             plt.show()
-
-
 
     def TimeMeasures(self, t, eta_c):
         fig, ax = plt.subplots()
@@ -277,30 +269,28 @@ class MilestoneI:
         if self.show:
             plt.show()
 
-
-    
-    def LuminosityDistance(self, z_obs, dL_obs, err_obs, z_comp, dL_comp):
+    def LuminosityDistance(self, z_obs, dL_obs, err_obs, z_comp, dL_comp_pri, dL_comp_post):
         fig, ax = plt.subplots(figsize=(10,4))
 
         ax.set_xscale("log")
         # ax.set_yscale("log")
     
         ax.errorbar(z_obs, dL_obs/z_obs, err_obs/z_obs, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, label=tex("d_L"+ tex.ap("obs") + "/z"))
-        # ax.plot(z_obs, dL_obs, 'o')#,         c="orangered")
         
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
-        # ax.plot(10000, 0)
-        # print("\n", dL_comp)
-        # print(z_comp)
-        # print(dL_comp/z_comp)
-        # reg = (z_comp>xlim[0]-0.1) & (z_comp<xlim[1]+1)
-        # dL_comp = dL_comp[reg]
-        # z_comp = z_comp[reg]
-        # y = np.where(~np.isnan(dL_comp/z_comp), dL_comp/z_comp, np.nan) # help
-        ax.plot(z_comp, dL_comp/z_comp, alpha=.7, label=r"$d_L/z$")
+
+        # avoid division by zero
+        idx0 = np.argmin(np.abs(z_comp))
+        z_comp[idx0] = 1e-3
+        dL_comp_pri[idx0] = 1
+        dL_comp_post[idx0] = 1
+    
+        ax.plot(z_comp, dL_comp_pri/z_comp, alpha=.7, c=COLOURS[4], label=r"$d_L/z$ (pre MCMC)")
+        ax.plot(z_comp, dL_comp_post/z_comp, alpha=.7, c=COLOURS[5], label=r"$d_L/z$ (post MCMC) ")
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
+        ax.errorbar(z_obs, dL_obs/z_obs, err_obs/z_obs, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, c=COLOURS[0]) # overplot ...
 
         ax.set_xlabel(r"$z$")
         ax.set_ylabel(r"Gpc")
@@ -380,29 +370,17 @@ class MilestoneI:
         mu, sigma = norm.fit(Omega_Lambda0)
         OmL_pdf = norm.pdf(LL, mu, sigma)
         pdf, = ax_L.plot(OmL_pdf, LL)
-        # leg = ax_L.legend([pdf], [r"$\mathcal{N}(\sigma\!=\!%.2f, \mu\!=\!%.2f)$" %(sigma, mu)], fontsize=14, markerscale=0.7, markerfirst=False)
-        # leg = ax_L.legend([pdf], [r"$\mathcal{N}(%.2f,$"%sigma+"\n"+ r"$\, %.2f)$" %mu], borderaxespad=.1, **leg_kw)
         ax_L.legend([pdf], [tex.normal(mu, sigma, splitline=True)], borderaxespad=.05, **leg_kw)
-        # text = leg.get_texts()[0]
-        # text.set_rotation(-90)
-        # reg = leg.get_frame()
-        # reg.set_angle(-90)
-        # ax_L.legend()
        
-       
-       # add our original point
+        # add our original point
         c = COLOURS[4]
         kw = dict(lw=5, ms=16)
         org_p, = ax.plot(org_x, org_y, "+", c=c, label="fiducial", **kw)
         # add new point
         new_p, = ax.plot(Omega_M0[np.nanargmin(chi2)], Omega_Lambda0[np.nanargmin(chi2)], "+", c=COLOURS[5], label="new best-fit", **kw)
 
-        # ax.annotate(r"$(\Omega_{\mathrm{m}0}, \Omega_{\Lambda 0}) = (%.3f, %.3f)$" %(org_x, org_y), (org_x, org_y), (org_x-0.1, org_y-0.35), arrowprops={"fc":c, "shrink":0.1}, color=c)
-        
         ax.legend(handles=[first, second, org_p, new_p], markerscale=1.7)
         # ax.legend(reverse=True, markerscale=2.)
-
-
 
         fig.tight_layout = True   
 
@@ -433,7 +411,6 @@ class MilestoneI:
             save(self.subdir + "curvature_pdf")
         if self.show:
             plt.show()
-
 
     def HubblePDF(self, H0):
         # thresh = chi2<np.min(chi2)+3.53

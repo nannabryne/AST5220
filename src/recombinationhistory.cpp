@@ -99,12 +99,12 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_saha_equat
   double Xe = 0.0;
   double ne = 0.0;
   
-  double f = 1/nb_of_x(x) * pow(m_e*Tb*k_b/(2*M_PI*_hbhb), 1.5) * exp(-epsilon_0/(k_b*Tb));
-  if(f>1e7){ // avoid overflow
+  double U = 1/nb_of_x(x) * pow(m_e*Tb*k_b/(2*M_PI*_hbhb), 1.5) * exp(-epsilon_0/(k_b*Tb));
+  if(U>1e7){ // avoid overflow
     Xe = 1.;
   }
   else{
-    Xe = 0.5*f * (sqrt(1+4./f)-1);
+    Xe = 0.5*U * (sqrt(1+4./U)-1);
   }
   ne = Xe * nb_of_x(x);
 
@@ -135,20 +135,20 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
   const double Tb      = cosmo->get_TCMB(x);
 
   //  define helper variables:
-  double eps_kT = epsilon_0/(k_b*Tb); // ϵ_0/(k_b T_b)
+  double Ups = epsilon_0/(k_b*Tb); // Υ = ϵ_0/(k_b T_b)
   double Hp_a = cosmo->H_of_x(x);     // Hp(x)/a   (= H)
   // double Hp_a = cosmo->Hp_of_x(x)/a;  // Hp(x)/a  
 
   //  compute ϕ_2:
-  double phi2 = 0.448 * log(eps_kT);
+  double phi2 = 0.448 * log(Ups);
   //  compute α^(2):
-  double alpha2 = 8*pow(3*M_PI, -0.5) * c*sigma_T * sqrt(eps_kT) * phi2;
+  double alpha2 = 8*pow(3*M_PI, -0.5) * c*sigma_T * sqrt(Ups) * phi2;
   //  compute β:
-  double beta = alpha2 * pow((m_e*k_b*Tb / (2*M_PI * _hbhb)), 1.5) * exp(-eps_kT);
+  double beta = alpha2 * pow((m_e*k_b*Tb / (2*M_PI * _hbhb)), 1.5) * exp(-Ups);
   //  compute β^(2):
   double beta2 = 0;
-  if(eps_kT < 200) // avoid nan's
-    beta2 = beta * exp(0.75*eps_kT);
+  if(Ups < 200) // avoid nan's
+    beta2 = beta * exp(0.75*Ups);
 
   //  find n_i's:
   double n_H = (1 - Yp) * nb_of_x(x);
@@ -189,7 +189,7 @@ void RecombinationHistory::solve_for_optical_depth_tau(){
   // The ODE system dtau/dx, dtau_noreion/dx and dtau_baryon/dx
   ODEFunction dtaudx = [&](double x, const double *tau, double *dtaudx){
     // Set the derivative for photon optical depth
-    dtaudx[0] = -Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
+    dtaudx[0] = dtaudx_of_x(x);//-Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
 
     return GSL_SUCCESS;
   };
@@ -213,7 +213,8 @@ void RecombinationHistory::solve_for_optical_depth_tau(){
   double xi;
   for(int i=0; i<npts; i++){
     xi = x_array[i];
-    gt_arr[i] = exp(-tau_of_x_spline(xi)) * Constants.c*ne_of_x(xi)*Constants.sigma_T*exp(xi)/cosmo->Hp_of_x(xi);
+    // gt_arr[i] = exp(-tau_of_x_spline(xi)) * Constants.c*ne_of_x(xi)*Constants.sigma_T*exp(xi)/cosmo->Hp_of_x(xi);
+    gt_arr[i] =  -exp(-tau_of_x_spline(xi))*dtaudx_of_x(xi);
     // gt_arr[i] = - exp(tau_of_x_splmine(xi)) * tau_of_x_spline.deriv_x(xi);
   }
   gt_of_x_spline.create(x_array, gt_arr, "gt");
@@ -230,7 +231,7 @@ double RecombinationHistory::tau_of_x(double x) const{
 }
 
 double RecombinationHistory::dtaudx_of_x(double x) const{
-  return tau_of_x_spline.deriv_x(x);
+  return -Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
 }
 
 double RecombinationHistory::ddtaudxx_of_x(double x) const{

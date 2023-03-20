@@ -1,17 +1,3 @@
-
-// How to analyze the resulting chains:
-// * Load the chains and skip the first few hundred samples (the burnin of the chains). E.g. loadtxt(file,skiprows=200) in python
-// * Find the minimum chi2 and the corresponding best-fit parameters (you can use np.argmin to get index of the minvalue in python)
-// * Select all samples of Omegam and OmegaLambda (computed from Omegam and OmegaK) that satisfy chi2 < chi2_min + 3.53 
-//   (e.g. Omegam[chi2 < chi2min + 3.53] in python)
-// * Scatterplotting these gives you the 1sigma (68.4%) confidence region
-// * Find the standard deviation of the samples to get the 1sigma confidence region of the parameters (assuming the posterior is a gaussian)
-// * Make and plot a histogram of the samples for the different parameters (Omegam, OmegaK, OmegaLambda, H0)
-// * You can also compute the mean and standard deviation of the chain values and use this to overplot a gaussian with the same mean and variance for comparison.
-//
-//====================================================================================================
-
-
 /*
 Based on template by Hans Winther (13/02/22).
   > Changed some variable names to be consistent with my own convention/notation.
@@ -31,8 +17,9 @@ INPUT_PATH and OUTPUT_PATH specified in "utils.h"
  * @brief Perform Monte Carlo Markov Chain via the Metropolis algorithm to fit the parameters h, Ω_m amd Ω_K
  * @param supernovadata_filename name of file in input-directory containing observational data: {z, d_L[Gpc], err[Gpc]}
  * @param result_filename name of file in output-directory for which to store the result: {χ^2, h, Ω_m, Ω_K}
+ * @return BackgroundCosmology object with new parameters
 */
-void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string result_filename){
+BackgroundCosmology mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string result_filename){
 
   const int nparam = 3;                     // #parameters we want to fit
   const int maxsteps = 10000;               // maximal #samples to generate
@@ -201,4 +188,14 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   for(int i=0; i<nparam; i++)
     std::cout << best_parameters[i] << " ";
   std::cout << "\n";
+
+  double param_Omegab   = 0.05;                         // unimportant as we just sample and are sensitive to Omegam
+  double param_Neff     = 0.0;                          // irrelevant at late times
+  double param_TCMB     = 2.7255;                       // temperature of the CMB
+  double param_h        = best_parameters[0];                //
+  double param_OmegaCDM = best_parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
+  double param_OmegaK   = best_parameters[2];                //
+  
+  BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_OmegaK, param_Neff, param_TCMB);
+  return cosmo;
 }

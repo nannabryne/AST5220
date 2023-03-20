@@ -9,11 +9,12 @@ rec = read_ASCII("recombination")
 
 x, X_e = rec[:,0], rec[:,1]
 
-# fig, ax = plt.subplots()
-# ax.plot(x, X_e)
-# ax.set_yscale("log")
+fig, ax = plt.subplots()
+ax.plot(x, X_e, label=tex("X_e"))
+ax.set_yscale("log")
+ax.legend()
 
-# save("electron_fraction")
+save("electron_fraction")
 
 
 
@@ -39,14 +40,11 @@ ddgtdxx = np.where(np.isnan(tau), np.nan, rec[:,8])
 
 
 fig, ax = plt.subplots()
-ax.plot(x, gt, label=tex.gt)
+ax.plot(x, gt/np.nanmax(gt), label=tex.gt)
+ax.plot(x, dgtdx/np.nanmax(dgtdx), label=tex.dv(tex.gt))
+ax.plot(x, ddgtdxx/np.nanmax(ddgtdxx), label=tex.dv(tex.gt, n=2))
 ax.legend()
-
-fig, ax = plt.subplots()
-ax.plot(x, dgtdx, label=tex.dv(tex.gt))
-ax.plot(x, ddgtdxx, label=tex.dv(tex.gt, n=2))
-ax.legend()
-
+save("visibility_function_misc")
 
 plt.show()
 

@@ -403,7 +403,7 @@ void BackgroundCosmology::info() const{
 
 
 void BackgroundCosmology::output(const std::string filename) const{
-  const int n_pts = 2001;
+  const int n_pts = 4001;
   double xa=x_start, xb=x_end;
   if(x_start<-20.){xa = -20.;}
   if(x_end>5.){xb = 5.;}
@@ -423,6 +423,7 @@ void BackgroundCosmology::output(const std::string filename) const{
     fp << get_Omegagamma(x)  << " ";  // 9
     fp << get_Omeganu(x)     << " ";  // 10
     fp << get_OmegaK(x)      << " ";  // 11
+    fp << dL_of_x(x)         << " ";  // 12
     fp <<"\n";
   };
   std::for_each(x_array.begin(), x_array.end(), print_data);

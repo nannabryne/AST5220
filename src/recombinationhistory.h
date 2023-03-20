@@ -15,8 +15,8 @@ class RecombinationHistory{
     // The cosmology we use
     BackgroundCosmology *cosmo = nullptr;
     
-    // Helium fraction
-    double Yp;
+    // Helium fraction 
+    double Yp;  // fractional abundance of helium (primordial value)
  
     // The start and end points for recombination arrays (can be modified)
     const double x_start  = -14;
@@ -92,6 +92,8 @@ class RecombinationHistory{
     double get_Yp() const;
 
     double nb_of_x(double x) const;
+    
+    void set_x_array(double x_start, double x_end, double npts);
 };
 
 #endif

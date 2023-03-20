@@ -1,6 +1,7 @@
 #	Makefile for project in AST5220 
 #	-------------------------------
 
+ARGS=?
 
 SHELL := /bin/bash
 # HOME := /Users/nannabryne# /uio/hume/student-u29/nannabr
@@ -60,7 +61,7 @@ all: $(BUILD_DIR)/$(TARGETS)
 
 # Command to run program
 run: 
-	./$(BUILD_DIR)/$(TARGETS)
+	./$(BUILD_DIR)/$(TARGETS) $(ARGS)
 
 # Command to clean, build and run in one go (temporary)
 autorun: clean all run
@@ -78,5 +79,10 @@ clean:
 	rm -rf $(BUILD_DIR)/$(TARGETS) $(BUILD_DIR)/*.o
 
 # Command to produce all plots (needs fix)
-plots: 	
+plots: plots2
+
+plots1:
+	cd plotting && python3 milestone_one.py
+
+plots2:
 	cd plotting && python3 milestone_two.py
