@@ -15,13 +15,28 @@ RecombinationHistory::RecombinationHistory(BackgroundCosmology *cosmo, double Yp
 // Do all the solving we need to do
 //====================================================
 
-void RecombinationHistory::solve(){
+void RecombinationHistory::solve(int nsteps_Xe, int nsteps_tau, bool print_milestones){
     
   // Compute and spline Xe, ne
-  solve_number_density_electrons();
-   
+  Utils::StartTiming("Xe");
+  solve_number_density_electrons(nsteps_Xe);
+  Utils::EndTiming("Xe");
+
   // Compute and spline tau, dtaudx, ddtauddx, g, dgdx, ddgddx, ...
-  solve_for_optical_depth_tau();
+  Utils::StartTiming("tau");
+  solve_for_optical_depth_tau(nsteps_tau);
+  Utils::EndTiming("tau");
+
+  //  compute sound horizon:
+  Utils::StartTiming("rs");
+  solve_for_sound_horizon(nsteps_tau);
+  Utils::EndTiming("rs");
+
+
+  if(print_milestones){
+    milestones(1e6);
+  }
+
 }
 
 
@@ -30,13 +45,14 @@ void RecombinationHistory::solve(){
 // Solve for X_e and n_e using Saha and Peebles and spline the result
 //====================================================
 
-void RecombinationHistory::solve_number_density_electrons(){
-  Utils::StartTiming("Xe");
+void RecombinationHistory::solve_number_density_electrons(int nsteps){
+
 
   //  set up x-, Xe- and ne-arrays:
-  Vector x_array = Utils::linspace(x_start, x_end, npts_rec_arrays);
-  Vector Xe_arr(npts_rec_arrays);
-  Vector ne_arr(npts_rec_arrays);
+  int npts = nsteps+1;
+  Vector x_array = Utils::linspace(x_start, x_end, npts);
+  Vector Xe_arr(npts);
+  Vector ne_arr(npts);
 
 
   // Calculate recombination history
@@ -45,7 +61,7 @@ void RecombinationHistory::solve_number_density_electrons(){
   // bool saha_regime = ( Xe_current > Xe_saha_limit);
   double Xe_current = 1.;
 
-  while( ( Xe_current > Xe_saha_limit) && i<npts_rec_arrays){
+  while( ( Xe_current > Xe_saha_limit) && i<npts){
     auto Xe_ne_data = electron_fraction_from_saha_equation(x_array[i]);
 
     Xe_arr[i] = Xe_ne_data.first;
@@ -70,15 +86,15 @@ void RecombinationHistory::solve_number_density_electrons(){
   Vector Xe_arr_peebles = peebles_Xe_ode.get_data_by_component(0);
   
   //  fill array:
-  for(int i=idx_pee; i<npts_rec_arrays; i++){
+  for(int i=idx_pee; i<npts; i++){
     Xe_arr[i] = Xe_arr_peebles[i-idx_pee];
     ne_arr[i] = Xe_arr[i]*nb_of_x(x_array[i]);
   }
 
+  Vector log_Xe_arr = log(Xe_arr);
   // spline result:
-  Xe_of_x_spline.create(x_array, Xe_arr, "Xe");
+  log_Xe_of_x_spline.create(x_array, log_Xe_arr, "Xe");
 
-  Utils::EndTiming("Xe");
 }
 
 //====================================================
@@ -169,28 +185,24 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
 }
 
 
-
-
-
 //====================================================
 // Solve for the optical depth tau, compute the 
 // visibility function and spline the result
 //====================================================
 
-void RecombinationHistory::solve_for_optical_depth_tau(){
-  Utils::StartTiming("tau");
+void RecombinationHistory::solve_for_optical_depth_tau(int nsteps){
+  // Utils::StartTiming("tau");
 
   // Set up x-arrays to integrate over. We split into three regions as we need extra points in reionisation 
 
-  int npts = 8001;
+  int npts = nsteps+1;
   Vector x_array = Utils::linspace(x_start, 0, npts);
   Vector x_array_backward = Utils::linspace(0, x_start, npts);
 
   // The ODE system dtau/dx, dtau_noreion/dx and dtau_baryon/dx
   ODEFunction dtaudx = [&](double x, const double *tau, double *dtaudx){
     // Set the derivative for photon optical depth
-    dtaudx[0] = dtaudx_of_x(x);//-Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
-
+    dtaudx[0] = dtaudx_of_x(x);
     return GSL_SUCCESS;
   };
 
@@ -213,14 +225,87 @@ void RecombinationHistory::solve_for_optical_depth_tau(){
   double xi;
   for(int i=0; i<npts; i++){
     xi = x_array[i];
-    // gt_arr[i] = exp(-tau_of_x_spline(xi)) * Constants.c*ne_of_x(xi)*Constants.sigma_T*exp(xi)/cosmo->Hp_of_x(xi);
     gt_arr[i] =  -exp(-tau_of_x_spline(xi))*dtaudx_of_x(xi);
-    // gt_arr[i] = - exp(tau_of_x_splmine(xi)) * tau_of_x_spline.deriv_x(xi);
   }
   gt_of_x_spline.create(x_array, gt_arr, "gt");
 
-  Utils::EndTiming("tau");
 }
+
+
+void RecombinationHistory::solve_for_sound_horizon(int nsteps){
+  // Utils::StartTiming("tau");
+
+  // Set up x-arrays to integrate over. We split into three regions as we need extra points in reionisation 
+
+  int npts = nsteps+1;
+  Vector x_array = Utils::linspace(x_start, x_end, npts);
+
+  ODEFunction drsdx = [&](double x, const double *rs, double *drsdx){
+    drsdx[0] = cs_of_x(x)/cosmo->Hp_of_x(x);
+    return GSL_SUCCESS;
+  };
+
+  //  Set up + solve the ODE and spline
+  Vector rs_0 = {cs_of_x(x_start)/cosmo->Hp_of_x(x_start)};  // initial condition
+  ODESolver ode; 
+  ode.solve(drsdx, x_array, rs_0);
+  Vector rs_arr = ode.get_data_by_component(0);
+
+  rs_of_x_spline.create(x_array, rs_arr, "rs");
+
+}
+
+
+void RecombinationHistory::milestones(int nsteps){
+
+  //  Locate milestones
+  Vector x_array = Utils::linspace(-10, -4, nsteps+1);
+  double gmax = 0., XXmin = 1.;
+  int i = 0;
+  double x_lss = 0., x_rec = 0.;  // last scattering surface, recombination
+  
+  
+  double g_curr, XX_curr, x_curr;
+  for(i=0; i<=nsteps+1; i++){
+    x_curr = x_array[i];
+    g_curr = gt_of_x(x_curr);
+    XX_curr = abs(Xe_of_x(x_curr) - 0.1);
+    if(g_curr>gmax){
+      gmax = g_curr;
+      x_lss = x_curr;
+    }
+    if(XX_curr<XXmin){
+      XXmin = XX_curr;
+      x_rec = x_curr;
+    }
+  }
+
+  double x_0 = 0.;
+
+
+  //  Print table
+
+  double conv = 1/Constants.s_per_Gyr*1e6;
+  printf("______________________________________________________________________\n");
+  printf("                            |      x           z             t       | \n");
+  printf("----------------------------------------------------------------------\n");
+  printf("recombination               |");
+  printf(" %11.7f %11.3f %11.3f ka |\n", x_rec, cosmo->z_of_x(x_rec), cosmo->t_of_x(x_rec)*conv);
+  printf("last scattering surface     |");
+  printf(" %11.7f %11.3f %11.3f ka |\n", x_lss, cosmo->z_of_x(x_lss), cosmo->t_of_x(x_lss)*conv);
+  printf("----------------------------------------------------------------------\n");
+  printf("f-o abundance of free electrons today: %11.7e \n", Xe_of_x(x_0));
+  printf("sound horizon at decoupling:           %11.3f Mpc\n", rs_of_x(x_lss)/Constants.Mpc);
+  printf("----------------------------------------------------------------------\n");
+
+  // printf("\nUsed %d+1 points in x-array from x=%.1f to x=%.1f.\n\n", nsteps, x_start, x_end);
+}
+
+
+
+
+
+
 
 //====================================================
 // Get methods
@@ -251,8 +336,8 @@ double RecombinationHistory::ddgtdxx_of_x(double x) const{
 }
 
 double RecombinationHistory::Xe_of_x(double x) const{
-  // return exp(log_Xe_of_x_spline(x));
-  return Xe_of_x_spline(x);
+  return exp(log_Xe_of_x_spline(x));
+  // return Xe_of_x_spline(x);
 }
 
 double RecombinationHistory::ne_of_x(double x) const{
@@ -264,6 +349,17 @@ double RecombinationHistory::nb_of_x(double x) const{
   return (3*_H0H0 * Omegab0) / (_8piG * Constants.m_H * exp(3.*x));
 }
 
+
+double RecombinationHistory::cs_of_x(double x) const{
+  double R = 0.75 * cosmo->get_Omegab()/cosmo->get_Omegagamma() * exp(x);
+  double U = 1./(3.* (1 + R));
+  return Constants.c * sqrt(U);
+}
+
+
+double RecombinationHistory::rs_of_x(double x) const{
+  return rs_of_x_spline(x);
+}
 
 
 

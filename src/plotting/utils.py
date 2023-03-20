@@ -139,6 +139,8 @@ class LaTeX:
         self.unit = lambda u: r"~\mathrm{%s}"%u
         self.inv = lambda A: r"%s^{-1}"%A
 
+        self.frac = lambda a, b: r"$\frac{%s}{%s}$"%(a, b)
+
     def __call__(self, str):
         str = str.replace("$", "")
         return r"$%s$"%str
@@ -167,6 +169,15 @@ class LaTeX:
             return self(s1+s2)
 
 
+
+
+pinpoint_kw = dict(color="slategrey", lw=.9, ls=":", alpha=.5)
+overplot_kw = dict(color="darkslategrey", ls="-.", alpha=.5, lw=2.2)
+
+
+mark_axis_kw = dict(reset=True, direction="out", length=17, width=.9, color="slategrey", labelcolor="slategrey")
+mark_xaxis_kw = dict(**mark_axis_kw, top=False)
+mark_yaxis_kw = dict(**mark_axis_kw, left=False, right=True, labelleft=False, labelright=True)
 
 
 

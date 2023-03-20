@@ -51,7 +51,7 @@ int main(int narg, char **argv){
 
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, OmegaK, Neff, TCMB);
     cosmo.info();
-    cosmo.solve(1e5, false);
+    cosmo.solve(1e5, true);
     
     
     // Output background evolution quantities
@@ -70,13 +70,13 @@ int main(int narg, char **argv){
     // //  ----------------------
 
 
-    // // Solve the recombination history
-    // RecombinationHistory rec(&cosmo, Yp);
-    // rec.solve();
-    // rec.info();
+    // Solve the recombination history
+    RecombinationHistory rec(&cosmo, Yp);
+    rec.solve(8e5, 8e5, true);
+    rec.info();
 
-    // // Output recombination quantities
-    // rec.output("recombination.txt");
+    // Output recombination quantities
+    rec.output("recombination.txt");
 
 
     return 0;

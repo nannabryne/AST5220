@@ -241,21 +241,12 @@ class MilestoneI:
         # self._mark_acc(ax)
         ax.set_yscale("log")
 
-        # c = "slategrey"
-        # ax.yaxis.set_tick_params("minor", reset=True, direction="out", length=17, width=.9, top=False, color=c, labelcolor=c)
-        # x_a = self.x[self.idx["acc"]]
-        # ax.set_xticks([x_a], labels=[r"$x_\mathrm{acc}$"], minor=True)
-        # ax.axvline(x_a, lw=.9, ls=":", color=c, alpha=.5)
-
-
         ax.set_xlim(-12, 2)
         ax.set_ylim(3e-8, 4e2)
 
         ax.legend()
 
         # ax2 = ax.twinx()
-        # ax2.set_ylim(ax.get_ylim())
-        # ax2.spines[["left", "bottom", "top"]].set_visible(False) 
         c = "slategrey"
         ax.yaxis.set_tick_params("minor", reset=True, direction="out", length=17, width=.9, left=False, right=True, color=c, labelcolor=c,  labelleft=False, labelright=True)
         t_0 = t[self.idx["0"]]
