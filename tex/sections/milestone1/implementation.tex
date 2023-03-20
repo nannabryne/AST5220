@@ -4,7 +4,7 @@
 % PAST TENSE
 
 
-The code we wrote included a class in \verb|C++| representing the background. In particular, this class requires current values of the density parameters $\Omega_{\mathrm{b}0}$, $\Omega_{\mathrm{CDM}0}$ and $\Omega_{\mathrm{K}0}$, the CMB temperature today ($\TCMB$) and the effective neutrino number ($N_\mathrm{eff}$). In addition, the class needs the ``little'' Hubble constant $h=H_0$~$[100\text{~km}\text{~s}^{-1}\text{~Mpc}^{-1}]$. The remaining density parameters are computed as elaborated in \cref{mil1:sec:theo}. Amongst the class methods are functions for computing $\Hp(x)$, $\dv*{\Hp(x)}{x}$, $\dv*[2]{\Hp(x)}{x}$ and $\Omega_{s0}(x)$ for some $x$, as well as code that solves the ODEs for $\eta(x)$ and $t(x)$. Another vital method is the one that yields the luminosity distance $d_L(x)$ for some $x$.
+The code we wrote included a class in \verb|C++| representing the background. In particular, this class requires current values of the density parameters $\Omega_{\mathrm{b}0}$, $\Omega_{\mathrm{c}0}$ and $\Omega_{\mathrm{K}0}$, the CMB temperature today ($\TCMB$) and the effective neutrino number ($N_\mathrm{eff}$). In addition, the class needs the ``little'' Hubble constant $h=H_0$~$[100\text{~km}\text{~s}^{-1}\text{~Mpc}^{-1}]$. The remaining density parameters are computed as elaborated in \cref{mil1:sec:theo}. Amongst the class methods are functions for computing $\Hp(x)$, $\dv*{\Hp(x)}{x}$, $\dv*[2]{\Hp(x)}{x}$ and $\Omega_{s0}(x)$ for some $x$, as well as code that solves the ODEs for $\eta(x)$ and $t(x)$. Another vital method is the one that yields the luminosity distance $d_L(x)$ for some $x$.
 
 % The specifics of our flat ($\OmgK=0$) model was stolen from \citep{Planckdata} with $h=0.67$, $\TCMB=2.7255$ K, $N_\mathrm{eff}=3.046$, $\Omega_{\mathrm{b}0} = 0.05$, and $\Omega_{\mathrm{CDM}0}= 0.267$. 
 
@@ -15,7 +15,7 @@ The specifics of our model was found from fits to \citep{Planckdata}:
         \text{CMB temperature:}&& \TCMB &=2.7255\text{~K} \\
         \text{effective Neutrino number:}&& N\ped{eff}&=3.046\\
         \text{baryon density:}&& \Omega\ped{b 0}&=0.05\\
-        \text{CDM density:}&& \Omega\ped{CDM 0}&=0.267\\
+        \text{CDM density:}&& \Omega\ped{c 0}&=0.267\\
         \text{curvature density:}&& \OmgK&=0
     \end{split}
 \end{equation}

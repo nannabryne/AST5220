@@ -49,11 +49,20 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \begin{equation}
         \Omega\gped{\textnu 0} = N\ped{eff} \cdot \frac{7}{8} \left(\frac{4}{11}\right)^{\sfrac{4}{3}} \Omega\gped{\textgamma 0},
     \end{equation}
-    $N\ped{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal -- the ``radiation-matter equality'' -- as $\OmgM[](x\!=\!x\ped{eq}) = \OmgR[](x\!=\!x\ped{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. 
+    $N\ped{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal -- the ``radiation-matter equality'' -- as $\OmgM[](x\!=\!x\ped{eq}) = \OmgR[](x\!=\!x\ped{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. We obtain the analytical expressions
+    \begin{equation}\label{mil1:theo:eq:x_eq_Lambda}
+        x\ped{eq} = \ln{\frac{\OmgR}{\OmgM}}  \quad\text{and}\quad 
+            x\ped{\Lambda} = \frac{1}{3}\ln{\frac{\OmgM}{\OmgL}}.
+    \end{equation}
 
 
 \subsubsection{Expansion and analytical approximations}\label[sec]{mil1:theo:sec:approximations}
-    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$).
+    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$). Using \cref{app:hubble_derivatives:eq:dHp_dx} and arguing that the radiation term vanishes, we get
+    %the reasonable assumption that $\OmgR \ll \OmgM \eu^{x\ped{acc}}$ and $\OmgR \ll \OmgL \eu^{4x\ped{acc}}$, we get
+    \begin{equation}
+        x\ped{acc} = \frac{1}{3}\ln{\frac{\OmgM}{2\OmgL}} = x\ped{\Lambda} - \frac{1}{3}\ln{2}
+    \end{equation}
+    for the acceleration onset.
 
     The first Friedmann equation can be written in the general form
     \begin{equation}\label{mil1:theo:eq:Hp_of_x_general_form}
