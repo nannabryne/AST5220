@@ -36,7 +36,7 @@
 \crefdefaultlabelformat{\textbf{#2}}
 \crefname{eq}{Eq.}{Eq.}		% equation
 % \crefname{eqs}{Eqs.}{Eqs.}	% set of equations
-\crefname{sec}{Sec.}{Sec.}	% section
+\crefname{sec}{Sect.}{Sect.}	% section
 \crefname{app}{App.}{App.}	% appendix
 \crefname{fig}{Fig.}{Fig.}	% figure
 \crefname{tab}{Tab.}{Tab.}	% table
@@ -86,6 +86,10 @@
 \providecommand*{\ap}[1]{\ensuremath{^\mathrm{#1}}}     % apex
 \providecommand*{\gped}[1]{\ensuremath{_\text{#1}}}     % greek pedex (fixme)
 
+% units:
+\providecommand*{\unit}[1]{~\ensuremath{\mathrm{#1}}}   % unit
+
+
 
 % reaction
 
@@ -97,6 +101,9 @@
 \newcommand{\Hp}{\mathcal{H}}   % conformal Hubble parameter
 \newcommand{\gt}{\tilde{g}}     % visibilty function
 
+% \newcommand{\epskT}{\frac{\epsilon_0}{k\ped{B} T\ped{b}}}    % eps0/(kb Tb)
+\newcommand{\epskT}{\varUpsilon }    % eps0/(kb Tb)
+
 
 
 % Density parameters (much used):
@@ -106,7 +113,9 @@
 \newcommand{\OmgK}[1][0]{\Omega_{\mathrm{K}#1}}			% curvature
 \newcommand{\TCMB}[1][0]{T_{\mathrm{CMB}#1}}			% CMB temp
 
-% This project:
+
+% For random expression (temporary variable):
+\providecommand*{\expr}{\ensuremath{\mathfrak{U}}}      % random expression (fraktur U)
 
 
 

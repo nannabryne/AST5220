@@ -49,7 +49,7 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`.
 - [ ] Fix labels in H, dHdx, ...-plots
 ## Coding
 - [ ] Structural changes
-- [ ] (M1) What happened to the luminosity distance????
+- [x] (M1) What happened to the luminosity distance????
 ## Report
 - [x] Write figure captions
 ## Readme

@@ -10,33 +10,33 @@ Revisit the general form of the first Friedmann equation from \cref{mil1:theo:se
 \begin{equation}\label{app:hubble_derivatives:eq:Hp_of_x}
     \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}e^{-(1+3w_s)x}},
 \end{equation}
-where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$) and $w_s$ represents the species' equation of state parameter. As a shorthand notation, we introduce $\Xi_m = \Xi_m(x)$ given by
+where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$) and $w_s$ represents the species' equation of state parameter. As a shorthand notation, we introduce $\varXi_m = \varXi_m(x)$ given by
 \begin{equation}\label{app:hubble_derivatives:eq:Xi_of_x}
-    \Xi_{m}(x)\equiv \sum_{s} (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x} \,; \quad m\in\mathbb{N},
+    \varXi_{m}(x)\equiv \sum_{s} (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x} \,; \quad m\in\mathbb{N},
 \end{equation}\label{app:hubble_derivatives:dHp_dx}
-s.t. $\dv*[n]{X_m}{x} = \Xi_{m+n}$. Now $\Hp = H_0\sqrt{\Xi_0}$ and its first derivative becomes
+s.t. $\dv*[n]{X_m}{x} = \varXi_{m+n}$. Now $\Hp = H_0\sqrt{\varXi_0}$ and its first derivative becomes
 \begin{equation}
-    \dv{\Hp}{x} = H_0 \frac{\Xi_1}{2\sqrt{\Xi_0}}.
+    \dv{\Hp}{x} = H_0 \frac{\varXi_1}{2\sqrt{\varXi_0}}.
 \end{equation}
 The second derivative is obtained through the quotient rule, i.e.
 \begin{equation}\label{app:hubble_derivatives:eq:ddHp_dxx}
     \begin{split}
-    \dv[2]{\Hp}{x} &= \frac{H_0}{2} \frac{\Xi_2\sqrt{\Xi_0} - \Xi_1\frac{\Xi_1}{2\sqrt{\Xi_0}}}{\Xi_0} \\
-    % &= H_0\frac{1} {2\sqrt{\Xi_0}}\left(  \Xi_2- \frac{\Xi_1^2}{2\Xi_0} \right).
-    &= H_0\frac{\Xi_1} {2\sqrt{\Xi_0}}\left(  \frac{\Xi_2}{\Xi_1}- \frac{\Xi_1}{2\Xi_0} \right).
+    \dv[2]{\Hp}{x} &= \frac{H_0}{2} \frac{\varXi_2\sqrt{\varXi_0} - \varXi_1\frac{\varXi_1}{2\sqrt{\varXi_0}}}{\varXi_0} \\
+    % &= H_0\frac{1} {2\sqrt{\varXi_0}}\left(  \varXi_2- \frac{\varXi_1^2}{2\varXi_0} \right).
+    &= H_0\frac{\varXi_1} {2\sqrt{\varXi_0}}\left(  \frac{\varXi_2}{\varXi_1}- \frac{\varXi_1}{2\varXi_0} \right).
     \end{split}
 \end{equation}
 
 
 Now that we have these expressions, let us look at some special cases. Assume that the universe only consists of the substance $s$. Then
 \begin{equation}
-    \Xi_m = (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x}.
+    \varXi_m = (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x}.
 \end{equation}
 We obtain the following:
 \begin{subequations}
     \begin{align}
-        \frac{1}{\Hp} \dv{\Hp}{x} &= \frac{\Xi_1}{2\Xi_0} &&= - \frac{1}{2}(1+3w_s) \\
-        \frac{1}{\Hp} \dv[2]{\Hp}{x} &= \frac{\Xi_1}{2\Xi_0} \left( \frac{\Xi_2}{\Xi_1}- \frac{\Xi_1}{2\Xi_0}  \right) &&=+ \frac{3}{4}(1+3w_s)^2
+        \frac{1}{\Hp} \dv{\Hp}{x} &= \frac{\varXi_1}{2\varXi_0} &&= - \frac{1}{2}(1+3w_s) \\
+        \frac{1}{\Hp} \dv[2]{\Hp}{x} &= \frac{\varXi_1}{2\varXi_0} \left( \frac{\varXi_2}{\varXi_1}- \frac{\varXi_1}{2\varXi_0}  \right) &&=+ \frac{3}{4}(1+3w_s)^2
     \end{align}
 \end{subequations}
 As for the conformal time, we get an expression that is ill-defined for some cases:

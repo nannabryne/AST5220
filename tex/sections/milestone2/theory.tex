@@ -3,44 +3,105 @@
 % ---------------------------------------
 % PRESENT/FUTURE TENSE
 
-Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. In cosmology, Thomson scattering ($\gamma + e^{-} \getsto \gamma+ e^{-}$) is predominantly responsible for the absorption of photons universe, and we find the optical depth through the ODE in $x$
-\begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
-    \dv{\tau}{x} = - \frac{n_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
-\end{equation}
-where $\sigma\ped{T}$ is the Thomson scattering cross-section and $n_e$ the electron density. A related quantity is the visibility function
-\begin{equation}\label{mil2:theo:eq:gt_of_x}
-    \gt(x)= - \eu^{-\tau(x)} \dv{\tau}{x},
-\end{equation}
-a proper probability distribution since we demand $\int_{-\infty}^{0}\diff x\, \gt(x) = 1$. 
+\begin{itemize}
+    \item Thermal history
+    \item Thomson scattering
+    \item Recombination: Saha and Peebles
+    \item Sound horison
+\end{itemize}
 
-\subsubsection{Saha approximation}\label{mil2:theo:sec:Saha}
-    Consider the interaction that keeps electrons ($e^{-}$) and protons ($p^{+}$) in equilibrium with photons ($\gamma$),
+Following the Big Bang Nucleosynthesis (BBN), ordinary matter in the universe 
+
+\colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+
+
+\subsubsection{Optical depth and visibility}\label{mil2:theo:sec:optical_depth}
+    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. In cosmology, Thomson scattering ($\gamma + e^{-} \rightleftharpoons \gamma+ e^{-}$) is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
+    \begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
+        \dv{\tau}{x} = - \frac{cn_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
+    \end{equation}
+    with $\tau(0)=0$, where $\sigma\ped{T}$ is the Thomson scattering cross-section and $n_e$ the electron density. A related quantity is the visibility function
+    \begin{equation}\label{mil2:theo:eq:gt_of_x}
+        \gt(x)= - \eu^{-\tau(x)} \dv{\tau}{x},
+    \end{equation}
+    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gt(x) = 1$. 
+
+\subsubsection{Hydrogen recombination}\label{mil2:theo:sec:recombination}
+    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$.
+
+    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+
+    Consider the interaction that keeps electrons ($e^{-}$) and protons ($p$) in equilibrium with photons ($\gamma$),
     \begin{equation}\label{mil2:theo:eq:relevant_interaction}
-        e^{-} + p^{+} \getsto \element{H}+\gamma.
+        e^{-} + p \rightleftharpoons \element{H}+\gamma.
     \end{equation}
-    
-    We define the fractional electron density $X_e\equiv n_e/n\ped{b}$ where $n\ped{b} \approx n_p + n\ped{H} = n_e +n\ped{H}$ is the total baryon number density. 
-
+    Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
+    \begin{align}\label{mil2:theo:eq:org_Saha}
+        \frac{n_e n_p}{n\ped{\element{H}}}  = \frac{n_e^{(0)} n_p^{(0)}}{n\ped{\element{H}}^{(0)}},
+    \end{align}
+    the \textit{Saha equation}. Likewise letting $m_s$ refer to the mass of $s$, we can take the number density of neutral hydrogen to be
     \begin{equation}
-        n\ped{\element{H}} = \left(1-Y_P\right) n\ped{b} \simeq \frac{\Omega\ped{b0}\rho\ped{cr0}}{m\ped{H}\eu^{3x}}
+        n\ped{H}= \left(1-Y_P\right) n\ped{b} \simeq \left(1-Y_P\right) \frac{\Omega\ped{b0}\rho\ped{cr0}}{m\ped{H}\eu^{3x}}\,;\quad \rho\ped{cr0} = \frac{3H_0^2}{8\pi G},
     \end{equation}
+    where $Y_P$ denotes the primordial helium mass fraction. We neglect helium s.t. $Y_P = 0$ and assume that all baryons are protons. Further, recognising the neutrality of the universe ensures $n_p=n_e$. Now, $n\ped{b}=n_p + n\ped{\element{H}}$ and
+    \begin{equation}
+        X_e = \frac{n_e}{n_e + n\ped{\element{H}}} = \frac{n_p}{n_p + n\ped{\element{H}}}.
+    \end{equation}
+    Revisiting the reaction in \cref{mil2:theo:eq:relevant_interaction}
 
+    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+    
+    Let $\varUpsilon\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying \cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more useful form of the Saha equation
     \begin{equation}\label{mil2:theo:eq:Saha}
-        \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e k_b T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-B_1/k_b T\ped{b}}
+        \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT}\,; \quad   0 < X_e \leq 1 \wedge X_e\sim 1.
     \end{equation}
-
-
-\subsubsection{Peebles equation}\label{mil2:theo:sec:Peebles}
-    % Ionisation rate
+    The constraints on $X_e$ are that it is a positive number that cannot exceed 1 and the observation that it has to be close to 1. The latter constraint is due to the equilibrium assumption from which the Saha equation is derived: as $X_e$ falls the reaction rate for \cref{mil2:theo:eq:relevant_interaction} falls and equilibrium is not guaranteed. To proceed, we need to solve the Boltzmann equation. More precisely, James Peebles needed to solve the Boltzmann equation, whereas we will study the product; a first-order ODE the \textit{Peebles equation}. Said equation reads
     \begin{equation}\label{mil2:theo:eq:Peebles}
-        \dv{X_e}{x} = \frac{C_r(T\ped{b})}{\Hp(x)\eu^{-x}} \left[ \beta(T\ped{b}) \left(1-X_e\right) - n\ped{\element{H}} \alpha^{(2)}(T\ped{b})X_e^2 \right]
+        \dv{X_e}{x} = \frac{C_r(T\ped{b})}{\Hp(x)\eu^{-x}} \left[ \beta(T\ped{b}) \left(1-X_e\right) - n\ped{\element{H}} \alpha^{(2)}(T\ped{b})X_e^2 \right],
     \end{equation}
+    % .... the change in $X_e$ with respect to $x$ goes as the reduction factor $C_r$, times the collisional ionisation rate from the ground state
+    where the necessary mathematical expressions are found in \cref{mil2:theo:eq:Peebles_add}.
 
-    \begin{subequations}
+    Let us break the equation down to physical quantities and processes. 
+    \begin{itemize}
+        \item The net effect of a ground-state recombination is zero.
+        \item \dots
+        \item There are to pathways from the first excited state $n=2$ to the ground state $n=1$: \begin{itemize}
+            \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon (rate given by $\Lambda_\alpha$ in \cref{mil2:theo:eq:Peebles_Lambda_alpha}) something about cosmological redshift
+            \item $2s\to 1s$: 2-photon decay (rate given by $\Lambda_{2s\to 1s}$ in \cref{mil2:theo:eq:Peebles_Lambda_2s1s})
+        \end{itemize} 
+        \item \dots
+    \end{itemize}
+    The reduction (or correction) factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rate () from the first excited level ($n=2$) (see \cref{mil2:theo:eq:Peebles_Cr}).
+    \citep{DodelsonBook,ChungPei1995,Peebles1968}
+
+    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+
+    \begin{subequations}\label{mil2:theo:eq:Peebles_add}
         \begin{align}
-            C_r(T\ped{b}) &= \frac{\Lambda_{2s\to 1s}+ \Lambda_{\alpha}}{\Lambda_{2s\to 1s} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \\
-            \beta (T\ped{b}) &= \left(\frac{m_e k\ped{B}T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-B_1/k_b T\ped{b}} \alpha^{(2)}(T\ped{b}) \\
-            \alpha^{(2)}(T\ped{b}) &= \frac{64 \pi}{\sqrt{27\pi}} \frac{e^4}{m_e^2c^3} \sqrt{\frac{B_1}{k_b T\ped{b}}} \phi_2(T\ped{b}) \\
-            \beta^{(2)}(T\ped{b}) &= \beta(T\ped{b})\eu^{3B_1 /4k_b T\ped{b}}
+            C_r(T\ped{b}) &= \frac{\Lambda_{2s\to 1s}+ \Lambda_{\alpha}}{\Lambda_{2s\to 1s} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \label{mil2:theo:eq:Peebles_Cr} \\
+            \Lambda_{2s\to 1s} &=8.227\unit{s}^{-1} \label{mil2:theo:eq:Peebles_Lambda_2s1s}  \\
+            \Lambda_\alpha &= \frac{\Hp\eu^{-x}}{(8\pi)^2 n_{1s}}\left( \frac{3\epsilon_0}{\hbar c}\right)^3 \label{mil2:theo:eq:Peebles_Lambda_alpha}  \\
+            n_{1s} &= (1-X_e)n\ped{H}\label{mil2:theo:eq:Peebles_n1s}\\
+            \beta^{(2)}(T\ped{b}) &= \beta(T\ped{b})\eu^{\sfrac{3}{4}\epskT} \label{mil2:theo:eq:Peebles_beta2} \\
+            \beta (T\ped{b}) &= \alpha^{(2)}(T\ped{b}) \left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT} \label{mil2:theo:eq:Peebles_beta}  \\
+            \alpha^{(2)}(T\ped{b}) &= \frac{8}{\sqrt{3\pi}} c\sigma\ped{T} \sqrt{\epskT} \phi_2(T\ped{b}) \label{mil2:theo:eq:Peebles_alpha2} \\
+            \phi_2(T\ped{b}) &= 0.448\ln{\epskT} \label{mil2:theo:eq:Peebles_phi2}
         \end{align}
     \end{subequations}
+
+
+\subsubsection{Sound horison}\label{mil2:theo:eq:sound_horison}
+    The distance that a sound wave could propagate in the primordial plasma before photons decoupled is called ``the sound horison at decoupling'', a quantity whose significance will become prominent in sections to come. We define the sound speed of a photon-baryon plasma as
+    \begin{equation}
+        c_s \equiv c\sqrt{\frac{1}{3(1+R(x))}}.
+    \end{equation}
+    where the baryon-to-photon energy density is defined as
+    \begin{equation}
+        R(x) \equiv \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
+    \end{equation}
+    The comoving distance traveled by a sound wave -- the sound horison -- at time $x$ as the solution $r_s(x)$ to the ODE
+    \begin{equation}
+        \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
+    \end{equation}
+    Evaluating $r_s(x=x\ped{dec})$ gives the sound horison at decoupling.
