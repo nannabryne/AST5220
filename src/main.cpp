@@ -72,11 +72,21 @@ int main(int narg, char **argv){
 
     // Solve the recombination history
     RecombinationHistory rec(&cosmo, Yp);
-    rec.solve(8e5, 8e5, true);
     rec.info();
+    rec.solve(8e5, 8e5, true);
 
     // Output recombination quantities
     rec.output("recombination.txt");
+    
+
+    // Compare with solution using only Saha
+    RecombinationHistory rec_noPee(&cosmo, Yp);
+    rec_noPee.set_Saha_limit(0.0);
+    rec_noPee.solve(8e5, 8e5, true);
+
+    // Output recombination quantities
+    rec_noPee.output("recombination_Saha_only.txt");
+    
 
 
     return 0;

@@ -11,6 +11,10 @@ RecombinationHistory::RecombinationHistory(BackgroundCosmology *cosmo, double Yp
   _H0H0 = cosmo->get_H0()*cosmo->get_H0();
 }
 
+void RecombinationHistory::set_Saha_limit(double Xe_Saha_lower_limit){
+  Xe_Saha_limit = Xe_Saha_lower_limit;
+}
+
 //====================================================
 // Do all the solving we need to do
 //====================================================
@@ -56,13 +60,13 @@ void RecombinationHistory::solve_number_density_electrons(int nsteps){
 
 
   // Calculate recombination history
-  // bool saha_regime = true;
+  // bool Saha_regime = true;
   int i = 0;
-  // bool saha_regime = ( Xe_current > Xe_saha_limit);
+  // bool Saha_regime = ( Xe_current > Xe_Saha_limit);
   double Xe_current = 1.;
 
-  while( ( Xe_current > Xe_saha_limit) && i<npts){
-    auto Xe_ne_data = electron_fraction_from_saha_equation(x_array[i]);
+  while( ( Xe_current > Xe_Saha_limit) && i<npts){
+    auto Xe_ne_data = electron_fraction_from_Saha_equation(x_array[i]);
 
     Xe_arr[i] = Xe_ne_data.first;
     ne_arr[i] = Xe_ne_data.second;
@@ -70,25 +74,30 @@ void RecombinationHistory::solve_number_density_electrons(int nsteps){
 
     i++;
   }
-
-  int idx_pee = i-2;
-
-  // The Peebles ODE equation
-  ODESolver peebles_Xe_ode;
-  ODEFunction dXedx = [&](double x, const double *Xe, double *dXedx){
-    return rhs_peebles_ode(x, Xe, dXedx);
-  };
-
-  //  set up and solve Peebles ODE:
-  Vector Xe_ini = {Xe_arr[idx_pee]};  // initial condition from Saha regime
-  Vector x_arr_rest = Vector(x_array.begin()+idx_pee, x_array.end());
-  peebles_Xe_ode.solve(dXedx, x_arr_rest, Xe_ini);
-  Vector Xe_arr_peebles = peebles_Xe_ode.get_data_by_component(0);
+  // std::cout << "here" << std::endl;
   
-  //  fill array:
-  for(int i=idx_pee; i<npts; i++){
-    Xe_arr[i] = Xe_arr_peebles[i-idx_pee];
-    ne_arr[i] = Xe_arr[i]*nb_of_x(x_array[i]);
+  if(i<npts-1){
+    // std::cout << "here" << std::endl;
+    int idx_Pee = i-2;
+
+    // The Peebles ODE equation
+    ODESolver Peebles_Xe_ode;
+    ODEFunction dXedx = [&](double x, const double *Xe, double *dXedx){
+      return rhs_Peebles_ode(x, Xe, dXedx);
+    };
+
+    //  set up and solve Peebles ODE:
+    Vector Xe_ini = {Xe_arr[idx_Pee]};  // initial condition from Saha regime
+    Vector x_arr_rest = Vector(x_array.begin()+idx_Pee, x_array.end());
+    Peebles_Xe_ode.solve(dXedx, x_arr_rest, Xe_ini);
+    Vector Xe_arr_Peebles = Peebles_Xe_ode.get_data_by_component(0);
+    
+    //  fill array:
+    for(int i=idx_Pee; i<npts; i++){
+      Xe_arr[i] = Xe_arr_Peebles[i-idx_Pee];
+      ne_arr[i] = Xe_arr[i]*nb_of_x(x_array[i]);
+    }
+
   }
 
   Vector log_Xe_arr = log(Xe_arr);
@@ -100,7 +109,7 @@ void RecombinationHistory::solve_number_density_electrons(int nsteps){
 //====================================================
 // Solve the Saha equation to get ne and Xe
 //====================================================
-std::pair<double,double> RecombinationHistory::electron_fraction_from_saha_equation(double x) const{
+std::pair<double,double> RecombinationHistory::electron_fraction_from_Saha_equation(double x) const{
  
   // Physical constants
   const double k_b         = Constants.k_b;
@@ -130,7 +139,7 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_saha_equat
 //====================================================
 // The right hand side of the dXedx Peebles ODE
 //====================================================
-int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dXedx){
+int RecombinationHistory::rhs_Peebles_ode(double x, const double *Xe, double *dXedx){
 
   // Current value of a and X_e
   const double X_e         = Xe[0];
@@ -260,20 +269,27 @@ void RecombinationHistory::milestones(int nsteps){
 
   //  Locate milestones
   Vector x_array = Utils::linspace(-10, -4, nsteps+1);
-  double gmax = 0., XXmin = 1.;
+  double gmax = 0., XXmin = 1., tauumin = 1.;
   int i = 0;
   double x_lss = 0., x_rec = 0.;  // last scattering surface, recombination
+  double x_lss_alt = 0.;  // alternative definition
   
   
-  double g_curr, XX_curr, x_curr;
-  for(i=0; i<=nsteps+1; i++){
+  double g_curr, XX_curr, tauu_curr, x_curr;
+  for(i=0; i<nsteps+1; i++){
     x_curr = x_array[i];
     g_curr = gt_of_x(x_curr);
+    tauu_curr = abs(tau_of_x(x_curr) - 1.);
     XX_curr = abs(Xe_of_x(x_curr) - 0.1);
     if(g_curr>gmax){
       gmax = g_curr;
       x_lss = x_curr;
     }
+    if(tauu_curr<tauumin){
+      tauumin = tauu_curr;
+      x_lss_alt = x_curr;
+    }
+
     if(XX_curr<XXmin){
       XXmin = XX_curr;
       x_rec = x_curr;
@@ -281,6 +297,8 @@ void RecombinationHistory::milestones(int nsteps){
   }
 
   double x_0 = 0.;
+
+  // x_lss = x_lss_alt;
 
 
   //  Print table
@@ -337,7 +355,6 @@ double RecombinationHistory::ddgtdxx_of_x(double x) const{
 
 double RecombinationHistory::Xe_of_x(double x) const{
   return exp(log_Xe_of_x_spline(x));
-  // return Xe_of_x_spline(x);
 }
 
 double RecombinationHistory::ne_of_x(double x) const{
@@ -375,7 +392,8 @@ double RecombinationHistory::get_Yp() const{
 void RecombinationHistory::info() const{
   std::cout << "\n";
   std::cout << "Info about recombination/reionization history class:\n";
-  std::cout << "Yp:          " << Yp          << "\n";
+  std::cout << "Yp:               " << Yp             << "\n";
+  std::cout << "Saha thresh: Xe > " << Xe_Saha_limit  << "\n";
   std::cout << std::endl;
 } 
 

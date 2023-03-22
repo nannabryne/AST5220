@@ -26,17 +26,17 @@ class RecombinationHistory{
     const int npts_rec_arrays = 4000;
   
     // Xe for when to switch between Saha and Peebles
-    const double Xe_saha_limit = 0.99;
+    double Xe_Saha_limit = 0.99;
 
     //===============================================================
     // [1] Computation of Xe (Saha and Peebles equation)
     //===============================================================
  
     // Compute Xe from the Saha equation
-    std::pair<double,double> electron_fraction_from_saha_equation(double x) const;
+    std::pair<double,double> electron_fraction_from_Saha_equation(double x) const;
     
     // Right hand side of the dXedx Peebles equation
-    int rhs_peebles_ode(double x, const double *y, double *dydx);
+    int rhs_Peebles_ode(double x, const double *y, double *dydx);
     
     // Solve for Xe 
     void solve_number_density_electrons(int nsteps=8000);
@@ -91,6 +91,8 @@ class RecombinationHistory{
 
     // Output some data to file
     void output(const std::string filename) const;
+
+    void set_Saha_limit(double Xe_Saha_lower_limit);
 
     // Get functions that we must implement
     double tau_of_x(double x) const;

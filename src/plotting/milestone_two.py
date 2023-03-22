@@ -7,19 +7,29 @@ tex = LaTeX()
 
 rec = read_ASCII("recombination")
 
-x_star = -6.985
+rec_Saha = read_ASCII("recombination_Saha_only")
 
-x, X_e = rec[:,0], rec[:,1]
+x_rec = -6.985
+
+x, Xe = rec[:,0], rec[:,1]
+x_Saha, Xe_Saha = rec_Saha[:,0], rec_Saha[:,1]
 
 fig, ax = plt.subplots()
-ax.plot(x, X_e, label=tex("X_e"))
+# ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+" ("+ tex("X_e"+tex.ap("Saha")+"=0.99") + ")")
+# ax.plot(x_Saha, Xe_Saha, ls="--", color=COLOURS[0], alpha=.7, label=tex("X_e")+" ("+ tex("X_e"+tex.ap("Saha")+"=0.00") + ")")
+ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+ " (Saha+Peebles)")
+ax.plot(x_Saha, Xe_Saha, ls="--", color=COLOURS[0], alpha=.7, label=tex("X_e")+ " (Saha)")
+
 ax.set_yscale("log")
 ax.legend()
 ax.set_xlabel(tex.x)
 
-ax.axvline(x_star, **pinpoint_kw)
+ylim = (1e-4,1.5)
+ax.set_ylim(ylim)
+
+ax.axvline(x_rec, **pinpoint_kw)
 ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_star], labels=[tex("x_*")], minor=True)
+ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
 
 ax.axhline(0.99, **pinpoint_kw)
 ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
@@ -53,9 +63,9 @@ ax.set_xlabel(tex.x)
 ax.set_yscale("log")
 ax.legend()
 
-ax.axvline(x_star, **pinpoint_kw)
+ax.axvline(x_rec, **pinpoint_kw)
 ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_star], labels=[tex("x_*")], minor=True)
+ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
 
 # ax.axhline(1.00, **pinpoint_kw)
 # ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
@@ -80,9 +90,9 @@ ax.plot(x, gt, c="royalblue", alpha=.7, label=tex.gt)
 ax.plot(x, dgtdx/10, c="forestgreen", alpha=.7, label=tex(tex.frac(1,10) + tex.dv(tex.gt)))
 ax.plot(x, ddgtdxx/300, c="dodgerblue", alpha=.7, label=tex(tex.frac(1,300)+tex.dv(tex.gt, n=2)))
 
-ax.axvline(x_star, **pinpoint_kw)
+ax.axvline(x_rec, **pinpoint_kw)
 ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_star], labels=[tex("x_*")], minor=True)
+ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
 
 ax.set_xlabel(tex.x)
 ax.set_xlim(-7.7, -5.7)
