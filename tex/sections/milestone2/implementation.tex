@@ -3,8 +3,9 @@
 % --------------------------------------
 % PAST TENSE
 
-We implemented a class in \verb|C++| that assumes a background, an object of the class from \cref{mil1:sec:imp}, and a primordial helium abundance $Y_P$. We wrote code that (1) calculated $X_e(x)$ (and $n_e(x)$) from the \textcolor{blue}{Saha and Peebles equations} and (2) computed $\tau(x)$ as well as $\gti(x)$, $\dv*[]{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ for a given array of $x$-values. %We chose the interval $x\in [-14, 2]$.
+We implemented a class in \verb|C++| that assumes a background, an object of the class from \cref{mil1:sec:imp}, and a primordial helium abundance $Y_P$. The code we wrote (1) calculated $X_e(x)$ (and $n_e(x)$) from the Saha and Peebles equations and (2) computed $\tau(x)$ as well as $\gti(x)$, $\dv*[]{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ for a given array of $x$-values. %We chose the interval $x\in [-14, 2]$.
 %subsections??
+We ran an additional simulation where we assumed equilibrium all the way, that is we solved for $X_e(x)$ using only the Saha equation. 
 
 \subsubsection{Electron fraction and number density}\label[sec]{mil2:imp:sec:Xe_ne}
     The computation of $X_e(x)$ was divided into two parts. We let $X_e(x)>0.99$ signify the Saha regime for which we use the Saha approximation in \cref{mil2:theo:eq:Saha}. Numerically speaking, the solution to this equation, 

@@ -3,7 +3,7 @@
 % --------------------------------------
 % PAST TENSE
 
-The free electron fraction as computed from the Saha and Peebles equations in their respective regimes is plotted in \cref{mil2:res:fig:electron_fraction}.
+The free electron fraction as computed from the Saha and Peebles equations in their respective regimes is plotted in \cref{mil2:res:fig:electron_fraction}. We added the result from using only the Saha equation.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{milestone2/electron_fraction.png} 
@@ -25,20 +25,21 @@ We present the optical depth and its derivatives in \cref{mil2:res:fig:optical_d
     \label[fig]{mil2:res:fig:visibility_function}
 \end{figure}
 
-Using our definitions of the time of last scattering surface and recombination from \cref{mil2:theo:sec:optical_depth} and \cref{mil2:theo:sec:recombination}, we measured the logarithmic scale factor, redshift and cosmic time at these events. We present the results in \cref{mil2:res:tab:time_of_events} in addition to today's value of the freece-out (FO) electron abundance and the sound horizon at decoupling. The number of signifant figures is exaggerated to point out the small differences.
-
+Using our definitions of the time of last scattering surface and recombination from \cref{mil2:theo:sec:optical_depth} and \cref{mil2:theo:sec:recombination}, we measured the logarithmic scale factor, redshift and cosmic time at these events. We present the results in \cref{mil2:res:tab:time_of_events} in addition to today's value of the freeze-out (FO) electron abundance and the sound horizon at decoupling. The number of significant figures is exaggerated to point out the small differences. The corresponding values resulting from the Saha equation is included in parentheses.
 \begin{table}[h]
     \setlength\tabcolsep{0pt}
-    \caption{The values of the logarithmic scale factor $x$, the redshift $z$ and the cosmic time $t$ corresponding to two events in the history of the universe.}
+    \caption{The values of the logarithmic scale factor $x$, the redshift $z$ and the cosmic time $t$ corresponding to two events in the history of the universe. Values in parentheses are those we get with only the Saha equation.}
     \label[tab]{mil2:res:tab:time_of_events}
-    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l *{1}{d{2.4}} *{1}{d{4.1}} *{1}{d{3.5}}}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l *{1}{d{3.5}} *{1}{d{5.2}} *{1}{d{4.6}}}
         \toprule
         & \multicolumn{1}{c}{$x$} & \multicolumn{1}{c}{$z$} & \multicolumn{1}{c}{$t$} \\
         \midrule
-        Recombination           & -6.9853 & 1079.7 & 377.95\unit{ka} \\
-        Last scattering surface & -6.9854 & 1079.8 & 378.04\unit{ka} \\
+        Recombination           & -6.9854 & 1079.8 & 377.95\unit{ka} \\
+                                & (-7.1404) & (1260.9) & (290.89\unit{ka}) \\
+        Last scattering surface & -6.9853 & 1079.7 & 378.04\unit{ka} \\
+                                & (-7.1548) & (1279.3) & (283.81\unit{ka}) \\
         \midrule
-        \multicolumn{2}{l}{FO free electron abundance today: }& \multicolumn{2}{c}{$X_{e0} = 2.0261\cross10^{-4}$}\\
+        \multicolumn{2}{l}{Relic FO free electron abundance: }& \multicolumn{2}{c}{$X_{e0} = 2.0261\cross10^{-4}$}\\
         \multicolumn{2}{l}{Sound horizon at decoupling: }& \multicolumn{2}{c}{$r_s(x_*) = 145.30\unit{Mpc}$}\\
         \bottomrule
     \end{tabular*}

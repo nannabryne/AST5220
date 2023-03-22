@@ -3,20 +3,35 @@
 % ---------------------------------------
 % PRESENT/FUTURE TENSE
 
-\begin{itemize}
-    \item Thermal history
-    \item Thomson scattering
-    \item Recombination: Saha and Peebles
-    \item Sound horizon
-\end{itemize}
+% \begin{itemize}
+%     \item Thermal history
+%     \item Thomson scattering
+%     \item Recombination: Saha and Peebles
+%     \item Sound horizon
+%     \item !!!!! Interpreatation of tau, g, rs
+% \end{itemize}
 
-Following the Big Bang Nucleosynthesis (BBN), ordinary matter in the universe 
+The process that keeping the photons ($\gamma$) coupled to electrons ($e^{-}$) in the early universe is called Thomson scattering and is the low-energy case of Compton scattering,
+\begin{equation}\label{mil2:theo:eq:Compton_Thomson}
+    \gamma + e^{-} \rightleftharpoons \gamma + e^{-},
+\end{equation}
+as well as the major source of opacity in the early universe. When the temperature decreased enough to let electrons combine with protons ($p$) to produce hydrogen (\element{H}), and the abundance of free electrons rapidly decreases. As direct recombinations to the ground state are highly unlikely, a hydrogen atom generally arises from an electron in a high energy state that immediately decays to its ground state, emitting a photon in the process;
+\begin{equation}\label{mil2:theo:eq:relevant_interaction}
+    e^{-} + p \rightleftharpoons \element{H}+\gamma,
+\end{equation}
+There are two main pathways from the first exited state ($n=2$) to the ground state ($n=1$):
+\begin{itemize}
+    \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon that is (almost exclusively) to be reabsorbed by another ground state hydrogen (almost exclusively)
+    \item $2s\to 1s$: through the very slow process of 2-photon decay
+\end{itemize}
+These basic principles are amongst those that Jim Peebles and collaborators \citep{Peebles1968} adopted in their model of non-equilibrium recombination history of hydrogen, described by the differential equation for the free electron abundance we call the \textit{Peebles equation} (\cref{mil2:theo:eq:Peebles}). There are numerical difficulties when solving this equation for very early times -- this is where we address the work of Meghnad Saha in 1920. The \textit{Saha equation} (\cref{mil2:theo:eq:org_Saha}) is applicable in systems of chemical equilibrium and relates the number densities of reactants to those of the products in a reaction (assuming the equilibrium density of each element is known). At early times, this is a viable assumption, and we can examine the abundance of free electrons in the universe at all times. \citep{Peebles1968,ChungPei1995,Callin2006}
+
 
 \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
 
 
 \subsubsection{Optical depth and visibility}\label[sec]{mil2:theo:sec:optical_depth}
-    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. In cosmology, Thomson scattering ($\gamma + e^{-} \rightleftharpoons \gamma+ e^{-}$) is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
+    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or none absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
     \begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
         \dv{\tau}{x} = - \frac{cn_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
     \end{equation}
@@ -24,26 +39,16 @@ Following the Big Bang Nucleosynthesis (BBN), ordinary matter in the universe
     \begin{equation}\label{mil2:theo:eq:gt_of_x}
         \gti(x)= - \eu^{-\tau(x)} \dv{\tau}{x},
     \end{equation}
-    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. This function will have a peak at the point in time where the photons's mean free path increased tremendously, i.e. at the last scattering surface, which happened immediately after the number of free electrons dropped dramatically, i.e. recombination. In mathematical terms, $\gti(x\ped{lss}) = \max{\gti(x)}$.
-    % \begin{equation}\label{mil2:theo:eq:def_of_lss}
-    %     \gti(x\ped{lss}) = \max{\gti(x)}.
-    % \end{equation}
-    \colorbox{green}{more here!}
+    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. The probability it describes, is that of a CMB photon's last interaction with an electron to have happened at $x$. This function will have a peak at the point in time when the mean free path of the photons increased tremendously -- at the last scattering surface -- which happened immediately after the number of free electrons dropped dramatically -- during recombination. In mathematical terms, $\gti(x\ped{SoLS}) = \max{\gti(x)}$. The surface of last scattering can also be taken as the time when the universe is neither opaque nor transparent, i.e. the solution of $\tau(x\!=\!x\ped{SoLS}) = 1$. We will use the former, but expect to see that $\tau(x\ped{SoLS}) \simeq 1$ in any case. 
 
 \subsubsection{Hydrogen recombination}\label[sec]{mil2:theo:sec:recombination}
-    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$.
+    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this, as with $x\ped{SoLS}$, vary in the literature.
 
-    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
-
-    Consider the interaction that keeps electrons ($e^{-}$) and protons ($p$) in equilibrium with photons ($\gamma$),
-    \begin{equation}\label{mil2:theo:eq:relevant_interaction}
-        e^{-} + p \rightleftharpoons \element{H}+\gamma.
-    \end{equation}
-    Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
+    Consider the interaction that keeps electrons and protons in equilibrium with photons, i.e. \cref{mil2:theo:eq:relevant_interaction}. Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
     \begin{align}\label{mil2:theo:eq:org_Saha}
         \frac{n_e n_p}{n\ped{\element{H}}}  = \frac{n_e^{(0)} n_p^{(0)}}{n\ped{\element{H}}^{(0)}},
     \end{align}
-    the \textit{Saha equation}. Likewise letting $m_s$ refer to the mass of $s$, we can take the number density of neutral hydrogen to be
+    the \textit{Saha equation}. Likewise, letting $m_s$ refer to the mass of $s$, we can take the number density of neutral hydrogen to be
     \begin{equation}
         n\ped{H}= \left(1-Y_P\right) n\ped{b} \simeq \left(1-Y_P\right) \frac{\Omega\ped{b0}\rho\ped{cr0}}{m\ped{H}\eu^{3x}}\,;\quad \rho\ped{cr0} = \frac{3H_0^2}{8\pi G},
     \end{equation}
@@ -51,36 +56,16 @@ Following the Big Bang Nucleosynthesis (BBN), ordinary matter in the universe
     \begin{equation}
         X_e = \frac{n_e}{n_e + n\ped{\element{H}}} = \frac{n_p}{n_p + n\ped{\element{H}}}.
     \end{equation}
-    Revisiting the reaction in \cref{mil2:theo:eq:relevant_interaction}
 
-    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
-    
-    Let $\varUpsilon\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying \cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more useful form of the Saha equation
+    Let $\varUpsilon\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying \cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more suggestive form of the Saha equation
     \begin{equation}\label{mil2:theo:eq:Saha}
         \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT}\,; \quad   0 < X_e \leq 1 \wedge X_e\sim 1.
     \end{equation}
-    The constraints on $X_e$ are that it is a positive number that cannot exceed 1 and the observation that it has to be close to 1. The latter constraint is due to the equilibrium assumption from which the Saha equation is derived: as $X_e$ falls the reaction rate for \cref{mil2:theo:eq:relevant_interaction} falls and equilibrium is not guaranteed. To proceed, we need to solve the Boltzmann equation. More precisely, James Peebles needed to solve the Boltzmann equation, whereas we will study the product; a first-order ODE the \textit{Peebles equation}. Said equation reads
+    The constraints on $X_e$ are that it is a positive number that cannot exceed 1 and the observation that it has to be close to 1. The latter constraint is due to the equilibrium assumption from which the Saha equation is derived: as $X_e$ falls the reaction rate for \cref{mil2:theo:eq:relevant_interaction} falls and equilibrium is not guaranteed. To proceed, we need to solve the Boltzmann equation. More precisely, Jim Peebles needed to solve the Boltzmann equation, whereas we will study the product; a first-order ODE the \textit{Peebles equation}. Said equation reads
     \begin{equation}\label{mil2:theo:eq:Peebles}
         \dv{X_e}{x} = \frac{C_r(T\ped{b})}{\Hp(x)\eu^{-x}} \left[ \beta(T\ped{b}) \left(1-X_e\right) - n\ped{\element{H}} \alpha^{(2)}(T\ped{b})X_e^2 \right],
     \end{equation}
-    % .... the change in $X_e$ with respect to $x$ goes as the reduction factor $C_r$, times the collisional ionisation rate from the ground state
-    where the necessary mathematical expressions are found in \cref{mil2:theo:eq:Peebles_add}.
-
-    Let us break the equation down to physical quantities and processes. 
-    \begin{itemize}
-        \item The net effect of a ground-state recombination is zero.
-        \item \dots
-        \item There are to pathways from the first excited state $n=2$ to the ground state $n=1$: \begin{itemize}
-            \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon (rate given by $\Lambda_\alpha$ in \cref{mil2:theo:eq:Peebles_Lambda_alpha}) something about cosmological redshift
-            \item $2s\to 1s$: 2-photon decay (rate given by $\Lambda_{2s\to 1s}$ in \cref{mil2:theo:eq:Peebles_Lambda_2s1s})
-        \end{itemize} 
-        \item \dots
-    \end{itemize}
-    The reduction (or correction) factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rate () from the first excited level ($n=2$) (see \cref{mil2:theo:eq:Peebles_Cr}).
-    \citep{DodelsonBook,ChungPei1995,Peebles1968}
-
-    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
-
+    where the necessary mathematical expressions are the following:
     \begin{subequations}\label{mil2:theo:eq:Peebles_add}
         \begin{align}
             C_r(T\ped{b}) &= \frac{\Lambda_{2s\to 1s}+ \Lambda_{\alpha}}{\Lambda_{2s\to 1s} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \label{mil2:theo:eq:Peebles_Cr} \\
@@ -93,19 +78,29 @@ Following the Big Bang Nucleosynthesis (BBN), ordinary matter in the universe
             \phi_2(T\ped{b}) &= 0.448\ln{\epskT} \label{mil2:theo:eq:Peebles_phi2}
         \end{align}
     \end{subequations}
+    A detailed description of \cref{mil2:theo:eq:Peebles_add} is found in \citep{Peebles1968}. 
+
+    % The reduction (or correction) factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rate () from the first excited level ($n=2$) (see \cref{mil2:theo:eq:Peebles_Cr}).
 
 
-\subsubsection{Sound horizon}\label[sec]{mil2:theo:eq:sound_horizon}
+    % \citep{DodelsonBook,ChungPei1995,Peebles1968}
+
+    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+
+    
+
+
+\subsubsection{Sound horizon}\label[sec]{mil2:theo:sec:sound_horizon}
     The distance that a sound wave could propagate in the primordial plasma before photons decoupled is called ``the sound horizon at decoupling'', a quantity whose significance will become prominent in sections to come. We define the sound speed of a photon-baryon plasma as
     \begin{equation}
-        c_s \equiv c\sqrt{\frac{1}{3(1+R(x))}}.
+        c_s \equiv c\sqrt{\frac{1}{3(1+R)}},
     \end{equation}
     where the baryon-to-photon energy density is defined as
     \begin{equation}
-        R(x) \equiv \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
+        R \equiv \frac{\Omega\ped{b}(x)}{\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
     \end{equation}
-    The comoving distance traveled by a sound wave -- the sound horizon -- at time $x$ as the solution $r_s(x)$ to the ODE
+    The co-moving distance travelled by a sound wave -- the sound horizon -- at time $x$ as the solution $r_s(x)$ to the ODE
     \begin{equation}
         \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
     \end{equation}
-    Evaluating $r_s(x=x\ped{dec})$ gives the sound horizon at decoupling.
+    Evaluating $r_s(x\!=x\!\ped{dec})$ gives the sound horizon at decoupling.
