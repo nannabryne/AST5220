@@ -15,25 +15,23 @@
 
 The process that keeping the photons ($\gamma$) coupled to electrons ($e^{-}$) in the early universe is called Thomson scattering and is the low-energy case of Compton scattering,
 \begin{equation}\label{mil2:theo:eq:Compton_Thomson}
-    \gamma + e^{-} \rightleftharpoons \gamma + e^{-},
+    \gamma + e^{-} \getsto \gamma + e^{-},
 \end{equation}
-as well as the major source of opacity in the early universe. When the temperature decreased enough to let electrons combine with protons ($p$) to produce hydrogen (\element{H}), and the abundance of free electrons rapidly decreases. As direct recombinations to the ground state are highly unlikely, a hydrogen atom generally arises from an electron in a high energy state that immediately decays to its ground state, emitting a photon in the process;
+and considered to be the major source of opacity in the early universe. Going forward in time, the universe expanded and therefore cooled down, eventually to the temperature for which the combination of electrons and protons ($p$)---the formation of neutral hydrogen atoms (\element{H})---was energetically favourable. As a result, the amount of free electrons (and protons), compared to the total number of baryons in the universe, rapidly decreased. As direct recombinations to the ground state are highly unlikely, a hydrogen atom generally arises from an electron in a high energy state that immediately decays to its ground state, emitting a photon in the process;
 \begin{equation}\label{mil2:theo:eq:relevant_interaction}
-    e^{-} + p \rightleftharpoons \element{H}+\gamma,
+    e^{-} + p \getsto \element{H}+\gamma.
 \end{equation}
-There are two main pathways from the first exited state ($n=2$) to the ground state ($n=1$):
+There are two main pathways from the first excited state ($n=2$) to the ground state ($n=1$):
 \begin{itemize}
-    \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon that is (almost exclusively) to be reabsorbed by another ground state hydrogen (almost exclusively)
+    \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon that is (almost exclusively) to be reabsorbed by another ground state hydrogen
     \item $2s\to 1s$: through the very slow process of 2-photon decay
 \end{itemize}
 These basic principles are amongst those that Jim Peebles and collaborators~\citep[see][]{Peebles1968} adopted in their model of non-equilibrium recombination history of hydrogen, described by the differential equation for the free electron abundance we call the \textit{Peebles equation} (\cref{mil2:theo:eq:Peebles}). There are numerical difficulties when solving this equation for very early times---this is where we address the work of Meghnad Saha in 1920. The \textit{Saha equation} (\cref{mil2:theo:eq:org_Saha}) is applicable in systems of chemical equilibrium and relates the number densities of reactants to those of the products in a reaction (assuming the equilibrium density of each element is known). At early times, this is a viable assumption, and we can examine the abundance of free electrons in the universe at all times.~\citep{Peebles1968,ChungPei1995,Callin2006}
 
 
-\colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
-
 
 \subsubsection{Optical depth and visibility}\label[sec]{mil2:theo:sec:optical_depth}
-    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or none absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
+    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or no absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
     \begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
         \dv{\tau}{x} = - \frac{cn_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
     \end{equation}
@@ -50,13 +48,13 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
     We will take $x\ped{*}$ to mean the logarithmic scale factor at the time of recombination, which will be so close to the last scattering surface that it will also refer to this point in time when the distinction is not important. 
 
 \subsubsection{Hydrogen recombination}\label[sec]{mil2:theo:sec:recombination}
-    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this, as with $x\ped{dec}$, vary in the literature.
+    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x\ll x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!\ll\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this definition, as with $x\ped{dec}$, vary in the literature.
 
     Consider the interaction that keeps electrons and protons in equilibrium with photons, i.e.~\cref{mil2:theo:eq:relevant_interaction}. Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
     \begin{align}\label{mil2:theo:eq:org_Saha}
         \frac{n_e n_p}{n\ped{\element{H}}}  = \frac{n_e^{(0)} n_p^{(0)}}{n\ped{\element{H}}^{(0)}},
     \end{align}
-    the \textit{Saha equation}. Likewise, letting $m_s$ refer to the mass of $s$, we can take the number density of neutral hydrogen to be
+    known as the \textit{Saha equation}. Likewise, letting $m_s$ refer to the mass of $s$, we can take the number density of neutral hydrogen to be
     \begin{equation}
         n\ped{H}= \left(1-Y_P\right) n\ped{b} \simeq \left(1-Y_P\right) \frac{\Omega\ped{b0}\rho\ped{cr0}}{m\ped{H}\eu^{3x}}\,;\quad \rho\ped{cr0} = \frac{3H_0^2}{8\pi G},
     \end{equation}
@@ -86,14 +84,12 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
             \phi_2(T\ped{b}) &= 0.448\ln{\epskT} \label{mil2:theo:eq:Peebles_phi2}
         \end{align}
     \end{subequations}
-    A detailed description of~\cref{mil2:theo:eq:Peebles_add} is found in~\citet{Peebles1968}. 
+    A detailed description of~\cref{mil2:theo:eq:Peebles_add} is found in~\citet{Peebles1968}. \colorbox{orange}{Necessary to describe components here??}~\citep{DodelsonBook,ChungPei1995,Peebles1968}
 
     % The reduction (or correction) factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rate () from the first excited level ($n=2$) (see~\cref{mil2:theo:eq:Peebles_Cr}).
 
 
-    %~\citep{DodelsonBook,ChungPei1995,Peebles1968}
-
-    \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
+   
 
     
 
@@ -107,7 +103,7 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
     \begin{equation}
         R \equiv \frac{\Omega\ped{b}(x)}{\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
     \end{equation}
-    The co-moving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $r_s(x)$ to the ODE
+    The comoving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $r_s(x)$ to the ODE
     \begin{equation}
         \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
     \end{equation}

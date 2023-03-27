@@ -28,7 +28,11 @@ proves useful, giving both the ordinary differential equation (ODE) for $\eta(x)
         \dv{t}{x} &= \frac{1}{H} = \frac{\eu^x}{\Hp(x)}\,; && t(x\ped{init}) = t\ped{init},\label{mi1:theo:eq:ode_t_of_x}
     \end{align}
 \end{subequations}
-where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve~\cref{mil1:theo:eq:odes_time} analytically in the very early universe and in~\cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}).
+where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve~\cref{mil1:theo:eq:odes_time} analytically in the very early universe and in~\cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}). 
+
+The conformal time is a useful time measure for large-scale cosmology as it takes into account the expansion of the universe. $\eta(x)$ measures the comoving distance that non-interacting photons could have travelled since the beginning where $x=-\infty$ ($t=0$). Thus, the conformal time represents an upper limit to how far information could possibly travel. We say that regions that are separated by distances larger than this quantity are causally \textit{dis}connected. For this reason, some books refer to $\eta(x)$ as the comoving horizon.~\citep{DodelsonBook}
+
+%That said, the quantity $\eta(x)/c$ can be viewed as the time it took a
 
 Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary time variable.
 
@@ -43,7 +47,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
             \quad \OmgR[]= \Omega\gped{\textgamma} + \Omega\gped{\textnu}.
     \end{equation}
 
-   ~\cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
+    \cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
     \begin{equation}
         \Omega\gped{\textgamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k\ped{B} \TCMB \right)^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
     \end{equation}
@@ -58,7 +62,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \end{equation}
 
 
-\subsubsection{Expansion and analytical approximations}\label[sec]{mil1:theo:sec:approximations}
+\subsubsection{Cosmic expansion}\label[sec]{mil1:theo:sec:approximations}
     To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In~\cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$). Using~\cref{app:hubble_derivatives:eq:dHp_dx} and arguing that the radiation term vanishes, we get
     %the reasonable assumption that $\OmgR \ll \OmgM \eu^{x\ped{acc}}$ and $\OmgR \ll \OmgL \eu^{4x\ped{acc}}$, we get
     \begin{equation}
@@ -77,13 +81,15 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     If for said species we have $\Omega_{s}(x)\simeq 1$, we get $\Omega_{s'}(x)\ll 1$ for the others, and we expect this to be very close to equality. 
 
     In the very early universe, only relativistic particles were present. Conveniently, this gives nice expressions for the initial conditions for~\cref{mil1:theo:eq:odes_time}:
-    \begin{equation}\label{mil1:theo:eq:time_initial_conditions}
-        \begin{split}
-            \eta\ped{init} &= \frac{c}{\Hp(x\ped{init})} \\
-            t\ped{init} &= \frac{\eu^{x\ped{init}}}{2 \Hp(x\ped{init})}
-        \end{split}
-    \end{equation}
-    The remaining task is then to choose a suitable $x\ped{init} < x\ped{eq}$. 
+    \begin{subequations}\label{mil1:theo:eq:time_initial_conditions}
+        \begin{align}
+            \eta\ped{init} &= \int_{-\infty}^{x\ped{init}} \frac{c\eu^{x}}{H_0 \sqrt{\OmgR}} = \frac{c}{\Hp(x\ped{init})} \label{mil1:theo:eq:eta_init} \\
+            t\ped{init} &=  \int_{-\infty}^{x\ped{init}} \frac{\eu^{x}\eu^{x}}{H_0 \sqrt{\OmgR}} =\frac{\eu^{x\ped{init}}}{2 \Hp(x\ped{init})} \label{mil1:theo:eq:t_init} 
+        \end{align}
+    \end{subequations}
+    Choosing such initial conditions, it is important to make sure $x\ped{init} \ll x\ped{eq}$ so that the approximation on $\Hp(x)$ is viable. 
+
+    % Believe there is a pun on E.T.A. here somewhere
 
 
 
@@ -97,7 +103,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \begin{equation}\label{mil1:theo:eq:integral_for_r}
         \int_r^0 \frac{-\diff r'}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\diff \eta'
     \end{equation}
-    of which the right-hand side is the co-moving distance $\chi= \eta_0-\eta$. We evaluate the left integral in~\cref{mil1:theo:eq:integral_for_r} and find
+    of which the right-hand side is the comoving distance $\chi= \eta_0-\eta$. We evaluate the left integral in~\cref{mil1:theo:eq:integral_for_r} and find
     \begin{equation}\label{mil1:theo:eq:r_of_chi}
         r(\chi) = \begin{cases}
             \chi \cdot \frac{\sin\left( \sqrt{\abs{\OmgK}} H_0 \chi/c\right)  }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\

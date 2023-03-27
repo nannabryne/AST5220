@@ -15,16 +15,13 @@ We ran an additional simulation where we assumed equilibrium all the way, that i
         X_e(x) = \frac{\expr}{2}\left( -1+\sqrt{1+4\expr^{-1}}\right)\,; \quad 
             \expr = \frac{1}{n\ped{b}} \left( \frac{m_e k\ped{B} T\ped{b} }{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{\epskT},
     \end{equation}
-    blows up for large values of $\expr$. Analytically we have $X_e\to 1$ as $\expr\to \infty$, so we circumvented the issue by letting $X_e(x)=1 \,\forall\, \expr > 10^7$. Outside the Saha regime, we used the last value of $X_e(x)$ ($\approx 0.99$) as initial condition on the Peebles ODE (\cref{mil2:theo:eq:Peebles}) and solved this for the remaining values of $x$. Here as well, we needed to address numerical stability concerns. Specifically, $\beta^{(2)}$ in~\cref{mil2:theo:eq:Peebles_beta2} was set to zero when the exponent was too large; $\epskT> 200$, i.e. at later times when $T\ped{b} < 0.005 \epsilon_0/k\ped{B} \sim 800$~K. 
+    blows up for large values of $\expr$. Analytically we have $X_e\to 1$ as $\expr\to \infty$, so we circumvented the issue by letting $X_e=1 \,\forall\, \expr > 10^7$. Outside the Saha regime, we used the last value of $X_e(x)$ ($\approx 0.99$) as initial condition on the Peebles ODE (\cref{mil2:theo:eq:Peebles}) and solved this for the remaining values of $x$. Here as well, we needed to address numerical stability concerns. Specifically, $\beta^{(2)}$ in~\cref{mil2:theo:eq:Peebles_beta2} was set to zero when the exponent was too large; $\epskT> 200$, i.e. at later times when $T\ped{b} < 0.005 \epsilon_0/k\ped{B} \sim 800$~K. 
 
     We solved for $8\cross10^5+1$ equally spaced points $x\in[-12, 0]$. The numerical integration was performed using RK4 and the number of steps left in the $x$-array at the end of the Saha regime. 
 
 
 \subsubsection{Optical depth and visibility}\label[sec]{mil2:imp:sec:tau_gt}
-    We computed $\tau(x)$ by solving the simple ODE in~\cref{mil2:theo:eq:ode_tau_of_x} starting from $x=0$ where $\tau(0)=0$ and integrating backwards, using $8\cross10^5$ steps along $x\in[0, -12]$ in the RK4 algorithm.
+    We computed $\tau(x)$ by solving the simple ODE in~\cref{mil2:theo:eq:ode_tau_of_x} starting from $x=0$ where $\tau(0)=0$ and integrating backwards in time, using $8\cross10^5$ steps along $x\in[0, -12]$ in the RK4 algorithm.
     
     We used the analytical expressions in~\cref{mil2:theo:eq:ode_tau_of_x} and~\cref{mil2:theo:eq:gt_of_x} for $\dv*{\tau(x)}{x}$ and $\gti(x)$, respectively, and found $\dv*[2]{\tau(x)}{x}$, $\dv*{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ numerically. 
 
-%a primordial value of the helium abundance
-
-% That is, we have extended our program from~\cref{sec:mil1} to \dots 
