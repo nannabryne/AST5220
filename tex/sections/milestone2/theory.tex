@@ -1,3 +1,5 @@
+% !TEX root = ../../main.tex
+
 % ---------------------------------------
 % labels: \label{mil2:theo:[type]:[name]}
 % ---------------------------------------
@@ -8,7 +10,7 @@
 %     \item Thomson scattering
 %     \item Recombination: Saha and Peebles
 %     \item Sound horizon
-%     \item !!!!! Interpreatation of tau, g, rs
+%     \item !!!!! Interpretation of tau, g, rs
 % \end{itemize}
 
 The process that keeping the photons ($\gamma$) coupled to electrons ($e^{-}$) in the early universe is called Thomson scattering and is the low-energy case of Compton scattering,
@@ -24,7 +26,7 @@ There are two main pathways from the first exited state ($n=2$) to the ground st
     \item $2p\to 1s$: decay through the emission of a Lyman-\textalpha~photon that is (almost exclusively) to be reabsorbed by another ground state hydrogen (almost exclusively)
     \item $2s\to 1s$: through the very slow process of 2-photon decay
 \end{itemize}
-These basic principles are amongst those that Jim Peebles and collaborators~\citep[see][]{Peebles1968} adopted in their model of non-equilibrium recombination history of hydrogen, described by the differential equation for the free electron abundance we call the \textit{Peebles equation} (\cref{mil2:theo:eq:Peebles}). There are numerical difficulties when solving this equation for very early times -- this is where we address the work of Meghnad Saha in 1920. The \textit{Saha equation} (\cref{mil2:theo:eq:org_Saha}) is applicable in systems of chemical equilibrium and relates the number densities of reactants to those of the products in a reaction (assuming the equilibrium density of each element is known). At early times, this is a viable assumption, and we can examine the abundance of free electrons in the universe at all times.~\citep{Peebles1968,ChungPei1995,Callin2006}
+These basic principles are amongst those that Jim Peebles and collaborators~\citep[see][]{Peebles1968} adopted in their model of non-equilibrium recombination history of hydrogen, described by the differential equation for the free electron abundance we call the \textit{Peebles equation} (\cref{mil2:theo:eq:Peebles}). There are numerical difficulties when solving this equation for very early times---this is where we address the work of Meghnad Saha in 1920. The \textit{Saha equation} (\cref{mil2:theo:eq:org_Saha}) is applicable in systems of chemical equilibrium and relates the number densities of reactants to those of the products in a reaction (assuming the equilibrium density of each element is known). At early times, this is a viable assumption, and we can examine the abundance of free electrons in the universe at all times.~\citep{Peebles1968,ChungPei1995,Callin2006}
 
 
 \colorbox{pink}{\dots \, \dots \, \dots \, \dots \, \dots \, \dots \, \dots }
@@ -39,14 +41,16 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
     \begin{equation}\label{mil2:theo:eq:gt_of_x}
         \gti(x)= - \eu^{-\tau(x)} \dv{\tau(x)}{x},
     \end{equation}
-    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. The probability it describes, is that of a CMB photon's last interaction with an electron to have happened at $x$. This function will have a peak at the point in time when the mean free path of the photons increased tremendously -- at the last scattering surface -- which happened immediately after the number of free electrons dropped dramatically -- during recombination. In mathematical terms, $\gti(x\ped{SoLS}) = \max{\gti(x)}$, or
+    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. The probability it describes, is that of a CMB photon's last interaction with an electron to have happened at $x$. This function will have a peak at the point in time when the mean free path of the photons increased tremendously---at the last scattering surface---which happened immediately after the number of free electrons dropped dramatically---during recombination. In mathematical terms, this decoupling happened when $\gti(x\ped{dec}) = \max{\gti(x)}$, or
     \begin{equation}
-        \dv{\gti(x)}{x}\bigg|_{x=x\ped{SoLS}} = 0 \quad \Leftrightarrow\quad \left[\dv[2]{\tau(x)}{x} = \left(\dv{\tau(x)}{x} \right)^2 \right]_{x=x\ped{SoLS}}.
+        \dv{\gti(x)}{x}\bigg|_{x=x\ped{dec}} = 0 \quad \Leftrightarrow\quad \left[\dv[2]{\tau(x)}{x} = \left(\dv{\tau(x)}{x} \right)^2 \right]_{x=x\ped{dec}}.
     \end{equation}
-    The surface of last scattering can also be taken as the time when the universe is neither opaque nor transparent, i.e. the solution of $\tau(x\!=\!x\ped{SoLS}) = 1$. We will use the former, but expect to see that $\tau(x\ped{SoLS}) \simeq 1$ in any case. 
+    The surface of last scattering can also be taken as the time when the universe is neither opaque nor transparent, i.e. the solution of $\tau(x\!=\!x\ped{dec}) = 1$. We will use the former, but expect to see that $\tau(x\ped{dec}) \simeq 1$ in any case. 
+
+    We will take $x\ped{*}$ to mean the logarithmic scale factor at the time of recombination, which will be so close to the last scattering surface that it will also refer to this point in time when the distinction is not important. 
 
 \subsubsection{Hydrogen recombination}\label[sec]{mil2:theo:sec:recombination}
-    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this, as with $x\ped{SoLS}$, vary in the literature.
+    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x<x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!<\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this, as with $x\ped{dec}$, vary in the literature.
 
     Consider the interaction that keeps electrons and protons in equilibrium with photons, i.e.~\cref{mil2:theo:eq:relevant_interaction}. Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
     \begin{align}\label{mil2:theo:eq:org_Saha}
@@ -103,8 +107,8 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
     \begin{equation}
         R \equiv \frac{\Omega\ped{b}(x)}{\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
     \end{equation}
-    The co-moving distance travelled by a sound wave -- the sound horizon -- at time $x$ as the solution $r_s(x)$ to the ODE
+    The co-moving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $r_s(x)$ to the ODE
     \begin{equation}
         \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
     \end{equation}
-    Evaluating $r_s(x\!=\!x\ped{dec})$ gives the sound horizon at decoupling.
+    Evaluating $r_s(x\!=\!x\ped{*})$ gives the sound horizon at decoupling (assuming $x\ped{dec}\simeq x\ped{*}$). At this point, the plasma through which sound waves propagate is no longer present and the waves are frozen in.
