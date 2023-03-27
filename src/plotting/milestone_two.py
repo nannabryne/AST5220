@@ -5,18 +5,30 @@ import plotsrc_milestone_one as PLOT
 const = ConstantsAndUnits()
 tex = LaTeX()
 
-rec = read_ASCII("recombination")
 
+#   for drawing nice line at recombination:
+rec_kw = dict(colour="k", width=1.3, top=True, alpha=.9)
+
+
+
+#   get data:
+
+rec = read_ASCII("recombination")
 rec_Saha = read_ASCII("recombination_Saha_only")
 
 x_rec = -6.985
+
+
 
 x, Xe = rec[:,0], rec[:,1]
 x_Saha, Xe_Saha = rec_Saha[:,0], rec_Saha[:,1]
 
 fig, ax = plt.subplots()
-ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+ " (Saha+Peebles)")
-ax.plot(x_Saha, Xe_Saha, label=tex("X_e")+ " (Saha)", **overplot_kw)
+# ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+ " (Saha+Peebles)")
+# ax.plot(x_Saha, Xe_Saha, label=tex("X_e")+ " (Saha)", **overplot_kw)
+
+ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e"))
+ax.plot(x_Saha, Xe_Saha, **overplot_kw)
 
 ax.set_yscale("log")
 ax.legend()
@@ -26,13 +38,10 @@ ylim = (1e-4,1.5)
 ax.set_ylim(ylim)
 ax.set_xlim(-8.4,-3.6)
 
-ax.axvline(x_rec, **pinpoint_kw)
-ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
 
-# ax.axhline(0.99, **pinpoint_kw)
-# ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
-# ax.set_yticks([0.99], labels=[tex("0.99")], minor=True)
+pinpoint_x(ax, [x_rec], [tex("x_*")], **rec_kw)
+# pinpoint_y(ax, [0.99], ["0.99"], right=True)
+
 
 save("electron_fraction")
 
@@ -60,17 +69,11 @@ ax.plot(x, -dtaudx, label=tex("-"+tex.dv(tex.tau)), **dfdx_of_x_kw)
 ax.plot(x, ddtaudxx, label=tex.dv(tex.tau, n=2), **ddfdxx_of_x_kw)
 ax.set_xlabel(tex.x)
 ax.set_yscale("log")
-ax.set_xlim(-8.7,-3.2)
+ax.set_xlim(-9.3,-3.2)
 ax.set_ylim(1e-5, 1e4)
 ax.legend()
 
-ax.axvline(x_rec, **pinpoint_kw)
-ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
-
-# ax.axhline(1.00, **pinpoint_kw)
-# ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
-# ax.set_yticks([0.999], labels=[tex("1.0")], minor=True)
+pinpoint_x(ax, [x_rec], [tex("x_*")], **rec_kw)
 
 
 save("optical_depth_misc")
@@ -91,9 +94,8 @@ ax.plot(x, gt,          label=tex.gt, **f_of_x_kw)
 ax.plot(x, dgtdx/10,    label=tex(tex.frac(1,10) + tex.dv(tex.gt)), **dfdx_of_x_kw)
 ax.plot(x, ddgtdxx/300, label=tex(tex.frac(1,300)+tex.dv(tex.gt, n=2)), **ddfdxx_of_x_kw)
 
-ax.axvline(x_rec, **pinpoint_kw)
-ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
-ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
+
+pinpoint_x(ax, [x_rec], [tex("x_*")], **rec_kw)
 
 ax.set_xlabel(tex.x)
 ax.set_xlim(-7.7, -5.7)

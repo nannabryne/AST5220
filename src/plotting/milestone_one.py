@@ -88,7 +88,7 @@ class SimpleCosmo:
 
     def plot_misc_functions(self):
         self.plot.HubbleDerivatives(self.Hp, self.dHpdx, self.ddHpdxx)
-        self.plot.ConformalTime_HubbleParametter(self.eta_c, self.Hp)
+        self.plot.ConformalTime_HubbleParameter(self.eta_c, self.Hp)
         self.plot.HubbleParameter(self.Hp*Hubble_conv_fac, self.OmegaR[self.idx["0"]], self.OmegaM[self.idx["0"]], self.OmegaLambda[self.idx["0"]])
 
     def plot_time_measures(self):

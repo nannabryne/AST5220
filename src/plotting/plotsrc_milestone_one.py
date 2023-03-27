@@ -162,15 +162,15 @@ class MilestoneI:
         ax.plot(self.x, dHp_dx/Hp,   c="forestgreen", label=tex(tex.inv(tex.Hp)+ tex.dv()))
         ax.plot(self.x, ddHp_dxx/Hp, c="dodgerblue", label=tex(tex.inv(tex.Hp)+ tex.dv(n=2))) 
        
-        self._compare_with_analytical(ax, (-1, -.5, 1), ":", label=True)    #dHpdx
-        self._compare_with_analytical(ax, (1, .25, 1), "--", label=True)    #ddHpdxx
+        self._compare_with_analytical(ax, (-1, -.5, 1), ":", label=False)    #dHpdx
+        self._compare_with_analytical(ax, (1, .25, 1), "--", label=False)    #ddHpdxx
         ax.plot(0,-2)
         self._colour_eras(ax, vlines=False)
-        self._mark_acc(ax)
+        # self._mark_acc(ax)
         ax.set_xlim(-16, 4)
         ax.set_ylim(-1.2, 1.4)
         
-        # ax.legend(ncols=2)
+        ax.legend()
         ax.set_xlabel(tex.x)
 
         # self._mark_milestones(ax)
@@ -181,14 +181,14 @@ class MilestoneI:
         if self.show:
             plt.show()
 
-    def ConformalTime_HubbleParametter(self, eta_c, Hp):
+    def ConformalTime_HubbleParameter(self, eta_c, Hp):
         fig, ax = plt.subplots()
         ax.plot(self.x, eta_c*Hp, c="orangered",label=tex(tex.Hp+"\eta/c"))
         self._colour_eras(ax, vlines=False)
-        self._compare_with_analytical(ax, (1, 2, 100), "-.", label=True) # dunno about the last one
+        self._compare_with_analytical(ax, (1, 2, 100), "-.", label=False) # dunno about the last one
         self._mark_acc(ax)
         ax.set_xlim(-16, 4)
-        # ax.legend(ncols=2)    
+        ax.legend()    
         ax.set_xlabel(tex.x)
         ax.set_ylim(0.5, 4.5)
 
@@ -211,14 +211,15 @@ class MilestoneI:
         H_AB = H0 * np.sqrt(OmegaR0) * np.exp(-self.x)
         H_BC = H0 * np.sqrt(OmegaM0) * np.exp(-0.5*self.x)
         H_CD = H0 * np.sqrt(OmegaL0) * np.exp(self.x)
-        self._compare_with_analytical(ax, (H_AB, H_BC, H_CD), "-.", label=True)
-        self._mark_acc(ax)
+        self._compare_with_analytical(ax, (H_AB, H_BC, H_CD), "-.", label=False)
+        # self._mark_acc(ax)
         ax.set_ylabel(r"100 km s$^{-1}$ Mpc$^{-1}$")
         ax.set_xlabel(tex.x)
         # ax.set_xlim(np.min(x), 0)
 
         ax.set_ylim(0.1, 1e5)
         ax.set_xlim(-16, 4)
+        ax.legend()
 
         ax.set_yscale("log")
 

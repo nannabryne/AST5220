@@ -171,18 +171,43 @@ class LaTeX:
 
 
 
-pinpoint_kw = dict(color="slategrey", lw=.9, ls=":", alpha=.5)
-overplot_kw = dict(color="darkslategrey", ls="-.", alpha=.5, lw=2.2)
 
+overplot_kw = dict(color="darkslategrey", ls="-.", alpha=.5, lw=2.2)
 
 f_of_x_kw =     dict(color="royalblue",   alpha=.9)
 dfdx_of_x_kw =  dict(color="forestgreen", alpha=.7, lw=1.4)
 ddfdxx_of_x_kw =dict(color="dodgerblue",  alpha=.7, lw=1.4)
 
 
-mark_axis_kw = dict(reset=True, direction="out", length=17, width=.9, color="slategrey", labelcolor="slategrey")
-mark_xaxis_kw = dict(**mark_axis_kw, top=False)
-mark_yaxis_kw = dict(**mark_axis_kw, left=False, right=True, labelleft=False, labelright=True)
+
+def pinpoint_x(ax, x_list, x_label_list, colour="slategrey", style=":", width=.9, alpha=.5, top=False):
+    line_kw = dict(color=colour, lw=width, ls=style, alpha=alpha)
+    if top:
+        tick_kw = dict(reset=True, direction="out", length=9, width=width, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False)
+    else:
+        tick_kw = dict(reset=True, direction="out", length=17, width=width, color=colour, labelcolor=colour, top=False, bottom=True, labeltop=False, labelbottom=True)
+
+    for x in x_list:
+        ax.axvline(x, **line_kw)
+
+    ax.xaxis.set_tick_params("minor", **tick_kw)
+    # ax.set_xticks(x_list, labels=[tex(x_label) for x_label in x_label_list], minor=True)
+    ax.set_xticks(x_list, labels=x_label_list, minor=True)
+
+
+
+def pinpoint_y(ax, y_list, y_label_list, colour="slategrey", style=":", width=.9, alpha=.5, right=False):
+    line_kw = dict(color=colour, lw=width, ls=style, alpha=alpha)
+    if right:
+        tick_kw = dict(reset=True, direction="out", length=17, width=width, color=colour, labelcolor=colour, right=True, left=False, labelright=True, labelleft=False)
+    else:
+        tick_kw = dict(reset=True, direction="out", length=17, width=width, color=colour, labelcolor=colour, right=False, left=True, labelright=False, labelleft=True)
+
+    for y in y_list:
+        ax.axhline(y, **line_kw)
+
+    ax.yaxis.set_tick_params("minor", **tick_kw)
+    ax.set_yticks(y_list, labels=y_label_list, minor=True)
 
 
 
