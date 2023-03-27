@@ -15,8 +15,6 @@ x, Xe = rec[:,0], rec[:,1]
 x_Saha, Xe_Saha = rec_Saha[:,0], rec_Saha[:,1]
 
 fig, ax = plt.subplots()
-# ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+" ("+ tex("X_e"+tex.ap("Saha")+"=0.99") + ")")
-# ax.plot(x_Saha, Xe_Saha, ls="--", color=COLOURS[0], alpha=.7, label=tex("X_e")+" ("+ tex("X_e"+tex.ap("Saha")+"=0.00") + ")")
 ax.plot(x, Xe, color=COLOURS[0], label=tex("X_e")+ " (Saha+Peebles)")
 ax.plot(x_Saha, Xe_Saha, label=tex("X_e")+ " (Saha)", **overplot_kw)
 
@@ -32,9 +30,9 @@ ax.axvline(x_rec, **pinpoint_kw)
 ax.xaxis.set_tick_params("minor", **mark_xaxis_kw)
 ax.set_xticks([x_rec], labels=[tex("x_*")], minor=True)
 
-ax.axhline(0.99, **pinpoint_kw)
-ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
-ax.set_yticks([0.99], labels=[tex("0.99")], minor=True)
+# ax.axhline(0.99, **pinpoint_kw)
+# ax.yaxis.set_tick_params("minor", **mark_yaxis_kw)
+# ax.set_yticks([0.99], labels=[tex("0.99")], minor=True)
 
 save("electron_fraction")
 
@@ -62,6 +60,8 @@ ax.plot(x, -dtaudx, label=tex("-"+tex.dv(tex.tau)), **dfdx_of_x_kw)
 ax.plot(x, ddtaudxx, label=tex.dv(tex.tau, n=2), **ddfdxx_of_x_kw)
 ax.set_xlabel(tex.x)
 ax.set_yscale("log")
+ax.set_xlim(-8.7,-3.2)
+ax.set_ylim(1e-5, 1e4)
 ax.legend()
 
 ax.axvline(x_rec, **pinpoint_kw)
