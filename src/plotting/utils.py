@@ -175,6 +175,11 @@ pinpoint_kw = dict(color="slategrey", lw=.9, ls=":", alpha=.5)
 overplot_kw = dict(color="darkslategrey", ls="-.", alpha=.5, lw=2.2)
 
 
+f_of_x_kw =     dict(color="royalblue",   alpha=.9)
+dfdx_of_x_kw =  dict(color="forestgreen", alpha=.7, lw=1.4)
+ddfdxx_of_x_kw =dict(color="dodgerblue",  alpha=.7, lw=1.4)
+
+
 mark_axis_kw = dict(reset=True, direction="out", length=17, width=.9, color="slategrey", labelcolor="slategrey")
 mark_xaxis_kw = dict(**mark_axis_kw, top=False)
 mark_yaxis_kw = dict(**mark_axis_kw, left=False, right=True, labelleft=False, labelright=True)

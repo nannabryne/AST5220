@@ -242,9 +242,6 @@ void RecombinationHistory::solve_for_optical_depth_tau(int nsteps){
 
 
 void RecombinationHistory::solve_for_sound_horizon(int nsteps){
-  // Utils::StartTiming("tau");
-
-  // Set up x-arrays to integrate over. We split into three regions as we need extra points in reionisation 
 
   int npts = nsteps+1;
   Vector x_array = Utils::linspace(x_start, x_end, npts);
