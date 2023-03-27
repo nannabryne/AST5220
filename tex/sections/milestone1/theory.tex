@@ -26,7 +26,7 @@ proves useful, giving both the ordinary differential equation (ODE) for $\eta(x)
         \dv{t}{x} &= \frac{1}{H} = \frac{\eu^x}{\Hp(x)}\,; && t(x\ped{init}) = t\ped{init},\label{mi1:theo:eq:ode_t_of_x}
     \end{align}
 \end{subequations}
-where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve \cref{mil1:theo:eq:odes_time} analytically in the very early universe and in \cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}).
+where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve~\cref{mil1:theo:eq:odes_time} analytically in the very early universe and in~\cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}).
 
 Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary time variable.
 
@@ -41,7 +41,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
             \quad \OmgR[]= \Omega\gped{\textgamma} + \Omega\gped{\textnu}.
     \end{equation}
 
-    \cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
+   ~\cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
     \begin{equation}
         \Omega\gped{\textgamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k\ped{B} \TCMB \right)^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
     \end{equation}
@@ -57,7 +57,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
 
 
 \subsubsection{Expansion and analytical approximations}\label[sec]{mil1:theo:sec:approximations}
-    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In \cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$). Using \cref{app:hubble_derivatives:eq:dHp_dx} and arguing that the radiation term vanishes, we get
+    To study the geometry of the universe, we want to know when the expansion started, i.e. when the universe started accelerating: $\dv*[2]{a}{t}$. It is trivial to show that this condition is equivalent to requiring $\dv*{\Hp}{x}|_{x=x\ped{acc}} = 0$. In~\cref{app:hubble_derivatives} we present analytical expressions for the derivatives of $\Hp(x)$ in $x$. Studying these expressions, we expect to see that the start of acceleration and time of matter-dark energy transition are close to each other ($x\ped{acc} \sim x_{\Lambda}$). Using~\cref{app:hubble_derivatives:eq:dHp_dx} and arguing that the radiation term vanishes, we get
     %the reasonable assumption that $\OmgR \ll \OmgM \eu^{x\ped{acc}}$ and $\OmgR \ll \OmgL \eu^{4x\ped{acc}}$, we get
     \begin{equation}
         x\ped{acc} = \frac{1}{3}\ln{\frac{\OmgM}{2\OmgL}} = x\ped{\Lambda} - \frac{1}{3}\ln{2}
@@ -74,7 +74,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \end{equation}
     If for said species we have $\Omega_{s}(x)\simeq 1$, we get $\Omega_{s'}(x)\ll 1$ for the others, and we expect this to be very close to equality. 
 
-    In the very early universe, only relativistic particles were present. Conveniently, this gives nice expressions for the initial conditions for \cref{mil1:theo:eq:odes_time}:
+    In the very early universe, only relativistic particles were present. Conveniently, this gives nice expressions for the initial conditions for~\cref{mil1:theo:eq:odes_time}:
     \begin{equation}\label{mil1:theo:eq:time_initial_conditions}
         \begin{split}
             \eta\ped{init} &= \frac{c}{\Hp(x\ped{init})} \\
@@ -91,11 +91,11 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \begin{equation}\label{mil1:theo:eq:FRW_spherical}
         ds^2 = \eu^{2x} \left( -\diff\eta^2  + \frac{\diff r^2}{1-kr^2} + r^2\diff\theta^2+ r^2 \sin^2\!{\theta} \,\diff \phi^2 \right),
     \end{equation}
-    and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\diff r<0;\, \diff\theta^2 = \diff\phi^2 =0$) photon ($d s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$). \cref{mil1:theo:eq:FRW_spherical} gives
+    and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\diff r<0;\, \diff\theta^2 = \diff\phi^2 =0$) photon ($d s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$).~\cref{mil1:theo:eq:FRW_spherical} gives
     \begin{equation}\label{mil1:theo:eq:integral_for_r}
         \int_r^0 \frac{-\diff r'}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\diff \eta'
     \end{equation}
-    of which the right-hand side is the co-moving distance $\chi= \eta_0-\eta$. We evaluate the left integral in \cref{mil1:theo:eq:integral_for_r} and find
+    of which the right-hand side is the co-moving distance $\chi= \eta_0-\eta$. We evaluate the left integral in~\cref{mil1:theo:eq:integral_for_r} and find
     \begin{equation}\label{mil1:theo:eq:r_of_chi}
         r(\chi) = \begin{cases}
             \chi \cdot \frac{\sin\left( \sqrt{\abs{\OmgK}} H_0 \chi/c\right)  }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\
@@ -104,7 +104,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
         \end{cases}.
     \end{equation}
     
-    The angular diameter distance of an object of physical size $D$ and angular size $\theta$ is $d_A= D/\theta$. From \cref{mil1:theo:eq:FRW_spherical} we get $\diff D = r\eu^x \diff \theta$ and so  
+    The angular diameter distance of an object of physical size $D$ and angular size $\theta$ is $d_A= D/\theta$. From~\cref{mil1:theo:eq:FRW_spherical} we get $\diff D = r\eu^x \diff \theta$ and so  
     \begin{equation}\label{mil1:theo:eq:dA_of_x}
             d_A(x) =r \eu^x.
     \end{equation}

@@ -6,9 +6,9 @@
 
 The first ingredient in the aforementioned program is a numerical framework describing the (unperturbed) background geometry. Said geometry is determined by the Friedmann-Robertson-Walker (FRW) metric and, as a starting point, a flatness assumption. However, we keep the variables associated with the curvature, the reasoning behind which will become clear shortly.
 
-We want to describe the evolution of the Hubble parameter, conformal time and distance measures, all as functions of the logarithmic scale factor, $x=\ln{a}$, working as the main time variable in this paper. This is to be done with the use of the fiducial parameters (``fiducials'') from \citep{Planckdata}.
+We want to describe the evolution of the Hubble parameter, conformal time and distance measures, all as functions of the logarithmic scale factor, $x=\ln{a}$, working as the main time variable in this paper. This is to be done with the use of the fiducial parameters (``fiducials'') from~\citet{Planckdata}.
 
-The implementation of these functions results in a cosmological model that we can play around with. Our next task is to use observational data from \citep{supernovadata} to tweak the default cosmological parameters and evaluate their credibility, curvature being one of the parameters. In particular, we will use a Monte Carlo Markov Chain (MCMC) with Metropolis algorithm to explore the parameter space of our model to infer their properties and compare them with observations from supernovae.
+The implementation of these functions results in a cosmological model that we can play around with. Our next task is to use observational data from~\citet{supernovadata} to tweak the default cosmological parameters and evaluate their credibility, curvature being one of the parameters. In particular, we will use a Monte Carlo Markov Chain (MCMC) with Metropolis algorithm to explore the parameter space of our model to infer their properties and compare them with observations from supernovae.
 
 MCMC is a popular statistical technique used in various fields besides cosmology. The Metropolis algorithm, a simple and widely used MCMC method, generates a Markov chain of samples in a data set that converge to the target distribution by iteratively accepting or rejecting proposed moves in parameter space based on a set of acceptance criteria.
 
