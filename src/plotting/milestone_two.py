@@ -17,7 +17,7 @@ rec = read_ASCII("recombination")
 rec_Saha = read_ASCII("recombination_Saha_only")
 
 x_rec = -6.985
-
+Xe_fo = 2.026e-4
 
 
 x, Xe = rec[:,0], rec[:,1]
@@ -39,8 +39,9 @@ ax.set_ylim(ylim)
 ax.set_xlim(-8.4,-3.6)
 
 
+
 pinpoint_x(ax, [x_rec], [tex("x_*")], **rec_kw)
-# pinpoint_y(ax, [0.99], ["0.99"], right=True)
+pinpoint_y(ax, [Xe_fo], [tex("X_{e}" + tex.ap("(fo)"))], right=True)
 
 
 save("electron_fraction")
