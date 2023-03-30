@@ -28,7 +28,24 @@ There are two main pathways from the first excited state ($n=2$) to the ground s
 \end{itemize}
 These basic principles are amongst those that Jim Peebles and collaborators~\citep[see][]{Peebles1968} adopted in their model of non-equilibrium recombination history of hydrogen, described by the differential equation for the free electron abundance we call the \textit{Peebles equation} (\cref{mil2:theo:eq:Peebles}). There are numerical difficulties when solving this equation for very early times---this is where we address the work of Meghnad Saha in 1920. The \textit{Saha equation} (\cref{mil2:theo:eq:org_Saha}) is applicable in systems of chemical equilibrium and relates the number densities of reactants to those of the products in a reaction (assuming the equilibrium density of each element is known). At early times, this is a viable assumption, and we can examine the abundance of free electrons in the universe at all times.~\citep{Peebles1968,ChungPei1995,Callin2006}
 
+The aforementioned equations originate from the Boltzmann equation, which can take the general form
+\begin{equation}\label{mil2:theo:eq:Boltzmann}
+    \frac{1}{n_1 \eu^{3x}} \dv{(n_1\eu^{3x})}{x} = - \frac{\Gamma_1}{\Hp(x)\eu^{-x}} \left[1- \frac{n_3 n_4}{n_1 n_2} \frac{n_1^{(0)} n_2^{(0)}}{n_3^{(0)} n_4^{(0)}}  \right]
+\end{equation}
+for a reaction $(1) + (2) \getsto (3) + (4)$, where $n_j$ ($n_j^{(0)}$) denotes the (equilibrium) number density of $j=1,2,3,4$. The interaction rate $\Gamma_1 = n_2 \langle\sigma v\rangle$ depends on the thermally averaged cross-section $\langle\sigma v\rangle$ that we get from quantum field theory (QFT). If $\Gamma_1 \gg \Hp\eu^{-x}$ (recall: $\Hp(x)\eu^{-x}= H$, the expansion rate of the universe), 
 
+\textcolor{blue}{\cdots}
+
+
+When the interactions are sufficiently efficient, we will have equilibrium and the bracket in \cref{mil2:theo:eq:Boltzmann} goes to zero. This is how the Saha equation arises. %For computational science, this approximation is very useful. The 
+
+\textcolor{blue}{\cdots}
+
+% \feynmandiagram [horizontal=a to b] {
+%   i1 [particle=\(e^{-}\)] -- [fermion] a -- [fermion] i2 [particle=\(e^{+}\)],
+%   a -- [photon, edge label=\(\gamma\), momentum'=\(k\)] b,
+%   f1 [particle=\(\mu^{+}\)] -- [fermion] b -- [fermion] f2 [particle=\(\mu^{-}\)],
+% };
 
 \subsubsection{Optical depth and visibility}\label[sec]{mil2:theo:sec:optical_depth}
     Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or no absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
