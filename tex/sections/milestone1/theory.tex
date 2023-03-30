@@ -83,11 +83,11 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     In the very early universe, only relativistic particles were present. Conveniently, this gives nice expressions for the initial conditions for~\cref{mil1:theo:eq:odes_time}:
     \begin{subequations}\label{mil1:theo:eq:time_initial_conditions}
         \begin{align}
-            \eta\ped{init} &= \int_{-\infty}^{x\ped{init}} \frac{c\eu^{x}}{H_0 \sqrt{\OmgR}} = \frac{c}{\Hp(x\ped{init})} \label{mil1:theo:eq:eta_init} \\
-            t\ped{init} &=  \int_{-\infty}^{x\ped{init}} \frac{\eu^{x}\eu^{x}}{H_0 \sqrt{\OmgR}} =\frac{\eu^{x\ped{init}}}{2 \Hp(x\ped{init})} \label{mil1:theo:eq:t_init} 
+            \eta\ped{init} &= \int_{-\infty}^{x\ped{init}}\dx{x}\frac{c\eu^{x}}{H_0 \sqrt{\OmgR}} = \frac{c}{\Hp(x\ped{init})} \label{mil1:theo:eq:eta_init} \\
+            t\ped{init} &=  \int_{-\infty}^{x\ped{init}}\dx{x} \frac{\eu^{x}\eu^{x}}{H_0 \sqrt{\OmgR}} =\frac{\eu^{x\ped{init}}}{2 \Hp(x\ped{init})} \label{mil1:theo:eq:t_init} 
         \end{align}
     \end{subequations}
-    Choosing such initial conditions, it is important to make sure $x\ped{init} \ll x\ped{eq}$ so that the approximation on $\Hp(x)$ is viable. 
+    Choosing such initial conditions, it is important to make sure $x\ped{init} \ll x\ped{eq}$ so that the approximation $\Hp(x) \simeq H_0 \sqrt{\OmgR} \eu^{-x}$ is viable. 
 
     % Believe there is a pun on E.T.A. here somewhere
 
@@ -101,14 +101,14 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \end{equation}
     and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\diff r<0;\, \diff\theta^2 = \diff\phi^2 =0$) photon ($d s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$).~\cref{mil1:theo:eq:FRW_spherical} gives
     \begin{equation}\label{mil1:theo:eq:integral_for_r}
-        \int_r^0 \frac{-\diff r'}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\diff \eta'
+        \int_r^0\dx{r'} \frac{-1}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\dx{\eta'}
     \end{equation}
     of which the right-hand side is the comoving distance $\chi= \eta_0-\eta$. We evaluate the left integral in~\cref{mil1:theo:eq:integral_for_r} and find
     \begin{equation}\label{mil1:theo:eq:r_of_chi}
         r(\chi) = \begin{cases}
-            \chi \cdot \frac{\sin\left( \sqrt{\abs{\OmgK}} H_0 \chi/c\right)  }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\
+            \chi \cdot \frac{\sin{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c\right) } }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\
             \chi                                                                                     &\OmgK = 0\\
-            \chi \cdot \frac{\sinh\left( \sqrt{\abs{\OmgK}} H_0 \chi/c  \right)}{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK > 0
+            \chi \cdot \frac{\sinh{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c  \right)}}{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK > 0
         \end{cases}.
     \end{equation}
     

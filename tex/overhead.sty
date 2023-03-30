@@ -1,5 +1,7 @@
 \documentclass{../../../texmex/aa} 
 
+% !TEX root = ../../main.tex
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
@@ -56,7 +58,7 @@
 % Table formatting:
 \usepackage{booktabs,dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}} % "decimal" column type
-\renewcommand{\ast}{{}^{\textstyle *}} % for raised "asterisks"
+% \renewcommand{\ast}{{}^{\textstyle *}} % for raised "asterisks"
 
 % i do not remember ...
 \makeatletter
@@ -73,12 +75,19 @@
 
 
 % MATH STUFF
-\newcommand{\diff}{\mathrm{d}}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
+
+\newcommand{\dx}[1]{\!\!\diff {#1}\,} % for integrals..
 
 
 
 
+
+
+
+% \providecommand*{\eu}{\ensuremath{\mathrm{e}}}  % the number `e'
 \providecommand*{\eu}{\ensuremath{\mathrm{e}}}  % the number `e'
+
 \providecommand*{\im}{\ensuremath{\mathrm{i}}}  % the imaginary unit
 
 % single word sub/superscrips:
@@ -118,7 +127,8 @@
 \providecommand*{\expr}{\ensuremath{\mathfrak{U}}}      % random expression (fraktur U)
 
 
-
+% Substript for freeze-out:
+\newcommand{\pedfo}[1]{_{#1,\mathrm{fo}}}
 
 
 
