@@ -13,7 +13,7 @@
 %     \item !!!!! Interpretation of tau, g, rs
 % \end{itemize}
 
-The process that keeping the photons ($\gamma$) coupled to electrons ($e^{-}$) in the early universe is called Thomson scattering and is the low-energy case of Compton scattering,
+The process that is keeping the photons ($\gamma$) coupled to electrons ($e^{-}$) in the early universe is called Thomson scattering and is the low-energy case of Compton scattering,
 \begin{equation}\label{mil2:theo:eq:Compton_Thomson}
     \gamma + e^{-} \getsto \gamma + e^{-},
 \end{equation}
@@ -30,16 +30,16 @@ These basic principles are amongst those that Jim Peebles and collaborators~\cit
 
 The aforementioned equations originate from the Boltzmann equation, which can take the general form
 \begin{equation}\label{mil2:theo:eq:Boltzmann}
-    \frac{1}{n_1 \eu^{3x}} \dv{(n_1\eu^{3x})}{x} = - \frac{\Gamma_1}{\Hp(x)\eu^{-x}} \left[1- \frac{n_3 n_4}{n_1 n_2} \frac{n_1^{(0)} n_2^{(0)}}{n_3^{(0)} n_4^{(0)}}  \right]
+    \frac{1}{n_1 \eu^{3x}} \dv{\left(n_1\eu^{3x}\right)}{x} = - \frac{\Gamma_1}{\Hp(x)\eu^{-x}} \left[1- \frac{n_3 n_4}{n_1 n_2} \frac{n_1^{(0)} n_2^{(0)}}{n_3^{(0)} n_4^{(0)}}  \right]
 \end{equation}
-for a reaction $(1) + (2) \getsto (3) + (4)$, where $n_j$ ($n_j^{(0)}$) denotes the (equilibrium) number density of $j=1,2,3,4$. The interaction rate $\Gamma_1 = n_2 \langle\sigma v\rangle$ depends on the thermally averaged cross-section $\langle\sigma v\rangle$ that we get from quantum field theory (QFT). If $\Gamma_1 \gg \Hp\eu^{-x}$ (recall: $\Hp(x)\eu^{-x}= H$, the expansion rate of the universe), 
+for a reaction $(1) + (2) \getsto (3) + (4)$, where $n_j$ ($n_j^{(0)}$) denotes the (equilibrium) number density of $j=1,2,3,4$. The interaction rate $\Gamma_1 = n_2 \langle\sigma v\rangle$ depends on the thermally averaged cross-section $\langle\sigma v\rangle$ that we get from quantum field theory (QFT). We provide a qualitative discussion of this equation below.
 
-\textcolor{blue}{\dots}
+If $\Gamma_1 \gg \Hp\eu^{-x}$ (recall: $\Hp(x)\eu^{-x}= H$, the expansion rate of the universe), the rate at which the interaction is happening is large enough to keep up with the expansion of the surroundings, and the system is driven towards equilibrium ($n_j = n_j^{(0)}$). When the interactions are sufficiently efficient, we will have equilibrium and the bracket in \cref{mil2:theo:eq:Boltzmann} goes to zero. This is how the Saha equation arises. One may wonder why we consider this approximation at all when we have a completely fine ODE. However, in numerical analysis, the subtraction in said bracket may result in a ``catastrophic cancellation'', hence the Saha approximation for the equilibrium case is necessary.
 
+Once $\Gamma_1 \sim \Hp\eu^{-x}$, the interaction rate is comparable to the expansion rate and this dynamic equilibrium is no longer upheld. We say that the particles involved \textit{decouple} from the primordial plasma. After decoupling, a species evolves independently.
 
-When the interactions are sufficiently efficient, we will have equilibrium and the bracket in \cref{mil2:theo:eq:Boltzmann} goes to zero. This is how the Saha equation arises. %For computational science, this approximation is very useful. The 
+When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of \cref{mil2:theo:eq:Boltzmann} is practically zero and $n_1$ goes as $\eu^{-3}$, meaning that the number density of $(1)$ is constant in a comoving volume. If $(1)$ is massive, we say that it \textit{freezes out} at this point, and expect to find the same fractional abundance today.
 
-\textcolor{blue}{\dots}
 
 % \feynmandiagram [horizontal=a to b] {
 %   i1 [particle=\(e^{-}\)] -- [fermion] a -- [fermion] i2 [particle=\(e^{+}\)],
@@ -128,7 +128,7 @@ When the interactions are sufficiently efficient, we will have equilibrium and t
         R \equiv \frac{\Omega\ped{b}(x)}{\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
     \end{equation}
     The comoving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $r_s(x)$ to the ODE
-    \begin{equation}
+    \begin{equation}\label{mil2:theo:eq:ode_rs_of_x}
         \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
     \end{equation}
     Evaluating $r_s(x\!=\!x\ped{*})$ gives the sound horizon at decoupling (assuming $x\ped{dec}\simeq x\ped{*}$). At this point, the plasma through which sound waves propagate is no longer present and the waves are frozen in.
