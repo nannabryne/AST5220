@@ -1,8 +1,9 @@
 #include "backgroundcosmology.h"
 
-//====================================================
-// Constructors
-//====================================================
+
+//  ----------------------------------
+//  CONSTRUCT
+//  ----------------------------------
 
 BackgroundCosmology::BackgroundCosmology(
     double h0, 
@@ -81,7 +82,7 @@ void BackgroundCosmology::solve_cosmic_time(int nsteps){
 
 }
 
-void BackgroundCosmology::solve(int nsteps, bool print_milestones){
+void BackgroundCosmology::solve(bool print_milestones, int nsteps){
 
   Utils::StartTiming("eta");  
   solve_conformal_time(nsteps);
@@ -100,53 +101,6 @@ void BackgroundCosmology::solve(int nsteps, bool print_milestones){
 void BackgroundCosmology::milestones(int nsteps){
 
   //  Locate milestones
-
-  // // Vector x_array = Utils::linspace(x_start, x_end, nsteps+1);
-  // bool rad=true, mat=false, DE=false;
-  // int i = 0;
-  // double OmR, OmM, OmL;
-  // double dHpdx = dHpdx_of_x(x_start);
-  // double xi = x_array[0];
-  // double x_eq, x_acc, x_L, x_0; 
-
-  // // R-M eq
-  // while(rad && i<=nsteps){
-  //   OmR = get_OmegaR(x_array[i+1]);
-  //   OmM = get_OmegaM(x_array[i+1]);
-  //   if(OmM>=OmR){
-  //     mat = true;
-  //     rad = false;
-  //     x_eq = x_array[i];
-  //   }
-  //   i++;
-  // }
-
-  // // acceleration starts
-  // while(mat && i<=nsteps && dHpdx<=0){
-  //   dHpdx = dHpdx_of_x(x_array[i+1]);
-  //   i++;
-  // }
-  // x_acc = x_array[i-1];
-
-  // // M-DE eq
-  // while(mat && i<=nsteps){
-  //   OmM = get_OmegaM(x_array[i+1]);
-  //   OmL = get_OmegaLambda(x_array[i+1]);
-  //   if(OmL>=OmM){
-  //     DE = true;
-  //     mat = false;
-  //     x_L = x_array[i];
-  //   }
-  //   i++;
-  // }
-
-  // // today
-  // while(DE && i<=nsteps && xi<=0.){
-  //   xi = x_array[i+1];
-  //   i++;
-  // }
-  // x_0 = x_array[i-1];
-
 
   double x_eq = log(OmegaR0/OmegaM0);
   double x_L = 1./3.*log(OmegaM0/OmegaLambda0);

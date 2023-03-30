@@ -51,29 +51,23 @@ int main(int narg, char **argv){
 
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, OmegaK, Neff, TCMB);
     cosmo.info();
-    cosmo.solve(1e5, true);
+    cosmo.solve(true, 1e5);
     
     
     // Output background evolution quantities
     cosmo.output("background_cosmology.txt");
 
     // m1_MCMC();
-
-    // if(narg>1){
-    //     // MCMC analysis
-    //     if(argv[1]=="MCMC")
-    //         m1_MCMC();
-    // }
     
-    // //  ----------------------
-    // //  Milestone II
-    // //  ----------------------
+    //  ----------------------
+    //  Milestone II
+    //  ----------------------
 
 
     // Solve the recombination history
     RecombinationHistory rec(&cosmo, Yp);
     rec.info();
-    rec.solve(8e5, 8e5, true);
+    rec.solve(true);
 
     // Output recombination quantities
     rec.output("recombination.txt");
@@ -82,7 +76,7 @@ int main(int narg, char **argv){
     // Compare with solution using only Saha
     RecombinationHistory rec_noPee(&cosmo, Yp);
     rec_noPee.set_Saha_limit(0.0);
-    rec_noPee.solve(8e5, 8e5, true);
+    rec_noPee.solve(true);
 
     // Output recombination quantities
     rec_noPee.output("recombination_Saha_only.txt");

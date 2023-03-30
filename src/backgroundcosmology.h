@@ -40,6 +40,13 @@ class BackgroundCosmology{
     double Xi1(double x) const;
     /* Ξ_2(x) */
     double Xi2(double x) const;
+
+
+    /**
+     * @brief Locate milestones and print result.
+     * @param nsteps number of steps in x-array
+    */
+    void milestones(int nsteps);
  
   public:
 
@@ -54,6 +61,7 @@ class BackgroundCosmology{
      * @param OmegaK0 curvature density today ( = 1 - Σ(Ω_i0) )
      * @param Neff effective number of relativistic species (3.046 or 0 if ignoring neutrinos)
      * @param TCMB0 CMB temperature today [K]
+     * @return Backgroundcosmology-object
     */
     BackgroundCosmology(
         double h0, 
@@ -82,28 +90,22 @@ class BackgroundCosmology{
 
     /**
      * @brief Solve the background by finding eta(x).
-     * @param nsteps number of points in x-array
+     * @param nsteps number of steps in x-array
     */
     void solve_conformal_time(int nsteps=1e4);
 
     /**
      * @brief Solve the background by finding t(x).
-     * @param nsteps number of points in x-array
+     * @param nsteps number of steps in x-array
     */
     void solve_cosmic_time(int nsteps=1e4);
 
     /**
      * @brief Solve the background.
-     * @param nsteps number of points in x-array
      * @param print_milestones whether to print the table showing the time positions of the milestones
+     * @param nsteps number of steps in x-array
     */
-    void solve(int nsteps=1e4, bool print_milestones=true);
-
-    /**
-     * @brief Locate milestones and print result.
-     * @param nsteps number of points in x-array
-    */
-   void milestones(int nsteps);
+    void solve(bool print_milestones=true, int nsteps=1e4);
 
 
     // >> get-methods:
@@ -111,137 +113,159 @@ class BackgroundCosmology{
     /**
      * @brief Compute the redshift z(x).
      * @param x the time point x = ln(a)
+     * @return z(x)
     */
     double z_of_x(double x) const;
 
     /**
      * @brief Compute the conformal time η(x).
      * @param x the time point x = ln(a)
+     * @return η(x)
     */
     double eta_of_x(double x) const;
 
     /**
      * @brief Compute the cosmic time t(x).
      * @param x the time point x = ln(a)
+     * @return t(x)
     */
     double t_of_x(double x) const;
 
     /**
      * @brief Compute the photon radius r(χ).
      * @param Chi the comoving distance χ = η(x=0) - n(x)
+     * @return r(χ)
     */
     double r_of_Chi(double Chi) const;
 
     /**
      * @brief Compute the comoving distance χ(x).
      * @param x the time point x = ln(a)
+     * @return χ(x)
     */
     double Chi_of_x(double x) const;
 
     /**
      * @brief Compute the angular distance d_A(x).
      * @param x the time point x = ln(a)
+     * @return d_A(x)
     */
     double dA_of_x(double x) const;
-
 
     /**
      * @brief Compute the luminosity distance d_L(x).
      * @param x the time point x = ln(a)
+     * @return d_L(x)
     */
     double dL_of_x(double x) const;
 
     /**
      * @brief Compute the Hubble factor H(x).
      * @param x the time point x = ln(a)
+     * @return H(x)
     */
     double H_of_x(double x) const;
 
     /**
-     * @brief Compute the scaled Hubble factor Hp(x).
+     * @brief Compute the conformal Hubble factor Hp(x).
      * @param x the time point x = ln(a)
+     * @return Hp(x)
     */
     double Hp_of_x(double x) const;
 
     /**
-     * @brief Compute the total time derivative of the scaled Hubble factor Hp'(x).
+     * @brief Compute the total time derivative of the conformal Hubble factor Hp'(x).
      * @param x the time point x = ln(a)
+     * @return d/dx[Hp(x)]
     */
     double dHpdx_of_x(double x) const;
 
     /**
-     * @brief Compute the double total time derivative of the scaled Hubble factor Hp''(x).
+     * @brief Compute the double total time derivative of the conformal Hubble factor Hp''(x).
      * @param x the time point x = ln(a)
+     * @return d^2/dx^2[Hp(x)]
     */
     double ddHpdxx_of_x(double x) const;
 
     /**
      * @brief Compute the baryon density Ω_b(x).
      * @param x the time point x = ln(a)
+     * @return Ω_b(x)
     */
     double get_Omegab(double x = 0.0) const; 
 
     /**
-     * @brief Compute the total matter density Ω_M(x).
+     * @brief Compute the total matter density Ω_m(x).
      * @param x the time point x = ln(a)
+     * @return Ω_m(x)
     */
     double get_OmegaM(double x = 0.0) const; 
 
     /**
      * @brief Compute the photon density Ω_γ(x).
      * @param x the time point x = ln(a)
+     * @return Ω_γ(x)
     */
     double get_Omegagamma(double x = 0.0) const;
 
     /**
-     * @brief Compute the total radiation density Ω_R(x).
+     * @brief Compute the total radiation density Ω_r(x).
      * @param x the time point x = ln(a)
+     * @return Ω_r(x)
     */
     double get_OmegaR(double x = 0.0) const; 
 
     /**
      * @brief Compute the neutrino density Ω_ν(x).
      * @param x the time point x = ln(a)
+     * @return Ω_ν(x)
     */
     double get_Omeganu(double x = 0.0) const;
 
     /**
-     * @brief Compute the cold dark matter density Ω_CDM(x).
+     * @brief Compute the cold dark matter density Ω_c(x).
      * @param x the time point x = ln(a)
+     * @return Ω_c(x)
     */
     double get_OmegaCDM(double x = 0.0) const; 
 
     /**
      * @brief Compute the dark energy density Ω_Λ(x).
      * @param x the time point x = ln(a)
+     * @return Ω_Λ(x)
     */
     double get_OmegaLambda(double x = 0.0) const; 
 
     /**
      * @brief Compute the curvature density Ω_k(x).
      * @param x the time point x = ln(a)
+     * @return Ω_k(x)
     */
     double get_OmegaK(double x = 0.0) const; 
 
     
     /**
-     * @brief Get the Hubble parameter today H(x=0) = H0.
+     * @brief Get the Hubble parameter today H(x=0) = H_0.
+     * @return H_0
     */
     double get_H0() const;
 
     /**
      * @brief Get the little Hubble parameter today h = H(x=0) / (100km/s / Mpc).
+     * @return h
     */
     double get_h() const;
 
     /**
-     * @brief Get the effective neutrino number.
+     * @brief Get the effective neutrino number N_eff.
+     * @return N_eff
     */
     double get_Neff() const;
 
     /**
      * @brief Compute the CMB temperature T_CMB(x).
      * @param x the time point x = ln(a)
+     * @return T_CMB(x)
     */
     double get_TCMB(double x = 0.0) const;
 
@@ -250,12 +274,14 @@ class BackgroundCosmology{
     /**
      * @brief Compute the luminosity distance d_L(x).
      * @param x the time point x = ln(a)
+     * @return d_L(x)
     */
     double get_luminosity_distance_of_x(double x) const;
     
     /**
      * @brief Compute the comoving distance χ(x).
      * @param x the time point x = ln(a)
+     * @return χ(x)
     */
     double get_comoving_distance_of_x(double x) const;
 
