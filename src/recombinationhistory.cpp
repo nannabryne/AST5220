@@ -292,7 +292,8 @@ int RecombinationHistory::rhs_Peebles_ode(double x, const double *Xe, double *dX
   double fac = (3*eps_0/(hbar*c));
   double Lambda_alpha = Hp_a * (fac*fac*fac) / (_8pi*_8pi) / n_1s;
   //  compute C_r:
-  double Cr = (Lambda_2s1s + Lambda_alpha) / (Lambda_2s1s + Lambda_alpha + beta2);
+  double Lambda = (Lambda_2s1s + Lambda_alpha)
+  double Cr = Lambda / (Lambda + beta2);
   
 
   //  find rhs:
