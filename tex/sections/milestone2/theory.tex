@@ -80,40 +80,44 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
         X_e = \frac{n_e}{n_e + n\ped{\element{H}}} = \frac{n_p}{n_p + n\ped{\element{H}}}.
     \end{equation}
 
-    Let $\varUpsilon\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying~\cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more suggestive form of the Saha equation
+    % \textcolor{blue}{
+    % The binding energy of hydrogen is $\epsilon_0  = 13.6\unit{eV}$.\footnote{Binding energy $B\ped{H}=m_e + m_p - m\ped{H}$}
+    % }
+    \please
+
+    The evolution of the baryon temperature $T\ped{b}=T\ped{b}(x)$ is non-trivial, and the precision gained from implementing the exact model is dissapointing. It suffices to assume $T\ped{b}\approx T\gped{\textgamma} = \TCMB \eu^{-x}$.~\citep{Callin2006}
+    
+    As the binding energy of hydrogen is $\epsilon_0 \simeq 13.6\unit{eV}$,\footnote{Binding energy: $\epsilon_0\equiv B\ped{H}=m_e + m_p - m\ped{H}$.} a natural guess is $x_* \approx $ \textcolor{blue}{send help}
+
+    \sendhelp
+
+    % as it turns out to evolve very much like the photon temperature $T\gped{\textgamma} $.
+    
+    Let $\varUpsilon= \epskT(T\ped{b})\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying~\cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more suggestive form of the Saha equation
     \begin{equation}\label{mil2:theo:eq:Saha}
         \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT}\,; \quad   0 < X_e \leq 1 \wedge X_e\sim 1.
     \end{equation}
-    The constraints on $X_e$ are that it is a positive number that cannot exceed 1 and the observation that it has to be close to 1. The latter constraint is due to the equilibrium assumption from which the Saha equation is derived: as $X_e$ falls the reaction rate for~\cref{mil2:theo:eq:relevant_interaction} falls and equilibrium is not guaranteed. To proceed, we need to solve the Boltzmann equation. More precisely, Jim Peebles needed to solve the Boltzmann equation, whereas we will study the product; a first-order ODE the \textit{Peebles equation}. Said equation reads
+    The constraints on $X_e$ are that it is a positive number that cannot exceed 1 and the observation that it has to be close to 1. The latter constraint is due to the equilibrium assumption from which the Saha equation is derived: as $X_e$ falls the reaction rate for~\cref{mil2:theo:eq:relevant_interaction} falls and equilibrium is not guaranteed. To proceed, we need to solve the Boltzmann equation. More precisely, Jim Peebles needed to solve the Boltzmann equation, whereas we shall study the product; a first-order named ODE the \textit{Peebles equation}. Said equation reads
     \begin{equation}\label{mil2:theo:eq:Peebles}
         \dv{X_e}{x} = \frac{C_r(T\ped{b})}{\Hp(x)\eu^{-x}} \left[ \beta(T\ped{b}) \left(1-X_e\right) - n\ped{\element{H}} \alpha^{(2)}(T\ped{b})X_e^2 \right],
     \end{equation}
     where the necessary mathematical expressions are the following:
     \begin{subequations}\label{mil2:theo:eq:Peebles_add}
         \begin{align}
-            C_r(T\ped{b}) &= \frac{\Lambda_{2s\to 1s}+ \Lambda_{\alpha}}{\Lambda_{2s\to 1s} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \label{mil2:theo:eq:Peebles_Cr} \\
-            \Lambda_{2s\to 1s} &=8.227\unit{s}^{-1} \label{mil2:theo:eq:Peebles_Lambda_2s1s}  \\
+            C_r(T\ped{b}) &= \frac{\Lambda_{2\gamma}+ \Lambda_{\alpha}}{\Lambda_{2\gamma} + \Lambda_\alpha + \beta^{(2)}(T\ped{b})} \label{mil2:theo:eq:Peebles_Cr} \\
+            \Lambda_{2\gamma} &=8.227\unit{s}^{-1} \label{mil2:theo:eq:Peebles_Lambda_2s1s}  \\
             \Lambda_\alpha &= \frac{\Hp\eu^{-x}}{(8\pi)^2 n_{1s}}\left( \frac{3\epsilon_0}{\hbar c}\right)^3 \label{mil2:theo:eq:Peebles_Lambda_alpha}  \\
-            n_{1s} &= (1-X_e)n\ped{H}\label{mil2:theo:eq:Peebles_n1s}\\
+            n_{1s} &\approx (1-X_e)n\ped{H}\label{mil2:theo:eq:Peebles_n1s}\\
             \beta^{(2)}(T\ped{b}) &= \beta(T\ped{b})\eu^{\sfrac{3}{4}\epskT} \label{mil2:theo:eq:Peebles_beta2} \\
             \beta (T\ped{b}) &= \alpha^{(2)}(T\ped{b}) \left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT} \label{mil2:theo:eq:Peebles_beta}  \\
             \alpha^{(2)}(T\ped{b}) &= \frac{8 c\sigma\ped{T} }{\sqrt{3\pi}}\sqrt{\epskT} \phi_2(T\ped{b}) \label{mil2:theo:eq:Peebles_alpha2} \\
-            \phi_2(T\ped{b}) &= 0.448\ln{\epskT} \label{mil2:theo:eq:Peebles_phi2}
+            \phi_2(T\ped{b}) &\approx 0.448\ln{\epskT} \label{mil2:theo:eq:Peebles_phi2}
         \end{align}
     \end{subequations}
-    A detailed description of~\cref{mil2:theo:eq:Peebles_add} is found in~\citet{Peebles1968}. The decay rates $\Lambda_\alpha$ and $\Lambda_{2s\to 1s}$ are the rates of the processes $2p\to 1s$ and $2s\to 1s$ mentioned in the beginning of \cref{mil2:sec:theo}, respectively. The reduction factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rates from the first excited level. Thus, $\beta^{(2)}$ represents the rate of reionisation \textcolor{blue}{(\dots)}
-
-    \textcolor{pink}{
-    The reduction factor is the probability that an atom in the first excited state reaches the ground state to one of the two pathways before being photoionised.}
+    A detailed description of~\cref{mil2:theo:eq:Peebles_add} is found in~\citet{Peebles1968}. We provide a brief summary of the model.
     
-    \colorbox{orange}{Necessary to describe components here??}
-    
-    ~\citep{DodelsonBook,ChungPei1995,Peebles1968}
-
-    % The reduction (or correction) factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rate () from the first excited level ($n=2$) (see~\cref{mil2:theo:eq:Peebles_Cr}).
-
-
-   
+    The decay rates $\Lambda_\alpha$ and $\Lambda_{2\gamma}$ are the rates of the processes $2p\to 1s$ and $2s\to 1s$ mentioned in the beginning of \cref{mil2:sec:theo}, respectively. $\beta^{(2)}$ represents the Lyman alpha production.
+    Thus, the correction factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rates from the first excited level. In other terms, $C_r$ is the probability that a hydrogen atom in $n=2$ actually reaches $n=1$ through emission of a Lyman-\textalpha~photon or two photons. The approximation of the number density of \element{H} in the ground state $n_{1s}$ is sensible for $T\ped{b}\ll 10^5\unit{K}$, i.e. for $x \ll \ln{\TCMB} -5\ln{10} \approx -10 $. Finally, $\beta$ is the ionization rate and $\alpha^{(2)}$ the recombination rate, where $\phi_2$ is also a good approximation at low temperatures.~\citep{DodelsonBook,ChungPei1995,Peebles1968}
 
     
 
