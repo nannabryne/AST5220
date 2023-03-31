@@ -167,6 +167,13 @@ class LaTeX:
         else:
         # s += "\,\sigma\!=\!%.2f)" %sigma
             return self(s1+s2)
+        
+    def TITLE(self, title):
+        words = title.split()
+        s = ""
+        for word in words:
+            s += "\mathsf{%s}~"%word
+        return self(s)
 
 
 
