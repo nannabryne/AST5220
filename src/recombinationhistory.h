@@ -227,9 +227,9 @@ class RecombinationHistory{
     double cs_of_x(double x) const;
 
     /**
-     * @brief Compute the sound horizon r_s(x). 
+     * @brief Compute the sound horizon s(x). 
      * @param x the time point x = ln(a)
-     * @return r_s(x)
+     * @return s(x)
     */
     double rs_of_x(double x) const;
 

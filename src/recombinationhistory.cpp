@@ -170,9 +170,8 @@ void RecombinationHistory::milestones(int nsteps){
   Vector x_array = Utils::linspace(-10, -4, nsteps+1);
   double gmax = 0., XXmin = 1., tauumin = 1.;
   int i = 0;
-  double x_lss = 0., x_rec = 0.;  // last scattering surface, recombination
-  double x_lss_alt = 0.;  // alternative definition
-  
+
+  double xa=0., xb=0., xc=0.;
   
   double g_curr, XX_curr, tauu_curr, x_curr;
   for(i=0; i<nsteps+1; i++){
@@ -180,24 +179,24 @@ void RecombinationHistory::milestones(int nsteps){
     g_curr = gt_of_x(x_curr);
     tauu_curr = abs(tau_of_x(x_curr) - 1.);
     XX_curr = abs(Xe_of_x(x_curr) - 0.1);
+   
+    if(XX_curr<XXmin){
+      XXmin = XX_curr;
+      xa = x_curr;
+    }
     if(g_curr>gmax){
       gmax = g_curr;
-      x_lss = x_curr;
+      xb = x_curr;
     }
     if(tauu_curr<tauumin){
       tauumin = tauu_curr;
-      x_lss_alt = x_curr;
+      xc = x_curr;
     }
-
-    if(XX_curr<XXmin){
-      XXmin = XX_curr;
-      x_rec = x_curr;
-    }
+   
   }
 
   double x_0 = 0.;
 
-  // x_lss = x_lss_alt;
 
 
   //  Print table
@@ -206,13 +205,15 @@ void RecombinationHistory::milestones(int nsteps){
   printf("______________________________________________________________________\n");
   printf("                            |      x           z             t       | \n");
   printf("----------------------------------------------------------------------\n");
-  printf("recombination               |");
-  printf(" %11.7f %11.3f %11.3f ka |\n", x_rec, cosmo->z_of_x(x_rec), cosmo->t_of_x(x_rec)*conv);
-  printf("last scattering surface     |");
-  printf(" %11.7f %11.3f %11.3f ka |\n", x_lss, cosmo->z_of_x(x_lss), cosmo->t_of_x(x_lss)*conv);
+  printf("tau = 1                     |");
+  printf(" %11.7f %11.3f %11.3f ka |\n", xc, cosmo->z_of_x(xc), cosmo->t_of_x(xc)*conv);
+  printf("X_e = 0.1                   |");
+  printf(" %11.7f %11.3f %11.3f ka |\n", xa, cosmo->z_of_x(xa), cosmo->t_of_x(xa)*conv);
+  printf("gt = max{gt}                |");
+  printf(" %11.7f %11.3f %11.3f ka |\n", xb, cosmo->z_of_x(xb), cosmo->t_of_x(xb)*conv);
   printf("----------------------------------------------------------------------\n");
   printf("f-o abundance of free electrons today: %11.7e \n", Xe_of_x(x_0));
-  printf("sound horizon at decoupling:           %11.3f Mpc\n", rs_of_x(x_lss)/Constants.Mpc);
+  printf("sound horizon at decoupling:           %11.3f Mpc\n", rs_of_x(xb)/Constants.Mpc);
   printf("----------------------------------------------------------------------\n");
 
   // printf("\nUsed %d+1 points in x-array from x=%.1f to x=%.1f.\n\n", nsteps, x_start, x_end);
@@ -292,7 +293,7 @@ int RecombinationHistory::rhs_Peebles_ode(double x, const double *Xe, double *dX
   double fac = (3*eps_0/(hbar*c));
   double Lambda_alpha = Hp_a * (fac*fac*fac) / (_8pi*_8pi) / n_1s;
   //  compute C_r:
-  double Lambda = (Lambda_2s1s + Lambda_alpha)
+  double Lambda = (Lambda_2s1s + Lambda_alpha);
   double Cr = Lambda / (Lambda + beta2);
   
 

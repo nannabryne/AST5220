@@ -13,7 +13,7 @@ void m1_MCMC(){
     std::cout << "\n\n";
 
     new_cosmo.info();
-    new_cosmo.solve(1e5, false);
+    new_cosmo.solve(false, 1e5);
 
     new_cosmo.output("revised_background_cosmology.txt");
 }

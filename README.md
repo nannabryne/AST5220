@@ -4,7 +4,12 @@ The project report is found [here](https://github.com/nannabryne/AST5220/blob/ma
 
 ## Milestone I: Background cosmology 
 *(first draft 05/03/23)*
-Relevant text found in Sec. 2 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_050323.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_050323.pdf`.
+Relevant text found in Sect. 2 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_050323.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_050323.pdf`.
+
+
+## Milestone II: Recombination history
+*(second draft 02/04/23)*
+Relevant text found in Sect. 3 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_020423.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_020423.pdf`. <mark> FIXME </mark>
 
 # Code
 All code is located in the `src/` directory.
@@ -46,7 +51,7 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`.
 - [x] Fix units in plots (km/s $\to$ km s $^{-1}$ )
 - [ ] Fix colours in density parameters plot
 - [ ] Coordinate fonts to be the same as in tex document
-- [ ] Fix labels in H, dHdx, ...-plots
+- [x] Fix labels in H, dHdx, ...-plots
 ## Coding
 - [ ] Structural changes
 - [x] (M1) What happened to the luminosity distance????
