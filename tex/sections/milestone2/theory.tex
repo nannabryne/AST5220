@@ -56,16 +56,24 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
     \begin{equation}\label{mil2:theo:eq:gt_of_x}
         \gti(x)= - \eu^{-\tau(x)} \dv{\tau(x)}{x},
     \end{equation}
-    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. The probability it describes, is that of a CMB photon's last interaction with an electron to have happened at $x$. This function will have a peak at the point in time when the mean free path of the photons increased tremendously---at the last scattering surface---which happened immediately after the number of free electrons dropped dramatically---during recombination. In mathematical terms, this decoupling happened when $\gti(x\ped{dec}) = \max{\gti(x)}$, or
-    \begin{equation}
-        \dv{\gti(x)}{x}\bigg|_{x=x\ped{dec}} = 0 \quad \Leftrightarrow\quad \left[\dv[2]{\tau(x)}{x} = \left(\dv{\tau(x)}{x} \right)^2 \right]_{x=x\ped{dec}}.
-    \end{equation}
-    The surface of last scattering can also be taken as the time when the universe is neither opaque nor transparent, i.e. the solution of $\tau(x\!=\!x\ped{dec}) = 1$. We will use the former, but expect to see that $\tau(x\ped{dec}) \simeq 1$ in any case. 
+    a proper probability distribution obeying $\int_{-\infty}^{0}\diff x\, \gti(x) = 1$. The probability it describes, is that of a CMB photon's last interaction with an electron to have happened at $x$. This function will have a peak at the point in time when the mean free path of the photons increased tremendously---at the last scattering surface---which happened immediately after the number of free electrons dropped dramatically. In mathematical terms, this decoupling happened when $\gti(x_*) = \max{\gti(x)}$. 
+    
+    We will take $x\ped{*}$ to mean the logarithmic cosmic scale factor at the epoch of recombination, and our primary definition of this will be the peak of the visibility function. However, there are ambiguities to the definition of this point in time. For instance, the surface of last scattering can also be taken as the time when the universe is neither opaque nor transparent, i.e. the solution of $\tau(x\!=\!x\ped{*}) = 1$. As mentioned above, photons decoupled when the interaction rate of the photons was equal the expansion rate of the universe.
 
-    We will take $x\ped{*}$ to mean the logarithmic scale factor at the time of recombination, which will be so close to the last scattering surface that it will also refer to this point in time when the distinction is not important. 
+
+    %We will use the former, but expect to see that $\tau(x\ped{*}) \simeq 1$ in any case. 
+    %, or
+    % \begin{equation}
+    %     \dv{\gti(x)}{x}\bigg|_{x=x\ped{dec}} = 0 \quad \Leftrightarrow\quad \left[\dv[2]{\tau(x)}{x} = \left(\dv{\tau(x)}{x} \right)^2 \right]_{x=x\ped{dec}}.
+    % \end{equation}
+   
+
+    % We will take $x\ped{*}$ to mean the logarithmic scale factor at the time of recombination, which will be so close to the last scattering surface that it will also refer to this point in time when the distinction is not important. 
+
+    
 
 \subsubsection{Hydrogen recombination}\label[sec]{mil2:theo:sec:recombination}
-    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x\ll x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!\ll\!x_*)\simeq 1$. We will let the time of recombination, $x_*$, be the solution to $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this definition, as with $x\ped{dec}$, vary in the literature.
+    Before we can compute the optical depth, we need to know the electron number density, $n_e$, at all times. We define the free electron fraction $X_e=X_e(x)\equiv n_e/n\ped{b}$ where $n\ped{b}$ is the total baryon number density. Before recombination, that is for $x\ll x_*$, all hydrogen is completely ionised, meaning that $X_e(x\!\ll\!x_*)\simeq 1$. We will consider the 90\% drop in fractional electron abundance mark the onset of recombination, i.e. when $X_e(x\!=\!x_*) = 0.1$. One should keep in mind that the number 0.1 is arbitrary and that this definition vary in the literature. 
 
     Consider the interaction that keeps electrons and protons in equilibrium with photons, i.e.~\cref{mil2:theo:eq:relevant_interaction}. Letting $n_s$ ($n_s^{(0)}$) denote the number density of a species/element $s$ (in equilibrium), the corresponding equilibrium equation is 
     \begin{align}\label{mil2:theo:eq:org_Saha}
@@ -83,17 +91,17 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
     % \textcolor{blue}{
     % The binding energy of hydrogen is $\epsilon_0  = 13.6\unit{eV}$.\footnote{Binding energy $B\ped{H}=m_e + m_p - m\ped{H}$}
     % }
-    \please
+    % \please
 
     The evolution of the baryon temperature $T\ped{b}=T\ped{b}(x)$ is non-trivial, and the precision gained from implementing the exact model is dissapointing. It suffices to assume $T\ped{b}\approx T\gped{\textgamma} = \TCMB \eu^{-x}$.~\citep{Callin2006}
     
-    As the binding energy of hydrogen is $\epsilon_0 \simeq 13.6\unit{eV}$,\footnote{Binding energy: $\epsilon_0\equiv B\ped{H}=m_e + m_p - m\ped{H}$.} a natural guess is $x_* \approx $ \textcolor{blue}{send help}
+    % As the binding energy of hydrogen is $\epsilon_0 \simeq 13.6\unit{eV}$,\footnote{Binding energy: $\epsilon_0\equiv B\ped{H}=m_e + m_p - m\ped{H}$.} a natural guess is $x_* \approx $ \textcolor{blue}{send help}
 
-    \sendhelp
+    % \sendhelp
 
     % as it turns out to evolve very much like the photon temperature $T\gped{\textgamma} $.
     
-    Let $\varUpsilon= \epskT(T\ped{b})\equiv \epsilon_0/(k\ped{B} T\ped{b} )$ for notational ease. Multiplying~\cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more suggestive form of the Saha equation
+    Let $\varUpsilon= \epskT(T\ped{b})\equiv \epsilon_0/(k\ped{B} T\ped{b})$, where $\epsilon_0 \simeq 13.6\unit{eV}$ is the binding energy of hydrogen, for notational ease. Multiplying~\cref{mil2:theo:eq:org_Saha} by $n\ped{b}^{-1}$ and inserting expressions for $n_s^{(0)}$, we obtain the more suggestive form of the Saha equation
     \begin{equation}\label{mil2:theo:eq:Saha}
         \frac{X_e^2}{1-X_e}= \frac{1}{n\ped{b}}\left(\frac{m_e k\ped{B} T\ped{b}}{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{-\epskT}\,; \quad   0 < X_e \leq 1 \wedge X_e\sim 1.
     \end{equation}
@@ -129,10 +137,10 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
     \end{equation}
     where the baryon-to-photon energy ratio is defined as
     \begin{equation}
-        R \equiv \frac{\Omega\ped{b}(x)}{\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
+        R \equiv \frac{3\Omega\ped{b}(x)}{4\Omega\gped{\textgamma}(x)} =  \frac{3\Omega\ped{b0}}{4\Omega\gped{\textgamma 0}}\eu^x.
     \end{equation}
-    The comoving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $r_s(x)$ to the ODE
+    The comoving distance travelled by a sound wave---the sound horizon---at time $x$ as the solution $s(x)$ to the ODE
     \begin{equation}\label{mil2:theo:eq:ode_rs_of_x}
-        \dv{r_s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad r_s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
+        \dv{s}{x} = \frac{c_s}{\Hp(x)}\, ; \quad s(x\ped{init}) = \frac{c_s(x\ped{init})}{\Hp(x\ped{init}) }.
     \end{equation}
-    Evaluating $r_s(x\!=\!x\ped{*})$ gives the sound horizon at decoupling (assuming $x\ped{dec}\simeq x\ped{*}$). At this point, the plasma through which sound waves propagate is no longer present and the waves are frozen in.
+    Evaluating $s_*\equiv s(x\!=\!x\ped{*})$ gives the sound horizon at decoupling. At this point, the plasma through which sound waves propagate is no longer present and the waves are frozen in.

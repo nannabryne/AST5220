@@ -5,7 +5,7 @@
 % --------------------------------------
 % PAST TENSE
 
-We implemented a class in \verb|C++| that assumes a background, an object of the class from~\cref{mil1:sec:imp}, and a primordial helium abundance $Y_P$. The code we wrote calculated $X_e(x)$ (and $n_e(x)$) from the Saha and Peebles equations and computed $\tau(x)$ as well as $\gti(x)$, $\dv*[]{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ for a given array of $x$-values. We added a computation of $r_s(x)$ to find the sound horizon at decoupling.
+We implemented a class in \verb|C++| that assumes a background, an object of the class from~\cref{mil1:sec:imp}, and a primordial helium abundance $Y_P$. The code we wrote calculated $X_e(x)$ (and $n_e(x)$) from the Saha and Peebles equations and computed $\tau(x)$ as well as $\gti(x)$, $\dv*[]{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ for a given array of $x$-values. We added a computation of $s(x)$ to find the sound horizon at decoupling.
 
 We ran an additional simulation where we assumed equilibrium all the way, that is we solved for $X_e(x)$ using only the Saha equation. 
 
@@ -26,4 +26,4 @@ We ran an additional simulation where we assumed equilibrium all the way, that i
     We used the analytical expressions in~\cref{mil2:theo:eq:ode_tau_of_x} and~\cref{mil2:theo:eq:gt_of_x} for $\dv*{\tau(x)}{x}$ and $\gti(x)$, respectively, and found $\dv*[2]{\tau(x)}{x}$, $\dv*{\gti(x)}{x}$ and $\dv*[2]{\gti(x)}{x}$ numerically. 
 
 \subsubsection{Sound horizon}\label[sec]{mil2:imp:sec:rs}
-    The computation of $r_s(x)$ was a straight-forward numerical integration of~\cref{mil2:theo:eq:ode_rs_of_x} for $x\in[-12, 0]$, again using RK4 with $8\cross10^5$ steps. Having $x\ped{init}=-12$ ensures radiation domination (see \cref{mil1:res:fig:density_params}), so the initial condition is valid.
+    The computation of $s(x)$ was a straight-forward numerical integration of~\cref{mil2:theo:eq:ode_rs_of_x} for $x\in[-12, 0]$, again using RK4 with $8\cross10^5$ steps. Having $x\ped{init}=-12$ ensures radiation domination (see \cref{mil1:res:fig:density_params}), so the initial condition is valid.
