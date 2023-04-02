@@ -23,7 +23,11 @@ For running `Python` code, one needs this:
 - `seaborn` 
 
 ## How to run
-Go to the `src/` directory. To run all simulations, type:
+Go to the `src/` directory. Create a build directory unless you have not already, by typing:
+```
+make dir
+```
+To run all simulations, type:
 ```
 make clean
 make all
@@ -35,8 +39,9 @@ make autorun
 ~~~
 To produce plots, run:
 ~~~
-make plots
+make plotsX
 ~~~
+where `X` is the milestone number.
 
 ## Plotting source
 We produce plots using `Python` and relevant code is found in `src/plotting/`. 
