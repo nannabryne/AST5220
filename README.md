@@ -9,7 +9,8 @@ Relevant text found in Sect. 2 of the report. However, a [copy](https://github.c
 
 ## Milestone II: Recombination history
 *(second draft 02/04/23)*
-Relevant text found in Sect. 3 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_020423.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_020423.pdf`. <mark> FIXME </mark>
+Relevant text found in Sect. 3 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_020423.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_020423.pdf`.
+
 
 # Code
 All code is located in the `src/` directory.
