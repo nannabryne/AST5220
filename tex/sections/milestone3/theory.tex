@@ -56,6 +56,10 @@
 %     &- \delta_{\ell,0}\dv{\Phi}{x} + \delta_{\ell,1}\left[\frac{ck}{3\Hp}\Psi + \dv{\tau}{x}\frac{u\ped{b}}{3}\right] - \delta_{\ell,2} \dv{\tau}{x}\frac{\Theta_\ell}{10}
 % \end{split}
 % \end{equation}
+\par \textcolor{blue}{$\ell = \ell\ped{max}$}
+\begin{subequations}
+    
+
 \begin{equation}
 \begin{split}
     \dv{\Theta_\ell}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
@@ -65,11 +69,13 @@
 \end{equation}
 
 
-\par \textcolor{blue}{$\ell = \ell\ped{max}$}
+
 
 \begin{equation}
     \dv{\Theta_{\ell\ped{max}}}{x} = \frac{ck}{\Hp} \Theta_{\ell\ped{max}-1} - \frac{c(\ell\ped{max}+1)}{\Hp \eta}\Theta_{\ell\ped{max}} + \dv{\tau}{x} \Theta_{\ell\ped{max}}
 \end{equation}
+
+\end{subequations}
 % \begin{equation}\label{mil3:theo:eq:photontemp_perturbations}
 % \dv{\Theta_\ell}{x} = \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) + \dv{\tau}{x}\Theta_\ell
 
@@ -98,7 +104,7 @@
     \delta\ped{c, b}&= -\frac{3}{2} \Psi     \label{mil3:theo:eq:init_delta}\\
     u\ped{c, b}     &= -\frac{ck}{2\Hp} \Psi \label{mil3:theo:eq:init_u}\\
     \Theta_\ell &=\begin{cases}
-        -\frac{1}{2}\Psi     & \ell = 0 \\
+        -\frac{1}{2}\Psi     & \ell = 0  \\
         -\frac{ck}{3\Hp} \Theta_0 & \ell = 1 \\ 
         -\frac{8ck}{15\Hp\dv*{\tau}{x}}\Theta_1    & \ell = 2 \\ 
         -\frac{\ell}{2\ell+1} \frac{ck}{15\Hp\dv*{\tau}{x}} \Theta_{\ell-1} &\ell \geq 3
@@ -107,3 +113,15 @@
 \end{subequations}
 
 
+\noindent\colorbox{orange}{TIGHT COUPLING REGIME:}
+
+\begin{subequations}\label{mil3:theo:eq:tight_regime}
+\begin{equation}
+\begin{split}
+    q &= &&\left[(1+R^{-1})\dv{\tau}{x} +\frac{1}{\Hp}\dv{\Hp}{x} -1\right]^{-1} \cross \\
+    &\,&&\Bigg\{ \left[(1-R^{-1})\dv{\tau}{x} + (1+R^{-1})\dv[2]{\tau}{x}\right] (3\Theta_1 + u\ped{b}) \\
+    &\,&&  - \frac{ck}{\Hp} \left[  \Psi + \left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\left(-\Theta_0+ 2\Theta_2\right)- \dv{\Theta_0}{x}\right]
+    \Bigg\}
+\end{split}
+\end{equation}
+\end{subequations}
