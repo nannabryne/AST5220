@@ -2,6 +2,7 @@
 #include "backgroundcosmology.h"
 #include "supernovafitting.h"
 #include "recombinationhistory.h"
+#include "perturbations.h"
 
 
 
@@ -16,6 +17,17 @@ void m1_MCMC(){
     new_cosmo.solve(false, 1e5);
 
     new_cosmo.output("revised_background_cosmology.txt");
+}
+
+
+void m2_Saha(BackgroundCosmology cosmo){
+    // Compare with solution using only Saha
+    RecombinationHistory rec_noPee(&cosmo, 0);
+    rec_noPee.set_Saha_limit(0.0);
+    rec_noPee.solve(false);
+
+    // Output recombination quantities
+    rec_noPee.output("recombination_Saha_only.txt");
 }
 
 
@@ -42,6 +54,9 @@ int main(int narg, char **argv){
     double n_s         = 0.965;
     double kpivot_mpc  = 0.05;
 
+    // Print tables?
+    bool print = false;
+
 
     //  ----------------------
     //  Milestone I
@@ -51,7 +66,7 @@ int main(int narg, char **argv){
 
     BackgroundCosmology cosmo(h, Omegab, OmegaCDM, OmegaK, Neff, TCMB);
     cosmo.info();
-    cosmo.solve(true, 1e5);
+    cosmo.solve(print, 1e5);
     
     
     // Output background evolution quantities
@@ -59,6 +74,7 @@ int main(int narg, char **argv){
 
     // m1_MCMC();
     
+
     //  ----------------------
     //  Milestone II
     //  ----------------------
@@ -67,20 +83,27 @@ int main(int narg, char **argv){
     // Solve the recombination history
     RecombinationHistory rec(&cosmo, Yp);
     rec.info();
-    rec.solve(true);
+    rec.solve(print);
 
     // Output recombination quantities
     rec.output("recombination.txt");
-    
 
-    // Compare with solution using only Saha
-    RecombinationHistory rec_noPee(&cosmo, Yp);
-    rec_noPee.set_Saha_limit(0.0);
-    rec_noPee.solve(true);
+    // m2_Saha(cosmo);
 
-    // Output recombination quantities
-    rec_noPee.output("recombination_Saha_only.txt");
+
+    //  ----------------------
+    //  Milestone III
+    //  ----------------------
+
+    // Solve the perturbations
+    Perturbations pert(&cosmo, &rec);
+    // pert.solve();
+    pert.info();
     
+    // Output perturbation quantities
+    double kvalue = 0.01 / Constants.Mpc;
+    // pert.output(kvalue, "perturbations_k0.01");
+        
 
 
     return 0;

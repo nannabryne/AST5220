@@ -36,7 +36,13 @@ OPTIONS += -D_SPLINE_WARNINGS_ON				#	show warnings if atempting to evaluate a s
 # 	Object files and dependencies:
 #	-	-	-	-	-	-	-	-	-	-	-	-
 
-OBJS_ = main.o utils.o backgroundcosmology.o recombinationhistory.o spline.o ODESolver.o
+
+OBJ1 = backgroundcosmology
+OBJ2 = recombinationhistory
+OBJ3 = perturbations
+OBJ0 = main utils spline ODESolver
+
+OBJS_ = main.o utils.o backgroundcosmology.o recombinationhistory.o perturbations.o spline.o ODESolver.o
 OBJS = $(addprefix $(BUILD_DIR)/, $(OBJS_))
 
 main.o					: backgroundcosmology.h
@@ -45,6 +51,8 @@ ODESolver.o             : ODESolver.h
 utils.o                 : utils.h spline.h ODESolver.h
 backgroundcosmology.o   : backgroundcosmology.h utils.h spline.h ODESolver.h
 recombinationhistory.o  : recombinationhistory.h backgroundcosmology.h
+perturbations.o         : perturbations.h backgroundcosmology.h recombinationhistory.h 
+powerspectrum.o         : powerspectrum.h backgroundcosmology.h recombinationhistory.h perturbations.h
 
 
 
