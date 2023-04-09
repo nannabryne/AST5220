@@ -24,7 +24,7 @@ class RecombinationHistory{
     double Y_P;  // fractional abundance of helium (primordial value)
  
     // The start and end points for recombination arrays
-    const double x_start  = -12.;
+    const double x_start  = -20;
     const double x_end    = 0.;
   
     double Xe_Saha_limit = 0.99;  // X_e for when to switch between Saha and Peebles
@@ -55,7 +55,7 @@ class RecombinationHistory{
      * @brief Solve recombination by finding X_e(x) and n_e(x).
      * @param nsteps number of steps in x-array
     */
-    void solve_number_density_electrons(int nsteps=80000);
+    void solve_number_density_electrons(int nsteps=8e5);
     
 
     //===============================================================
@@ -66,7 +66,7 @@ class RecombinationHistory{
      * @brief Solve ODE to find τ(x) and gt(x).
      * @param nsteps number of steps in integration
     */
-    void solve_for_optical_depth_tau(int nsteps=80000);
+    void solve_for_optical_depth_tau(int nsteps=8e5);
 
 
     //===============================================================
@@ -78,7 +78,7 @@ class RecombinationHistory{
      * @brief Solve ODE to find r_s(x).
      * @param nsteps number of steps in integration
     */
-    void solve_for_sound_horizon(int nsteps=80000);
+    void solve_for_sound_horizon(int nsteps=8e5);
 
 
     //===============================================================

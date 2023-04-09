@@ -397,7 +397,7 @@ void RecombinationHistory::info() const{
 void RecombinationHistory::output(const std::string filename) const{
   std::ofstream fp(OUTPUT_PATH + filename.c_str());
   const int npts       = 5000;
-  const double x_min   = x_start;
+  const double x_min   = -12;
   const double x_max   = x_end;
 
   Vector x_array = Utils::linspace(x_min, x_max, npts);
