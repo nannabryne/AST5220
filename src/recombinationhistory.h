@@ -66,7 +66,7 @@ class RecombinationHistory{
      * @brief Solve ODE to find τ(x) and gt(x).
      * @param nsteps number of steps in integration
     */
-    void solve_for_optical_depth_tau(int nsteps=8e5);
+    void solve_for_optical_depth_tau(int nsteps=1e5);
 
 
     //===============================================================
