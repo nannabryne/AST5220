@@ -283,6 +283,7 @@ Vector Perturbations::set_ic_after_tight_coupling(
   // ...
 
   double Psi = get_Psi(x, k);
+  double dtau_inv = 1./rec->dtaudx_of_x(x);
 
   // SET: Scalar quantities (Gravitational potental, baryons and c)
   // ...
@@ -303,10 +304,10 @@ Vector Perturbations::set_ic_after_tight_coupling(
   int ell=0, ell_tc=n_ell_Theta_tc-1, ell_max=n_ell_Theta-1;
 
   for(ell=0; ell<=ell_tc; ell++){
-    Theta[ell] = Theta_tc[ell]
+    Theta[ell] = Theta_tc[ell];
   }
 
-  double U = ckH * dtau_inv; 
+  double U = Constants.c*k/cosmo->Hp_of_x(x) * dtau_inv; 
   Theta[2] = -8./15.*U * Theta[1]; //idk
   for(ell=3; ell<=ell_max; ell++){
     Theta[ell] = - ell/(2*ell + 1) * U * Theta[ell-1];
@@ -356,7 +357,7 @@ double Perturbations::get_tight_coupling_time(const double k) const{
     lim = ck/cosmo->Hp_of_x(x);
     if(lim>1)
       lim = 1;
-    lim *= 10.
+    lim *= 10.;
 
     val = abs(rec->dtaudx_of_x(x));
 
@@ -390,9 +391,25 @@ void Perturbations::compute_source_functions(){
   Vector ST_array(k_array.size() * x_array.size());
   Vector SE_array(k_array.size() * x_array.size());
 
+  const double c = Constants.c;
+  const double H0 = cosmo->get_H0();
+  const double H0H0 = H0*H0;
+  const double Omegagamma0 = cosmo->get_Omegagamma();
+  const double Omegac0 = cosmo->get_OmegaCDM();
+  const double Omegab0 = cosmo->get_Omegab();
+
   // Compute source functions
   for(auto ix = 0; ix < x_array.size(); ix++){
     const double x = x_array[ix];
+    // Fetch all the things we need...
+    double a = exp(x);
+    const double Hp       = cosmo->Hp_of_x(x);
+    const double dHpdx    = cosmo->dHpdx_of_x(x);
+    const double tau      = rec->tau_of_x(x);
+    const double dtaudx   = rec->dtaudx_of_x(x);
+    const double gt       = rec->gt_of_x(x);
+    const double dgtdx    = rec->dgtdx_of_x(x);
+
     for(auto ik = 0; ik < k_array.size(); ik++){
       const double k = k_array[ik];
 
@@ -403,14 +420,34 @@ void Perturbations::compute_source_functions(){
       //=============================================================================
       // TODO: Compute the source functions
       //=============================================================================
+      
       // Fetch all the things we need...
-      // const double Hp       = cosmo->Hp_of_x(x);
-      // const double tau      = rec->tau_of_x(x);
+      
       // ...
       // ...
+      double ck = c*k;
+      double ck_inv = 1./ck;
+      double ckH = ck/Hp;
+      const double Psi =  get_Psi(x, k);
+      const double Phi =  get_Phi(x, k);
+      const double Theta0 = get_Theta(x, k, 0);
+      const double ub = get_u_b(x, k);
+
+      double term1, term2, term3;
+
+      term1 = gt * (Theta0 + Psi);
+
+
+      // OBS!!
+      double dubdx = -ub - ckH*Psi + dtaudx ;
+      term2 = ck_inv * ( dgtdx*ub*Hp + gt*(dubdx*Hp + ub*dHpdx) );
+    
+      double dPsidx = - Phi - 12*H0*H0*ck_inv*ck_inv*exp(-2*x)*Omegagamma0*get_Theta(x, k, 2);
+      double dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp*a*a) * (Omegac0*get_delta_c(x, k) + Omegab0*get_delta_b(x, k))*a + 4*Omegagamma0*Theta0;
+      term3 = exp(-tau)* ( dPsidx - dPhidx );
 
       // Temperatur source
-      ST_array[index] = 0.0;
+      ST_array[index] = Hp/c*(term1+term2+term3);
 
       // Polarization source
       if(Constants.polarization){
@@ -572,6 +609,7 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double ddtaudxx = rec->ddtaudxx_of_x(x);
   // ...
 
+  double Psi = get_Psi(x, k);
   // Useful factors
   double c = Constants.c;
   double ckH = c*k/Hp;    // ck/Hp
@@ -610,16 +648,15 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   dThetadx[0] = -ckH * Theta[1] + dtaudx*Theta[0] - dPhidx;
 
   for(ell=1; ell<ell_max; ell++){
-    aa = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
-    bb = dtaudx * Theta[ell]
-    dThetadx[ell] = aa + bb;
+    expr_a = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
+    expr_b = dtaudx * Theta[ell];
+    dThetadx[ell] = expr_a + expr_b;
   }
   dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
   dThetadx[2] -= 0.1*dtaudx*Theta[2];
   
   ell = ell_max;
   dThetadx[ell] = ckH*dThetadx[ell-1] - (c*(ell+1)/(Hp*cosmo->eta_of_x(x)) + dtaudx)*Theta[ell];
-
 
 
   return GSL_SUCCESS;
