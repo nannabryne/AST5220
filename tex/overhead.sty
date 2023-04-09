@@ -32,6 +32,7 @@
 \usepackage{relsize}
 \usepackage{txfonts}	% Important for the A&A style!
 \bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
+\usepackage{ifthen} 
 
 
 % Clever referencing:
@@ -92,7 +93,15 @@
 
 
 % \providecommand*{\eu}{\ensuremath{\mathrm{e}}}  % the number `e'
-\providecommand*{\eu}{\ensuremath{\mathrm{e}}}  % the number `e'
+\makeatletter
+\newcommand{\eu}[1][\@nil]{%
+\def\tmp{#1}%
+    \ifx\tmp\@nnil
+        \ensuremath{\mathrm{e}}
+    \else
+        \ensuremath{\mathrm{e}^{#1}}
+    \fi}
+\makeatother
 
 \providecommand*{\im}{\ensuremath{\mathrm{i}}}  % the imaginary unit
 
@@ -117,7 +126,10 @@
 \newcommand{\gti}{\tilde{g}}     % visibilty function
 
 % \newcommand{\epskT}{\frac{\epsilon_0}{k\ped{B} T\ped{b}}}    % eps0/(kb Tb)
-\newcommand{\epskT}{\varUpsilon }    % eps0/(kb Tb)
+\newcommand{\epskT}{\varUpsilon }   % eps0/(kb Tb)
+% \newcommand{\ckH}{\frac{ck}{\Hp}}   % ck/Hp
+\newcommand{\ckH}[1][]{\frac{ck}{#1\Hp}}   % ck/Hp
+% \newcommand{\ckH}{\tilde{\varUpsilon}}   % ck/Hp
 
 \renewcommand{\Theta}{\ensuremath{\varTheta}}   % photon pert.
 \renewcommand{\Psi}{\ensuremath{\varPsi}}   % metric pert.

@@ -7,11 +7,12 @@
 
 
 
+
 \noindent\colorbox{orange}{FULL SYSTEM:}
 \par \textcolor{blue}{\underline{Metric perturbations}}
 \begin{subequations}\label{mil3:theo:eq:metric_perturbations}
 \begin{align}
-    \dv{\Phi}{x} &= \Psi - \frac{c^2 k^2}{3\Hp^2(x)} \Phi + \frac{H_0^2}{2\Hp^2(x)}\left\{ \left(\Omega\ped{c 0}\delta\ped{c} + \Omega\ped{b 0}\delta\ped{b} \right)\eu^{-x} +4\Omega\gped{\textgamma 0}\Theta_0 \eu^{-2x} \right\} \\
+    \dv{\Phi}{x} &= \Psi - \frac{c^2 k^2}{3\Hp^2} \Phi + \frac{H_0^2}{2\Hp^2\eu[2x]}\left\{ \left(\Omega\ped{c 0}\delta\ped{c} + \Omega\ped{b 0}\delta\ped{b} \right)\eu[x]+4\Omega\gped{\textgamma 0}\Theta_0\right\} \\
     \dv{\Psi}{x} &= - \Phi - \frac{12H_0^2}{c^2k^2\eu^{2x}} \Omega\gped{\textgamma 0}\Theta_2 
 \end{align}
 \end{subequations}
@@ -19,19 +20,19 @@
 \par \textcolor{blue}{\underline{Matter perturbations}}
 \begin{subequations}\label{mil3:theo:eq:matter_perturbations}
 \begin{align}
-    \dv{\delta\ped{c, b}}{x} &=  \frac{ck}{\Hp} u\ped{c, b} - 3\dv{\Phi}{x}  \\
-    \dv{u\ped{c, b}}{x} &= - u\ped{c, b} - \frac{ck}{\Hp}\Psi + \mathbf{1}\ped{b} \dv{\tau}{x} \frac{3\Theta_1 +u\ped{b}}{R(x)} 
+    \dv{\delta\ped{c, b}}{x} &=  \ckH[2] u\ped{c, b} - 3\dv{\Phi}{x}  \\
+    \dv{u\ped{c, b}}{x} &= - u\ped{c, b} - \ckH\Psi + \mathbf{1}\ped{b} \dv{\tau}{x} \frac{3\Theta_1 +u\ped{b}}{R(x)} 
 \end{align}
 \end{subequations}
 
 \par \textcolor{blue}{\underline{Photon temperature perturbations}}
 % \begin{equation}\label{mil3:theo:eq:photontemp_perturbations}
 % \dv{\Theta_\ell}{x} = \begin{cases}
-%     - \frac{ck}{\Hp}\Theta_{\ell+1}- \dv{\Phi}{x} & \ell =0\\
+%     - \ckH\Theta_{\ell+1}- \dv{\Phi}{x} & \ell =0\\
 %     \frac{ck}{3\Hp} \left( \Theta_{\ell-1} - 2\Theta_{\ell+1} + \Psi\right) + \dv{\tau}{x}\left[\Theta_{\ell} + \frac{1}{3}u\ped{b} \right] & \ell =1  \\
 %     \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) +\frac{9}{10} \dv{\tau}{x}\Theta_{\ell} &  \ell =2 \\
 %     \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) + \dv{\tau}{x}\Theta_\ell  & 3 \leq \ell < \ell\ped{max} \\
-%     \frac{ck}{\Hp} \Theta_{\ell-1}- \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \dv{\tau}{x}\Theta_\ell &  \ell = \ell\ped{max}
+%     \ckH \Theta_{\ell-1}- \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \dv{\tau}{x}\Theta_\ell &  \ell = \ell\ped{max}
 % \end{cases}
 % \end{equation}
 
@@ -56,31 +57,51 @@
 %     &- \delta_{\ell,0}\dv{\Phi}{x} + \delta_{\ell,1}\left[\frac{ck}{3\Hp}\Psi + \dv{\tau}{x}\frac{u\ped{b}}{3}\right] - \delta_{\ell,2} \dv{\tau}{x}\frac{\Theta_\ell}{10}
 % \end{split}
 % \end{equation}
-\par \textcolor{blue}{$\ell = \ell\ped{max}$}
 \begin{subequations}
-    
-
 \begin{equation}
 \begin{split}
-    \dv{\Theta_\ell}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
+    \dv{\Theta_{\ell< \ell\ped{max}}}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
     &+ \dv{\tau}{x}\left[\left(1 -\frac{\delta_{\ell,2}}{10}\right)\Theta_\ell+ \frac{\delta_{\ell,1} u\ped{b}}{3}\right] 
     - \delta_{\ell,0}\dv{\Phi}{x}% + \delta_{\ell,1}\frac{ck}{3\Hp}\Psi 
 \end{split}
 \end{equation}
-
-
-
-
+\par \textcolor{blue}{$\ell = \ell\ped{max}$}
 \begin{equation}
-    \dv{\Theta_{\ell\ped{max}}}{x} = \frac{ck}{\Hp} \Theta_{\ell\ped{max}-1} - \frac{c(\ell\ped{max}+1)}{\Hp \eta}\Theta_{\ell\ped{max}} + \dv{\tau}{x} \Theta_{\ell\ped{max}}
+    \dv{\Theta_{\ell = \ell\ped{max}}}{x} = \ckH \Theta_{\ell-1} - \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \dv{\tau}{x} \Theta_{\ell}
 \end{equation}
-
 \end{subequations}
 % \begin{equation}\label{mil3:theo:eq:photontemp_perturbations}
 % \dv{\Theta_\ell}{x} = \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) + \dv{\tau}{x}\Theta_\ell
 
 
 % \end{equation}
+
+
+
+\noindent\colorbox{orange}{TIGHT COUPLING REGIME:}
+
+\begin{subequations}\label{mil3:theo:eq:tight_regime}
+
+\begin{equation}
+\begin{split}
+    q = &\left[\dv{\tau}{x}~(1+R) - R\left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\right]^{-1} \cross \\
+    \,&\Bigg\{ \left[ \dv[2]{\tau}{x}~(1+R) - \dv{\tau}{x}~(1-R) \right] (3\Theta_1 + u\ped{b}) \\
+    \,&  - \ckH R\left[  \Psi + \left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\left(-\Theta_0+ 2\Theta_2\right)- \dv{\Theta_0}{x}\right]
+    \Bigg\}
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+    \dv{u\ped{b}}{x} =& \frac{q-Ru\ped{b} + \ckH(-\Theta_0+2\Theta_2)}{1+R} - \ckH\Psi 
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+    \dv{\Theta_1}{x} =& \frac{1}{3}\left(q-\dv{u\ped{b}}{x}\right)
+\end{split}
+\end{equation}
+\end{subequations}
+
 
 % \begin{subequations}\label{mil3:theo:eq:initial_conditions}
 % \begin{align}
@@ -105,23 +126,9 @@
     u\ped{c, b}     &= -\frac{ck}{2\Hp} \Psi \label{mil3:theo:eq:init_u}\\
     \Theta_\ell &=\begin{cases}
         -\frac{1}{2}\Psi     & \ell = 0  \\
-        -\frac{ck}{3\Hp} \Theta_0 & \ell = 1 \\ 
+        +\frac{ck}{6\Hp}\Psi  & \ell = 1 \\ 
         -\frac{8ck}{15\Hp\dv*{\tau}{x}}\Theta_1    & \ell = 2 \\ 
-        -\frac{\ell}{2\ell+1} \frac{ck}{15\Hp\dv*{\tau}{x}} \Theta_{\ell-1} &\ell \geq 3
+        -\frac{\ell}{2\ell+1} \frac{ck}{\Hp\dv*{\tau}{x}} \Theta_{\ell-1} &\ell \geq 3
     \end{cases} \label{mil3:theo:eq:init_Theta}
 \end{align}
-\end{subequations}
-
-
-\noindent\colorbox{orange}{TIGHT COUPLING REGIME:}
-
-\begin{subequations}\label{mil3:theo:eq:tight_regime}
-\begin{equation}
-\begin{split}
-    q &= &&\left[(1+R^{-1})\dv{\tau}{x} +\frac{1}{\Hp}\dv{\Hp}{x} -1\right]^{-1} \cross \\
-    &\,&&\Bigg\{ \left[(1-R^{-1})\dv{\tau}{x} + (1+R^{-1})\dv[2]{\tau}{x}\right] (3\Theta_1 + u\ped{b}) \\
-    &\,&&  - \frac{ck}{\Hp} \left[  \Psi + \left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\left(-\Theta_0+ 2\Theta_2\right)- \dv{\Theta_0}{x}\right]
-    \Bigg\}
-\end{split}
-\end{equation}
 \end{subequations}
