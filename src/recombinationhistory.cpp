@@ -363,9 +363,12 @@ double RecombinationHistory::nb_of_x(double x) const{
   return (3*_H0H0 * Omegab0) / (_8piG * Constants.m_H * exp(3.*x));
 }
 
+double RecombinationHistory::R_of_x(double x) const{
+  return 0.75 * cosmo->get_Omegab()/cosmo->get_Omegagamma() * exp(x);
+}
+
 double RecombinationHistory::cs_of_x(double x) const{
-  double R = 0.75 * cosmo->get_Omegab()/cosmo->get_Omegagamma() * exp(x);
-  double U = 1./(3.* (1 + R));
+  double U = 1./(3.* (1 + R_of_x(x)));
   return Constants.c * sqrt(U);
 }
 

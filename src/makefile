@@ -87,10 +87,13 @@ clean:
 	rm -rf $(BUILD_DIR)/$(TARGETS) $(BUILD_DIR)/*.o
 
 # Command to produce all plots (needs fix)
-plots: plots2
+plots: plots3
 
 plots1:
 	cd plotting && python3 milestone_one.py
 
 plots2:
 	cd plotting && python3 milestone_two.py
+
+plots3:
+	cd plotting && python3 milestone_three.py

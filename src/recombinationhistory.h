@@ -220,6 +220,13 @@ class RecombinationHistory{
     double nb_of_x(double x) const;
 
     /**
+     * @brief Compute the photon-to-baryon ratio in the primidial plasma plasma cR(x). 
+     * @param x the time point x = ln(a)
+     * @return R(x)
+    */
+    double R_of_x(double x) const;
+
+    /**
      * @brief Compute the sound of speed in the photon-baryon plasma c_s(x). 
      * @param x the time point x = ln(a)
      * @return c_s(x)

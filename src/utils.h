@@ -60,33 +60,33 @@ extern struct ConstantsAndUnits {
 
   // For integration of perturbations (number of equations and positions in arrays)
   const int n_scalars           = 5;
-  const int n_ell_theta         = 8;
-  const int n_ell_thetap        = 8 * polarization;
+  const int n_ell_Theta         = 8;
+  const int n_ell_Thetap        = 8 * polarization;
   const int n_ell_neutrinos     = 8 * neutrinos;
-  const int n_ell_tot_full      = n_scalars + n_ell_theta + n_ell_thetap + n_ell_neutrinos;
+  const int n_ell_tot_full      = n_scalars + n_ell_Theta + n_ell_Thetap + n_ell_neutrinos;
   const int ind_deltac          = 0; 
   const int ind_deltab          = 1;
   const int ind_uc              = 2;
   const int ind_ub              = 3;
   const int ind_Phi             = 4;
-  const int ind_start_theta     = n_scalars;
-  const int ind_start_thetap    = ind_start_theta  + n_ell_theta;
-  const int ind_start_nu        = ind_start_thetap + n_ell_thetap;
+  const int ind_start_Theta     = n_scalars;
+  const int ind_start_Thetap    = ind_start_Theta  + n_ell_Theta;
+  const int ind_start_nu        = ind_start_Thetap + n_ell_Thetap;
  
   // For integration of perturbations in tight coupling regime (Only 2 photon multipoles + neutrinos needed)
   const int n_scalars_tc        = 5;
-  const int n_ell_theta_tc      = 2;
-  const int n_ell_thetap_tc     = 0;
+  const int n_ell_Theta_tc      = 2;
+  const int n_ell_Thetap_tc     = 0;
   const int n_ell_neutrinos_tc  = n_ell_neutrinos;
-  const int n_ell_tot_tc        = n_scalars_tc + n_ell_theta_tc + n_ell_thetap_tc + n_ell_neutrinos;
+  const int n_ell_tot_tc        = n_scalars_tc + n_ell_Theta_tc + n_ell_Thetap_tc + n_ell_neutrinos;
   const int ind_deltac_tc       = 0; 
   const int ind_deltab_tc       = 1;
   const int ind_uc_tc           = 2;
   const int ind_ub_tc           = 3;
   const int ind_Phi_tc          = 4;
-  const int ind_start_theta_tc  = n_scalars_tc;
-  const int ind_start_thetap_tc = ind_start_theta_tc  + n_ell_theta_tc;
-  const int ind_start_nu_tc     = ind_start_thetap_tc + n_ell_thetap_tc;
+  const int ind_start_Theta_tc  = n_scalars_tc;
+  const int ind_start_Thetap_tc = ind_start_Theta_tc  + n_ell_Theta_tc;
+  const int ind_start_nu_tc     = ind_start_Thetap_tc + n_ell_Thetap_tc;
 
 } Constants;
 
