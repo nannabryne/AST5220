@@ -2,25 +2,13 @@ from utils import *
 SET_SUBDIR("milestone1")
 
 
-""" CRAZY code, will fix this ASAP """
+class ColourCyclesI(ColourCycles):
+    def densityparams(self):
+        self.colours = ["#ffa500","#5d00ff", "#ef495e"]
 
+    def densityparams_shy(self):
+        self.colours = ["#fffb00", "#ae7fff", "#e7aeb0"]
 
-
-
-# colours related to some vital quantity
-mainColours = {
-    "R": "#ffa500", # radiation
-    "M": "#5d00ff", # matter
-    "L": "#ef495e",  # cosmological constant
-    "Hubble": ["g", "b", "r"]
-}
-
-# colours derived from the above (supposed to be similar, but not the same)
-subColours = {
-    "R": "#fffb00",#'#fee090'
-    "M": "#ae7fff",
-    "L": "#e7aeb0"
-}
 
 tex = LaTeX()
 
@@ -32,15 +20,17 @@ def __colour_eras(ax, info, xlims=None, vlines=False, text=False):
     xB, xC = info["x_eq"], info["x_Lambda"]
     y0, y1 = ax.get_ylim()
 
+    c = ColourCyclesI("densityparams_shy")
+
     if text: 
         box_kw = dict(facecolor="slategrey", alpha=.1)
-        ax.annotate("radiation era", (xA, y1), color=subColours["R"], bbox=box_kw)
-        ax.annotate("matter era", (xB, y1), color=subColours["M"], bbox=box_kw)
-        ax.annotate("DE era", (xC, y1), color=subColours["L"], bbox=box_kw)
+        ax.annotate("radiation era", (xA, y1), color=c[0], bbox=box_kw)
+        ax.annotate("matter era", (xB, y1), color=c[1], bbox=box_kw)
+        ax.annotate("DE era", (xC, y1), color=c[2], bbox=box_kw)
 
-    ax.fill_betweenx([y0,y1], xA, xB, color=subColours["R"], alpha=.1)
-    ax.fill_betweenx([y0,y1], xB, xC, color=subColours["M"], alpha=.1)
-    ax.fill_betweenx([y0,y1], xC, xD, color=subColours["L"], alpha=.1)
+    ax.fill_betweenx([y0,y1], xA, xB, color=c[0], alpha=.1)
+    ax.fill_betweenx([y0,y1], xB, xC, color=c[1], alpha=.1)
+    ax.fill_betweenx([y0,y1], xC, xD, color=c[2], alpha=.1)
 
     if vlines:
         x_acc, x_0 = info["x_acc"], info["x_0"]
@@ -68,9 +58,10 @@ def __compare_with_analytical(ax, analytical, which, ls="-."):
 def DensityParameters(df, info, savefig=True):
     fig, ax = plt.subplots(figsize=(10,6))
     x = df["x"]
-    ax.plot(x, df["OmegaM"], c=mainColours["M"],  label=tex("\Omega" + tex.ped("m")))
-    ax.plot(x, df["OmegaL"], c=mainColours["L"],  label=tex("\Omega_\Lambda"))
-    ax.plot(x, df["OmegaR"], c=mainColours["R"],  label=tex("\Omega" + tex.ped("r")))
+    c = ColourCyclesI("densityparams", ax)
+    ax.plot(x, df["OmegaR"],  label=tex("\Omega" + tex.ped("r")))
+    ax.plot(x, df["OmegaM"],  label=tex("\Omega" + tex.ped("m")))
+    ax.plot(x, df["OmegaL"],  label=tex("\Omega_\Lambda"))
 
 
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper right', ncols=3, borderaxespad=0.)
@@ -84,10 +75,11 @@ def DensityParameters(df, info, savefig=True):
 
 def HubbleDerivatives(df, info, analytical, savefig=True):
     fig, ax = plt.subplots()
+    c = ColourCycles("derivatives", ax)
 
     x, Hp = df["x"], df["Hp"]
-    ax.plot(x, df["dHpdx"]/Hp,   c=dfdx_of_x_kw["color"], label=tex(tex.inv(tex.Hp)+ tex.dv()))
-    ax.plot(x, df["ddHpdxx"]/Hp, c=ddfdxx_of_x_kw["color"],  label=tex(tex.inv(tex.Hp)+ tex.dv(n=2))) 
+    ax.plot(x, df["dHpdx"]/Hp,   c=c[1], label=tex(tex.inv(tex.Hp)+ tex.dv()))
+    ax.plot(x, df["ddHpdxx"]/Hp, c=c[2],  label=tex(tex.inv(tex.Hp)+ tex.dv(n=2))) 
 
     __compare_with_analytical(ax, analytical, "Hubble_der", ":")
     __compare_with_analytical(ax, analytical, "Hubble_doubleder", "--")
@@ -128,8 +120,9 @@ def ConformalTime_HubbleParameter(df, info, analytical, savefig=True):
 def HubbleParameter(df, info, analytical, savefig=True):
 
     fig, ax = plt.subplots()
+    c = ColourCycles("derivatives", ax)
 
-    ax.plot(df["x"], df["Hp"], c=f_of_x_kw["color"], label=tex.Hp)
+    ax.plot(df["x"], df["Hp"], c=c[0], label=tex.Hp)
 
     __colour_eras(ax, info, vlines=False)
     __compare_with_analytical(ax, analytical, "Hubble", "-.")

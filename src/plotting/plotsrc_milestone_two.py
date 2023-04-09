@@ -52,6 +52,7 @@ def BaryonTemperature(df, info, savefig=False):
 def OpticalDepth(df, info, savefig=True):
     
     fig, ax = plt.subplots()
+    ColourCycles("derivatives", ax)
     x = df["x"]
 
     ax.plot(x, df["tau"], label=tex.tau, **f_of_x_kw)
@@ -74,7 +75,7 @@ def OpticalDepth(df, info, savefig=True):
 def VisibilityFunction(df, info, savefig=True):
     fig, ax = plt.subplots()
     x = df["x"]
-
+    ColourCycles("derivatives", ax)
     ax.plot(x, df["gt"],          label=tex.gt, **f_of_x_kw)
     ax.plot(x, df["dgtdx"]/10,    label=tex(tex.frac(1,10) + tex.dv(tex.gt)), **dfdx_of_x_kw)
     ax.plot(x, df["ddgtdxx"]/300, label=tex(tex.frac(1,300)+tex.dv(tex.gt, n=2)), **ddfdxx_of_x_kw)

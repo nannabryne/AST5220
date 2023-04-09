@@ -320,3 +320,34 @@ class ConstantsAndUnits:
         
 
 
+
+class ColourCycles:
+    def __init__(self, name="default", ax=None):
+        
+        if isinstance(name, str):
+            try:
+                eval(f"self.{name}()")
+            except ValueError:
+                print("provide valid arg")
+                exit()
+
+        elif isinstance(name, (list, tuple)):
+            self.colours = name
+        
+        self.n_colours = len(self.colours)
+
+        if ax is not None:
+            self.set_cycle(ax)
+
+
+    def default(self):
+        self.colours = ['#E24A33', '#348ABD', '#988ED5', '#777777', '#FBC15E', '#8EBA42', '#FFB5B8']
+        
+    def derivatives(self):
+        self.colours = ["royalblue", "forestgreen", "dodgerblue"]
+
+    def set_cycle(self, ax):
+        ax.set_prop_cycle(cycler("color", self.colours))
+
+    def __getitem__(self, it):
+        return self.colours[it]
