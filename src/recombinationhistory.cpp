@@ -24,7 +24,7 @@ void RecombinationHistory::set_Saha_limit(double Xe_Saha_lower_limit){
 
 void RecombinationHistory::solve_number_density_electrons(int nsteps){
 
-  // set up x-, Xe- and ne-arrays:
+  //  set up x-, Xe- and ne-arrays:
   int npts = nsteps+1;
   Vector x_array = Utils::linspace(x_start, x_end, npts);
   Vector Xe_arr(npts);
@@ -53,19 +53,19 @@ void RecombinationHistory::solve_number_density_electrons(int nsteps){
   if(i<npts-1){
     int idx_Pee = i-2;
 
-    // the Peebles ODE equation:
+    //  the Peebles ODE equation:
     ODESolver Peebles_Xe_ode;
     ODEFunction dXedx = [&](double x, const double *Xe, double *dXedx){
       return rhs_Peebles_ode(x, Xe, dXedx);
     };
 
-    // set up and solve Peebles ODE:
+    //  set up and solve Peebles ODE:
     Vector Xe_ini = {Xe_arr[idx_Pee]};  // initial condition from Saha regime
     Vector x_arr_rest = Vector(x_array.begin()+idx_Pee, x_array.end());
     Peebles_Xe_ode.solve(dXedx, x_arr_rest, Xe_ini);
     Vector Xe_arr_Peebles = Peebles_Xe_ode.get_data_by_component(0);
     
-    // fill array:
+    //  fill array:
     for(int i=idx_Pee; i<npts; i++){
       Xe_arr[i] = Xe_arr_Peebles[i-idx_Pee];
       ne_arr[i] = Xe_arr[i]*nb_of_x(x_array[i]);
@@ -142,17 +142,17 @@ void RecombinationHistory::solve_for_sound_horizon(int nsteps){
 
 void RecombinationHistory::solve(bool print_milestones, int nsteps_Xe, int nsteps_tau, int nsteps_rs){
     
-  // compute and spline Xe, ne:
+  //  compute and spline Xe, ne:
   Utils::StartTiming("Xe");
   solve_number_density_electrons(nsteps_Xe);
   Utils::EndTiming("Xe");
 
-  // compute and spline tau and g:
+  //  compute and spline tau and g:
   Utils::StartTiming("tau");
   solve_for_optical_depth_tau(nsteps_tau);
   Utils::EndTiming("tau");
 
-  // compute and spline rs:
+  //  compute and spline rs:
   Utils::StartTiming("rs");
   solve_for_sound_horizon(nsteps_rs);
   Utils::EndTiming("rs");
@@ -233,7 +233,7 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_Saha_equat
   const double m_H    = Constants.m_H;
   const double eps_0  = Constants.epsilon_0;
 
-  // fetch cosmological parameters:
+  //  fetch cosmological parameters:
   const double Tb = cosmo->get_TCMB(x);  // Tb = Tgamma
 
   double Ups = eps_0/(k_b*Tb);  // Υ = ϵ_0/(k_b T_b)

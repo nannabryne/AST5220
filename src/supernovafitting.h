@@ -102,10 +102,10 @@ BackgroundCosmology mcmc_fit_to_supernova_data(std::string supernovadata_filenam
     double param_Neff     = 0.0;                          // irrelevant at late times
     double param_TCMB     = 2.7255;                       // temperature of the CMB
     double param_h        = parameters[0];                //
-    double param_OmegaCDM = parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
+    double param_Omegac = parameters[1] - param_Omegab; // Omegac = Omegam - Omegab
     double param_OmegaK   = parameters[2];                //
     
-    BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_OmegaK, param_Neff, param_TCMB);
+    BackgroundCosmology cosmo(param_h, param_Omegab, param_Omegac, param_OmegaK, param_Neff, param_TCMB);
     //  solve to get the distance function:
     cosmo.solve_conformal_time();
 
@@ -193,9 +193,9 @@ BackgroundCosmology mcmc_fit_to_supernova_data(std::string supernovadata_filenam
   double param_Neff     = 0.0;                          // irrelevant at late times
   double param_TCMB     = 2.7255;                       // temperature of the CMB
   double param_h        = best_parameters[0];                //
-  double param_OmegaCDM = best_parameters[1] - param_Omegab; // OmegaCDM = Omegam - Omegab
+  double param_Omegac   = best_parameters[1] - param_Omegab; // Omegac = Omegam - Omegab
   double param_OmegaK   = best_parameters[2];                //
   
-  BackgroundCosmology cosmo(param_h, param_Omegab, param_OmegaCDM, param_OmegaK, param_Neff, param_TCMB);
+  BackgroundCosmology cosmo(param_h, param_Omegab, param_Omegac, param_OmegaK, param_Neff, param_TCMB);
   return cosmo;
 }

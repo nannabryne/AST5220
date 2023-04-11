@@ -12,7 +12,7 @@ class BackgroundCosmology{
     // Cosmological parameters:
     double h0;              // little h0 = H0/(100km/s/Mpc)
     double Omegab0;         // baryon density today
-    double OmegaCDM0;       // CDM density today
+    double Omegac0;         // CDM density today
     double OmegaLambda0;    // dark energy density today
     double Neff;            // effective number of relativistic species (3.046 or 0 if ignoring neutrinos)
     double TCMB0;           // temperature of the CMB today in Kelvin
@@ -22,7 +22,7 @@ class BackgroundCosmology{
     double Omeganu0;        // neutrino density today (follows from TCMB0 and Neff)
     double OmegaK0;         // curvature density = 1 - OmegaM0 - OmegaR0 - OmegaLambda0
     double H0;              // the Hubble parameter today H0 = 100h km/s/Mpc
-    double OmegaM0;         // total matter density today = Omegab0 + OmegaCDM0
+    double OmegaM0;         // total matter density today = Omegab0 + Omegac0
     double OmegaR0;         // total radiation density today = Omegagamma0 + Omeganu0
 
     // Start and end of x-integration:
@@ -57,7 +57,7 @@ class BackgroundCosmology{
      * @brief Create an instance of the Backgroundcosmology-class with a set of parameters describing the Universe today. Compute the remaining parameters based on the input parameters.
      * @param h0 Hubble parameter today (H0) divided by 100 km/s / Mpc
      * @param Omegab0 baryon density today
-     * @param OmegaCDM0 cold dark matter density today
+     * @param Omegac0 cold dark matter density today
      * @param OmegaK0 curvature density today ( = 1 - Σ(Ω_i0) )
      * @param Neff effective number of relativistic species (3.046 or 0 if ignoring neutrinos)
      * @param TCMB0 CMB temperature today [K]
@@ -66,7 +66,7 @@ class BackgroundCosmology{
     BackgroundCosmology(
         double h0, 
         double Omegab0, 
-        double OmegaCDM0, 
+        double Omegac0, 
         double OmegaK0,
         double Neff, 
         double TCMB0
@@ -227,7 +227,7 @@ class BackgroundCosmology{
      * @param x the time point x = ln(a)
      * @return Ω_c(x)
     */
-    double get_OmegaCDM(double x = 0.0) const; 
+    double get_Omegac(double x = 0.0) const; 
 
     /**
      * @brief Compute the dark energy density Ω_Λ(x).

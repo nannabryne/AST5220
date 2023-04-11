@@ -8,13 +8,13 @@
 BackgroundCosmology::BackgroundCosmology(
     double h0, 
     double Omegab0, 
-    double OmegaCDM0, 
+    double Omegac0, 
     double OmegaK0,
     double Neff, 
     double TCMB0) :
   h0(h0),
   Omegab0(Omegab0),
-  OmegaCDM0(OmegaCDM0),
+  Omegac0(Omegac0),
   OmegaK0(OmegaK0),
   Neff(Neff), 
   TCMB0(TCMB0){
@@ -30,7 +30,7 @@ BackgroundCosmology::BackgroundCosmology(
 
   Omeganu0 = Neff * 7./8. * std::pow(4./11., 4./3.) * Omegagamma0;
 
-  OmegaM0 = (OmegaCDM0 + Omegab0);
+  OmegaM0 = (Omegac0 + Omegab0);
   OmegaR0 = (Omegagamma0 + Omeganu0);
   OmegaLambda0 = (1 - OmegaK0 - OmegaM0 - OmegaR0);
 
@@ -215,11 +215,11 @@ double BackgroundCosmology::get_Omeganu(double x) const{
   return Omeganu0 * H0*H0 * std::exp(-2.*x) / (Hpx*Hpx);
 }
 
-double BackgroundCosmology::get_OmegaCDM(double x) const{ 
-  if(x == 0.0) return OmegaCDM0;
+double BackgroundCosmology::get_Omegac(double x) const{ 
+  if(x == 0.0) return Omegac0;
 
   double Hpx = Hp_of_x(x);
-  return OmegaCDM0 * H0*H0 * std::exp(-x) / (Hpx*Hpx);
+  return Omegac0 * H0*H0 * std::exp(-x) / (Hpx*Hpx);
 }
 
 double BackgroundCosmology::get_OmegaLambda(double x) const{ 
@@ -351,7 +351,7 @@ void BackgroundCosmology::info() const{
   std::cout << "\n";
   std::cout << "Info about cosmology class:\n";
   std::cout << "Omegab0:      " << Omegab0      << "\n";
-  std::cout << "OmegaCDM0:    " << OmegaCDM0    << "\n";
+  std::cout << "Omegac0:    " << Omegac0    << "\n";
   std::cout << "OmegaLambda0: " << OmegaLambda0 << "\n";
   std::cout << "OmegaK0:      " << OmegaK0      << "\n";
   std::cout << "Omeganu0:     " << Omeganu0     << "\n";
@@ -379,7 +379,7 @@ void BackgroundCosmology::output(const std::string filename) const{
     fp << dHpdx_of_x(x)      << " ";  // 4
     fp << ddHpdxx_of_x(x)    << " ";  // 5
     fp << get_Omegab(x)      << " ";  // 6
-    fp << get_OmegaCDM(x)    << " ";  // 7
+    fp << get_Omegac(x)      << " ";  // 7
     fp << get_OmegaLambda(x) << " ";  // 8
     fp << get_Omegagamma(x)  << " ";  // 9
     fp << get_Omeganu(x)     << " ";  // 10
