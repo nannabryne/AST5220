@@ -382,12 +382,12 @@ void Perturbations::compute_source_functions(){
   Vector SE_array(k_array.size() * x_array.size());
 
   //  fetch constants and variables:
-  const double c              = Constants.c;
-  const double H0             = cosmo->get_H0();
-  const double H0H0           = H0*H0;
-  const double Omegagamma0    = cosmo->get_Omegagamma();
-  const double Omegac0        = cosmo->get_Omegac();
-  const double Omegab0        = cosmo->get_Omegab();
+  const double c              = Constants.c;              // c
+  const double H0             = cosmo->get_H0();          // H_0
+  const double H0H0           = H0*H0;                    // H_0^2
+  const double Omegagamma0    = cosmo->get_Omegagamma();  // Ω_γ0
+  const double Omegac0        = cosmo->get_Omegac();      // Ω_c0
+  const double Omegab0        = cosmo->get_Omegab();      // Ω_b0
 
   //  compute source functions:
   for(auto ix = 0; ix < x_array.size(); ix++){
@@ -417,7 +417,7 @@ void Perturbations::compute_source_functions(){
       double ck             = c*k;
       double ck_inv         = 1./ck;
       double ckH            = ck/Hp;
-      const double Psi      = get_Psi(x, k);      // Ψ(x,k)
+      const double Psi      = get_Psi(x, k);        // Ψ(x,k)
       const double Phi      = get_Phi(x, k);  
       const double Theta0   = get_Theta(x, k, 0);
       const double ub       = get_u_b(x, k);
@@ -501,17 +501,17 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double Omegagamma0    = cosmo->get_Omegagamma();    // Ω_γ0
   double Omegac0        = cosmo->get_Omegac();        // Ω_c0
   double Omegab0        = cosmo->get_Omegab();        // Ω_b0 
+  double eta            = cosmo->eta_of_x(x);         // η(x)
 
   //  fetch recombination variables::
   double R          = rec->R_of_x(x);           // R(x)
   double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
   double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
-  // ...
 
   //  fetch perturbation variables:
   double Psi = get_Psi(x, k);   // Ψ(x,k)
 
-  // Useful factors
+  // useful factors:
   double c      = Constants.c;  // c
   double ckH    = c*k/Hp;       // ck/Hp
   double Rplus  = (1+R);        // ( 1 + R )
@@ -530,11 +530,6 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double U1 = ( 1 - dHpdx/Hp );             // ( 1 - d/dx[Hp] )
   double U2 = ( -Theta[0] + 2*Theta[2] );   // ( - Θ_0 + 2Θ_2 )
 
-
-  // SET: Scalar quantities (Phi, delta, v, ...)
-  // ...
-  // ...
-  // ...
 
   //  compute scalar quantities (Φ, δ, u):
 
@@ -558,13 +553,26 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute photon temperature perturbations (Θ_ℓ):
 
-  // ....
+  dThetadx[0] = -ckH * Theta[1] + dtaudx*Theta[0] - dPhidx;
   dThetadx[1] = 1./3. * ( q - du_bdx);
-  // ...
 
+  int ell     = 2;                // ℓ
+  int ell_max = n_ell_Theta - 1;  // ℓ_max
+
+  for(ell; ell<ell_max; ell++){
+    expr_a = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
+    expr_b = dtaudx * Theta[ell];
+    dThetadx[ell] = expr_a + expr_b;
+  }
+  dThetadx[2] -= 0.1*dtaudx*Theta[2];
+  
+  ell = ell_max;
+  dThetadx[ell] = ckH*dThetadx[ell-1] - (c*(ell+1)/(Hp*eta) + dtaudx)*Theta[ell];
 
   return GSL_SUCCESS;
 }
+
+
 
 //====================================================
 // The right hand side of the full ODE
@@ -586,40 +594,40 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   const bool neutrinos          = Constants.neutrinos;
 
   // The different quantities in the y array
-  const double &delta_c         =  y[Constants.ind_deltac];       // δ_c
-  const double &delta_b         =  y[Constants.ind_deltab];       // δ_b
-  const double &u_c             =  y[Constants.ind_uc];           // u_c
-  const double &u_b             =  y[Constants.ind_ub];           // u_c
-  const double &Phi             =  y[Constants.ind_Phi];          // Φ
-  const double *Theta           = &y[Constants.ind_start_Theta];  // Θ_ℓ
+  const double &delta_c         =  y[Constants.ind_deltac];       // δ_c(x,k)
+  const double &delta_b         =  y[Constants.ind_deltab];       // δ_b(x,k)
+  const double &u_c             =  y[Constants.ind_uc];           // u_c(x,k)
+  const double &u_b             =  y[Constants.ind_ub];           // u_c(x,k)
+  const double &Phi             =  y[Constants.ind_Phi];          // Φ(x,k)
+  const double *Theta           = &y[Constants.ind_start_Theta];  // Θ_ℓ(x,k)
   const double *Theta_p         = &y[Constants.ind_start_Thetap];
   const double *Nu              = &y[Constants.ind_start_nu];    
 
   // References to the quantities we are going to set in the dydx array
-  double &ddelta_cdx      =  dydx[Constants.ind_deltac];        // d/dx[δ_c]
-  double &ddelta_bdx      =  dydx[Constants.ind_deltab];        // d/dx[δ_b]
-  double &du_cdx          =  dydx[Constants.ind_uc];            // d/dx[u_c]
-  double &du_bdx          =  dydx[Constants.ind_ub];            // d/dx[u_b]
-  double &dPhidx          =  dydx[Constants.ind_Phi];           // d/dx[Φ]
-  double *dThetadx        = &dydx[Constants.ind_start_Theta];   // d/dx[Θ_ℓ]
+  double &ddelta_cdx      =  dydx[Constants.ind_deltac];        // d/dx[δ_c(x,k)]
+  double &ddelta_bdx      =  dydx[Constants.ind_deltab];        // d/dx[δ_b(x,k)]
+  double &du_cdx          =  dydx[Constants.ind_uc];            // d/dx[u_c(x,k)]
+  double &du_bdx          =  dydx[Constants.ind_ub];            // d/dx[u_b(x,k)]
+  double &dPhidx          =  dydx[Constants.ind_Phi];           // d/dx[Φ(x,k)]
+  double *dThetadx        = &dydx[Constants.ind_start_Theta];   // d/dx[Θ_ℓ(x,k)]
   double *dTheta_pdx      = &dydx[Constants.ind_start_Thetap];
   double *dNudx           = &dydx[Constants.ind_start_nu];
 
-  // Cosmological parameters and variables
-  double Hp           = cosmo->Hp_of_x(x);
-  double dHpdx        = cosmo->dHpdx_of_x(x);
-  double H0           = cosmo->get_H0();
-  double Omegagamma0  = cosmo->get_Omegagamma();
-  double Omegac0      = cosmo->get_Omegac();
-  double Omegab0      = cosmo->get_Omegab();
+  // Cosmological parameters and variables 
+  double Hp           = cosmo->Hp_of_x(x);          // Hp(x)
+  double dHpdx        = cosmo->dHpdx_of_x(x);       // d/dx[Hp(x)]
+  double H0           = cosmo->get_H0();            // H_0
+  double Omegagamma0  = cosmo->get_Omegagamma();    // Ω_γ0
+  double Omegac0      = cosmo->get_Omegac();        // Ω_c0
+  double Omegab0      = cosmo->get_Omegab();        // Ω_b0
 
   // Recombination variables
-  double R          = rec->R_of_x(x);
-  double dtaudx     = rec->dtaudx_of_x(x);
-  double ddtaudxx   = rec->ddtaudxx_of_x(x);
+  double R          = rec->R_of_x(x);           // R(x)
+  double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
+  double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
 
   // Perturbation variables
-  double Psi = get_Psi(x, k);   // Ψ
+  double Psi = get_Psi(x, k);   // Ψ(x,k)
 
 
   //  useful factors
@@ -801,3 +809,26 @@ void Perturbations::output(const double k, const std::string filename) const{
   };
   std::for_each(x_array.begin(), x_array.end(), print_data);
 }
+
+
+
+
+/*
+
+\Psi : Ψ
+\Phi : Φ
+\Theta : Θ
+\Omega : Ω
+
+
+
+\gamma : γ
+\delta : δ
+\eta : η
+\tau : τ
+
+
+
+\ell : ℓ
+
+*/

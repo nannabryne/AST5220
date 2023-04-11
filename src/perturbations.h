@@ -112,13 +112,64 @@ class Perturbations{
     void output(const double k, const std::string filename) const;
 
     // Get the quantities we have integrated
+
+    /**
+     * @brief Compute the CDM perturbation δ_c(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return δ_c(x,k)
+    */
     double get_delta_c(const double x, const double k) const;
+
+    /**
+     * @brief Compute the baryonic matter perturbation δ_b(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return δ_b(x,k)
+    */
     double get_delta_b(const double x, const double k) const;
+
+    /**
+     * @brief Compute the CDM bulk velocity u_c(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return u_c(x,k)
+    */
     double get_u_c(const double x, const double k) const;
+
+    /**
+     * @brief Compute the baryonic bulk velocity u_b(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return u_b(x,k)
+    */
     double get_u_b(const double x, const double k) const;
+
+    /**
+     * @brief Compute the gravitational potential Φ(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return Φ(x,k)
+    */
     double get_Phi(const double x, const double k) const;
+
+    /**
+     * @brief Compute the XXXXXXX Ψ(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return Ψ(x,k)
+    */
     double get_Psi(const double x, const double k) const;
+
+
     double get_Pi(const double x, const double k) const;
+
+    /**
+     * @brief Compute the photon temperature perturbation Θ_ℓ(x,k).
+     * @param x the time point x = ln(a)
+     * @param k the wave number k 
+     * @return Θ_ℓ(x,k)
+    */
     double get_Theta(const double x, const double k, const int ell) const;
     double get_Theta_p(const double x, const double k, const int ell) const;
     double get_Nu(const double x, const double k, const int ell) const;
