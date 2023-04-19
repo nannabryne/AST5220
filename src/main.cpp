@@ -101,9 +101,13 @@ int main(int narg, char **argv){
     // pert.info();
     
     // Output perturbation quantities
-    double kvalue = 0.01 / Constants.Mpc;
-    std::cout << "OUTPUT ..." << std::endl;
+    double kvalue;
+    kvalue = 0.001 / Constants.Mpc;
+    pert.output(kvalue, "perturbations_k0.001.txt");
+    kvalue = 0.01 / Constants.Mpc;
     pert.output(kvalue, "perturbations_k0.01.txt");
+    kvalue = 0.1 / Constants.Mpc;
+    pert.output(kvalue, "perturbations_k0.1.txt");
         
 
 
