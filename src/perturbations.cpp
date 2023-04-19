@@ -42,12 +42,16 @@ void Perturbations::integrate_perturbations(){
   // quadratic or a logarithmic spacing
   //===================================================================
 
-  // Set up k-array for the k's we are to integrate over
+  //  set up k-array for the k's we are to integrate over:
+  Vector k_array = exp(Utils::linspace(log(k_min), log(k_max), n_k));
+  
 
-  Vector k_array(n_k);
+  Vector x_array = Utils::linspace(x_start, x_end, n_x);
 
-  //  loop over all wavenumbers:
-  for(int ik = 0; ik < n_k; ik++){
+  Vector Phi_array(n_x*n_k);
+
+  //  loop over all wavenumbers:  
+  for(int ik=0; ik<n_k; ik++){
 
     //  progress bar...
     if( (10*ik) / n_k != (10*ik+10) / n_k ) {
@@ -59,6 +63,13 @@ void Perturbations::integrate_perturbations(){
 
     //  find value to integrate to:
     double x_end_tight = get_tight_coupling_time(k);
+    double idk = n_x*(x_end_tight-x_start)/(x_end-x_start);
+    int n_x_tight = int(idk);
+    Vector x_array_tight = Utils::linspace(x_start, x_end_tight, n_x_tight);
+    Vector x_array_full = Utils::linspace(x_end_tight, x_end, n_x-n_x_tight);
+
+    std::cout << "x_end_tight: " <<  x_end_tight << std::endl;
+    std::cout << "n_x_tight: " <<  n_x_tight << std::endl;
 
 
     //===================================================================
@@ -67,7 +78,7 @@ void Perturbations::integrate_perturbations(){
     // set_ic : The IC at the start
     // rhs_tight_coupling_ode : The dydx for our coupled ODE system
     //===================================================================
-
+    
 
     //  set up initial conditions in the tight coupling regime:
     auto y_tight_coupling_ini = set_ic(x_start, k);
@@ -78,12 +89,20 @@ void Perturbations::integrate_perturbations(){
       return rhs_tight_coupling_ode(x, k, y, dydx);
     };
 
+   
     // Integrate from x_start -> x_end_tight
     // ...
     // ...
     // ...
     // ...
     // ...
+
+    ODESolver ode_tight;
+    ode_tight.solve(dydx_tight_coupling, x_array_tight, y_tight_coupling_ini);
+    Vector y_tight_coupling = ode_tight.get_final_data();
+
+    std::cout << y_tight_coupling[0] << ", " << y_tight_coupling[2] << std::endl;
+
 
     //====i===============================================================
     // TODO: Full equation integration
@@ -93,7 +112,8 @@ void Perturbations::integrate_perturbations(){
     //===================================================================
 
     // Set up initial conditions (y_tight_coupling is the solution at the end of tight coupling)
-    // auto y_full_ini = set_ic_after_tight_coupling(y_tight_coupling, x_end_tight, k);
+    auto y_full_ini = set_ic_after_tight_coupling(y_tight_coupling, x_end_tight, k);
+
 
     // The full ODE system
     ODEFunction dydx_full = [&](double x, const double *y, double *dydx){
@@ -106,6 +126,14 @@ void Perturbations::integrate_perturbations(){
     // ...
     // ...
     // ...
+    ODESolver ode_full;
+    ode_full.solve(dydx_full, x_array_full, y_full_ini);
+    Vector y_full = ode_full.get_data_by_component(0);
+
+
+    
+
+
 
     //===================================================================
     // TODO: remember to store the data found from integrating so we can
@@ -129,6 +157,28 @@ void Perturbations::integrate_perturbations(){
     //===================================================================
     //...
     //...
+    int d = n_x*ik;
+
+    Vector Phi__ = ode_tight.get_data_by_component(Constants.ind_Phi);
+    
+    // std::cout << Phi__[40] << std::endl;
+
+
+    for(int i=0; i<n_x_tight; i++){
+      // Phi_array[i + d] = y_tight_coupling[Constants.ind_Phi];
+      Phi_array[i + d] = ode_tight.get_data_by_component(Constants.ind_Phi)[i];
+      // std::cout << Phi_array[i+d] << std::endl;
+    }
+    for(int i=n_x_tight; i<n_x; i++){
+      Phi_array[i + d] = ode_full.get_data_by_component(Constants.ind_Phi)[i];//y_full[Constants.ind_Phi];
+
+    }
+
+    // Phi_array[n_x*ik] = y_full[Constants.ind_Phi];
+
+    // std::cout << Phi_array[n_x*ik] << std::en
+
+
 
   }
   
@@ -139,6 +189,9 @@ void Perturbations::integrate_perturbations(){
   // ...
   // ...
   // ...
+
+  Phi_spline.create(x_array, k_array, Phi_array);
+  // std::cout << " ok" << std::endl;
 
 }
 
@@ -187,7 +240,7 @@ Vector Perturbations::set_ic(const double x, const double k) const{
   double ddtaudxx   = rec->ddtaudxx_of_x(x);  // d^2/dx^2[τ(x)]
 
   //  fetch perturbation variables:
-  double Psi = -2./3.;    // Ψ(x,k)
+  double Psi = -2./3.;    // Ψ(x=x_init,k)
 
   //  define useful factors:
   double ckH      = Constants.c*k/Hp;   // ck/Hp(x)
@@ -211,7 +264,7 @@ Vector Perturbations::set_ic(const double x, const double k) const{
   // compute photon temperature perturbations (Θ_ℓ):
 
   Theta[0] = -0.5 * Psi;
-  Theta[1] = 1./6.*ckH * Psi;
+  Theta[1] = ckH/6. * Psi;
 
   return y_tc;
 }
@@ -279,9 +332,18 @@ Vector Perturbations::set_ic_after_tight_coupling(
   // ...
   // ...
 
+  //  fetch constants and variables:
+  const double c              = Constants.c;              // c
+  const double H0             = cosmo->get_H0();          // H_0
+  const double H0H0           = H0*H0;                    // H_0^2
+  const double Omegagamma0    = cosmo->get_Omegagamma();  // Ω_γ0
+
 
   //  define useful variables:
-  double Psi        = get_Psi(x, k);          // Ψ(x,k)
+  double ck     = ck;           // ck
+  double a      = exp(x);       // e^x
+
+  double Psi        =  -Phi - 12*H0H0/(ck*ck)*exp(-2*x) * Omegagamma0*Theta[2];  // Ψ(x,k)
   double dtau_inv   = 1./rec->dtaudx_of_x(x); // (d/dx[τ(x)])^(-1)
 
 
@@ -508,18 +570,23 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
   double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
 
-  //  fetch perturbation variables:
-  double Psi = get_Psi(x, k);   // Ψ(x,k)
+  
 
   // useful factors:
   double c      = Constants.c;  // c
-  double ckH    = c*k/Hp;       // ck/Hp
+  double ck     = ck;           // ck
+  double ckH    = ck/Hp;        // ck/Hp
   double Rplus  = (1+R);        // ( 1 + R )
   double Rminus = (1-R);        // ( 1 - R )
   double H0H0   = H0*H0;        // H_0^2
   double a      = exp(x);       // e^x
 
-  double expr_a, expr_b;
+  double expr;
+
+  //  fetch perturbation variables:
+  // double Psi = get_Psi(x, k);   // Ψ(x,k)
+  double Psi = -Phi - 12*H0H0/(ck*ck*a*a) * Omegagamma0*Theta[2];  // Ψ(x,k)
+  
 
   //=============================================================================
   // TODO: fill in the expressions for all the derivatives
@@ -533,41 +600,41 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute scalar quantities (Φ, δ, u):
 
-  expr_a = (Omegac0*delta_c + Omegab0*delta_b)*a + 4*Omegagamma0*Theta[0];
-  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp*a*a) * expr_a;
+  expr = (Omegac0*delta_c + Omegab0*delta_b)*a + 4*Omegagamma0*Theta[0];
+  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp*a*a) * expr;
   
-  expr_a = 0.5*ckH; expr_b = 3*dPhidx;
-  ddelta_cdx = expr_a*u_c - expr_b;
-  ddelta_bdx = expr_a*u_b - expr_b;
+  expr = 3*dPhidx;
+  ddelta_cdx = ckH*u_c - expr;
+  ddelta_bdx = ckH*u_b - expr;
   
-  expr_b = ckH*Psi;
-  du_cdx = - u_c - expr_b;
+  expr = ckH*Psi;
+  du_cdx = - u_c - expr;
 
-  double denom_inv = 1./( dtaudx*Rplus - R*U1 );
+  double denom = ( dtaudx*Rplus - R*U1 );
   double term1 = ( ddtaudxx*Rplus - dtaudx*Rminus ) * (3*Theta[1] + u_b);
   double term2 = ckH*R * ( Psi + U1*U2 - dThetadx[0]);
-  double q = (term1+term2)*denom_inv;
+  double q = (term1+term2)/denom;
 
-  du_bdx = ( q - R*u_b + ckH*U2)/Rplus - ckH*Psi;
+  du_bdx = ( q - R*u_b + ckH*U2)/Rplus - expr;
 
 
   //  compute photon temperature perturbations (Θ_ℓ):
 
-  dThetadx[0] = -ckH * Theta[1] + dtaudx*Theta[0] - dPhidx;
+  dThetadx[0] = -ckH * Theta[1] - dPhidx;
   dThetadx[1] = 1./3. * ( q - du_bdx);
 
-  int ell     = 2;                // ℓ
-  int ell_max = n_ell_Theta - 1;  // ℓ_max
+  // int ell     = 2;                // ℓ
+  // int ell_max = n_ell_Theta - 1;  // ℓ_max
 
-  for(ell; ell<ell_max; ell++){
-    expr_a = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
-    expr_b = dtaudx * Theta[ell];
-    dThetadx[ell] = expr_a + expr_b;
-  }
-  dThetadx[2] -= 0.1*dtaudx*Theta[2];
+  // for(ell; ell<ell_max; ell++){
+  //   expr_a = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
+  //   expr_b = dtaudx * Theta[ell];
+  //   dThetadx[ell] = expr_a + expr_b;
+  // }
+  // dThetadx[2] -= 0.1*dtaudx*Theta[2];
   
-  ell = ell_max;
-  dThetadx[ell] = ckH*dThetadx[ell-1] - (c*(ell+1)/(Hp*eta) + dtaudx)*Theta[ell];
+  // ell = ell_max;
+  // dThetadx[ell] = ckH*dThetadx[ell-1] - (c*(ell+1)/(Hp*eta) + dtaudx)*Theta[ell];
 
   return GSL_SUCCESS;
 }
@@ -626,19 +693,25 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
   double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
 
-  // Perturbation variables
-  double Psi = get_Psi(x, k);   // Ψ(x,k)
+  
 
 
   //  useful factors
   double c      = Constants.c;    // c
-  double ckH    = c*k/Hp;         // ck/Hp
+  double ck     = c*k;            // ck
+  double ckH    = ck/Hp;          // ck/Hp
   double Rplus  = (1+R);          // ( 1 + R )
   double Rminus = (1-R);          // ( 1 - R ) 
   double H0H0   = H0*H0;          // (H_0)^2
   double a      = exp(x);         // e^x
 
   double expr_a, expr_b;
+
+  // Perturbation variables
+  // double Psi = get_Psi(x, k);   // Ψ(x,k)
+  double Psi = -Phi - 12*H0H0/(ck*ck*a*a) * Omegagamma0*Theta[2];  // Ψ(x,k) ???
+
+  
 
 
   //  compute derivatives of scalar quantities (Φ, δ, u):
