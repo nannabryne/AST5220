@@ -36,7 +36,7 @@
 % \end{cases}
 % \end{equation}
 
-\par \textcolor{blue}{$\ell < \ell\ped{max}$ --- FIXME!!} 
+
 % \begin{equation}
 % \begin{split}
 %     \dv{\Theta_\ell}{x} = &\frac{ck\left(\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}\right)}{(2\ell +1) \Hp}  + \dv{\tau}{x} \Theta_\ell \left(1-\frac{\delta_{\ell,2}}{10}\right) + \mathcal{K}
@@ -58,6 +58,15 @@
 % \end{split}
 % \end{equation}
 \begin{subequations}
+\par \textcolor{blue}{$\ell = 0$ --- FIXME!!} 
+\begin{equation}
+\begin{split}
+    \dv{\Theta_{\ell< \ell\ped{max}}}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
+    &+ \dv{\tau}{x}\left[\left(1 -\frac{\delta_{\ell,2}}{10}\right)\Theta_\ell+ \frac{\delta_{\ell,1} u\ped{b}}{3}\right] 
+    - \delta_{\ell,0}\dv{\Phi}{x}% + \delta_{\ell,1}\frac{ck}{3\Hp}\Psi 
+\end{split}
+\end{equation}
+\par \textcolor{blue}{$\ell < \ell\ped{max}$ --- FIXME!!} 
 \begin{equation}
 \begin{split}
     \dv{\Theta_{\ell< \ell\ped{max}}}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
