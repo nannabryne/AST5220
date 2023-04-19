@@ -453,14 +453,20 @@ double Perturbations::get_tight_coupling_time(const double k) const{
 
     val = abs(rec->dtaudx_of_x(x));
 
-    if(val<=10){
+
+    if(val<=10 || val<=10*c*k/cosmo->Hp_of_x(x)){
+      x_tight_coupling_end = x;
+      break;
+    }
+
+    if(val<=lim){
       x_tight_coupling_end = x;
       break;
     }
 
   }
 
-
+  std::cout << "k = " << k*Constants.Mpc << " -> x_tc_end = " << x_tight_coupling_end << std::endl;
   return x_tight_coupling_end;
 }
 
@@ -733,7 +739,6 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double H0H0   = H0*H0;          // (H_0)^2
   double a      = exp(x);         // e^x
 
-  double expr_a, expr_b;
   double expr;
 
   // Perturbation variables
@@ -763,9 +768,8 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   dThetadx[0] = -ckH * Theta[1] + dtaudx*Theta[0] - dPhidx;
 
   for(ell=1; ell<ell_max; ell++){
-    expr_a = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
-    expr_b = dtaudx * Theta[ell];
-    dThetadx[ell] = expr_a + expr_b;
+    expr = ckH / (2*ell+1) * ( ell*Theta[ell-1] - (ell+1)*ell*Theta[ell+1] );
+    dThetadx[ell] = expr + dtaudx * Theta[ell];
   }
   dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
   dThetadx[2] -= 0.1*dtaudx*Theta[2];
