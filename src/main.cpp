@@ -98,10 +98,11 @@ int main(int narg, char **argv){
     // Solve the perturbations
     Perturbations pert(&cosmo, &rec);
     pert.solve();
-    pert.info();
+    // pert.info();
     
     // Output perturbation quantities
     double kvalue = 0.01 / Constants.Mpc;
+    std::cout << "OUTPUT ..." << std::endl;
     pert.output(kvalue, "perturbations_k0.01.txt");
         
 

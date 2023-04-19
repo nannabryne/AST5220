@@ -94,6 +94,9 @@ class Perturbations{
     // Compute source functions and spline the result
     void compute_source_functions();
 
+
+    double expr_Psi(double x, double k, double Phi, double Theta2);
+
   public:
 
     // Constructors
