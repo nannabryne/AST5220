@@ -33,17 +33,17 @@ class Perturbations{
     // but you only need to make the splines you will need
 
     // Splines of scalar perturbations quantities
-    Spline2D delta_c_spline{"delta_c_spline"};
-    Spline2D delta_b_spline{"delta_b_spline"};
-    Spline2D u_c_spline{"u_c_spline"};
-    Spline2D u_b_spline{"u_b_spline"};
-    Spline2D Phi_spline{"Phi_spline"};
-    Spline2D Pi_spline{"Pi_spline"};
-    Spline2D Psi_spline{"Psi_spline"};
+    Spline2D delta_c_spline{"delta_c"};
+    Spline2D delta_b_spline{"delta_b"};
+    Spline2D u_c_spline{"u_c"};
+    Spline2D u_b_spline{"u_b"};
+    Spline2D Phi_spline{"Phi"};
+    Spline2D Pi_spline{"Pi"};
+    Spline2D Psi_spline{"Psi"};
    
     // Splines of source functions (ST for temperature; SE for polarization)
-    Spline2D ST_spline{"ST_spline"};
-    Spline2D SE_spline{"SE_spline"};
+    Spline2D ST_spline{"ST"};
+    Spline2D SE_spline{"SE"};
     
     // Splines of mulipole quantities
     // NB: If you use there you have to allocate the container first
@@ -95,7 +95,8 @@ class Perturbations{
     void compute_source_functions();
 
 
-    double expr_Psi(double x, double k, double Phi, double Theta2);
+    double expr_Psi(double x, double k, double Phi, double Theta2) const;
+    double expr_Theta2(double x, double k, double Theta1) const;
 
   public:
 

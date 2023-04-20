@@ -162,7 +162,6 @@ void Perturbations::integrate_perturbations(){
     // std::cout << ode_tight.get_data_by_component(Constants.ind_deltab_tc)[n_x_tight-1] << std::endl;
     // std::cout << ode_full.get_data_by_component(Constants.ind_deltab)[0] << std::endl;
 
-    double fac = -8./15*Constants.c*k;
     double x;
     for(int i=0; i<n_x_tight-1; i++){
       
@@ -173,7 +172,8 @@ void Perturbations::integrate_perturbations(){
       Theta0_array[i + d] = ode_tight.get_data_by_component(Constants.ind_start_Theta_tc)[i];
       Theta1_array[i + d] = ode_tight.get_data_by_component(Constants.ind_start_Theta_tc+1)[i];
       x = x_array_tight[i];
-      Theta2_array[i + d] = fac/(cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x))*Theta1_array[i+d]; // FIXME
+      // Theta2_array[i + d] = fac/(cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x))*Theta1_array[i+d]; // FIXME
+      Theta2_array[i + d] = expr_Theta2(x, k, Theta1_array[i+d]);
       Phi_array[i + d] = ode_tight.get_data_by_component(Constants.ind_Phi_tc)[i];
       Psi_array[i + d] = expr_Psi(x, k, Phi_array[i+d], Theta2_array[i+d]);
       
@@ -206,18 +206,18 @@ void Perturbations::integrate_perturbations(){
   // ...
   // ...
 
-  delta_c_spline.create(x_array, k_array, delta_c_array);
-  delta_b_spline.create(x_array, k_array, delta_b_array);
-  u_c_spline.create(x_array, k_array, u_c_array);
-  u_b_spline.create(x_array, k_array, u_b_array);
+  delta_c_spline.create(x_array, k_array, delta_c_array, "delta_c");
+  delta_b_spline.create(x_array, k_array, delta_b_array, "delta_b");
+  u_c_spline.create(x_array, k_array, u_c_array, "u_c");
+  u_b_spline.create(x_array, k_array, u_b_array, "u_b");
 
-  Phi_spline.create(x_array, k_array, Phi_array);
-  Psi_spline.create(x_array, k_array, Psi_array);
+  Phi_spline.create(x_array, k_array, Phi_array, "Phi");
+  Psi_spline.create(x_array, k_array, Psi_array, "Psi");
 
   Theta_spline = std::vector<Spline2D>(3);
-  Theta_spline[0].create(x_array, k_array, Theta0_array);
-  Theta_spline[1].create(x_array, k_array, Theta1_array);
-  Theta_spline[2].create(x_array, k_array, Theta2_array);
+  Theta_spline[0].create(x_array, k_array, Theta0_array, "Theta0");
+  Theta_spline[1].create(x_array, k_array, Theta1_array, "Theta1");
+  Theta_spline[2].create(x_array, k_array, Theta2_array, "Theta2");
   
 
 }
@@ -271,7 +271,6 @@ Vector Perturbations::set_ic(const double x, const double k) const{
 
   //  define useful factors:
   double ckH      = Constants.c*k/Hp;   // ck/Hp(x)
-  double dtau_inv = 1./dtaudx;          // (d/dx[τ(x)])^(-1)
 
 
   //  Set initial conditions in the tight coupling regime
@@ -339,14 +338,14 @@ Vector Perturbations::set_ic_after_tight_coupling(
   const double *Nu_tc           = &y_tc[Constants.ind_start_nu_tc];
 
   //  reference to the quantities we are going to set:
-  double &delta_c         =  y[Constants.ind_deltac_tc];        // δ_c(x,k) after tight coupling
-  double &delta_b         =  y[Constants.ind_deltab_tc];        // δ_b(x,k) after tight coupling
-  double &u_c             =  y[Constants.ind_uc_tc];            // u_c(x,k) after tight coupling
-  double &u_b             =  y[Constants.ind_ub_tc];            // u_b(x,k) after tight coupling
-  double &Phi             =  y[Constants.ind_Phi_tc];           // Φ(x,k) after tight coupling
-  double *Theta           = &y[Constants.ind_start_Theta_tc];   // Θ_ℓ(x,k) after tight coupling
-  double *Theta_p         = &y[Constants.ind_start_Thetap_tc];
-  double *Nu              = &y[Constants.ind_start_nu_tc];
+  double &delta_c         =  y[Constants.ind_deltac];        // δ_c(x,k) after tight coupling
+  double &delta_b         =  y[Constants.ind_deltab];        // δ_b(x,k) after tight coupling
+  double &u_c             =  y[Constants.ind_uc];            // u_c(x,k) after tight coupling
+  double &u_b             =  y[Constants.ind_ub];            // u_b(x,k) after tight coupling
+  double &Phi             =  y[Constants.ind_Phi];           // Φ(x,k) after tight coupling
+  double *Theta           = &y[Constants.ind_start_Theta];   // Θ_ℓ(x,k) after tight coupling
+  double *Theta_p         = &y[Constants.ind_start_Thetap];
+  double *Nu              = &y[Constants.ind_start_nu];
 
   //=============================================================================
   // TODO: fill in the initial conditions for the full equation system below
@@ -370,7 +369,7 @@ Vector Perturbations::set_ic_after_tight_coupling(
 
   double expr = (H0/(c*k*a));
   // double Psi        =  -Phi - 12*expr*expr * Omegagamma0*Theta[2];  // Ψ(x,k)
-  double dtau_inv   = 1./rec->dtaudx_of_x(x); // (d/dx[τ(x)])^(-1)
+  // double dtau_inv   = 1./rec->dtaudx_of_x(x); // (d/dx[τ(x)])^(-1)
 
 
   //  compute scalar quantities (Φ, δ, u):
@@ -393,11 +392,12 @@ Vector Perturbations::set_ic_after_tight_coupling(
     Theta[ell] = Theta_tc[ell];
   }
 
-  double U = Constants.c*k/cosmo->Hp_of_x(x) * dtau_inv; 
-  Theta[2] = -8./15.*U * Theta[1]; //idk
+  double U = Constants.c*k/(cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x)) ;
+  // Theta[2] = -8./15.*U * Theta[1]; //idk
+  Theta[2] = expr_Theta2(x, k, Theta[1]);
 
   for(ell=3; ell<=ell_max; ell++){
-    Theta[ell] = - double(ell)/(2.*ell-1.) * U * Theta[ell-1];
+    Theta[ell] = - ell/(2.*ell-1.) * U * Theta[ell-1];
   }
 
   return y;
@@ -615,9 +615,10 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double expr;
 
   //  fetch perturbation variables:
-  double Theta2 = -8./15 * ckH / rec->dtaudx_of_x(x) * Theta[1]; // FIXME;
+  // double Theta2 = -8./15 * ckH / rec->dtaudx_of_x(x) * Theta[1]; // FIXME;
+  const double Theta2 = expr_Theta2(x, k, Theta[1]);
   // double Theta2 = -8./15 * Constants.c*k/ (cosmo->Hp_of_x(x)* rec->dtaudx_of_x(x)) * Theta[1]; // FIXME;
-  double Psi = expr_Psi(x, k, Phi, Theta2);  // Ψ(x,k)
+  const double Psi = expr_Psi(x, k, Phi, Theta2);  // Ψ(x,k)
 
   
 
@@ -711,36 +712,34 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double *dNudx           = &dydx[Constants.ind_start_nu];
 
   // Cosmological parameters and variables 
-  double Hp           = cosmo->Hp_of_x(x);          // Hp(x)
-  double dHpdx        = cosmo->dHpdx_of_x(x);       // d/dx[Hp(x)]
-  double eta          = cosmo->eta_of_x(x);         // η(x)
-  double H0           = cosmo->get_H0();            // H_0
-  double Omegagamma0  = cosmo->get_Omegagamma();    // Ω_γ0
-  double Omegac0      = cosmo->get_Omegac();        // Ω_c0
-  double Omegab0      = cosmo->get_Omegab();        // Ω_b0
+  const double Hp           = cosmo->Hp_of_x(x);          // Hp(x)
+  const double dHpdx        = cosmo->dHpdx_of_x(x);       // d/dx[Hp(x)]
+  const double eta          = cosmo->eta_of_x(x);         // η(x)
+  const double H0           = cosmo->get_H0();            // H_0
+  const double Omegagamma0  = cosmo->get_Omegagamma();    // Ω_γ0
+  const double Omegac0      = cosmo->get_Omegac();        // Ω_c0
+  const double Omegab0      = cosmo->get_Omegab();        // Ω_b0
 
   // Recombination variables
-  double R          = rec->R_of_x(x);           // R(x)
-  double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
-  double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
+  const double R          = rec->R_of_x(x);           // R(x)
+  const double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
+  const double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
 
   
-
-
   //  useful factors
-  double c      = Constants.c;    // c
-  double ckH    = c*k/Hp;         // ck/Hp
-  double Rplus  = (1.+R);         // ( 1 + R )
-  double Rminus = (1.-R);         // ( 1 - R ) 
-  double H0H0   = H0*H0;          // (H_0)^2
-  double a      = exp(x);         // e^x
+  const double c      = Constants.c;    // c
+  const double ckH    = c*k/Hp;         // ck/Hp
+  const double Rplus  = (1.+R);         // ( 1 + R )
+  const double Rminus = (1.-R);         // ( 1 - R ) 
+  const double H0H0   = H0*H0;          // (H_0)^2
+  const double a      = exp(x);         // e^x
 
   double expr;
 
   // Perturbation variables
   // expr = (H0/(c*k*a));  // H_0 / (ck e^x)
   // double Psi = -Phi - 12*expr*expr * Omegagamma0*Theta[2];  // Ψ(x,k)
-  double Psi = expr_Psi(x, k, Phi, Theta[2]);  // Ψ(x,k)
+  const double Psi = expr_Psi(x, k, Phi, Theta[2]);  // Ψ(x,k)
 
   //  compute derivatives of scalar quantities (Φ, δ, u):
 
@@ -767,17 +766,22 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
   // std::cout << 0 << ": " <<  Theta[0] << std::endl;
   // std::cout << 1 << ": " <<  Theta[1] << std::endl;
+
+  // std::cout << "Psi = " << Psi << ", Phi = " << Phi << std::endl;
+  // std::cout << "ck/Hp = " << ckH << std::endl;
+  // std::cout << "u_b = " << u_b << std::endl;
+  // std::cout << "u_c = " << u_c << std::endl;
   for(ell=2; ell<ell_max; ell++){
     dell = 1.*ell;
     expr = ckH / (2.*dell+1.) * ( dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] );
     
     dThetadx[ell] = expr + dtaudx * Theta[ell];
     // std::cout << ell << ": " <<  Theta[ell] << std::endl;
-    if(abs(dThetadx[ell])>1e1){
-      std::cout << "x = " << x << ": expr -> " << ckH / (2.*dell+1.) << "," << dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] << std::endl;
-      exit(1);
-      // Why does this happen at MR equality??
-    }
+    // if(abs(dThetadx[ell])>1e1){
+    //   std::cout << "x = " << x << ": expr -> " << ckH / (2.*dell+1.) << "," << dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] << std::endl;
+    //   exit(1);
+    //   // Why does this happen at MR equality??
+    // }
   }
   // dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
   dThetadx[2] -= 0.1*dtaudx*Theta[2];
@@ -796,10 +800,19 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
 
 
-double Perturbations::expr_Psi(double x, double k, double Phi, double Theta2){
+double Perturbations::expr_Psi(double x, double k, double Phi, double Theta2) const{
   double expr = cosmo->get_H0()/ ( Constants.c*k * exp(x));
   return - Phi - 12*expr*expr * cosmo->get_Omegagamma()*Theta2;
 }
+
+
+double Perturbations::expr_Theta2(double x, double k, double Theta1) const{
+  double fac = (4.*Constants.c*k) / (9.*cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x));
+  return -fac*Theta1;
+}
+
+
+
 
 
 //====================================================
