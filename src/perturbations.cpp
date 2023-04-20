@@ -74,8 +74,9 @@ void Perturbations::integrate_perturbations(){
     double x_end_tight = get_tight_coupling_time(k);
     double idk = n_x*(x_end_tight-x_start)/(x_end-x_start);
     int n_x_tight = int(idk);
+    int n_x_full = n_x-n_x_tight+1;
     Vector x_array_tight = Utils::linspace(x_start, x_end_tight, n_x_tight);
-    Vector x_array_full = Utils::linspace(x_end_tight, x_end, n_x-n_x_tight);
+    Vector x_array_full = Utils::linspace(x_end_tight, x_end, n_x_full);
 
     // std::cout << "x_end_tight: " <<  x_end_tight << std::endl;
     // std::cout << "n_x_tight: " <<  n_x_tight << std::endl;
@@ -158,9 +159,12 @@ void Perturbations::integrate_perturbations(){
     //...
     int d = n_x*ik;
 
+    // std::cout << ode_tight.get_data_by_component(Constants.ind_deltab_tc)[n_x_tight-1] << std::endl;
+    // std::cout << ode_full.get_data_by_component(Constants.ind_deltab)[0] << std::endl;
+
     double fac = -8./15*Constants.c*k;
     double x;
-    for(int i=0; i<n_x_tight; i++){
+    for(int i=0; i<n_x_tight-1; i++){
       
       delta_c_array[i + d] = ode_tight.get_data_by_component(Constants.ind_deltac_tc)[i];
       delta_b_array[i + d] = ode_tight.get_data_by_component(Constants.ind_deltab_tc)[i];
@@ -175,8 +179,9 @@ void Perturbations::integrate_perturbations(){
       
     }
     int ii;
-    for(int i=n_x_tight; i<n_x; i++){
-      ii = i-n_x_tight;
+    for(int i=n_x_tight-1; i<n_x; i++){
+      // std::cout << "i, ii = " << i << ", "<< ii << ": deltab = "<< ode_full.get_data_by_component(Constants.ind_deltab)[ii] << std::endl;
+      ii = i-n_x_tight+1;
       delta_c_array[i + d] = ode_full.get_data_by_component(Constants.ind_deltac)[ii];
       delta_b_array[i + d] = ode_full.get_data_by_component(Constants.ind_deltab)[ii];
       u_c_array[i + d] = ode_full.get_data_by_component(Constants.ind_uc)[ii];
@@ -189,7 +194,6 @@ void Perturbations::integrate_perturbations(){
     }
 
     
-
 
 
   }
@@ -393,7 +397,7 @@ Vector Perturbations::set_ic_after_tight_coupling(
   Theta[2] = -8./15.*U * Theta[1]; //idk
 
   for(ell=3; ell<=ell_max; ell++){
-    Theta[ell] = - ell/(2.*ell-1.) * U * Theta[ell-1];
+    Theta[ell] = - double(ell)/(2.*ell-1.) * U * Theta[ell-1];
   }
 
   return y;
@@ -611,10 +615,8 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double expr;
 
   //  fetch perturbation variables:
-  // double Psi = get_Psi(x, k);   // Ψ(x,k)
-  expr = (H0/(c*k*a));
-  // double Psi = -Phi - 12*expr*expr * Omegagamma0*Theta[2];  // Ψ(x,k)
   double Theta2 = -8./15 * ckH / rec->dtaudx_of_x(x) * Theta[1]; // FIXME;
+  // double Theta2 = -8./15 * Constants.c*k/ (cosmo->Hp_of_x(x)* rec->dtaudx_of_x(x)) * Theta[1]; // FIXME;
   double Psi = expr_Psi(x, k, Phi, Theta2);  // Ψ(x,k)
 
   
@@ -631,8 +633,8 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute scalar quantities (Φ, δ, u):
 
-  expr = (Omegac0*delta_c + Omegab0*delta_b)*a + 4*Omegagamma0*Theta[0];
-  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp*a*a) * expr;
+  expr = (Omegac0*delta_c + Omegab0*delta_b)/a + 4*Omegagamma0*Theta[0]/(a*a);
+  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp) * expr;
   
   expr = 3*dPhidx;
   ddelta_cdx = ckH*u_c - expr;
@@ -647,6 +649,16 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double q = (term1+term2)/denom;
 
   du_bdx = ( q - R*u_b + ckH*U2)/Rplus - expr;
+
+
+  // double Rinv = 1./R;
+
+  // denom = (1+ Rinv)*dtaudx + dHpdx/Hp - 1;
+  // term1 = - ( (1-Rinv)*dtaudx +  (1+Rinv)*ddtaudxx )*( 3*Theta[1] + u_b );
+  // term2 = - ckH* ( Psi - (1-dHpdx/Hp) * U2 + dThetadx[0]);
+  // q = (term1 + term2) /denom;
+
+  // du_bdx = 1/(1+Rinv) * ( -u_b - ckH*Psi + Rinv*(q+ ckH*U2 - ckH*Psi)  );
 
 
   //  compute photon temperature perturbations (Θ_ℓ):
@@ -753,10 +765,19 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   dThetadx[1] = ckH/3. * (Theta[0] - 2.*Theta[2] + Psi) + dtaudx*(Theta[1] + u_b/3.);
   double dell;
 
+  // std::cout << 0 << ": " <<  Theta[0] << std::endl;
+  // std::cout << 1 << ": " <<  Theta[1] << std::endl;
   for(ell=2; ell<ell_max; ell++){
     dell = 1.*ell;
     expr = ckH / (2.*dell+1.) * ( dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] );
+    
     dThetadx[ell] = expr + dtaudx * Theta[ell];
+    // std::cout << ell << ": " <<  Theta[ell] << std::endl;
+    if(abs(dThetadx[ell])>1e1){
+      std::cout << "x = " << x << ": expr -> " << ckH / (2.*dell+1.) << "," << dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] << std::endl;
+      exit(1);
+      // Why does this happen at MR equality??
+    }
   }
   // dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
   dThetadx[2] -= 0.1*dtaudx*Theta[2];

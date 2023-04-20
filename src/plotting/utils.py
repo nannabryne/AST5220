@@ -54,69 +54,6 @@ def save(filename, temp=True):
 
 
 
-def reset_matplotlib():
-    plt.rcParams.update(plt.rcParamsDefault)
-
-
-darkMode = False 
-
-
-# COLOURS = ["#5d00ff", "#ef495e", "#ffa500", "#9989f2", "#c0c066", "#133bfc", "#cd7e26"]
-
-# subCOLOURS = ["", "", "#FBAB18"]
-
-# COLOURS = ['#d73027','#fc8d59','#fee090','#ffffbf','#e0f3f8','#91bfdb','#4575b4']
-COLOURS = ['#E24A33', '#348ABD', '#988ED5', '#777777', '#FBC15E', '#8EBA42', '#FFB5B8']
-subCOLOURS = ["#DA8F84", "#83B5D2", "#CDC8EC", "w", "#F3C77C", "#B9D092", "#F7DBDC"]
-
-
-# print(plt.style.library["fivethirtyeight"])
-
-
-def _set_params():
-    # face = plt.style.library["ggplot"]["axes.facecolor"]
-    face = "#D4CCCD"
-    custom_params = {
-        "figure.figsize":(10,5), "figure.autolayout":True,
-        "savefig.dpi":300, "savefig.bbox":"tight",
-        "lines.linewidth":2.8, 
-        "text.usetex":True, 
-        "mathtext.fontset":"cm", "font.family":"STIXGeneral",
-        "axes.labelsize":22, "axes.titlesize":22, "axes.titlelocation":"left", "axes.titleweight":"bold", 
-        "axes.prop_cycle":cycler('color', COLOURS),
-        # "axes.facecolor":face,
-        "xtick.labelsize":16, "ytick.labelsize":16,
-        "legend.fontsize":20, "legend.fancybox":True, "legend.frameon":True, "legend.shadow":True, 
-        "font.size":18
-        }
-    
-    if darkMode:
-        custom_params["axes.facecolor"] = "#313332"
-        custom_params["grid.color"] = "#616667"#"#BFBFBF"
-        custom_params["legend.labelcolor"] = "w"
-
-    for param in custom_params.keys():
-        mpl.rcParams[param] = custom_params[param]
-
-    sns.set_style("darkgrid", rc=custom_params)
-    # sns.set_palette("hls")
-
-_set_params()
-
-
-
-
-def plot_colours():
-    
-    fig, ax = plt.subplots()
-    x = np.linspace(0, 5*np.pi, 100)
-    for i in range(len(COLOURS)):
-        c = COLOURS[i].strip("#")
-        ax.plot(x, np.sin(x+i*np.pi*0.3)*x-i*1.5, label=f"{i}: {c}")
-    ax.legend()
-    plt.show()
-
-# plot_colours()
 
 
 
@@ -140,6 +77,8 @@ class LaTeX:
         self.inv = lambda A: r"%s^{-1}"%A
 
         self.frac = lambda a, b: r"$\frac{%s}{%s}$"%(a, b)
+
+        self.__Greeks()
 
     def __call__(self, str):
         str = str.replace("$", "")
@@ -174,6 +113,12 @@ class LaTeX:
         for word in words:
             s += "\mathsf{%s}~"%word
         return self(s)
+    
+
+    def __Greeks(self):
+        self.Psi = self("\mathit{\Psi}")
+        self.Phi = self("\mathit{\Phi}")
+        self.Theta = self("\mathit{\Theta}")
 
 
 
@@ -289,11 +234,82 @@ class ColourCycles:
     def __getitem__(self, it):
         return self.colours[it]
     
+    def __call__(self):
+        return self.colours
+    
 
 
 
 
 
+
+
+def reset_matplotlib():
+    plt.rcParams.update(plt.rcParamsDefault)
+
+
+darkMode = False 
+
+
+# COLOURS = ["#5d00ff", "#ef495e", "#ffa500", "#9989f2", "#c0c066", "#133bfc", "#cd7e26"]
+
+# subCOLOURS = ["", "", "#FBAB18"]
+
+# COLOURS = ['#d73027','#fc8d59','#fee090','#ffffbf','#e0f3f8','#91bfdb','#4575b4']
+
+COLOURS = ['#E24A33', '#348ABD', '#988ED5', '#777777', '#FBC15E', '#8EBA42', '#FFB5B8']
+subCOLOURS = ["#DA8F84", "#83B5D2", "#CDC8EC", "w", "#F3C77C", "#B9D092", "#F7DBDC"]
+
+
+__colours = ColourCycles()
+# print(plt.style.library["fivethirtyeight"])
+
+
+def _set_params():
+    # face = plt.style.library["ggplot"]["axes.facecolor"]
+    face = "#D4CCCD"
+    custom_params = {
+        "figure.figsize":(10,5), "figure.autolayout":True,
+        "savefig.dpi":300, "savefig.bbox":"tight",
+        "lines.linewidth":2.8, 
+        "text.usetex":True, 
+        "mathtext.fontset":"custom", "mathtext.fallback":"stix", "font.family":"STIXGeneral",
+        "axes.labelsize":22, "axes.titlesize":22, "axes.titlelocation":"left", "axes.titleweight":"bold", 
+        "axes.prop_cycle":cycler('color', __colours()),
+        # "axes.facecolor":face,
+        "xtick.labelsize":16, "ytick.labelsize":16,
+        "legend.fontsize":20, "legend.fancybox":True, "legend.frameon":True, "legend.shadow":True, 
+        "font.size":18
+        }
+    
+    if darkMode:
+        custom_params["axes.facecolor"] = "#313332"
+        custom_params["grid.color"] = "#616667"#"#BFBFBF"
+        custom_params["legend.labelcolor"] = "w"
+
+    for param in custom_params.keys():
+        mpl.rcParams[param] = custom_params[param]
+
+    sns.set_style("darkgrid", rc=custom_params)
+    # sns.set_palette("hls")
+
+_set_params()
+
+
+
+
+def plot_colours():
+    
+    fig, ax = plt.subplots()
+    x = np.linspace(0, 5*np.pi, 100)
+    colours = __colours()
+    for i in range(len(colours)):
+        c = colours[i].strip("#")
+        ax.plot(x, np.sin(x+i*np.pi*0.3)*x-i*1.5, label=f"{i}: {c}")
+    ax.legend()
+    plt.show()
+
+# plot_colours()
 
 
 
