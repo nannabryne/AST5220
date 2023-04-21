@@ -351,7 +351,7 @@ void BackgroundCosmology::info() const{
   std::cout << "\n";
   std::cout << "Info about cosmology class:\n";
   std::cout << "Omegab0:      " << Omegab0      << "\n";
-  std::cout << "Omegac0:    " << Omegac0    << "\n";
+  std::cout << "Omegac0:      " << Omegac0      << "\n";
   std::cout << "OmegaLambda0: " << OmegaLambda0 << "\n";
   std::cout << "OmegaK0:      " << OmegaK0      << "\n";
   std::cout << "Omeganu0:     " << Omeganu0     << "\n";

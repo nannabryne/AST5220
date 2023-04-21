@@ -108,6 +108,11 @@ int main(int narg, char **argv){
     pert.output(kvalue, "perturbations_k0.01.txt");
     kvalue = 0.1 / Constants.Mpc;
     pert.output(kvalue, "perturbations_k0.1.txt");
+
+
+    /*
+    Sett Neff = 0, så får du de samme resultatene som Hans!
+    */
         
 
 
