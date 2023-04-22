@@ -33,6 +33,7 @@
 \usepackage{txfonts}	% Important for the A&A style!
 \bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 \usepackage{ifthen} 
+\usepackage{tcolorbox}
 
 
 % Clever referencing:
@@ -71,6 +72,10 @@
 \renewcommand*\aa@pageof{, page \thepage{} of \pageref*{LastPage}}
 \makeatother
 
+
+% Color boxes?
+\newtcbox{\mybox}[1]{colback=blue!5!white, colframe=black, fonttitle=\bfseries, title={#1}}
+
 %.............................
 % tex shortcuts
 %.............................
@@ -87,8 +92,9 @@
 \newcommand{\dx}[1]{\!\!\diff {#1}\,} % for integrals..
 
 
+\providecommand*{\deltasym}[1]{\ensuremath{\text{\textdelta}_{#1}}}    % delta tensor/symbol
 
-
+\providecommand*{\munu}{\ensuremath{_{\mu \nu}}}    % _(mu nu)
 
 
 
@@ -144,6 +150,8 @@
 \newcommand{\OmgL}[1][0]{\Omega_{\mathrm{\Lambda}#1}}   % dark energy/cosmological constant
 \newcommand{\OmgK}[1][0]{\Omega_{\mathrm{K}#1}}			% curvature
 \newcommand{\TCMB}[1][0]{T_{\mathrm{CMB}#1}}			% CMB temp
+\newcommand{\Tgamma}{T\gped{\textgamma}}			    % photon temp
+
 
 
 % For random expression (temporary variable):

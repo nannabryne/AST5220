@@ -7,6 +7,71 @@
 
 
 
+The geometry of the spacetime is encoded in the Einstein tensor $G\munu$ that relates to the energy-momentum tensor $T\munu$ through the Einstein equation $G\munu = 8\pi G T\munu$. The latter quantity describes the distrubution of energy and matter. The perturbed Einstein equation can be written
+\begin{equation}
+    \overline{G}\munu +\delta G\munu = 8\pi G \left( \overline{T}\munu+\delta T_{\mu \nu} \right),
+\end{equation}
+where we use (and will continue to use) an overline to indicate the unperturbed quanity. Being primarily interested in the perturbations, it all boils down to solving
+\begin{equation}\label{mil3:theo:eq:delta_G}
+    \delta G\munu = 8\pi G\, \delta T\munu
+\end{equation}
+in a clever way.\footnote{Solving it directly is highly non-trivial.} The metric is related to the Einstein tensor through $G\munu= R\munu - \frac{1}{2}g\munu R^\rho_{\, \rho}$, where $R\munu$ is the Ricci tensor. 
+%We will solve differential equations for:
+% \begin{itemize}
+%     \item spacetime corrections (potentials) $\Psi$ and $\Phi$
+%     \item density perturbations to normal matter $\delta\ped{c}$ and $\delta\ped{b}$
+% \end{itemize}
+Below is presented a short description of the quantities we aim to compute. 
+\begin{itemize}
+    \item $\Psi$ and $\Phi$ are spacetime corrections (potentials), both closely related to the Newtonian gravitational potential.
+    \item $\delta\ped{c}$ and $\delta\ped{b}$ are density perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively.
+    \item $u\ped{c}$ and $u\ped{b}$ are velocity perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively.
+    \item $\Theta_{\ell= 0, 1, \dots, \ell\ped{max}}$ are the photon multipoles that show up when expanding the photon temperature fluctuations $\Theta$ into spherical harmonics.
+\end{itemize}
+
+We will not go into detail in how to get from \cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. 
+
+
+\subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
+    The FRW metric from \cref{mil1:theo:eq:FRW} describes a smooth universe. A first order linear perturbation to the metric can be applied through
+    \begin{equation}\label{mil3:theo:eq:xxxxxx}
+        g\munu = \overline{g}\munu + h\munu,
+    \end{equation}
+    where $\overline{g}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2$. Recall $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
+    \begin{equation}
+    \begin{split}
+        h_{00} &= 2\Psi \\
+        h_{0i} &= 0 \\
+        h_{ij} &= 2\Phi \deltasym{ij}.
+    \end{split}
+    \end{equation}
+    The two potentials $\Psi$ and $\Phi$ are closely related to the Newtonian gravitational potential. Our perturbed metric is now given by
+    \begin{equation}
+    \begin{split}
+        g_{00} &= - \left(1+2\Psi\right) \\
+        g_{0i} &= 0 \\
+        g_{ij} &= \eu^{2x}\deltasym{ij}\left(1+2\Phi \right).
+    \end{split}
+    \end{equation}
+
+
+    % It can be shown \citep[see e.g.][Ch.~4]{Callin2006} that writing
+    % \begin{equation}
+    %     ds^2 = - (1-)
+    % \end{equation}
+
+
+
+
+\subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
+    The photon temperature $T\gped{\textgamma}$ \dots
+    \begin{equation}
+        \Tgamma (x) = \overline{T}\gped{\textgamma}(x) + \delta \Tgamma(x)= \TCMB \eu^{-x} \left[1 + \Theta(x)\right]
+    \end{equation}
+
+
+
+\please
 
 \noindent\colorbox{orange}{FULL SYSTEM:}
 \par \textcolor{blue}{\underline{Metric perturbations}}
@@ -136,3 +201,5 @@
     \end{cases} \label{mil3:theo:eq:init_Theta}
 \end{align}
 \end{subequations}
+
+\sendhelp
