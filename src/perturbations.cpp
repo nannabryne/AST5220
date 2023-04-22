@@ -617,6 +617,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   
   expr = ckH*Psi;
   du_cdx = - u_c - expr;
+  dThetadx[0] = -ckH * Theta[1] - dPhidx;
 
   double denom = ( dtaudx*Rplus - R*U1 );
   double term1 = - ( ddtaudxx*Rplus - dtaudx*Rminus ) * (3*Theta[1] + u_b);
@@ -638,7 +639,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute photon temperature perturbations (Θ_ℓ):
 
-  dThetadx[0] = -ckH * Theta[1] - dPhidx;
+  
   dThetadx[1] = 1./3. * ( q - du_bdx);
 
   return GSL_SUCCESS;
