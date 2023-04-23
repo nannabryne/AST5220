@@ -1,0 +1,246 @@
+% !TEX root = ../../main.tex
+
+% --------------------------------------
+% labels: \label{app:pert:[type]:[name]}
+% --------------------------------------
+
+
+
+We let $' \equiv \dv{}{x}$ in the equations below. Additionally, we introduce $\ckH\equiv \frac{ck}{\Hp(x)}$ as a shorthand notation.
+
+
+\subsection{The full system}
+
+The full system $\vec{Y}=(\Phi, \delta\ped{c}, \delta\ped{b}, u\ped{c}, u\ped{b}, \Theta_0, \Theta_1, \dots, \Theta_{\ell\ped{max}})$ \dots
+
+The metric perturbations evolves as follows:
+\begin{subequations}\label{app:pert:eq:metric_perturbations}
+\begin{align}
+    \Phi' &= \Psi - \frac{\ckH^2}{3} \Phi + \frac{H_0^2}{2\Hp^2\eu[2x]}\left\{ \left(\Omega\ped{c 0}\delta\ped{c} + \Omega\ped{b 0}\delta\ped{b} \right)\eu[x]+4\Omega\gped{\textgamma 0}\Theta_0\right\} \label{app:pert:eq:dPhidx}\\
+    \Psi &= - \Phi - \frac{12H_0^2}{c^2k^2\eu^{2x}} \Omega\gped{\textgamma 0}\Theta_2 \label{app:pert:eq:Psi}
+\end{align}
+\end{subequations}
+Note that \cref{app:pert:eq:Psi} is not a differential equation.
+
+The perturbations to normal matter ($s=\mathrm{c,b}$) are the following:
+\begin{subequations}\label{app:pert:eq:matter_perturbations}
+\begin{align}
+    \delta_s'&=  \ckH u_s - 3\dot{\Phi}\label{app:pert:eq:ddelta_sdx}  \\
+    u_s' &= - u_s - \ckH\Psi + \deltasym{s\mathrm{b}}  \frac{\tau'}{R} \left(3\Theta_1 +u\ped{b}\right)\label{app:pert:eq:du_sdx} 
+\end{align}
+\end{subequations}
+
+For the photon multipoles 
+
+\begin{subequations}\label{app:pert:eq:photon_multipoles}
+The monopole and dipole evolves as:
+\begin{align}
+    \Theta_0' &= -\ckH \Theta_1 - \Phi ' \label{app:pert:eq:dTheta0dx}\\
+    \Theta_1' &= \frac{\ckH}{3} \left[ \Theta_0 - 2\Theta_2 + \Psi \right] + \tau'\left[\Theta_1 + \frac{u\ped{b}}{3} \right] \label{app:pert:eq:dTheta1dx}
+\end{align}
+For the quadrupole and higher multipoles, we have:
+\begin{align}
+\Theta_\ell' = \begin{cases}
+    % \frac{\ckH}{5} \left[ 2 \Theta_1 -  3 \Theta_3 \right] +\frac{9}{10} \tau' \Theta_2  & \ell = 2 \\ 
+    \frac{\ckH}{2\ell + 1} \left[ \ell \Theta_{\ell-1}-  (\ell+1) \Theta_{\ell+1} \right] + \frac{9}{10}\tau ' \Theta_\ell & \ell = 2 \\ 
+    \frac{\ckH}{2\ell + 1} \left[ \ell \Theta_{\ell-1}-  (\ell+1) \Theta_{\ell+1} \right] + \tau ' \Theta_\ell  & 2< \ell < \ell\ped{max} \\
+    \ckH \Theta_{\ell-1} - \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \tau' \Theta_{\ell}& \ell=\ell\ped{max}
+\end{cases} \label{app:pert:eq:dThetaelldx}
+\end{align}
+\end{subequations}
+
+
+
+
+\subsection{Tight coupling regime}
+The tight coupling regime considers \cref{app:pert:eq:metric_perturbations}, \cref{app:pert:eq:dTheta0dx} and \cref{app:pert:eq:matter_perturbations} except for \cref{app:pert:eq:du_sdx} for $s=\mathrm{b}$. The following equations substitute the missing derivatives $\Theta_1'$ and $u\ped{b}'$:
+\begin{subequations}\label{app:pert:eq:tight_coupling}
+\begin{align}
+    u\ped{b}' &= \frac{q-Ru\ped{b} + \ckH(-\Theta_0+2\Theta_2)}{1+R} - \ckH\Psi \\
+    \Theta_1' &= \frac{1}{3}\left(q-u\ped{b}'\right)
+\end{align}
+Where $q$ is given by:
+\begin{align}
+    q = &\left[\tau'~(1+R) - R\left(1-\frac{\Hp'}{\Hp}\right)\right]^{-1} \cross \\
+    &\Bigg\{ -\left[\tau''~(1+R) - \tau'~(1-R) \right] \left(3\Theta_1 + u\ped{b}\right) \\
+    &\,  - \ckH R\left[  \Psi - \left(1-\frac{\Hp'}{\Hp}\right)\left(-\Theta_0+ 2\Theta_2\right)+ \Theta_1'\right]
+    \Bigg\}
+\end{align}
+\end{subequations}
+We dismiss the photons multipoles higher than the quadrupole. We need the quadrupole to solve the coupled set of equations, but we will use \cref{app:pert:eq:init_Theta2} to compute this quantity instead of a differential equation.
+
+
+\subsection{Initial conditions}
+
+At $x=x\ped{init}\ll x\ped{eq}$, we have the scalar quantities:
+\begin{subequations}\label{app:pert:eq:initial_conditions}
+\begin{align}
+    \Psi     &= -\frac{2}{3}     \label{app:pert:eq:init_Psi}\\
+    \Phi     &= -\Psi               \label{app:pert:eq:init_Phi}\\
+    \delta_s &= -\frac{3}{2} \Psi     \label{app:pert:eq:init_delta}\\
+    u_s      &= -\frac{\ckH}{2} \Psi \label{app:pert:eq:init_u}
+\end{align}
+\end{subequations}
+The first two photon multipoles are given by the following:
+\begin{subequations}\label{app:pert:eq:initial_conditions_Theta}
+\begin{align}
+    \Theta_0 &= -\frac{1}{2}\Psi        \label{app:pert:eq:init_Theta0}\\
+    \Theta_1 &= +\frac{\ckH}{6}\Psi     \label{app:pert:eq:init_Theta1}
+\end{align}
+For the quadrupole, we use the following expression at the initial time:
+\begin{equation}\label{app:pert:eq:init_Theta2}
+    \Theta_2 = -\frac{4\ckH}{9\tau'}\Theta_{1} \\ 
+\end{equation}
+For the remaining $\ell >2$:
+\begin{equation}
+    \Theta_\ell = -\frac{\ell}{2\ell+1} \frac{\ckH}{\tau'} \Theta_{\ell-1} \label{app:pert:eq:init_Thetaell}
+\end{equation}
+% \begin{align}
+%     \Theta_\ell =\begin{cases}
+%         -\frac{4\ckH}{9\tau'}\Theta_{\ell-1}    & \ell = 2 \\ 
+%         -\frac{\ell}{2\ell+1} \frac{\ckH}{\tau'} \Theta_{\ell-1} &\ell > 2
+%     \end{cases} \label{app:pert:eq:init_Thetaell}
+% \end{align}
+\end{subequations}
+
+
+
+
+
+
+
+
+
+
+% \please
+
+% \noindent\colorbox{orange}{FULL SYSTEM:}
+% \par \textcolor{blue}{\underline{Metric perturbations}}
+% \begin{subequations}\label{app:pert:eq:metric_perturbations2}
+% \begin{align}
+%     \dv{\Phi}{x} &= \Psi - \frac{c^2 k^2}{3\Hp^2} \Phi + \frac{H_0^2}{2\Hp^2\eu[2x]}\left\{ \left(\Omega\ped{c 0}\delta\ped{c} + \Omega\ped{b 0}\delta\ped{b} \right)\eu[x]+4\Omega\gped{\textgamma 0}\Theta_0\right\} \\
+%     \Psi &= - \Phi - \frac{12H_0^2}{c^2k^2\eu^{2x}} \Omega\gped{\textgamma 0}\Theta_2 
+% \end{align}
+% \end{subequations}
+
+% \par \textcolor{blue}{\underline{Matter perturbations}}
+% \begin{subequations}\label{app:pert:eq:matter_perturbations2}
+% \begin{align}
+%     \dv{\delta\ped{c, b}}{x} &=  \ckH u\ped{c, b} - 3\dv{\Phi}{x}  \\
+%     \dv{u\ped{c, b}}{x} &= - u\ped{c, b} - \ckH\Psi + \mathbf{1}\ped{b} \dv{\tau}{x} \frac{3\Theta_1 +u\ped{b}}{R(x)} 
+% \end{align}
+% \end{subequations}
+
+% \par \textcolor{blue}{\underline{Photon temperature perturbations}}
+% \begin{equation}\label{app:pert:eq:photontemp_perturbations}
+% \dv{\Theta_\ell}{x} = \begin{cases}
+%     - \ckH\Theta_{\ell+1}- \dv{\Phi}{x} & \ell =0\\
+%     \frac{ck}{3\Hp} \left( \Theta_{\ell-1} - 2\Theta_{\ell+1} + \Psi\right) + \dv{\tau}{x}\left[\Theta_{\ell} + \frac{1}{3}u\ped{b} \right] & \ell =1  \\
+%     \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) +\frac{9}{10} \dv{\tau}{x}\Theta_{\ell} &  \ell =2 \\
+%     \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) + \dv{\tau}{x}\Theta_\ell  & 3 \leq \ell < \ell\ped{max} \\
+%     \ckH \Theta_{\ell-1}- \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \dv{\tau}{x}\Theta_\ell &  \ell = \ell\ped{max}
+% \end{cases}
+% \end{equation}
+
+
+% \begin{equation}
+% \begin{split}
+%     \dv{\Theta_\ell}{x} = &\frac{ck\left(\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}\right)}{(2\ell +1) \Hp}  + \dv{\tau}{x} \Theta_\ell \left(1-\frac{\delta_{\ell,2}}{10}\right) + \mathcal{K}
+% \end{split}
+% % \left[\Theta_\ell + \frac{\delta_{\ell,1} u\ped{b}}{3} - \frac{\delta_{\ell,2}\Theta_\ell}{10} \right] + \mathcal{K}
+% \end{equation}
+% \begin{equation}
+%     \mathcal{K} = \begin{cases}
+%         -\dv{\Phi}{x} &\ell = 0 \\
+%         \frac{ck}{3\Hp}\Psi + \dv{\tau}{x}\frac{u\ped{b}}{3} & \ell =1 \\
+%         0 & \ell \leq 2
+%     \end{cases}
+% \end{equation}
+
+% \begin{equation}
+% \begin{split}
+%     \dv{\Theta_\ell}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}\right]}{(2\ell +1) \Hp}  + \dv{\tau}{x} \Theta_\ell \\%\left(1-\frac{\delta_{\ell,2}}{10}\right) \\
+%     &- \delta_{\ell,0}\dv{\Phi}{x} + \delta_{\ell,1}\left[\frac{ck}{3\Hp}\Psi + \dv{\tau}{x}\frac{u\ped{b}}{3}\right] - \delta_{\ell,2} \dv{\tau}{x}\frac{\Theta_\ell}{10}
+% % \end{split}
+% % \end{equation}
+% \begin{subequations}
+% \par \textcolor{blue}{$\ell = 0$ --- FIXME!!} 
+% \begin{equation}
+%     \dv{\Theta_{\ell= 0}}{x} = \frac{ck}{\Hp}\Theta_{\ell+1}  -\dv{\Phi}{x}
+% \end{equation}
+% \par \textcolor{blue}{$\ell < \ell\ped{max}$ --- FIXME!!} 
+% \begin{equation}
+% \begin{split}
+%     \dv{\Theta_{0<\ell< \ell\ped{max}}}{x} = &\frac{ck\left[\ell \Theta_{\ell-1} - (\ell+1)\Theta_{\ell+1}+\delta_{\ell,1} \Psi\right]}{(2\ell +1) \Hp}  \\
+%     &+ \dv{\tau}{x}\left[\left(1 -\frac{\delta_{\ell,2}}{10}\right)\Theta_\ell+ \frac{\delta_{\ell,1} u\ped{b}}{3}\right] 
+% \end{split}
+% \end{equation}
+% \par \textcolor{blue}{$\ell = \ell\ped{max}$}
+% \begin{equation}
+%     \dv{\Theta_{\ell = \ell\ped{max}}}{x} = \ckH \Theta_{\ell-1} - \frac{c(\ell+1)}{\Hp \eta}\Theta_{\ell} + \dv{\tau}{x} \Theta_{\ell}
+% \end{equation}
+% \end{subequations}
+% \begin{equation}\label{app:pert:eq:photontemp_perturbations}
+% \dv{\Theta_\ell}{x} = \frac{ck}{(2\ell +1)\Hp} \left(\ell \Theta_{\ell-1}- (\ell + 1)\Theta_{\ell+1} \right) + \dv{\tau}{x}\Theta_\ell
+
+
+% \end{equation}
+
+
+
+% \noindent\colorbox{orange}{TIGHT COUPLING REGIME:}
+
+% \begin{subequations}\label{app:pert:eq:tight_regime}
+
+% \begin{equation}
+% \begin{split}
+%     q = &\left[\dv{\tau}{x}~(1+R) - R\left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\right]^{-1} \cross \\
+%     \,&\Bigg\{ \left[ \dv[2]{\tau}{x}~(1+R) - \dv{\tau}{x}~(1-R) \right] (3\Theta_1 + u\ped{b}) \\
+%     \,&  - \ckH R\left[  \Psi + \left(1-\frac{1}{\Hp}\dv{\Hp}{x}\right)\left(-\Theta_0+ 2\Theta_2\right)- \dv{\Theta_0}{x}\right]
+%     \Bigg\}
+% \end{split}
+% \end{equation}
+% \begin{equation}
+% \begin{split}
+%     \dv{u\ped{b}}{x} =& \frac{q-Ru\ped{b} + \ckH(-\Theta_0+2\Theta_2)}{1+R} - \ckH\Psi 
+% \end{split}
+% \end{equation}
+% \begin{equation}
+% \begin{split}
+%     \dv{\Theta_1}{x} =& \frac{1}{3}\left(q-\dv{u\ped{b}}{x}\right)
+% \end{split}
+% \end{equation}
+% \end{subequations}
+
+
+% \begin{subequations}\label{app:pert:eq:initial_conditions}
+% \begin{align}
+%     \Psi     &= -\frac{2}{3}     \label{app:pert:eq:init_Psi}\\
+%     \Phi     &= -\Psi         \label{app:pert:eq:init_Phi}\\
+%     \delta\ped{c, b}&= -\frac{3}{2} \Psi     \label{app:pert:eq:init_delta}\\
+%     u\ped{c, b}     &= -\frac{ck}{2\Hp} \Psi \label{app:pert:eq:init_u}\\
+%     \Theta_0 &= -\frac{1}{2}\Psi \label{app:pert:eq:init_Theta0}\\
+%     \Theta_1 &= +\frac{ck}{6\Hp}\Psi\label{app:pert:eq:init_Theta1}\\
+%     \Theta_2 &= -\frac{8ck}{15\Hp} \left(\dv{\tau}{x}\right)^{-1}\Theta_1\label{app:pert:eq:init_Theta2}\\
+%     \Theta_\ell &= -\frac{\ell}{2\ell+1} \frac{ck}{15\Hp} \left(\dv{\tau}{x}\right)^{-1}\Theta_{\ell-1}\label{app:pert:eq:init_Thetal}
+% \end{align}
+% \end{subequations}
+
+
+% \noindent\colorbox{orange}{INITIAL CONDITIONS:}
+% \begin{subequations}\label{app:pert:eq:initial_conditions}
+% \begin{align}
+%     \Psi     &= -\frac{2}{3}     \label{app:pert:eq:init_Psi}\\
+%     \Phi     &= -\Psi         \label{app:pert:eq:init_Phi}\\
+%     \delta\ped{c, b}&= -\frac{3}{2} \Psi     \label{app:pert:eq:init_delta}\\
+%     u\ped{c, b}     &= -\frac{ck}{2\Hp} \Psi \label{app:pert:eq:init_u}\\
+%     \Theta_\ell &=\begin{cases}
+%         -\frac{1}{2}\Psi     & \ell = 0  \\
+%         +\frac{ck}{6\Hp}\Psi  & \ell = 1 \\ 
+%         -\frac{8ck}{15\Hp\dv*{\tau}{x}}\Theta_1    & \ell = 2 \\ 
+%         -\frac{\ell}{2\ell+1} \frac{ck}{\Hp\dv*{\tau}{x}} \Theta_{\ell-1} &\ell \geq 3
+%     \end{cases} \label{app:pert:eq:init_Theta}
+% \end{align}
+% \end{subequations}
+
+% \sendhelp
