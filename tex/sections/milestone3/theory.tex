@@ -36,7 +36,7 @@ Instead of real space $(\vec{x}, t)$, we will work in the Fourier space ($\vec{x
 \begin{equation}
     f(\vec{x}, t) = \int \frac{d^3 k}{(2\pi)^3} \eu^{\im \vec{k}\cdot \vec{x}}f(\vec{k}, x(t)),
 \end{equation}
-and will notationally not be distinguished from its Fourier transform. Spatial derivatives of $f(\vec{x}, t)$ becomes
+and will notationally not be distinguished from its Fourier transform. Spatial derivatives of $f(\vec{x}, t)$ become
 \begin{equation}
     \pdv{f(\vec{x}, t)}{x^i} \to \im k_i f(\vec{k}, x(t)).
 \end{equation}
@@ -48,20 +48,22 @@ The direction of the wavevector $\vec{k}$ will be neglected. We let $k=\abs{\vec
 \end{split}
 \end{equation}
 
+We use the Fourier modes $k$ to classify the physical scales. We separate roughly between three main regimes: those of large-, intermediate- and small-scale modes. A mode enters the horizon when $k\eta(x) \gtrsim 1$, so this happens is later for larger scales (smaller values of $k$). 
+
 In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:pert}.
 
 
-\subsubsection{Two regimes}\label[sec]{mil3:theo:sec:regimes}
+% \subsubsection{Two regimes}\label[sec]{mil3:theo:sec:regimes}
     % We will encounter numerical obstacles 
-    Due to numerical obstacles, it is benefitial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
-    \begin{subequations}\label{mil3:theo:eq:tc_conditions}
-    \begin{align}
-        &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
-        & \abs{\dv{\tau(x)}{x}} > 10 \frac{ck}{\Hp(x)} \label{mil3:theo:eq:tc_condition_two}\\
-        &x \leq -8.3 \ll x_* \label{mil3:theo:eq:tc_condition_three}
-    \end{align}
-    \end{subequations}
-    \cref{mil3:theo:eq:tc_condition_three} ensures that tight coupling ends a fair while before the onset of recombination. 
+Due to numerical obstacles, it is benefitial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
+\begin{subequations}\label{mil3:theo:eq:tc_conditions}
+\begin{align}
+    &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
+    & \abs{\dv{\tau(x)}{x}} > 10 \frac{ck}{\Hp(x)} \label{mil3:theo:eq:tc_condition_two}\\
+    &x \leq -8.3 \ll x_* \label{mil3:theo:eq:tc_condition_three}
+\end{align}
+\end{subequations}
+\cref{mil3:theo:eq:tc_condition_three} ensures that tight coupling ends a fair while before the onset of recombination. 
 
 
 
@@ -70,7 +72,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \begin{equation}\label{mil3:theo:eq:xxxxxx}
         g\munu = \overline{g}\munu + h\munu,
     \end{equation}
-    where $\overline{g}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2$. Recall $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
+    where $\overline{g}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
     \begin{equation}
     \begin{split}
         h_{00} &= 2\Psi \\
