@@ -5,6 +5,8 @@ const = ConstantsAndUnits()
 
 tex = LaTeX()
 
+x_eq = -8.132   # RM-equality
+
 def create_dataframe(data):
     dic = dict(
         x           = data[:,0],

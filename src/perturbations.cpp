@@ -617,7 +617,12 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   
   expr = ckH*Psi;
   du_cdx = - u_c - expr;
+
+  //  compute photon temperature perturbations (Θ_0):
+
   dThetadx[0] = -ckH * Theta[1] - dPhidx;
+
+  //  compute scalar quantities (u_b):
 
   double denom = ( dtaudx*Rplus - R*U1 );
   double term1 = - ( ddtaudxx*Rplus - dtaudx*Rminus ) * (3*Theta[1] + u_b);
@@ -626,19 +631,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   du_bdx = ( q - R*u_b + ckH*U2)/Rplus - expr;
 
-
-  // double Rinv = 1./R;
-
-  // denom = (1+ Rinv)*dtaudx + dHpdx/Hp - 1;
-  // term1 = - ( (1-Rinv)*dtaudx +  (1+Rinv)*ddtaudxx )*( 3*Theta[1] + u_b );
-  // term2 = - ckH* ( Psi - (1-dHpdx/Hp) * U2 + dThetadx[0]);
-  // q = (term1 + term2) /denom;
-
-  // du_bdx = 1/(1+Rinv) * ( -u_b - ckH*Psi + Rinv*(q+ ckH*U2 - ckH*Psi)  );
-
-
-  //  compute photon temperature perturbations (Θ_ℓ):
-
+  //  compute photon temperature perturbations (Θ_1):
   
   dThetadx[1] = 1./3. * ( q - du_bdx);
 
