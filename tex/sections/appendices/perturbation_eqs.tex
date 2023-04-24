@@ -5,11 +5,12 @@
 % --------------------------------------
 
 
+This appendix contains equations relevant for \cref{sec:mil3}.
 
 We let $' \equiv \dv{}{x}$ in the equations below. Additionally, we introduce $\ckH\equiv \frac{ck}{\Hp(x)}$ as a shorthand notation.
 
 
-\subsection{The full system}
+\subsection{The full system}\label[app]{app:pert:sec:full_system}
 
 The full system $\vec{Y}=(\Phi, \delta\ped{c}, \delta\ped{b}, u\ped{c}, u\ped{b}, \Theta_0, \Theta_1, \dots, \Theta_{\ell\ped{max}})$ \dots
 
@@ -52,7 +53,7 @@ For the quadrupole and higher multipoles, we have:
 
 
 
-\subsection{Tight coupling regime}
+\subsection{Tight coupling regime}\label[app]{app:pert:sec:tight_coupling}
 The tight coupling regime considers \cref{app:pert:eq:metric_perturbations}, \cref{app:pert:eq:dTheta0dx} and \cref{app:pert:eq:matter_perturbations} except for \cref{app:pert:eq:du_sdx} for $s=\mathrm{b}$. The following equations substitute the missing derivatives $\Theta_1'$ and $u\ped{b}'$:
 \begin{subequations}\label{app:pert:eq:tight_coupling}
 \begin{align}
@@ -60,17 +61,19 @@ The tight coupling regime considers \cref{app:pert:eq:metric_perturbations}, \cr
     \Theta_1' &= \frac{1}{3}\left(q-u\ped{b}'\right)
 \end{align}
 Where $q$ is given by:
-\begin{align}
-    q = &\left[\tau'~(1+R) - R\left(1-\frac{\Hp'}{\Hp}\right)\right]^{-1} \cross \\
-    &\Bigg\{ -\left[\tau''~(1+R) - \tau'~(1-R) \right] \left(3\Theta_1 + u\ped{b}\right) \\
+\begin{equation}
+\begin{split}
+    q = &\left[\tau' (1+R) - R\left(1-\frac{\Hp'}{\Hp}\right)\right]^{-1} \cross \\
+    &\Bigg\{ -\left[\tau''(1+R) - \tau'(1-R) \right] \left(3\Theta_1 + u\ped{b}\right) \\
     &\,  - \ckH R\left[  \Psi - \left(1-\frac{\Hp'}{\Hp}\right)\left(-\Theta_0+ 2\Theta_2\right)+ \Theta_1'\right]
     \Bigg\}
-\end{align}
+\end{split}
+\end{equation}
 \end{subequations}
 We dismiss the photons multipoles higher than the quadrupole. We need the quadrupole to solve the coupled set of equations, but we will use \cref{app:pert:eq:init_Theta2} to compute this quantity instead of a differential equation.
 
 
-\subsection{Initial conditions}
+\subsection{Initial conditions}\label[app]{app:pert:sec:initial_conditions}
 
 At $x=x\ped{init}\ll x\ped{eq}$, we have the scalar quantities:
 \begin{subequations}\label{app:pert:eq:initial_conditions}

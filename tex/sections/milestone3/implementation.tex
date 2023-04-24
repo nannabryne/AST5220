@@ -6,23 +6,42 @@
 % PAST TENSE
 
 
-We extended our \verb|C++| program to account for perturbations in order to study the evolution of structure in the universe. Objects of the classes from~\cref{mil1:sec:imp} and~\cref{mil2:sec:imp} was suffient for the newest class to do all the desired work. 
+We extended our \verb|C++| program to account for perturbations in order to study the evolution of structure in the universe. Objects of the classes from~\cref{mil1:sec:imp} and~\cref{mil2:sec:imp} was sufficient for the newest class to do all the desired work. 
 
 
 
 
 
 \subsubsection{Perturbations}\label[sec]{mil3:imp:sec:main_work}
-    
-    \begin{enumerate}
-        \item Set initial conditions for TC system
-        \item Solve TC system
-        \item Use sol. to set IC for full system
-        \item Solve full system
-        \item Sow together solution
+    The following recipe \ref{item_one} -- \ref{item_six} was used for each of the 100 logarithmically spaced values $k \in [5\cross10^{-5}, \,3\cross 10^{-1}]\unit{Mpc}$. We used an array of $1\cross 10^4+1$ values of $x\in [x\ped{init}, 0]$ with $x\ped{init}=-20$.
+
+    \begin{enumerate}[wide,labelwidth=!,labelindent=0pt,label=(\roman*)]
+        \item\label{item_one} 
+        For the initial time $x\ped{init}$, set the initial conditions according to~\cref{app:pert:sec:initial_conditions} (\cref{app:pert:eq:initial_conditions} and~\eqref{app:pert:eq:dTheta0dx} to~\eqref{app:pert:eq:dTheta1dx}). 
+
+        \item\label{item_two} 
+        
+        Compute the time for which tight coupling ends, $x\ped{tc,end}(k)$. That is, find the $x$ for which~\cref{mil3:theo:eq:tc_condition_one},~\eqref{mil3:theo:eq:tc_condition_two} and/or~\eqref{mil3:theo:eq:tc_condition_three} is violated. 
+        
+        \item\label{item_three}
+        
+        Solve the set of differential equations from~\cref{app:pert:sec:tight_coupling} using RK4. Integrate from $x=x\ped{init}$ to $x=x\ped{tc,end}(k)$.
+
+        \item\label{item_four}
+        
+        Use the result from the tight coupling regime at $x=x\ped{tc,end}(k)$ to set the initial conditions for the full system. The higher multipoles are set according to~\cref{app:pert:eq:init_Theta2} to~\eqref{app:pert:eq:dThetaelldx}.
+
+        \item\label{item_five}
+        
+        Solve the set of differential equations from~\cref{app:pert:sec:full_system} using RK4. Integrate from $x=x\ped{tc,end}(k)$ to $x=0$. 
+
+        \item\label{item_six}
+        
+        Sew solutions together and save result.
+
     \end{enumerate}
 
-
+    
 
 
 

@@ -29,7 +29,7 @@ Below is presented a short description of the quantities we aim to compute.
     \item $\Theta_{\ell= 0, 1, \dots, \ell\ped{max}}$ are the photon multipoles that show up when expanding the photon temperature fluctuations $\Theta$ into spherical harmonics.
 \end{itemize}
 
-We will not go into detail in how to get from \cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. 
+We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. 
 
 
 Instead of real space $(\vec{x}, t)$, we will work in the Fourier space ($\vec{x}\to\vec{k}$), so that all our quantities will generally be functions of Fourier mode $k=\abs{\vec{k}}$ and our time variable $x = \ln{a(t)}$. That is, a function $f$ of space and time is
@@ -48,9 +48,25 @@ The direction of the wavevector $\vec{k}$ will be neglected. We let $k=\abs{\vec
 \end{split}
 \end{equation}
 
+In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:pert}.
+
+
+\subsubsection{Two regimes}\label[sec]{mil3:theo:sec:regimes}
+    % We will encounter numerical obstacles 
+    Due to numerical obstacles, it is benefitial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
+    \begin{subequations}\label{mil3:theo:eq:tc_conditions}
+    \begin{align}
+        &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
+        & \abs{\dv{\tau(x)}{x}} > 10 \frac{ck}{\Hp(x)} \label{mil3:theo:eq:tc_condition_two}\\
+        &x \leq -8.3 \ll x_* \label{mil3:theo:eq:tc_condition_three}
+    \end{align}
+    \end{subequations}
+    \cref{mil3:theo:eq:tc_condition_three} ensures that tight coupling ends a fair while before the onset of recombination. 
+
+
 
 \subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
-    The FRW metric from \cref{mil1:theo:eq:FRW} describes a smooth universe. A first order linear perturbation to the metric can be applied through
+    The FRW metric from~\cref{mil1:theo:eq:FRW} describes a smooth universe. A first order linear perturbation to the metric can be applied through
     \begin{equation}\label{mil3:theo:eq:xxxxxx}
         g\munu = \overline{g}\munu + h\munu,
     \end{equation}
@@ -99,12 +115,36 @@ The direction of the wavevector $\vec{k}$ will be neglected. We let $k=\abs{\vec
     % \end{equation}
 
 
-
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
-    The photon temperature $T\gped{\textgamma}$ 
+    We let the momentum of a photon be $\vec{p}$ and its magnitude $p = \abs{\vec{p}}$. Define $\mu\equiv(kp)^{-1} \vec{k}\cdot \vec{p}$. The perturbed photon temperature $T\gped{\textgamma}= T(\vec{k}, \mu, x)$ is 
+    \begin{equation}\label{mil3:theo:eq:defining_temperature_pert}
+        \Tgamma = \overline{\Tgamma}(x)\left[1 + \Theta(\vec{k}, \mu, x)\right],
+    \end{equation}
+    where $\overline{\Tgamma}(x) =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
+    % \begin{equation}\label{mil3:theo:eq:multipole_expansion}
+    % \begin{split}
+    %     \Theta_\ell &= \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \\
+    %     \Leftrightarrow \, \Theta(\mu) &= \sum_{\ell=0}^{\ell\ped{max}} \frac{2\ell+1}{\im^{\ell}}\Theta_\ell \mathcal{P}_\ell(\mu)\,; \quad\ell\ped{max} \to \infty,
+    % \end{split}
+    % \end{equation}
+    \begin{equation}\label{mil3:theo:eq:multipole_expansion}
+        \Theta_\ell = \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \,
+        \Leftrightarrow \, \Theta(\mu) = \sum_{\ell=0}^{\infty} \frac{2\ell+1}{\im^{\ell}}\Theta_\ell \mathcal{P}_\ell(\mu),
+    \end{equation}
+    where $\mathcal{P}_\ell(\mu)$ are the Legendre polynomials. 
+
+    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(k, x\!=\!0)$ to the temperature source function $\tilde{S}(k, x)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
     \begin{equation}
-        \Tgamma (x) = \overline{\Tgamma}(x)\left[1 + \Theta(x)\right]= \TCMB \eu^{-x} \left[1 + \Theta(x)\right]
+        \Theta_\ell (k, x\!=\!0) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(k,x') \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]),
+    \end{equation}
+    where
+    \begin{equation}\label{mil3:theo:eq:source_function}
+    \begin{split}
+        \tilde{S} =& \gti \left[\Theta_0 + \Psi + \frac{1}{4}\Theta_2\right] + \eu[-\tau]\left[ \dv{\Psi}{x} -\dv{\Phi}{x} \right] \\
+        &- \frac{1}{ck} \dv{}{x}\left(\Hp \gti u\ped{b} \right) + \frac{3}{4c^2k^2}\dv{}{x}\left[ \Hp \dv{}{x}\left(\Hp \gti\Theta_2 \right)  \right].
+    \end{split}
     \end{equation}
 
+    Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apperent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
     
 
