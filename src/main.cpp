@@ -98,7 +98,7 @@ int main(int narg, char **argv){
     // Solve the perturbations
     Perturbations pert(&cosmo, &rec);
     pert.solve();
-    // pert.info();
+    pert.info();
     
     // Output perturbation quantities
     double kvalue;
