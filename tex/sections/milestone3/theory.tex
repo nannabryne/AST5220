@@ -7,20 +7,15 @@
 
 
 
-The geometry of the spacetime is encoded in the Einstein tensor $G\munu$ that relates to the energy-momentum tensor $T\munu$ through the Einstein equation $G\munu = 8\pi G T\munu$. The latter quantity describes the distrubution of energy and matter. The perturbed Einstein equation can be written
+The geometry of the spacetime is encoded in the Einstein tensor $G\munu$ that relates to the energy-momentum tensor $T\munu$ through the Einstein equation $G\munu = 8\pi G T\munu$. The latter quantity describes the distribution of energy and matter. The perturbed Einstein equation can be written
 \begin{equation}
-    \overline{G}\munu +\delta G\munu = 8\pi G \left( \overline{T}\munu+\delta T_{\mu \nu} \right),
+    G^{(0)}\munu +\delta G\munu = 8\pi G \left( T^{(0)}\munu+\delta T_{\mu \nu} \right),
 \end{equation}
-where we use (and will continue to use) an overline to indicate the unperturbed quanity. Being primarily interested in the perturbations, it all boils down to solving
+where we use (and will continue to use) superscript ``$(0)$'' to indicate the unperturbed quantity. Being primarily interested in the perturbations, it all boils down to solving
 \begin{equation}\label{mil3:theo:eq:delta_G}
     \delta G\munu = 8\pi G\, \delta T\munu
 \end{equation}
-in a clever way.\footnote{Solving it directly is highly non-trivial.} The metric is related to the Einstein tensor through $G\munu= \mathcal{R}\munu - \frac{1}{2}g\munu \mathcal{R}$, where $\mathcal{R}\munu$ and $\mathcal{R}$ is the Ricci tensor and scaler, respectively. 
-%We will solve differential equations for:
-% \begin{itemize}
-%     \item spacetime corrections (potentials) $\Psi$ and $\Phi$
-%     \item density perturbations to normal matter $\delta\ped{c}$ and $\delta\ped{b}$
-% \end{itemize}
+in a clever way.\footnote{Solving it directly is highly non-trivial.} The metric is related to the Einstein tensor through $G\munu= \mathcal{R}\munu - \frac{1}{2}g\munu \mathcal{R}$, where $\mathcal{R}\munu$ and $\mathcal{R}$ is the Ricci tensor and scalar, respectively. 
 Below is presented a short description of the quantities we aim to compute. 
 \begin{itemize}
     \item $\Psi$ and $\Phi$ are spacetime corrections (potentials), both closely related to the Newtonian gravitational potential.
@@ -70,9 +65,9 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
 \subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
     The FRW metric from~\cref{mil1:theo:eq:FRW} describes a smooth universe. A first order linear perturbation to the metric can be applied through
     \begin{equation}\label{mil3:theo:eq:xxxxxx}
-        g\munu = \overline{g}\munu + h\munu,
+        g\munu = g^{(0)}\munu + h\munu,
     \end{equation}
-    where $\overline{g}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
+    where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
     \begin{equation}
     \begin{split}
         h_{00} &= 2\Psi \\
@@ -100,9 +95,9 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
 \subsubsection{Matter perturbations}\label[sec]{mil3:theo:sec:matter}
     The normal matter in the universe is either cold dark or baryonic. We set the perturbed number densities of these species to be
     \begin{equation}\label{mil3:theo:eq:defining_matter_pert}
-        n_s =  \overline{n_s} \left[1 + \delta_s\right]\,; \quad s=\mathrm{c,b},
+        n_s =  n_s^{(0)} \left[1 + \delta_s\right]\,; \quad s=\mathrm{c,b},
     \end{equation}
-    so that $\overline{n_s}\delta_s$ is the leading order term. To zeroth order, we have $\overline{n_s}\propto \eu^{-3x}$ from the Boltzmann equation.
+    so that $n_s^{(0)}\delta_s$ is the leading order term. To zeroth order, we have $n_s^{(0)}\propto \eu^{-3x}$ from the Boltzmann equation.
 
     We denote the fluid (or ``bulk'') velocity of a species $s$ as $\vec{u}_s$, and its longitudinal component as $u_s$, such that
     \begin{equation}
@@ -120,9 +115,9 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
     We let the momentum of a photon be $\vec{p}$ and its magnitude $p = \abs{\vec{p}}$. Define $\mu\equiv(kp)^{-1} \vec{k}\cdot \vec{p}$. The perturbed photon temperature $T\gped{\textgamma}= T(\vec{k}, \mu, x)$ is 
     \begin{equation}\label{mil3:theo:eq:defining_temperature_pert}
-        \Tgamma = \overline{\Tgamma}(x)\left[1 + \Theta(\vec{k}, \mu, x)\right],
+        \Tgamma = \Tgamma^{(0)}(x)\left[1 + \Theta(\vec{k}, \mu, x)\right],
     \end{equation}
-    where $\overline{\Tgamma}(x) =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
+    where $\Tgamma^{(0)}(x) =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
     % \begin{equation}\label{mil3:theo:eq:multipole_expansion}
     % \begin{split}
     %     \Theta_\ell &= \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \\
