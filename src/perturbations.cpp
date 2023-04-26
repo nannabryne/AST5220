@@ -243,7 +243,7 @@ Vector Perturbations::set_ic(const double x, const double k) const{
   double &u_b          =  y_tc[Constants.ind_ub_tc];            // u_b(x,k)
   double &Phi          =  y_tc[Constants.ind_Phi_tc];           // Φ(x,k) 
   double *Theta        = &y_tc[Constants.ind_start_Theta_tc];   // Θ_ℓ(x,k)
-  double *Nu           = &y_tc[Constants.ind_start_nu_tc];
+  // double *Nu           = &y_tc[Constants.ind_start_nu_tc];
 
   
   //  fetch cosmological parameters and variables:
@@ -324,7 +324,7 @@ Vector Perturbations::set_ic_after_tight_coupling(
   const double &u_b_tc          =  y_tc[Constants.ind_ub_tc];           // u_b(x,k) from tight coupling
   const double &Phi_tc          =  y_tc[Constants.ind_Phi_tc];          // Φ(x,k) from tight coupling
   const double *Theta_tc        = &y_tc[Constants.ind_start_Theta_tc];  // Θ_ℓ(x,k) from tight coupling
-  const double *Nu_tc           = &y_tc[Constants.ind_start_nu_tc];
+  // const double *Nu_tc           = &y_tc[Constants.ind_start_nu_tc];
 
   //  reference to the quantities we are going to set:
   double &delta_c         =  y[Constants.ind_deltac];        // δ_c(x,k) after tight coupling
@@ -333,8 +333,8 @@ Vector Perturbations::set_ic_after_tight_coupling(
   double &u_b             =  y[Constants.ind_ub];            // u_b(x,k) after tight coupling
   double &Phi             =  y[Constants.ind_Phi];           // Φ(x,k) after tight coupling
   double *Theta           = &y[Constants.ind_start_Theta];   // Θ_ℓ(x,k) after tight coupling
-  double *Theta_p         = &y[Constants.ind_start_Thetap];
-  double *Nu              = &y[Constants.ind_start_nu];
+  // double *Theta_p         = &y[Constants.ind_start_Thetap];
+  // double *Nu              = &y[Constants.ind_start_nu];
 
 
   //  fetch constants and variables:
@@ -563,7 +563,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   const double &u_b             =  y[Constants.ind_ub_tc];          // u_b(x,k)
   const double &Phi             =  y[Constants.ind_Phi_tc];         // Φ(x,k)
   const double *Theta           = &y[Constants.ind_start_Theta_tc]; // Θ_ℓ(x,k)
-  const double *Nu              = &y[Constants.ind_start_nu_tc];
+  // const double *Nu              = &y[Constants.ind_start_nu_tc];
 
   //  reference to the quantities we are going to set in the dydx array:
   double &ddelta_cdx      =  dydx[Constants.ind_deltac_tc];       // d/dx[δ_c(x,k)]
@@ -572,7 +572,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double &du_bdx          =  dydx[Constants.ind_ub_tc];           // d/dx[u_b(x,k)]
   double &dPhidx          =  dydx[Constants.ind_Phi_tc];          // d/dx[Φ(x,k)]
   double *dThetadx        = &dydx[Constants.ind_start_Theta_tc];  // d/dx[Θ_ℓ(x,k)]
-  double *dNudx           = &dydx[Constants.ind_start_nu_tc];     
+  // double *dNudx           = &dydx[Constants.ind_start_nu_tc];     
 
   //  fetch cosmological parameters and variables:
   double Hp             = cosmo->Hp_of_x(x);          // Hp(x)
@@ -670,8 +670,8 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   const double &u_b             =  y[Constants.ind_ub];           // u_c(x,k)
   const double &Phi             =  y[Constants.ind_Phi];          // Φ(x,k)
   const double *Theta           = &y[Constants.ind_start_Theta];  // Θ_ℓ(x,k)
-  const double *Theta_p         = &y[Constants.ind_start_Thetap];
-  const double *Nu              = &y[Constants.ind_start_nu];    
+  // const double *Theta_p         = &y[Constants.ind_start_Thetap];
+  // const double *Nu              = &y[Constants.ind_start_nu];    
 
   // References to the quantities we are going to set in the dydx array
   double &ddelta_cdx      =  dydx[Constants.ind_deltac];        // d/dx[δ_c(x,k)]
@@ -680,8 +680,8 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double &du_bdx          =  dydx[Constants.ind_ub];            // d/dx[u_b(x,k)]
   double &dPhidx          =  dydx[Constants.ind_Phi];           // d/dx[Φ(x,k)]
   double *dThetadx        = &dydx[Constants.ind_start_Theta];   // d/dx[Θ_ℓ(x,k)]
-  double *dTheta_pdx      = &dydx[Constants.ind_start_Thetap];
-  double *dNudx           = &dydx[Constants.ind_start_nu];
+  // double *dTheta_pdx      = &dydx[Constants.ind_start_Thetap];
+  // double *dNudx           = &dydx[Constants.ind_start_nu];
 
   // Cosmological parameters and variables 
   const double Hp           = cosmo->Hp_of_x(x);          // Hp(x)
