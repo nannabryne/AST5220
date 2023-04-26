@@ -50,7 +50,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
 
 % \subsubsection{Two regimes}\label[sec]{mil3:theo:sec:regimes}
     % We will encounter numerical obstacles 
-Due to numerical obstacles, it is benefitial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
+Due to numerical obstacles, it is beneficial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
 \begin{subequations}\label{mil3:theo:eq:tc_conditions}
 \begin{align}
     &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
@@ -63,26 +63,34 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
 
 
 \subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
-    The FRW metric from~\cref{mil1:theo:eq:FRW} describes a smooth universe. A first order linear perturbation to the metric can be applied through
+    The FRW metric from~\cref{mil1:theo:eq:FRW} describes a smooth universe, meaning a universe whose background is homogeneous and isotropic. A first order linear perturbation to the metric can be applied through
     \begin{equation}\label{mil3:theo:eq:xxxxxx}
-        g\munu = g^{(0)}\munu + h\munu,
+        g\munu = g^{(0)}\munu + h\munu\,; \quad \abs{h\munu } \ll 1,
     \end{equation}
-    where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is
+    where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is given in terms of the potentials $\Psi$ and $\Phi$. The resulting perturbed metric is now given by
     \begin{equation}
-    \begin{split}
-        h_{00} &= 2\Psi \\
-        h_{0i} &= 0 \\
-        h_{ij} &= 2\Phi \deltasym{ij}.
-    \end{split}
+        ds^2 = \eu[2x]\left[ -\left(1+2\Psi\right)\diff \eta^2 + \left(1+2\Phi\right) \deltasym{ij}\diff x^i \diff x^j\right] .
+        % ds^2 = -\left(1+2\Psi\right)\diff t^2 + \eu[2x]\left(1+2\Phi\right) \deltasym{ij}\diff x^i \diff x^j .
     \end{equation}
-    The two potentials $\Psi$ and $\Phi$ are closely related to the Newtonian gravitational potential. Our perturbed metric is now given by
-    \begin{equation}
-    \begin{split}
-        g_{00} &= - \left(1+2\Psi\right) \\
-        g_{0i} &= 0 \\
-        g_{ij} &= \eu^{2x}\deltasym{ij}\left(1+2\Phi \right).
-    \end{split}
-    \end{equation}
+    The time-dependent gravitational potential is encoded in $\Psi$ in the sense that it measures how the strength of the gravitational field in the perturbed universe differs from that of the smooth one. $\Phi$ describes the spatial curvature of the universe as it is a measure of the deviation of the spatial curvature from the smooth background. Both scalar perturbations are related to the distribution of matter in the universe. These fundamental quantities are the ones from which we will express the initial conditions of the system. %In fact, we will choose $\Psi$ s.t. $\abs{h\munu}$ in no way is much less than 1. 
+
+
+     % the former describing the time-dependent gravitational potential, the latter the spatial curvature of the universe.
+    % \begin{equation}
+    % \begin{split}
+    %     h_{00} &= -2\Psi \\
+    %     h_{0i} &= 0 \\
+    %     h_{ij} &= 2\Phi \eu^{2x} \deltasym{ij}.
+    % \end{split}
+    % \end{equation}
+    % The two potentials $\Psi$ and $\Phi$ are closely related to the Newtonian gravitational potential. 
+    % \begin{equation}
+    % \begin{split}
+    %     g_{00} &= - \left(1+2\Psi\right) \\
+    %     g_{0i} &= 0 \\
+    %     g_{ij} &= \eu^{2x}\deltasym{ij}\left(1+2\Phi \right).
+    % \end{split}
+    % \end{equation}
 
 
     % It can be shown \citep[see e.g.][Ch.~4]{Callin2006} that writing
@@ -111,13 +119,17 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
     %     \dv{\delta_s}{x}
     % \end{equation}
 
+    \begin{equation}
+        T_{00} = T^{(0)}_{00} +  \delta T_{00} = -\rho_s \left( 1 + \delta_s\right)
+    \end{equation}
+
 
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
-    We let the momentum of a photon be $\vec{p}$ and its magnitude $p = \abs{\vec{p}}$. Define $\mu\equiv(kp)^{-1} \vec{k}\cdot \vec{p}$. The perturbed photon temperature $T\gped{\textgamma}= T(\vec{k}, \mu, x)$ is 
+    We let the momentum of a photon be $\vec{p}$ and its magnitude $p = \abs{\vec{p}}$. Define $\mu\equiv(kp)^{-1} \vec{k}\cdot \vec{p}$. The perturbed photon temperature $T\gped{\textgamma}$ is
     \begin{equation}\label{mil3:theo:eq:defining_temperature_pert}
-        \Tgamma = \Tgamma^{(0)}(x)\left[1 + \Theta(\vec{k}, \mu, x)\right],
+        \Tgamma = \Tgamma^{(0)}\left[1 + \Theta(\mu)\right],
     \end{equation}
-    where $\Tgamma^{(0)}(x) =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
+    where $\Tgamma^{(0)} =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
     % \begin{equation}\label{mil3:theo:eq:multipole_expansion}
     % \begin{split}
     %     \Theta_\ell &= \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \\
@@ -129,6 +141,8 @@ Due to numerical obstacles, it is benefitial to define a regime in the early uni
         \Leftrightarrow \, \Theta(\mu) = \sum_{\ell=0}^{\infty} \frac{2\ell+1}{\im^{\ell}}\Theta_\ell \mathcal{P}_\ell(\mu),
     \end{equation}
     where $\mathcal{P}_\ell(\mu)$ are the Legendre polynomials. 
+
+    The 
 
     \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(k, x\!=\!0)$ to the temperature source function $\tilde{S}(k, x)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
     \begin{equation}
