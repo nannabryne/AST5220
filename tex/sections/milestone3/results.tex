@@ -14,11 +14,10 @@
 
 
 
-The figures below demonstrate our results for three wave numbers $k$. 
-% $k\in \{0.001,\,0.01,\, 0.1\} \unit{Mpc^{-1}}$
+The figures below demonstrate our results for three wave numbers $k$. We chose $k=0.001\unit{Mpc}^{-1}$ to represent the large-scale modes and $k=0.1\unit{Mpc}^{-1}$ for the small-scales. The intermediate-scale modes are represented by $k=0.01\unit{Mpc}^{-1}$.
 
 We present the absolute values of the matter perturbations in the upper panels of~\cref{mil3:res:fig:matter_perturbations}. The lower panels of said figure show the density and velocity perturbations for the photons.
-\onecolumn
+% \onecolumn
 \begin{figure*}[!ht]
     \begin{subfigure}{0.49\linewidth}
         \centering
@@ -35,14 +34,14 @@ We present the absolute values of the matter perturbations in the upper panels o
     \caption{\textcolor{orange}{CAPTION (matter perturbations)}}
 \label[fig]{mil3:res:fig:matter_perturbations}
 \end{figure*}
-\twocolumn
+% \twocolumn
 
 
 The photon quadrupole is plotted in~\cref{mil3:res:fig:photon_quadrupole}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{milestone3/photon_quadrupole.png} 
-    \caption{\textcolor{orange}{CAPTION}} 
+    \caption{The graphs show the quadrupole moment $\Theta_2(k, x)$ as function of logarithmic expansion factor $x$ for three different wavenumbers $k$.} 
     \label[fig]{mil3:res:fig:photon_quadrupole}
 \end{figure}
 
@@ -50,6 +49,10 @@ The photon quadrupole is plotted in~\cref{mil3:res:fig:photon_quadrupole}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{milestone3/gravitational_potential.png} 
-    \caption{\textcolor{orange}{CAPTION}} 
+    \caption{The graphs show the metric perturbations as functions of logarithmic expansion factor $x$ for three different wavenumbers $k$. Upper panel: spatial curvature $\Phi(k, x)$. Lower panel: sum of the spatial curvature $\Phi(k, x)$ and the gravitational potential $\Psi(k,x)$.} 
     \label[fig]{mil3:res:fig:gravitational_potential}
 \end{figure}
+
+Note that we completely dismissed neutrinos and photon polarisation. That is, we sat the effective neutrino number to be zero, slightly changing the background from \cref{sec:mil1}.
+
+The end of tight coupling turned out to be $x\ped{tc,end}(k)=-8.3$ for all three wavenumbers.

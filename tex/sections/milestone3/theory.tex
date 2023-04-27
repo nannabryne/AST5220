@@ -43,22 +43,11 @@ The direction of the wavevector $\vec{k}$ will be neglected. We let $k=\abs{\vec
 \end{split}
 \end{equation}
 
-We use the Fourier modes $k$ to classify the physical scales. We separate roughly between three main regimes: those of large-, intermediate- and small-scale modes. A mode enters the horizon when $k\eta(x) \gtrsim 1$, so this happens is later for larger scales (smaller values of $k$). Large-scale modes 
+We use the Fourier modes $k$ to classify the physical scales. We separate roughly between three main regimes: those of large-, intermediate- and small-scale modes. A mode enters the horizon when $k\eta(x) \gtrsim 1$, so this happens is later for larger scales (smaller values of $k$).
 
-In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:pert}.
+In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:app:pert}.
 
 
-% \subsubsection{Two regimes}\label[sec]{mil3:theo:sec:regimes}
-    % We will encounter numerical obstacles 
-Due to numerical obstacles, it is beneficial to define a regime in the early universe for which some useful approximations are viable. We refer to the situation wherein protons and electrons behave as a single fluid as the ``tight coupling regime''. We define the tight coupling regime to begin at (or prior to) $x=x\ped{init}$ and prolong as long as \cref{mil3:theo:eq:tc_conditions} holds:
-\begin{subequations}\label{mil3:theo:eq:tc_conditions}
-\begin{align}
-    &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
-    & \abs{\dv{\tau(x)}{x}} > 10 \frac{ck}{\Hp(x)} \label{mil3:theo:eq:tc_condition_two}\\
-    &x \leq -8.3 \ll x_* \label{mil3:theo:eq:tc_condition_three}
-\end{align}
-\end{subequations}
-\cref{mil3:theo:eq:tc_condition_three} ensures that tight coupling ends a fair while before the onset of recombination. 
 
 
 
@@ -74,29 +63,7 @@ Due to numerical obstacles, it is beneficial to define a regime in the early uni
     \end{equation}
     The time-dependent gravitational potential is encoded in $\Psi$ in the sense that it measures how the strength of the gravitational field in the perturbed universe differs from that of the smooth one. $\Phi$ describes the spatial curvature of the universe as it is a measure of the deviation of the spatial curvature from the smooth background. Both scalar perturbations are related to the distribution of matter in the universe. These fundamental quantities are the ones from which we will express the initial conditions of the system. %In fact, we will choose $\Psi$ s.t. $\abs{h\munu}$ in no way is much less than 1. 
 
-
-     % the former describing the time-dependent gravitational potential, the latter the spatial curvature of the universe.
-    % \begin{equation}
-    % \begin{split}
-    %     h_{00} &= -2\Psi \\
-    %     h_{0i} &= 0 \\
-    %     h_{ij} &= 2\Phi \eu^{2x} \deltasym{ij}.
-    % \end{split}
-    % \end{equation}
-    % The two potentials $\Psi$ and $\Phi$ are closely related to the Newtonian gravitational potential. 
-    % \begin{equation}
-    % \begin{split}
-    %     g_{00} &= - \left(1+2\Psi\right) \\
-    %     g_{0i} &= 0 \\
-    %     g_{ij} &= \eu^{2x}\deltasym{ij}\left(1+2\Phi \right).
-    % \end{split}
-    % \end{equation}
-
-
-    % It can be shown \citep[see e.g.][Ch.~4]{Callin2006} that writing
-    % \begin{equation}
-    %     ds^2 = - (1-)
-    % \end{equation}
+    It is the Poisson equation that determines the evolution of $\Phi$. The sum $\Phi + \Psi$ is given by an equation for anisotropic stress, resulting in a dependent expression for $\Psi$. The equations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:metric_perturbations}.
 
 
 
@@ -105,23 +72,33 @@ Due to numerical obstacles, it is beneficial to define a regime in the early uni
     \begin{equation}\label{mil3:theo:eq:defining_matter_pert}
         n_s =  n_s^{(0)} \left[1 + \delta_s\right]\,; \quad s=\mathrm{c,b},
     \end{equation}
-    so that $n_s^{(0)}\delta_s$ is the leading order term. To zeroth order, we have $n_s^{(0)}\propto \eu^{-3x}$ from the Boltzmann equation.
-
+    so that $n_s^{(0)}\delta_s$ is the leading order term. To zeroth order, we have $n_s^{(0)}\propto \eu^{-3x}$ from the Boltzmann equation. This is equivalent to perturbing the time-time-component of the energy momentum tensor,
+    \begin{equation}
+        T_{00} = T^{(0)}_{00} +  \delta T_{00} = -\rho_s \left( 1 + \delta_s\right).
+    \end{equation}
     We denote the fluid (or ``bulk'') velocity of a species $s$ as $\vec{u}_s$, and its longitudinal component as $u_s$, such that
     \begin{equation}
        \vec{u}_s = \vec{u}_s(\vec{k}, x) =  u_s(\vec{k}, x)\frac{\vec{k}}{k}.
     \end{equation}
     In addition, we use the convention that $u_s \to \im u_s$.
 
-    The governing equation for $\delta_s(k,x)$ is the continuity equation for $n_s(k,x)$ to first order. This takes the same form for $s=\mathrm{c}$ and $s=\mathrm{b}$. However, the equation for $u_{s}(k, x)$, the Euler equation, is one term \dots
-    % The continuity equation to first order becomes
-    % \begin{equation}
-    %     \dv{\delta_s}{x}
-    % \end{equation}
-
-    \begin{equation}
-        T_{00} = T^{(0)}_{00} +  \delta T_{00} = -\rho_s \left( 1 + \delta_s\right)
+    The governing equation for $\delta_s$ is the continuity equation for $n_s$ to first order. This takes the same form for $s=\mathrm{c}$ and $s=\mathrm{b}$. In general, for species $s$,
+    \begin{equation}\label{mil3:theo:continuity_equation}
+        \dv{\delta_s}{x} = (1+ w_s)\left(\frac{ck}{\Hp}u_s -3\dv{\Phi}{x}\right),
     \end{equation}
+    with $w_s$ as before. For normal matter, $w\ped{m} = w\ped{c} = w\ped{b} = 0$, whereas for relativistic particles we have $w\ped{r}=w\gped{\textgamma}=w\gped{\textnu}=\sfrac{1}{3}$. 
+    
+    The equation for $u_{s}$, the Euler equation, differs by one term for baryons and CDM. The collision-less Euler equation reads 
+    \begin{equation}\label{mil3:theo:euler_equation}
+        \dv{u_s}{x} = -(1- 3c_s^2)u_s - \frac{w_s ck}{(1+w_s)\Hp} \delta_s - \frac{ck}{\Hp}\Psi,
+    \end{equation}
+    where $c_s$ is the sound speed. $c_s^2 = w\ped{m}$ for baryons and CDM and $c_s^2=w\ped{r}$ for photons and neutrinos. In contrast with CDM, baryons interact with photons, giving rise to an additional term
+    \begin{equation}\label{mil3:theo:eq:baryon_momentum_transfer}
+        \text{momentum transfer} = - \frac{4\Omega\gped{\textgamma}}{3\Omega\ped{b}}\dv{\tau}{x} \left(u_\gamma-u\ped{b}\right)=-\dv{\tau}{x} \frac{u_\gamma-u\ped{b}}{R},
+    \end{equation}
+    where $R=R(x)$ is the baryon-to-photon energy ratio as before (see~\cref{mil2:theo:eq:R_of_x}). 
+
+    The final differential equations for the density and velocity perturbations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:matter_perturbations}.
 
 
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
@@ -130,32 +107,52 @@ Due to numerical obstacles, it is beneficial to define a regime in the early uni
         \Tgamma = \Tgamma^{(0)}\left[1 + \Theta(\mu)\right],
     \end{equation}
     where $\Tgamma^{(0)} =\TCMB \eu^{-x}$. The photon perturbation $\Theta(\mu)$ can be expanded into multipoles $\Theta_\ell$. The relation is
-    % \begin{equation}\label{mil3:theo:eq:multipole_expansion}
-    % \begin{split}
-    %     \Theta_\ell &= \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \\
-    %     \Leftrightarrow \, \Theta(\mu) &= \sum_{\ell=0}^{\ell\ped{max}} \frac{2\ell+1}{\im^{\ell}}\Theta_\ell \mathcal{P}_\ell(\mu)\,; \quad\ell\ped{max} \to \infty,
-    % \end{split}
-    % \end{equation}
     \begin{equation}\label{mil3:theo:eq:multipole_expansion}
         \Theta_\ell = \frac{\im^{\ell}}{2} \int_{-1}^{1}  \dx{\mu}\mathcal{P}_\ell(\mu)\Theta(\mu) \,
         \Leftrightarrow \, \Theta(\mu) = \sum_{\ell=0}^{\infty} \frac{2\ell+1}{\im^{\ell}}\Theta_\ell \mathcal{P}_\ell(\mu),
     \end{equation}
-    where $\mathcal{P}_\ell(\mu)$ are the Legendre polynomials. 
+    where $\mathcal{P}_\ell(\mu)$ are the Legendre polynomials. The hierarchy of differential equations governing the temperature multipoles are presented in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:photon_multipoles}.
 
-    The 
 
-    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(k, x\!=\!0)$ to the temperature source function $\tilde{S}(k, x)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
+    If we study the differential equations for the first two moments in~\cref{app:pert:eq:dThetaelldx}, we can identify the former as the continuity equation for the perturbed photon density by setting $\delta_\gamma = 4\Theta_0$,
     \begin{equation}
-        \Theta_\ell (k, x\!=\!0) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(k,x') \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]),
+        \dv{\delta_\gamma}{x}=\frac{4}{3} \left(\frac{ck}{\Hp} - 3\dv{\Phi}{x}\right),
     \end{equation}
-    where
-    \begin{equation}\label{mil3:theo:eq:source_function}
-    \begin{split}
-        \tilde{S} =& \gti \left[\Theta_0 + \Psi + \frac{1}{4}\Theta_2\right] + \eu[-\tau]\left[ \dv{\Psi}{x} -\dv{\Phi}{x} \right] \\
-        &- \frac{1}{ck} \dv{}{x}\left(\Hp \gti u\ped{b} \right) + \frac{3}{4c^2k^2}\dv{}{x}\left[ \Hp \dv{}{x}\left(\Hp \gti\Theta_2 \right)  \right].
-    \end{split}
+    exactly~\cref{mil3:theo:continuity_equation} with $s=\gamma$. The equation for the dipole serves as the perturbed Euler equation,~\cref{mil3:theo:eq:euler_photons}, if we let the longitudinal component of the photon velocity be $u_\gamma=-3\Theta_1$, that is
+    \begin{equation}\label{mil3:theo:eq:euler_photons}
+        \dv{u_\gamma}{x} = - \frac{ck}{4\Hp} \delta_\gamma + \frac{2ck}{\Hp}\Theta_2 - \frac{ck}{\Hp}\Psi + \dv{\tau}{x}\left[u_\gamma -u\ped{b}\right].
     \end{equation}
+    The last term---the momentum transfer---ensures that photons and baryons behave as a single fluid ($u_\gamma=u\ped{b}$) early on when Compton scattering is efficient. We refer to this period as ``the tight coupling regime''. 
 
-    Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apperent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
+
+\subsubsection{Tight coupling}
+    Due to numerical obstacles, we cannot use the full set of equations from~\cref{app:pert:sec:full_system} in the tight coupling regime. As $u\ped{b}\simeq u_\gamma = -3\Theta_1$ in this period, and $\abs{\dv*{\tau}{x}}$ is very large at this time, the last term in~\cref{mil3:theo:eq:euler_photons} is unfortunate. The same factor appears in the continuity equation for baryons (\cref{mil3:theo:eq:baryon_momentum_transfer}). The good news is that in this regime, some very useful approximations are viable, eventually allowing us to replace the differential equations for $u\ped{b}$ and $\Theta_2$ with differential equations that are way more numerically friendly. We present these in~\cref{app:pert:sec:tight_coupling}.
+
+    We assume tight coupling to begin in the very early universe and prolong until no later than recombination. The following three equations shall hold throughout the regime:\footnote{$x=-8.3$ used as a ``fair while before the onset of recombination''.}
+    \begin{subequations}\label{mil3:theo:eq:tc_conditions}
+    \begin{align}
+        &\abs{\dv{\tau(x)}{x}} > 10 \label{mil3:theo:eq:tc_condition_one} \\
+        & \abs{\dv{\tau(x)}{x}} > 10 \frac{ck}{\Hp(x)} \label{mil3:theo:eq:tc_condition_two}\\
+        &x \leq -8.3 \label{mil3:theo:eq:tc_condition_three}
+    \end{align}
+    \end{subequations}
+
+    The higher moments of the temperature fluctuations are very small in this regime ($\Theta_{\ell\geq 2}\ll 1$), and we can use the semi-analytical recursive relation in \cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
+
+
+
+\subsubsection{Line-of-sight integration}
+    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(k, x\!=\!0)$ to the temperature source function $\tilde{S}(k, x)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
+    \begin{equation}\label{mil3:theo:eq:temp_multipole_and_source_func}
+        \Theta_\ell (k, x\!=\!0) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(k,x') \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
+    \end{equation}
+    The full expression for $\Sti(k, x)$ is found in~\cref{app:app:source}.
+
+    Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apparent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
     
 
+
+\subsubsection{Initial conditions}
+    \please
+
+    \sendhelp

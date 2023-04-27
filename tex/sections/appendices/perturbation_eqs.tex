@@ -7,12 +7,12 @@
 
 This appendix contains equations relevant for \cref{sec:mil3}.
 
-We let $' \equiv \dv{}{x}$ in the equations below. Additionally, we introduce $\ckH\equiv \frac{ck}{\Hp(x)}$ as a shorthand notation.
+We let $' \equiv \dv{}{x}$ in the equations below. Additionally, we introduce $\ckH = \ckH(k, x)\equiv \frac{ck}{\Hp(x)}$ as a shorthand notation.
 
 
 \subsection{The full system}\label[app]{app:pert:sec:full_system}
 
-The full system $\vec{Y}=(\Phi, \delta\ped{c}, \delta\ped{b}, u\ped{c}, u\ped{b}, \Theta_0, \Theta_1, \dots, \Theta_{\ell\ped{max}})$ \dots
+% The full system $\vec{Y}=(\Phi, \delta\ped{c}, \delta\ped{b}, u\ped{c}, u\ped{b}, \Theta_0, \Theta_1, \dots, \Theta_{\ell\ped{max}})$ \dots
 
 The metric perturbations evolve as follows:
 \begin{subequations}\label{app:pert:eq:metric_perturbations}
@@ -75,35 +75,28 @@ We dismiss the photons multipoles higher than the quadrupole. We need the quadru
 
 \subsection{Initial conditions}\label[app]{app:pert:sec:initial_conditions}
 
-At $x=x\ped{init}\ll x\ped{eq}$, we have the scalar quantities:
+Let $\Psi\ped{init}\equiv\Psi(k, x\ped{init})$. Further, we use that $\Psi\ped{init}=-\sfrac{2}{3}$ and the following scalar quantities at $x=x\ped{init} \ll x\ped{eq}$:
 \begin{subequations}\label{app:pert:eq:initial_conditions}
 \begin{align}
-    \Psi     &= -\frac{2}{3}     \label{app:pert:eq:init_Psi}\\
-    \Phi     &= -\Psi               \label{app:pert:eq:init_Phi}\\
-    \delta_s &= -\frac{3}{2} \Psi     \label{app:pert:eq:init_delta}\\
-    u_s      &= -\frac{\ckH}{2} \Psi \label{app:pert:eq:init_u}
+    % \Psi(k, x\ped{init})     &= \Psi\ped{init} =-\frac{2}{3}     \label{app:pert:eq:init_Psi}\\
+    \Phi(k, x\ped{init})     &= -\Psi\ped{init}                                 \label{app:pert:eq:init_Phi}\\
+    \delta_s(k, x\ped{init}) &= -\frac{3}{2} \Psi\ped{init}                     \label{app:pert:eq:init_delta}\\
+    u_s(k, x\ped{init})      &= -\frac{\ckH(k, x\ped{init})}{2} \Psi\ped{init}  \label{app:pert:eq:init_u}
 \end{align}
 \end{subequations}
 The first two photon multipoles are given by the following:
-\begin{subequations}\label{app:pert:eq:initial_conditions_Theta}
+\begin{subequations}\label{app:pert:eq:initial_conditions_Theta01}
 \begin{align}
-    \Theta_0 &= -\frac{1}{2}\Psi        \label{app:pert:eq:init_Theta0}\\
-    \Theta_1 &= +\frac{\ckH}{6}\Psi     \label{app:pert:eq:init_Theta1}
+    \Theta_0(k, x\ped{init}) &= -\frac{1}{2}\Psi\ped{init}        \label{app:pert:eq:init_Theta0}\\
+    \Theta_1(k, x\ped{init}) &= +\frac{\ckH(k, x\ped{init})}{6}\Psi\ped{init}     \label{app:pert:eq:init_Theta1}
 \end{align}
-For the quadrupole, we use the following expression at the initial time:
-\begin{equation}\label{app:pert:eq:init_Theta2}
-    \Theta_2 = -\frac{4\ckH}{9\tau'}\Theta_{1} \\ 
-\end{equation}
-For the remaining $\ell >2$:
-\begin{equation}
-    \Theta_\ell = -\frac{\ell}{2\ell+1} \frac{\ckH}{\tau'} \Theta_{\ell-1} \label{app:pert:eq:init_Thetaell}
-\end{equation}
-% \begin{align}
-%     \Theta_\ell =\begin{cases}
-%         -\frac{4\ckH}{9\tau'}\Theta_{\ell-1}    & \ell = 2 \\ 
-%         -\frac{\ell}{2\ell+1} \frac{\ckH}{\tau'} \Theta_{\ell-1} &\ell > 2
-%     \end{cases} \label{app:pert:eq:init_Thetaell}
-% \end{align}
+\end{subequations}
+For the quadrupole and the remaining $\ell >2$, the following expressions hold at early times:
+\begin{subequations}\label{app:pert:eq:initial_conditions_Theta2ell}
+\begin{align}
+    \Theta_2(k, x) &= -\frac{4\ckH(k, x)}{9\tau'(x)}\Theta_{1}(k,x)\label{app:pert:eq:init_Theta2} \\
+    \Theta_\ell(k, x) &= -\frac{\ell}{2\ell+1} \frac{\ckH(k, x)}{\tau'(x)} \Theta_{\ell-1}(k,x) \label{app:pert:eq:init_Thetaell}
+\end{align}
 \end{subequations}
 
 
