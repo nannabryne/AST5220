@@ -342,8 +342,8 @@ Vector Perturbations::set_ic_after_tight_coupling(
   //  fetch constants and variables:
   const double c              = Constants.c;              // c
   const double H0             = cosmo->get_H0();          // H_0
-  const double H0H0           = H0*H0;                    // H_0^2
-  const double Omegagamma0    = cosmo->get_Omegagamma();  // Ω_γ0
+  // const double H0H0           = H0*H0;                    // H_0^2
+  // const double Omegagamma0    = cosmo->get_Omegagamma();  // Ω_γ0
 
 
   //  compute scalar quantities (Φ, δ, u):
@@ -366,12 +366,12 @@ Vector Perturbations::set_ic_after_tight_coupling(
     Theta[ell] = Theta_tc[ell];
   }
 
-  double U = Constants.c*k/(cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x)) ;
+  double U = c*k/(cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x)) ;
   // Theta[2] = -8./15.*U * Theta[1]; //idk
   Theta[2] = expr_Theta2(x, k, Theta[1]);
 
   for(ell=3; ell<=ell_max; ell++){
-    Theta[ell] = - ell/(2.*ell + 1.) * U * Theta[ell-1];
+    Theta[ell] = - (double)ell/(2.*ell + 1.) * U * Theta[ell-1];
   }
 
   return y;
@@ -565,7 +565,6 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   const double &u_b             =  y[Constants.ind_ub_tc];          // u_b(x,k)
   const double &Phi             =  y[Constants.ind_Phi_tc];         // Φ(x,k)
   const double *Theta           = &y[Constants.ind_start_Theta_tc]; // Θ_ℓ(x,k)
-  // const double *Nu              = &y[Constants.ind_start_nu_tc];
 
   //  reference to the quantities we are going to set in the dydx array:
   double &ddelta_cdx      =  dydx[Constants.ind_deltac_tc];       // d/dx[δ_c(x,k)]
@@ -573,8 +572,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double &du_cdx          =  dydx[Constants.ind_uc_tc];           // d/dx[u_c(x,k)]
   double &du_bdx          =  dydx[Constants.ind_ub_tc];           // d/dx[u_b(x,k)]
   double &dPhidx          =  dydx[Constants.ind_Phi_tc];          // d/dx[Φ(x,k)]
-  double *dThetadx        = &dydx[Constants.ind_start_Theta_tc];  // d/dx[Θ_ℓ(x,k)]
-  // double *dNudx           = &dydx[Constants.ind_start_nu_tc];     
+  double *dThetadx        = &dydx[Constants.ind_start_Theta_tc];  // d/dx[Θ_ℓ(x,k)]  
 
   //  fetch cosmological parameters and variables:
   double Hp             = cosmo->Hp_of_x(x);          // Hp(x)
@@ -614,10 +612,10 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute scalar quantities (Φ, δ, u):
 
-  expr = (Omegac0*delta_c + Omegab0*delta_b)/a + 4*Omegagamma0*Theta[0]/(a*a);
-  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*H0H0/(Hp*Hp) * expr;
+  expr = (Omegac0*delta_c + Omegab0*delta_b)/a + 4.*Omegagamma0*Theta[0]/(a*a);
+  dPhidx = Psi - 1./3*ckH*ckH*Phi + 0.5*(H0H0/(Hp*Hp)) * expr;
   
-  expr = 3*dPhidx;
+  expr = 3.*dPhidx;
   ddelta_cdx = ckH*u_c - expr;
   ddelta_bdx = ckH*u_b - expr;
   
@@ -639,7 +637,7 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
 
   //  compute photon temperature perturbations (Θ_1):
   
-  dThetadx[1] = 1./3. * ( q - du_bdx);
+  dThetadx[1] = ( q - du_bdx )/3.;
 
   return GSL_SUCCESS;
 }
@@ -671,9 +669,7 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   const double &u_c             =  y[Constants.ind_uc];           // u_c(x,k)
   const double &u_b             =  y[Constants.ind_ub];           // u_c(x,k)
   const double &Phi             =  y[Constants.ind_Phi];          // Φ(x,k)
-  const double *Theta           = &y[Constants.ind_start_Theta];  // Θ_ℓ(x,k)
-  // const double *Theta_p         = &y[Constants.ind_start_Thetap];
-  // const double *Nu              = &y[Constants.ind_start_nu];    
+  const double *Theta           = &y[Constants.ind_start_Theta];  // Θ_ℓ(x,k) 
 
   // References to the quantities we are going to set in the dydx array
   double &ddelta_cdx      =  dydx[Constants.ind_deltac];        // d/dx[δ_c(x,k)]
@@ -682,8 +678,6 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   double &du_bdx          =  dydx[Constants.ind_ub];            // d/dx[u_b(x,k)]
   double &dPhidx          =  dydx[Constants.ind_Phi];           // d/dx[Φ(x,k)]
   double *dThetadx        = &dydx[Constants.ind_start_Theta];   // d/dx[Θ_ℓ(x,k)]
-  // double *dTheta_pdx      = &dydx[Constants.ind_start_Thetap];
-  // double *dNudx           = &dydx[Constants.ind_start_nu];
 
   // Cosmological parameters and variables 
   const double Hp           = cosmo->Hp_of_x(x);          // Hp(x)
@@ -715,8 +709,8 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
   //  compute derivatives of scalar quantities (Φ, δ, u):
 
-  expr = (Omegac0*delta_c/a + Omegab0*delta_b/a) + 4.*Omegagamma0*Theta[0]/(a*a);
-  dPhidx = Psi - ckH*ckH*Phi/3. + 0.5*H0H0/(Hp*Hp) * expr;
+  expr = Omegac0*delta_c/a + Omegab0*delta_b/a + 4.*Omegagamma0*Theta[0]/(a*a);
+  dPhidx = Psi - ckH*ckH*Phi/3. + 0.5*(H0H0/(Hp*Hp)) * expr;
   
   expr = 3.*dPhidx;
   ddelta_cdx = ckH*u_c - expr;
@@ -724,16 +718,15 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
   expr = ckH*Psi;
   du_cdx = - u_c - expr;
-  du_bdx = - u_b - expr + dtaudx * (3*Theta[1]+u_b) / R;
-
+  du_bdx = - u_b - expr + dtaudx * ( 3.*Theta[1] + u_b ) / R;
 
   //  compute derivatives of photon multipoles (Θ_ℓ):
 
-  int ell     = 0;                // ℓ
-  int ell_max = n_ell_Theta - 1;  // ℓ_max
+  int ell           = 0;                // ℓ
+  const int ell_max = n_ell_Theta - 1;  // ℓ_max
 
   dThetadx[0] = -ckH * Theta[1] - dPhidx;
-  dThetadx[1] = ckH/3. * Theta[0] - ckH/3. *2.*Theta[2] + ckH/3. *Psi + dtaudx*(Theta[1] + u_b/3.);
+  dThetadx[1] = ckH/3. * Theta[0] - 2.*ckH/3.*Theta[2] + ckH/3.*Psi + dtaudx*( Theta[1] + u_b/3. );
   
   double dell;  // ℓ (double)
   double denom;
@@ -747,7 +740,7 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
     dThetadx[ell] = expr + dtaudx * Theta[ell];
   }
   // dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
-  dThetadx[2] -= 0.1*dtaudx*Theta[2];
+  dThetadx[2] -= dtaudx*Theta[2]/10.;
   
   ell = ell_max;
   dThetadx[ell] = ckH*dThetadx[ell-1] + -c*(ell+1.)/(Hp*eta)*Theta[ell] + dtaudx*Theta[ell];
@@ -763,12 +756,12 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
 double Perturbations::expr_Psi(double x, double k, double Phi, double Theta2) const{
   double expr = cosmo->get_H0()/ ( Constants.c*k * exp(x));
-  return - Phi - 12*expr*expr * cosmo->get_Omegagamma()*Theta2;
+  return - Phi - 12.*expr*expr * cosmo->get_Omegagamma()*Theta2;
 }
 
 
 double Perturbations::expr_Theta2(double x, double k, double Theta1) const{
-  double fac = (4.*Constants.c*k) / (9.*cosmo->Hp_of_x(x)*rec->dtaudx_of_x(x));
+  double fac =  (20. * Constants.c*k ) / ( 45. * cosmo->Hp_of_x(x) * rec->dtaudx_of_x(x) );
   return -fac*Theta1;
 }
 
