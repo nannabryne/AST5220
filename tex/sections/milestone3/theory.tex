@@ -6,6 +6,7 @@
 % PRESENT/FUTURE TENSE
 
 
+% The geometry of spacetime is described by the Einstein tensor $G\munu$, which relates to the distribution of energy and matter through the energy-momentum tensor $T\munu$ via the Einstein equation $G\munu = 8\pi G T\munu$. To account for perturbations, we can write the perturbed Einstein equation as $G^{(0)}\munu +\delta G\munu = 8\pi G \left( T^{(0)}\munu+\delta T_{\mu \nu} \right)$, where the superscript $(0)$ denotes the unperturbed quantity. The problem then is to solve the equation $\delta G\munu = 8\pi G, \delta T\munu$ efficiently, since direct solution is highly non-trivial. The Ricci tensor and scalar, denoted by $\mathcal{R}\munu$ and $\mathcal{R}$, respectively, are related to the Einstein tensor through $G\munu= \mathcal{R}\munu - \frac{1}{2}g\munu \mathcal{R}$.
 
 The geometry of the spacetime is encoded in the Einstein tensor $G\munu$ that relates to the energy-momentum tensor $T\munu$ through the Einstein equation $G\munu = 8\pi G T\munu$. The latter quantity describes the distribution of energy and matter. The perturbed Einstein equation can be written
 \begin{equation}
@@ -53,7 +54,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
 
 \subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
     The FRW metric from~\cref{mil1:theo:eq:FRW} describes a smooth universe, meaning a universe whose background is homogeneous and isotropic. A first order linear perturbation to the metric can be applied through
-    \begin{equation}\label{mil3:theo:eq:xxxxxx}
+    \begin{equation}\label{mil3:theo:eq:defining_h_munu}
         g\munu = g^{(0)}\munu + h\munu\,; \quad \abs{h\munu } \ll 1,
     \end{equation}
     where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is given in terms of the potentials $\Psi$ and $\Phi$. The resulting perturbed metric is now given by
@@ -83,7 +84,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     In addition, we use the convention that $u_s \to \im u_s$.
 
     The governing equation for $\delta_s$ is the continuity equation for $n_s$ to first order. This takes the same form for $s=\mathrm{c}$ and $s=\mathrm{b}$. In general, for species $s$,
-    \begin{equation}\label{mil3:theo:continuity_equation}
+    \begin{equation}\label{mil3:theo:eq:continuity_equation}
         \dv{\delta_s}{x} = (1+ w_s)\left(\frac{ck}{\Hp}u_s -3\dv{\Phi}{x}\right),
     \end{equation}
     with $w_s$ as before. For normal matter, $w\ped{m} = w\ped{c} = w\ped{b} = 0$, whereas for relativistic particles we have $w\ped{r}=w\gped{\textgamma}=w\gped{\textnu}=\sfrac{1}{3}$. 
@@ -118,7 +119,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \begin{equation}
         \dv{\delta_\gamma}{x}=\frac{4}{3} \left(\frac{ck}{\Hp} - 3\dv{\Phi}{x}\right),
     \end{equation}
-    exactly~\cref{mil3:theo:continuity_equation} with $s=\gamma$. The equation for the dipole serves as the perturbed Euler equation,~\cref{mil3:theo:eq:euler_photons}, if we let the longitudinal component of the photon velocity be $u_\gamma=-3\Theta_1$, that is
+    exactly~\cref{mil3:theo:eq:continuity_equation} with $s=\gamma$. The equation for the dipole serves as the perturbed Euler equation,~\cref{mil3:theo:eq:euler_photons}, if we let the longitudinal component of the photon velocity be $u_\gamma=-3\Theta_1$, that is
     \begin{equation}\label{mil3:theo:eq:euler_photons}
         \dv{u_\gamma}{x} = - \frac{ck}{4\Hp} \delta_\gamma + \frac{2ck}{\Hp}\Theta_2 - \frac{ck}{\Hp}\Psi + \dv{\tau}{x}\left[u_\gamma -u\ped{b}\right].
     \end{equation}
@@ -153,6 +154,13 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
 
 
 \subsubsection{Initial conditions}
-    \please
+    In the very early universe, shortly after inflation, all modes are outside the horizon; $k\eta\ll 1$. We refer to this mode-dependent period as the ``super-horizon regime''. Said regime allows for exact solutions, a very convenient property for setting initial conditions. Being able to express all of our desired quantities in terms of the gravitational potential $\Psi$, we only need this one value from inflation. See~\citet[Ch.~7,~8]{DodelsonBook} for more detail. We present the full set of initial conditions in~\cref{app:pert:sec:initial_conditions}. The choice $\Psi\ped{init}=-\sfrac{2}{3}$ is essentially a choice of normalisation, and does not actually violate~\cref{mil3:theo:eq:defining_h_munu}. %In particular, the choice is beneficial later 
 
-    \sendhelp
+
+\subsubsection{IDK}
+    Without going into detail about how to obtain these relations, we present a few approximations that are useful to later be able to validate our results.
+
+    For large-scale modes, we expect to see that $\Phi$ has decreased 10\% from the radiation-dominated era to the matter-dominated era. For small-scale modes, $\Phi$ should resemble
+    \begin{equation}
+        \propto \frac{\sin{y}-y\cos{y}}{y^3/3}\,; y=\frac{k\eta}{\sqrt{3}}
+    \end{equation}
