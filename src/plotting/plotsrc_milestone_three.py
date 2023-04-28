@@ -4,10 +4,20 @@ SET_SUBDIR("milestone3")
 tex = LaTeX()
 
 
+def INIT(x_RM_equality):
+    global x_eq, x_eq_args0, x_eq_args1
+    x_eq = x_RM_equality
+
+    x_eq_args0 = dict(x_list=[x_eq], x_label_list=[tex("x" + tex.ped("eq"))], style="-.", top=True)
+    x_eq_args1 = dict(x_list=[x_eq], style="-.")
+
 # go-to kwargs:
 alpha0  = .7
-lw0     = 2.1
+lw0     = 2.3
 ls0     = "-"
+
+xlims0  = (-15,0)
+gs_kw0  = dict(height_ratios=(6,5))
 
 
 def __set_k_label(fig, handles, k_dict, loc="center right"):
@@ -22,18 +32,17 @@ def __set_k_label(fig, handles, k_dict, loc="center right"):
 
 
 
+def __MatterPerturbations(which, df_list, k_dict):
 
-
-def __MatterPerturbations(which, label_dict, df_list, k_dict):
-
-    fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,7))
+    fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,6), gridspec_kw=gs_kw0)
     ax1, ax2 = axes.flat
 
     k_handles = []
 
     c_kw = dict(alpha=alpha0, lw=lw0, ls=ls0)
     b_kw = dict(alpha=alpha0, lw=lw0, ls="--")
-    g_kw = dict(alpha=alpha0, lw=lw0, ls=ls0)
+    g_kw = dict(alpha=alpha0, lw=.8, ls=":")
+    gg_kw= dict(alpha=alpha0, lw=lw0, ls=ls0)
 
     which = which.strip().lower()
     assert which == "u" or which == "delta"
@@ -41,20 +50,30 @@ def __MatterPerturbations(which, label_dict, df_list, k_dict):
     for i, df in enumerate(df_list):
         line, = ax1.plot(df["x"], np.abs(df[f"{which}c"]), c=k_dict["colour"][i], **c_kw)
         ax1.plot(df["x"], np.abs(df[f"{which}b"]), c=k_dict["colour"][i], **b_kw)
-        ax2.plot(df["x"], df[f"{which}gamma"], c=k_dict["colour"][i], **g_kw)
+        ax1.plot(df["x"], np.abs(df[f"{which}gamma"]), c=k_dict["colour"][i], **g_kw)
+        ax2.plot(df["x"], df[f"{which}gamma"], c=k_dict["colour"][i], **gg_kw)
         k_handles.append(line)
+    
+    pinpoint_x(ax1, **x_eq_args1)
+    pinpoint_x(ax2, **x_eq_args0)
+        
+    if which == "delta":
+        which = "\delta"
+    
+    abs_label_dict = {s:tex("|" + which + tex.ped(s) + "|") for s in ["c", "b", "\gamma"]}
+    ax1.plot(np.nan, np.nan, c="slategrey", label=abs_label_dict["c"], **c_kw)
+    ax1.plot(np.nan, np.nan, c="slategrey", label=abs_label_dict["b"], **b_kw)
+    ax1.plot(np.nan, np.nan, c="slategrey", label=abs_label_dict["\gamma"], **g_kw)
+    ax2.plot(np.nan, np.nan, c="slategrey", label=tex(which + tex.ped("\gamma")), **gg_kw)
 
-
-    ax1.plot(np.nan, np.nan, c="slategrey", label=label_dict["c"], **c_kw)
-    ax1.plot(np.nan, np.nan, c="slategrey", label=label_dict["b"], **b_kw)
-    ax2.plot(np.nan, np.nan, c="slategrey", label=label_dict["gamma"], **g_kw)
 
     u_legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
-    ax1.legend(ncols=2, **u_legend_kw)
+    ax1.legend(ncols=3, **u_legend_kw)
     ax2.legend(**u_legend_kw)
 
     ax1.set_yscale("log")
     ax2.set_xlabel(tex.x)
+    ax2.set_xlim(*xlims0)
 
     __set_k_label(fig, k_handles, k_dict, "center right")
 
@@ -75,7 +94,9 @@ def DensityPerturbations(df_list, k_dict, savefig=True):
                   b     = tex("| \delta"+tex.ped("b")+ "|"),
                   gamma = tex("\delta"+tex.ped("\gamma") + "=4" + tex.Theta + "_0"))
     
-    __MatterPerturbations("delta", labels, df_list, k_dict)
+    fig, axes =__MatterPerturbations("delta", df_list, k_dict)
+    ylims = (1.3e-2, axes[0].get_ylim()[1])
+    axes[0].set_ylim(ylims)
 
     if savefig:
         save("density_perturbations")
@@ -87,7 +108,9 @@ def VelocityPerturbations(df_list, k_dict, savefig=True):
                   b     = tex("| u"+tex.ped("b")+ "|"),
                   gamma = tex("u"+tex.ped("\gamma") + "=-3" + tex.Theta + "_1"))
 
-    __MatterPerturbations("u", labels, df_list, k_dict)
+    fig, axes = __MatterPerturbations("u", df_list, k_dict)
+    ylims = (0.6e-4, axes[0].get_ylim()[1])
+    axes[0].set_ylim(ylims)
 
     if savefig:
         save("velocity_perturbations")
@@ -104,11 +127,13 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
         k_handles.append(line)
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_2"), **Theta2_kw)
+    pinpoint_x(ax, **x_eq_args0)
     
     ax.legend()
 
-    __set_k_label(fig, k_handles, k_dict, (0.1, 0.1))
+    __set_k_label(fig, k_handles, k_dict, (0.12, 0.18))
     ax.set_xlabel(tex.x)
+    ax.set_xlim(-10,0)
     
 
 
@@ -119,7 +144,7 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
 
 def GravitationalPotential(df_list, k_dict, savefig=True):
 
-    fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,6))
+    fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,6), gridspec_kw=gs_kw0)
     ax1, ax2 = axes.flat
     k_handles = []
 
@@ -130,12 +155,16 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
         line, = ax1.plot(df["x"], df["Phi"], c=k_dict["colour"][i], **Phi_kw)
         ax2.plot(df["x"], df["Phi"] + df["Psi"], c=k_dict["colour"][i], **Phi_Psi_kw)
         k_handles.append(line)
+    
+    pinpoint_x(ax1, **x_eq_args1)
+    pinpoint_x(ax2, **x_eq_args0)
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
     ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi + "+" + tex.Psi), **Phi_Psi_kw)
     legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
     ax1.legend(**legend_kw)
     ax2.legend(**legend_kw)
+    ax2.set_xlim(*xlims0)
 
     __set_k_label(fig, k_handles, k_dict)
     ax2.set_xlabel(tex.x)
@@ -192,7 +221,7 @@ def SanityChecks(df_list):
 
     #   DENSITY PERTURBATIONS
 
-    fig1, ax1 = plt.subplots()
+    fig1, ax1 = plt.subplots(figsize=(8,7))
 
     ax = ax1
     for i, df in enumerate(df_list):
@@ -206,7 +235,7 @@ def SanityChecks(df_list):
 
     #   VELOCITY PERTURBATIONS
 
-    fig2, ax2 = plt.subplots()
+    fig2, ax2 = plt.subplots(figsize=(8,7))
 
     ax = ax2
     for i, df in enumerate(df_list):
@@ -220,7 +249,7 @@ def SanityChecks(df_list):
 
     #   PHOTON MONOPOLE
 
-    fig3, ax3 = plt.subplots()
+    fig3, ax3 = plt.subplots(figsize=(8,7))
 
     ax = ax3
     for i, df in enumerate(df_list):
@@ -239,7 +268,7 @@ def SanityChecks(df_list):
 
     ax.set_title(tex(tex.Theta + "_1"))
 
-    fig5, ax5 = plt.subplots()
+    fig5, ax5 = plt.subplots(figsize=(8,7))
 
 
     #   GRAVITATIONAL POTENTIAL 
@@ -263,6 +292,6 @@ def SanityChecks(df_list):
         ax.legend()
         ax.set_xlabel(tex.x)
         # ax.axvline(-8.3, color="k", ls="-")s
-        ax.set_ylim(reproduce_lims[i])
+        # ax.set_ylim(reproduce_lims[i])
 
     plt.show()

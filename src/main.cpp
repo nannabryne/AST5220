@@ -64,29 +64,29 @@ int main(int narg, char **argv){
 
     // Set up and solve the background
 
-    BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
-    cosmo.info();
-    cosmo.solve(print, 1e5);
+    // BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
+    // cosmo.info();
+    // cosmo.solve(print, 1e5);
     
     
-    // Output background evolution quantities
-    cosmo.output("background_cosmology.txt");
+    // // Output background evolution quantities
+    // cosmo.output("background_cosmology.txt");
 
-    // m1_MCMC();
+    // // m1_MCMC();
     
 
-    //  ----------------------
-    //  Milestone II
-    //  ----------------------
+    // //  ----------------------
+    // //  Milestone II
+    // //  ----------------------
 
 
-    // Solve the recombination history
-    RecombinationHistory rec(&cosmo, Yp);
-    rec.info();
-    rec.solve(print);
+    // // Solve the recombination history
+    // RecombinationHistory rec(&cosmo, Yp);
+    // rec.info();
+    // rec.solve(print);
 
-    // Output recombination quantities
-    rec.output("recombination.txt");
+    // // Output recombination quantities
+    // rec.output("recombination.txt");
 
     // m2_Saha(cosmo);
 
@@ -95,8 +95,13 @@ int main(int narg, char **argv){
     //  Milestone III
     //  ----------------------
 
+    BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+    cosmo2.solve(false, 1e5);
+    RecombinationHistory rec2(&cosmo2, Yp);
+    rec2.solve(false);
+
     // Solve the perturbations
-    Perturbations pert(&cosmo, &rec);
+    Perturbations pert(&cosmo2, &rec2);
     pert.solve();
     pert.info();
     

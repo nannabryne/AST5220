@@ -132,19 +132,23 @@ ddfdxx_of_x_kw =dict(color="dodgerblue",  alpha=.7, lw=1.4)
 
 
 
-def pinpoint_x(ax, x_list, x_label_list, colour="slategrey", style=":", width=.9, alpha=.5, top=False):
-    line_kw = dict(color=colour, lw=width, ls=style, alpha=alpha)
-    if top:
-        tick_kw = dict(reset=True, direction="out", length=9, width=width, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False)
-    else:
-        tick_kw = dict(reset=True, direction="out", length=17, width=width, color=colour, labelcolor=colour, top=False, bottom=True, labeltop=False, labelbottom=True)
+def pinpoint_x(ax, x_list, x_label_list=None, colour="slategrey", style=":", width=.9, alpha=.5, top=False, tick=True, line=True):
+    if x_label_list is None:
+        tick = False
 
-    for x in x_list:
-        ax.axvline(x, **line_kw)
+    if line:
+        line_kw = dict(color=colour, lw=width, ls=style, alpha=alpha)
+        for x in x_list:
+            ax.axvline(x, **line_kw)
 
-    ax.xaxis.set_tick_params("minor", **tick_kw)
-    # ax.set_xticks(x_list, labels=[tex(x_label) for x_label in x_label_list], minor=True)
-    ax.set_xticks(x_list, labels=x_label_list, minor=True)
+    if tick:
+        if top:
+            tick_kw = dict(reset=True, direction="out", length=9, width=width, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False)
+        else:
+            tick_kw = dict(reset=True, direction="out", length=17, width=width, color=colour, labelcolor=colour, top=False, bottom=True, labeltop=False, labelbottom=True)
+        ax.xaxis.set_tick_params("minor", **tick_kw)
+        # ax.set_xticks(x_list, labels=[tex(x_label) for x_label in x_label_list], minor=True)
+        ax.set_xticks(x_list, labels=x_label_list, minor=True)
 
 
 

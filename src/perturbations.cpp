@@ -42,6 +42,8 @@ void Perturbations::integrate_perturbations(){
   // quadratic or a logarithmic spacing
   //===================================================================
 
+  const gsl_odeiv2_step_type * stepper = gsl_odeiv2_step_rkf45;
+
   //  set up k-array for the k's we are to integrate over:
   Vector k_array = exp(Utils::linspace(log(k_min), log(k_max), n_k));
   
@@ -110,7 +112,7 @@ void Perturbations::integrate_perturbations(){
 
     ODESolver ode_tight;
     ode_tight.set_accuracy(1e-5, 1e-8, 1e-8);
-    ode_tight.solve(dydx_tight_coupling, x_array_tc, y_tight_coupling_ini);
+    ode_tight.solve(dydx_tight_coupling, x_array_tc, y_tight_coupling_ini, stepper);
     Vector y_tight_coupling = ode_tight.get_final_data();
     Vector2D y_sol_tc = ode_tight.get_data();
 
@@ -135,7 +137,7 @@ void Perturbations::integrate_perturbations(){
     // Integrate from x_end_tight -> x_end
     ODESolver ode_full;
     ode_full.set_accuracy(1e-5, 1e-8, 1e-8);
-    ode_full.solve(dydx_full, x_array_full, y_full_ini);
+    ode_full.solve(dydx_full, x_array_full, y_full_ini, stepper);
     Vector2D y_sol_full = ode_full.get_data();
     
 
@@ -695,14 +697,14 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   // Recombination variables
   const double R          = rec->R_of_x(x);           // R(x)
   const double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
-  const double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
+  // const double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
 
   
   //  useful factors
   const double c      = Constants.c;    // c
   const double ckH    = c*k/Hp;         // ck/Hp
-  const double Rplus  = (1.+R);         // ( 1 + R )
-  const double Rminus = (1.-R);         // ( 1 - R ) 
+  // const double Rplus  = (1.+R);         // ( 1 + R )
+  // const double Rminus = (1.-R);         // ( 1 - R ) 
   const double H0H0   = H0*H0;          // (H_0)^2
   const double a      = exp(x);         // e^x
 
@@ -713,8 +715,8 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
   //  compute derivatives of scalar quantities (Φ, δ, u):
 
-  expr = (Omegac0*delta_c + Omegab0*delta_b)*a + 4*Omegagamma0*Theta[0];
-  dPhidx = Psi - ckH*ckH*Phi/3. + 0.5*H0H0/(Hp*Hp*a*a) * expr;
+  expr = (Omegac0*delta_c/a + Omegab0*delta_b/a) + 4.*Omegagamma0*Theta[0]/(a*a);
+  dPhidx = Psi - ckH*ckH*Phi/3. + 0.5*H0H0/(Hp*Hp) * expr;
   
   expr = 3.*dPhidx;
   ddelta_cdx = ckH*u_c - expr;
@@ -731,12 +733,16 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   int ell_max = n_ell_Theta - 1;  // ℓ_max
 
   dThetadx[0] = -ckH * Theta[1] - dPhidx;
-  dThetadx[1] = ckH/3. * (Theta[0] - 2.*Theta[2] + Psi) + dtaudx*(Theta[1] + u_b/3.);
+  dThetadx[1] = ckH/3. * Theta[0] - ckH/3. *2.*Theta[2] + ckH/3. *Psi + dtaudx*(Theta[1] + u_b/3.);
   
   double dell;  // ℓ (double)
+  double denom;
   for(ell=2; ell<ell_max; ell++){
-    dell = 1.*ell;
-    expr = ckH / (2.*dell + 1.) * ( dell*Theta[ell-1] - (dell+1.)*Theta[ell+1] );
+    // dell = 1.*ell;
+    denom = (2.*ell + 1.);
+    expr = ell*ckH*Theta[ell-1]/denom - (ell+1.)*ckH*Theta[ell+1]/denom;
+
+    // expr = ckH  *  dell*Theta[ell-1]/ (2.*dell + 1.) - ckH*(dell+1.)*Theta[ell+1] / (2.*dell + 1.);
     
     dThetadx[ell] = expr + dtaudx * Theta[ell];
   }
@@ -744,7 +750,7 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   dThetadx[2] -= 0.1*dtaudx*Theta[2];
   
   ell = ell_max;
-  dThetadx[ell] = ckH*dThetadx[ell-1] + (-c*(ell+1.)/(Hp*eta) + dtaudx)*Theta[ell];
+  dThetadx[ell] = ckH*dThetadx[ell-1] + -c*(ell+1.)/(Hp*eta)*Theta[ell] + dtaudx*Theta[ell];
 
 
   return GSL_SUCCESS;
