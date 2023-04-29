@@ -4,12 +4,29 @@ SET_SUBDIR("milestone3")
 tex = LaTeX()
 
 
-def INIT(x_RM_equality):
-    global x_eq, x_eq_args0, x_eq_args1
+# this is dumb
+def INIT(x_RM_equality, x_recombination):
+    global x_eq, x_rec, x_eq_args0, x_eq_args1
     x_eq = x_RM_equality
+    x_rec = x_recombination
 
-    x_eq_args0 = dict(x_list=[x_eq], x_label_list=[tex("x" + tex.ped("eq"))], style="-.", top=True)
-    x_eq_args1 = dict(x_list=[x_eq], style="-.")
+    global x_eq_args0, x_eq_args1, x_rec_args0, x_rec_args1, x_eq_rec_args0, x_eq_rec_args1
+
+    # for only eq:
+    x_eq_args0  = dict(x_list=[x_eq], x_label_list=[tex("x" + tex.ped("eq"))], style="-.", top=True)
+    x_eq_args1  = dict(x_list=[x_eq], style="-.")
+
+    # for only rec:
+    x_rec_args0 = dict(x_list=[x_rec], x_label_list=[tex("x" + tex.ped("rec"))], style="-.", top=True)
+    x_rec_args1 = dict(x_list=[x_rec], style="-.")
+
+    # for both:
+    x_eq_rec_args0  = dict(x_list=[x_eq, x_rec], x_label_list=[tex("x" + tex.ped("eq")), tex("x" + tex.ped("rec"))], style="-.", top=True)
+    x_eq_rec_args1  = dict(x_list=[x_eq, x_rec], style="-.")
+
+
+
+
 
 # go-to kwargs:
 alpha0  = .7
@@ -54,8 +71,8 @@ def __MatterPerturbations(which, df_list, k_dict):
         ax2.plot(df["x"], df[f"{which}gamma"], c=k_dict["colour"][i], **gg_kw)
         k_handles.append(line)
     
-    pinpoint_x(ax1, **x_eq_args1)
-    pinpoint_x(ax2, **x_eq_args0)
+    pinpoint_x(ax1, **x_eq_rec_args1)
+    pinpoint_x(ax2, **x_eq_rec_args0)
         
     if which == "delta":
         which = "\delta"
@@ -127,7 +144,7 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
         k_handles.append(line)
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_2"), **Theta2_kw)
-    pinpoint_x(ax, **x_eq_args0)
+    pinpoint_x(ax, **x_eq_rec_args0)
     
     ax.legend()
 
@@ -153,11 +170,14 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
 
     for i, df in enumerate(df_list):
         line, = ax1.plot(df["x"], df["Phi"], c=k_dict["colour"][i], **Phi_kw)
-        ax2.plot(df["x"], df["Phi"] + df["Psi"], c=k_dict["colour"][i], **Phi_Psi_kw)
+        kval = k_dict["value"][i]
+        kval = 1
+
+        ax2.plot(df["x"], (df["Phi"] + df["Psi"])*kval*kval, c=k_dict["colour"][i], **Phi_Psi_kw)
         k_handles.append(line)
     
-    pinpoint_x(ax1, **x_eq_args1)
-    pinpoint_x(ax2, **x_eq_args0)
+    pinpoint_x(ax1, **x_eq_rec_args1)
+    pinpoint_x(ax2, **x_eq_rec_args0)
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
     ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi + "+" + tex.Psi), **Phi_Psi_kw)
@@ -173,35 +193,6 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
 
     if savefig:
         save("gravitational_potential")
-
-
-def GravitationalPotential_old(df_list, k_dict, savefig=True):
-
-    fig, ax = plt.subplots()
-    k_handles = []
-
-    Phi_kw      = dict(alpha=alpha0, lw=lw0, ls=ls0)
-    Phi_Psi_kw  = dict(alpha=alpha0, lw=lw0, ls="--")
-
-    for i, df in enumerate(df_list):
-        line, = ax.plot(df["x"], df["Phi"], c=k_dict["colour"][i], **Phi_kw)
-        ax.plot(df["x"], df["Phi"] + df["Psi"], c=k_dict["colour"][i], **Phi_Psi_kw)
-        k_handles.append(line)
-
-    ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
-    ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi + "+" + tex.Psi), **Phi_Psi_kw)
-    ax.legend()
-
-    __set_k_label(fig, k_handles, k_dict, (0.1, 0.2))
-    ax.set_xlabel(tex.x)
-    
-
-    if savefig:
-        save("gravitational_potential")
-
-
-
-
 
 
 

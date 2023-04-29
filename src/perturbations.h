@@ -25,12 +25,11 @@ class Perturbations{
     const double k_max   = Constants.k_max;
     
     // Start and end of the time-integration
-    const int n_x        = 5000+1;
-    const double x_start = -18.;
+    const int n_x        = int(5e3)+1;
+    const double x_start = -20.;
     const double x_end   = 0.;
 
-    // Below is a full list of splines you probably need, 
-    // but you only need to make the splines you will need
+
 
     // Splines of scalar perturbations quantities
     Spline2D delta_c_spline{"delta_c"};
@@ -49,8 +48,8 @@ class Perturbations{
     // NB: If you use there you have to allocate the container first
     // e.g. Theta_spline = std::vector<Spline2D>(n_ell_Theta); before using it
     std::vector<Spline2D> Theta_spline;
-    std::vector<Spline2D> Theta_p_spline;
-    std::vector<Spline2D> Nu_spline;
+    // std::vector<Spline2D> Theta_p_spline;
+    // std::vector<Spline2D> Nu_spline;
     
     //==========================================================
     // [1] Tight coupling ODE system
@@ -175,10 +174,13 @@ class Perturbations{
      * @return Θ_ℓ(x,k)
     */
     double get_Theta(const double x, const double k, const int ell) const;
-    double get_Theta_p(const double x, const double k, const int ell) const;
-    double get_Nu(const double x, const double k, const int ell) const;
+
+
+    
+    // double get_Theta_p(const double x, const double k, const int ell) const;
+    // double get_Nu(const double x, const double k, const int ell) const;
     double get_Source_T(const double x, const double k) const;
-    double get_Source_E(const double x, const double k) const;
+    // double get_Source_E(const double x, const double k) const;
 };
 
 #endif

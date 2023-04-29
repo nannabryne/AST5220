@@ -41,7 +41,7 @@ int main(int narg, char **argv){
     // Background parameters (today)
     double h           = 0.67;
     double Omegab      = 0.05;
-    double Omegac    = 0.267;
+    double Omegac      = 0.267;
     double OmegaK      = 0.0;
     double Neff        = 3.046;
     double TCMB        = 2.7255;
@@ -58,11 +58,11 @@ int main(int narg, char **argv){
     bool print = false;
 
 
-    //  ----------------------
-    //  Milestone I
-    //  ----------------------
+    // //  ----------------------
+    // //  Milestone I
+    // //  ----------------------
 
-    // Set up and solve the background
+    // // Set up and solve the background
 
     // BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
     // cosmo.info();
@@ -88,7 +88,7 @@ int main(int narg, char **argv){
     // // Output recombination quantities
     // rec.output("recombination.txt");
 
-    // m2_Saha(cosmo);
+    // // m2_Saha(cosmo);
 
 
     //  ----------------------
@@ -96,14 +96,14 @@ int main(int narg, char **argv){
     //  ----------------------
 
     BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-    cosmo2.solve(false, 1e5);
+    cosmo2.solve(false, 2e5);
     RecombinationHistory rec2(&cosmo2, Yp);
-    rec2.solve(false, 1e5);
+    rec2.solve(false, 1e5, 1e5, 1e5);
 
     // Solve the perturbations
     Perturbations pert(&cosmo2, &rec2);
-    pert.solve();
     pert.info();
+    pert.solve();
     
     // Output perturbation quantities
     double kvalue;

@@ -86,35 +86,41 @@ void RecombinationHistory::solve_for_optical_depth_tau(int nsteps){
 
   int npts = nsteps+1;
   Vector x_array = Utils::linspace(x_start, 0, npts);
-  Vector x_array_backward = Utils::linspace(0, x_start, npts);
+  Vector x_array_backward = x_array;// = Utils::linspace(0, x_start, npts);
+  std::reverse(x_array_backward.begin(), x_array_backward.end());
+
 
   // The ODE system dtau/dx, dtau_noreion/dx and dtau_baryon/dx
   ODEFunction dtaudx = [&](double x, const double *tau, double *dtaudx){
     // Set the derivative for photon optical depth
-    dtaudx[0] = dtaudx_of_x(x);
+    dtaudx[0] = -Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
     return GSL_SUCCESS;
   };
 
   //  Set up + solve the ODE and spline
   Vector tau_0 = {0};  // initial condition
   ODESolver ode_backward; 
+  ode_backward.set_accuracy(1e-5, 1e-8, 1e-8);
   ode_backward.solve(dtaudx, x_array_backward, tau_0);
-  Vector sol_backward = ode_backward.get_data_by_component(0);
+  // Vector sol_backward = ode_backward.get_data_by_component(0);
+  Vector tau_arr = ode_backward.get_data_by_component(0);
+  std::reverse(tau_arr.begin(), tau_arr.end());
 
-  Vector tau_arr(npts);
-  for(int i=0; i<npts; i++){
-    tau_arr[i] = sol_backward[npts-(i+1)];
-  }
+  Vector dtau_arr = ode_backward.get_derivative_data_by_component(0);
+  std::reverse(dtau_arr.begin(), dtau_arr.end());
 
   tau_of_x_spline.create(x_array, tau_arr, "tau");
+  dtaudx_of_x_spline.create(x_array, dtau_arr, "dtaudx");
 
 
-  //  Compute gt + derivatives and spline
+  //  Compute gt  and spline
   Vector gt_arr(npts);
+  // gt_arr = -exp(-tau_arr)*dtau_arr;
   double xi;
   for(int i=0; i<npts; i++){
     xi = x_array[i];
-    gt_arr[i] =  -exp(-tau_of_x_spline(xi))*dtaudx_of_x(xi);
+    gt_arr[i] = - exp(-tau_arr[i])*dtau_arr[i];
+    // gt_arr[i] =  -exp(-tau_of_x_spline(xi)) * dtaudx_of_x_spline(xi);
   }
   gt_of_x_spline.create(x_array, gt_arr, "gt");
 
@@ -253,6 +259,9 @@ std::pair<double,double> RecombinationHistory::electron_fraction_from_Saha_equat
   return std::pair<double,double>(Xe, ne);
 }
 
+
+
+
 int RecombinationHistory::rhs_Peebles_ode(double x, const double *Xe, double *dXedx){
 
   const double X_e          = Xe[0];  // current value of X_e
@@ -272,7 +281,8 @@ int RecombinationHistory::rhs_Peebles_ode(double x, const double *Xe, double *dX
 
   //  define 'helper' variables:
   double Ups = eps_0/(k_b*Tb);    // Υ = ϵ_0/(k_b T_b)
-  double Hp_a = cosmo->H_of_x(x);     // Hp(x)/a   (= H)
+  // double Hp_a = cosmo->Hp_of_x(x)*exp(-x);     // Hp(x)/a   (= H)
+  double Hp_a = cosmo->H_of_x(x);          // Hp(x)/a   (= H)
 
   //  compute ϕ_2:
   double phi2 = 0.448 * log(Ups);
@@ -313,12 +323,14 @@ double RecombinationHistory::tau_of_x(double x) const{
 }
 
 double RecombinationHistory::dtaudx_of_x(double x) const{
-  return -Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
+  // return -Constants.c*ne_of_x(x)*Constants.sigma_T*exp(x)/cosmo->Hp_of_x(x);
+  return dtaudx_of_x_spline(x);
 }
 
 double RecombinationHistory::ddtaudxx_of_x(double x) const{
-  return tau_of_x_spline.deriv_xx(x);
+  return dtaudx_of_x_spline.deriv_x(x);
 }
+
 
 
 //  ----------------------------------

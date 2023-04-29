@@ -6,8 +6,9 @@ const = ConstantsAndUnits()
 tex = LaTeX()
 
 x_eq = -8.132   # RM-equality
+x_rec = -6.985  # recombination onset
 
-PLOT.INIT(x_eq)
+PLOT.INIT(x_eq, x_rec)
 
 def create_dataframe(data):
     dic = dict(
@@ -49,7 +50,8 @@ k_label = lambda k: tex("k=%.3f" %k + tex.unit(tex.inv("Mpc")))
 k_dict = dict(label     = [k_label(k) for k in k_list], 
               val_str   = [str(k) for k in k_list],
               colour    = k_colour(),
-              value     = k_list)
+              value     = k_list,
+              value_SI  = [k/const.Mpc for k in k_list])
 
 
 
@@ -68,9 +70,26 @@ plt.show()
 
 
 
-# data_cosmo = read_ASCII("background_cosmology")
+data_cosmo = read_ASCII("background_cosmology")
 
-# x_cosmo, eta = data_cosmo[:,0], data_cosmo[:,1]
+
+x_cosmo, eta, Hp = data_cosmo[:,0], data_cosmo[:,1], data_cosmo[:,3]
+
+Hp[x_cosmo>0] = np.nan
+
+for i in range(len(k_list)):
+    hor = np.abs(eta-1/k_dict["value_SI"][i]) 
+
+    # hor = np.abs(Hp/const.c-k_dict["value_SI"][i]) 
+    x_hor = x_cosmo[np.nanargmin(hor)]
+    k = k_dict["val_str"][i]
+
+
+    print(f"k = {k} Mpc^(-1) crosses horizon at x = {x_hor:.3f}")
+
+
+
+
 
 # fig, ax = plt.subplots()
 

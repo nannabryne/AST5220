@@ -44,6 +44,7 @@ extern struct ConstantsAndUnits {
   const double xhi0        = 24.587387 * eV;              // Ionization energy for neutral Helium
   const double xhi1        = 4.0 * epsilon_0;             // Ionization energy for singly ionized Helium
   const double s_per_Gyr   = 3600.*24*365 * 1e9;          // Seconds in a Gigayear
+  const double s_per_Ga    = 3600.*24*365 * 1e9;          // Seconds in a Gigayear
   
   // Min and max k-value
   const double k_min = 0.00005 / Mpc;
