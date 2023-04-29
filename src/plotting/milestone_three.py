@@ -56,14 +56,14 @@ k_dict = dict(label     = [k_label(k) for k in k_list],
 
 
 
-# PLOT.VelocityPerturbations(df_list, k_dict)
-# PLOT.DensityPerturbations(df_list, k_dict)
+PLOT.VelocityPerturbations(df_list, k_dict)
+PLOT.DensityPerturbations(df_list, k_dict)
 
-# PLOT.PhotonQuadrupole(df_list, k_dict)
-# PLOT.GravitationalPotential(df_list, k_dict)
+PLOT.PhotonQuadrupole(df_list, k_dict)
+PLOT.GravitationalPotential(df_list, k_dict)
 
 
-PLOT.SanityChecks(df_list)
+# PLOT.SanityChecks(df_list)
 
 
 plt.show()

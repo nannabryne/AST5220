@@ -17,11 +17,11 @@ def INIT(x_RM_equality, x_recombination):
     x_eq_args1  = dict(x_list=[x_eq], style="-.")
 
     # for only rec:
-    x_rec_args0 = dict(x_list=[x_rec], x_label_list=[tex("x" + tex.ped("rec"))], style="-.", top=True)
+    x_rec_args0 = dict(x_list=[x_rec], x_label_list=[tex("x" + tex.ped("*"))], style="-.", top=True)
     x_rec_args1 = dict(x_list=[x_rec], style="-.")
 
     # for both:
-    x_eq_rec_args0  = dict(x_list=[x_eq, x_rec], x_label_list=[tex("x" + tex.ped("eq")), tex("x" + tex.ped("rec"))], style="-.", top=True)
+    x_eq_rec_args0  = dict(x_list=[x_eq, x_rec], x_label_list=[tex("x" + tex.ped("eq")), tex("x" + tex.ped("*"))], style="-.", top=True)
     x_eq_rec_args1  = dict(x_list=[x_eq, x_rec], style="-.")
 
 
@@ -68,6 +68,7 @@ def __MatterPerturbations(which, df_list, k_dict):
         line, = ax1.plot(df["x"], np.abs(df[f"{which}c"]), c=k_dict["colour"][i], **c_kw)
         ax1.plot(df["x"], np.abs(df[f"{which}b"]), c=k_dict["colour"][i], **b_kw)
         ax1.plot(df["x"], np.abs(df[f"{which}gamma"]), c=k_dict["colour"][i], **g_kw)
+        
         ax2.plot(df["x"], df[f"{which}gamma"], c=k_dict["colour"][i], **gg_kw)
         k_handles.append(line)
     
@@ -145,8 +146,8 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_2"), **Theta2_kw)
     pinpoint_x(ax, **x_eq_rec_args0)
-    
-    ax.legend()
+    legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
+    ax.legend(**legend_kw)
 
     __set_k_label(fig, k_handles, k_dict, (0.12, 0.18))
     ax.set_xlabel(tex.x)
@@ -180,7 +181,7 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
     pinpoint_x(ax2, **x_eq_rec_args0)
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
-    ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi + "+" + tex.Psi), **Phi_Psi_kw)
+    ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Psi + "+" + tex.Phi), **Phi_Psi_kw)
     legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
     ax1.legend(**legend_kw)
     ax2.legend(**legend_kw)

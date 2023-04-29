@@ -155,6 +155,44 @@ void Perturbations::integrate_perturbations(){
 
     int d = n_x*ik;
 
+
+    // Vector2D y_sol_tc2 = ode_tight.get_data_transpose();
+    // Vector2D y_sol_full2 = ode_full.get_data_transpose();
+
+
+
+    // // Vector2D y_sol;
+    // // std::copy(y_sol_tc.begin(), y_sol_tc2.end()-1, y_sol.begin());
+    // // std::copy(y_sol_full.begin(), y_sol_full.end(), y_sol.begin()+idx_end_tight);
+
+
+
+    // int d_tc = d;
+    // int d_full = d_tc + idx_end_tight;
+
+    // std::copy(y_sol_tc2[Constants.ind_deltac_tc].begin(), y_sol_tc2[Constants.ind_deltac_tc].end()-1, delta_c_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_deltac].begin(),  y_sol_full2[Constants.ind_deltac].end(),    delta_c_array.begin()+d_full);
+
+    // std::copy(y_sol_tc2[Constants.ind_deltab_tc].begin(), y_sol_tc2[Constants.ind_deltab_tc].end()-1, delta_b_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_deltab].begin(),  y_sol_full2[Constants.ind_deltab].end(),    delta_b_array.begin()+d_full);
+
+    // std::copy(y_sol_tc2[Constants.ind_uc_tc].begin(), y_sol_tc2[Constants.ind_uc_tc].end()-1, u_c_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_uc].begin(),  y_sol_full2[Constants.ind_uc].end(),    u_c_array.begin()+d_full);
+
+    // std::copy(y_sol_tc2[Constants.ind_ub_tc].begin(), y_sol_tc2[Constants.ind_ub_tc].end()-1, u_b_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_ub].begin(),  y_sol_full2[Constants.ind_ub].end(),    u_b_array.begin()+d_full);
+
+
+
+    // std::copy(y_sol_tc2[Constants.ind_Phi_tc].begin(), y_sol_tc2[Constants.ind_Phi_tc].end()-1, Phi_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_Phi].begin(),  y_sol_full2[Constants.ind_Phi].end(),    Phi_array.begin()+d_full);
+
+    // std::copy(y_sol_tc2[Constants.ind_start_Theta_tc].begin(), y_sol_tc2[Constants.ind_start_Theta_tc].end()-1, Theta0_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_start_Theta].begin(),  y_sol_full2[Constants.ind_start_Theta].end(),    Theta0_array.begin()+d_full);
+
+    // std::copy(y_sol_tc2[Constants.ind_start_Theta_tc+1].begin(), y_sol_tc2[Constants.ind_start_Theta_tc+1].end()-1, Theta1_array.begin()+d_tc);
+    // std::copy(y_sol_full2[Constants.ind_start_Theta+1].begin(),  y_sol_full2[Constants.ind_start_Theta+1].end(),    Theta1_array.begin()+d_full);
+
     double x;
     int i, j;
     Vector y_sol_curr;
@@ -185,7 +223,6 @@ void Perturbations::integrate_perturbations(){
       i = ix + d;
       // j = ix - n_x_tight;
       x = x_array[ix];
-      // x = x_array_full[j];
       y_sol_curr = y_sol_full[j];
 
       delta_c_array[i]    = y_sol_curr[Constants.ind_deltac];
@@ -201,6 +238,10 @@ void Perturbations::integrate_perturbations(){
       j += 1;
     }
     
+
+    
+    
+
 
 
   }
@@ -286,10 +327,10 @@ Vector Perturbations::set_ic(const double x, const double k) const{
   Phi = - Psi; 
 
   delta_c = -3./2. * Psi;
-  delta_b = delta_c;//-3./2. * Psi;
+  delta_b = delta_c;
 
   u_c = -0.5*ckH * Psi;
-  u_b = u_c;//-0.5*ckH * Psi;
+  u_b = u_c;
 
   // compute photon temperature perturbations (Θ_ℓ):
 
@@ -642,13 +683,13 @@ int Perturbations::rhs_tight_coupling_ode(double x, double k, const double *y, d
   double expr;
 
   //  fetch perturbation variables:
-  const double Theta2 = expr_Theta2(x, k, Theta[1]);  // Θ_2(x,k)
-  const double Psi = expr_Psi(x, k, Phi, Theta2);     // Ψ(x,k)
+  const double Theta2 = expr_Theta2(x, k, Theta[1]);    // Θ_2(x,k)
+  const double Psi    = expr_Psi(x, k, Phi, Theta2);    // Ψ(x,k)
 
   
   // reocurring terms:
-  double U1 = ( 1 - dHpdx/Hp );             // ( 1 - 1/Hp*d/dx[Hp] )
-  double U2 = ( -Theta[0] + 2.*Theta2 );     // ( - Θ_0 + 2Θ_2 )
+  double U1 = ( 1 - dHpdx/Hp );               // ( 1 - 1/Hp*d/dx[Hp] )
+  double U2 = ( -Theta[0] + 2.*Theta2 );      // ( - Θ_0 + 2Θ_2 )
 
 
   //  compute scalar quantities (Φ, δ, u):
@@ -746,25 +787,22 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
   // Recombination variables
   const double R          = rec->R_of_x(x);           // R(x)
   const double dtaudx     = rec->dtaudx_of_x(x);      // d/dx[τ(x)]
-  // const double ddtaudxx   = rec->ddtaudxx_of_x(x);    // d^2/dx^2[τ(x)]
+
+  // Perturbation variables
+  const double Psi = expr_Psi(x, k, Phi, Theta[2]);  // Ψ(x,k)
 
   
   //  useful factors
   const double c      = Constants.c;    // c
   const double ckH    = c*k/Hp;         // ck/Hp
-  // const double Rplus  = (1.+R);         // ( 1 + R )
-  // const double Rminus = (1.-R);         // ( 1 - R ) 
   const double H0H0   = H0*H0;          // (H_0)^2
   const double a      = exp(x);         // e^x
 
   double expr;
 
-  // Perturbation variables
-  const double Psi = expr_Psi(x, k, Phi, Theta[2]);  // Ψ(x,k)
-
   //  compute derivatives of scalar quantities (Φ, δ, u):
 
-  expr = Omegac0*delta_c/a + Omegab0*delta_b/a + 4.*Omegagamma0*Theta[0]/(a*a);
+  expr = ( Omegac0*delta_c + Omegab0*delta_b) / a + 4.*Omegagamma0*Theta[0]/(a*a);
   dPhidx = Psi - ckH*ckH*Phi/3. + 0.5*(H0H0/(Hp*Hp)) * expr;
   
   expr = 3.*dPhidx;
@@ -777,36 +815,23 @@ int Perturbations::rhs_full_ode(double x, double k, const double *y, double *dyd
 
   //  compute derivatives of photon multipoles (Θ_ℓ):
 
-  // int ell           = 0;                // ℓ
+  int ell           = 0;                // ℓ
   const int ell_max = n_ell_Theta - 1;  // ℓ_max
 
   dThetadx[0] = -ckH * Theta[1] - dPhidx;
   dThetadx[1] = ckH/3. * Theta[0] - 2.*ckH/3.*Theta[2] + ckH/3.*Psi + dtaudx*( Theta[1] + u_b/3. );
   
-  // double dell;  // ℓ (double)
-  double denom;
+  //double denom;
   for(int ell=2; ell<ell_max; ell++){
-    // dell = 1.*ell;
-    denom = (2.*ell + 1.);
-    expr = ell*ckH*Theta[ell-1]/denom - (ell+1.)*ckH*Theta[ell+1]/denom;
-
-    // expr = ckH  *  dell*Theta[ell-1]/ (2.*dell + 1.) - ckH*(dell+1.)*Theta[ell+1] / (2.*dell + 1.);
-    
+    // expr = ell*ckH*Theta[ell-1]/denom - (ell+1.)*ckH*Theta[ell+1]/denom;
+    expr = ckH/(2.*ell + 1.) * ( ell*Theta[ell-1] - (ell+1.)*Theta[ell+1]);
     dThetadx[ell] = expr + dtaudx * Theta[ell];
-    if(ell==2){
-       dThetadx[ell] -= dtaudx*Theta[ell]/10.;
-
-    }
-
-    // std::cout << ell << ": " << dThetadx[ell] << std::endl;
-
-
   }
   // dThetadx[1] += ckH*Psi + 1./3*dtaudx*u_b;
- 
-  
-  // ell = ell_max;
-  dThetadx[ell_max] = ckH*Theta[ell_max-1] - c*(ell_max+1.) / (Hp*eta) * Theta[ell_max] + dtaudx*Theta[ell_max];
+  ell = 2;
+  dThetadx[ell] -= dtaudx*Theta[ell]/10.;
+  ell = ell_max;
+  dThetadx[ell] = ckH*Theta[ell-1] - c*(ell+1.) / (Hp*eta) * Theta[ell] + dtaudx*Theta[ell];
 
   return GSL_SUCCESS;
 }
