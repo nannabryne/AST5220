@@ -30,7 +30,7 @@ def create_dataframe(data):
     
     return df
 
-# testing ...
+
 
 k_list = [0.001, 0.01, 0.1]
 df_list = []
@@ -40,8 +40,6 @@ for k in k_list:
     df_list.append(create_dataframe(pert))
 
 
-# reprodusere farger ...
-k_colour = ColourCycles(["dodgerblue", "orange", "forestgreen"])
 k_colour = ColourCycles()
 
 
@@ -57,9 +55,11 @@ k_dict = dict(label     = [k_label(k) for k in k_list],
 
 
 PLOT.VelocityPerturbations(df_list, k_dict)
+
 PLOT.DensityPerturbations(df_list, k_dict)
 
 PLOT.PhotonQuadrupole(df_list, k_dict)
+
 PLOT.GravitationalPotential(df_list, k_dict)
 
 
@@ -70,6 +70,15 @@ plt.show()
 
 
 
+
+
+
+
+
+
+
+
+# Delete me:
 data_cosmo = read_ASCII("background_cosmology")
 
 
