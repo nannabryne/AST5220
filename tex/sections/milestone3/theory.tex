@@ -16,40 +16,43 @@ where we use (and will continue to use) superscript ``$(0)$'' to indicate the un
 \begin{equation}\label{mil3:theo:eq:delta_G}
     \delta G\munu = 8\pi G\, \delta T\munu
 \end{equation}
-in a clever way.\footnote{Solving it directly is highly non-trivial.} The metric is related to the Einstein tensor through $G\munu= \mathcal{R}\munu - \frac{1}{2}g\munu \mathcal{R}$, where $\mathcal{R}\munu$ and $\mathcal{R}$ is the Ricci tensor and scalar, respectively. 
+in a clever way.\footnote{Solving it directly is highly non-trivial.} The metric is related to the Einstein tensor through $G\munu= \mathscr{R}\munu - \frac{1}{2}g\munu \mathscr{R}$, where $\mathscr{R}\munu$ and $\mathscr{R}$ is the Ricci tensor and scalar, respectively. 
 Below is presented a short description of the quantities we aim to compute. 
 \begin{itemize}
-    \item $\Psi$ and $\Phi$ are spacetime corrections (potentials), both closely related to the Newtonian gravitational potential.
-    \item $\delta\ped{c}$ and $\delta\ped{b}$ are density perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively.
-    \item $u\ped{c}$ and $u\ped{b}$ are velocity perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively.
-    \item $\Theta_{\ell= 0, 1, \dots, \ell\ped{max}}$ are the photon multipoles that show up when expanding the photon temperature fluctuations $\Theta$ into spherical harmonics.
+    \item $\Psi$ and $\Phi$ are first-order spacetime corrections (potentials) to $g^{00}$ and $g^{ij}$, respectively, both closely related to the Newtonian gravitational potential. We refer to $\Psi$ as the gravitational potential and $\Phi$ as the spatial curvature.
+    \item $\delta\ped{c}$ and $\delta\ped{b}$ are first-order density perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively.
+    \item $u\ped{c}$ and $u\ped{b}$ are velocity perturbations to non-relativistic matter, representing cold dark matter and baryonic matter, respectively. They are \textit{bulk} velocities in the longitudinal direction, and are themselves first-order terms.
+    \item $\Theta_{\ell= 0, 1, \dots, \ell\ped{max}}$ are the photon multipoles that show up when expanding the photon temperature fluctuations $\Theta$ into spherical harmonics. As we will see, the first two moments are related to the photon density perturbation to linear order $\delta_\gamma$ and the longitudinal photon velocity $u_\gamma$.
 \end{itemize}
 
-We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. 
+We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. One should also keep in mind that the perturbation quantities are functions of time $x$ \textit{and} Fourier mode $k$ (to be elaborated shortly), as this section will suffer from somewhat sloppy notation. In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:app:pert}. 
 
 
-Instead of real space $(\vec{x}, t)$, we will work in the Fourier space ($\vec{x}\to\vec{k}$), so that all our quantities will generally be functions of Fourier mode $k=\abs{\vec{k}}$ and our time variable $x = \ln{a(t)}$. That is, a function $f$ of space and time is
-\begin{equation}
-    f(\vec{x}, t) = \int \frac{d^3 k}{(2\pi)^3} \eu^{\im \vec{k}\cdot \vec{x}}f(\vec{k}, x(t)),
-\end{equation}
-and will notationally not be distinguished from its Fourier transform. Spatial derivatives of $f(\vec{x}, t)$ become
-\begin{equation}
-    \pdv{f(\vec{x}, t)}{x^i} \to \im k_i f(\vec{k}, x(t)).
-\end{equation}
-The direction of the wavevector $\vec{k}$ will be neglected. We let $k=\abs{\vec{k}}$ be the magnitude of a $\vec{k}$-mode. In summary:
-\begin{equation}
-\begin{split}
-    f(\vec{x}, t) &\to f(k, x) \\
-    \partial_i f(\vec{x}, t) &\to \im k f(k, x)
-\end{split}
-\end{equation}
+\subsubsection{Decomposition}\label[sec]{mil3:theo:sec:fourier}
+    Instead of real space of cosmic time $t$ and physical position $\vec{x}$, we will work in the Fourier space ($\vec{x}\to\vec{k}$), so that all our quantities will generally be functions of Fourier mode $k=\abs{\vec{k}}$ and our time variable $x = \ln{a(t)}$. That is, a function $f$ of space and time is
+    \begin{equation}
+        f(t, \vec{x}) = \int \frac{d^3 k}{(2\pi)^3} \eu^{\im \vec{k}\cdot \vec{x}}f(x(t), \vec{k}),
+    \end{equation}
+    and will notationally not be distinguished from its Fourier transform. Spatial derivatives of $f(t, \vec{x})$ become
+    \begin{equation}
+        \pdv{f(t, \vec{x})}{x^i} \to \im k_i f(x(t),\vec{k}).
+    \end{equation}
+    The direction of the comoving wavevector $\vec{k}$ will be neglected or contained in other variables. We let $k=\abs{\vec{k}}$ be the magnitude of a $\vec{k}$-mode. In summary:
+    \begin{equation}
+    \begin{split}
+        f(t, \vec{x}) &\to f(x, k) \\
+        \partial_i f(t, \vec{x}) &\to \im k f(x, k)
+    \end{split}
+    \end{equation}
 
-We use the Fourier modes $k$ to classify the physical scales. We separate roughly between three main regimes: those of large-, intermediate- and small-scale modes. A mode enters the horizon when $k\eta(x) \gtrsim 1$, so this happens is later for larger scales (smaller values of $k$).
+    We use the Fourier modes $k$ to classify the physical scales. The quantity $k$ is a frequency, inverse proportional to a physical wavelength $\lambda\ped{phys}$. This wavelength represents the spatial size of the causally connected region we consider when studying a $k$-mode. We separate roughly between three main regimes: those of large-, intermediate- and small-scale modes, characterised by their horizon entries. A mode enters the horizon when the comoving horizon is comparable to the wavelength, i.e.\ when $k\eta(x) \gtrsim 1$. We let $k\ped{eq}= 1/\eta(x\ped{eq})$ to separate the modes entering the horizon before and after matter-radiation equality $x\ped{eq}$. The hierarchy of modes is summarised below.
+    \begin{itemize}
+        \item Small-scale modes: $k \gg k\ped{eq}$, horizon entry during radiation domination.
+        \item Intermediate-scale modes: $k \sim k\ped{eq}$, horizon entry around the time of matter-radiation equality.
+        \item Large-scale modes: $k \ll k\ped{eq}$, horizon entry during matter domination.
+    \end{itemize}
 
-In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:app:pert}.
-
-
-
+    The comoving scales remain constant in time. When the modes are far outside the horizon ($k\eta\ll 1$), what we refer to as the ``super-horizon regime'', perturbations have not yet entered the horizon. Together with the assumption that the early universe is optically thick and rapidly rarefying ($\tau,\, \abs{\dv*{\tau}{x}} \gg 1$), very useful physical approximations can be employed to find a set of equations connecting the initial conditions of our quantities. For the full set, see~\cref{app:pert:sec:initial_conditions}. 
 
 
 \subsubsection{Metric perturbations}\label[sec]{mil3:theo:sec:metric_pert}
@@ -64,8 +67,11 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \end{equation}
     The time-dependent gravitational potential is encoded in $\Psi$ in the sense that it measures how the strength of the gravitational field in the perturbed universe differs from that of the smooth one. $\Phi$ describes the spatial curvature of the universe as it is a measure of the deviation of the spatial curvature from the smooth background. Both scalar perturbations are related to the distribution of matter in the universe. These fundamental quantities are the ones from which we will express the initial conditions of the system. %In fact, we will choose $\Psi$ s.t. $\abs{h\munu}$ in no way is much less than 1. 
 
-    It is the Poisson equation that determines the evolution of $\Phi$. The sum $\Phi + \Psi$ is given by an equation for anisotropic stress, resulting in a dynamical expression for $\Psi$. The equations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:metric_perturbations}. The absence of anisotropic stress causes $\Psi=-\Phi$.
+    It is the Poisson equation that determines the evolution of $\Phi$. The sum $\Phi + \Psi$ is given by an equation for anisotropic stress, resulting in a dynamical expression for $\Psi$. The equations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:metric_perturbations}. 
+    
+    The absence of anisotropic stress causes $\Phi=-\Psi$. Shear stress in a tightly coupled fluid is manifestly absent; only anisotropic motion of fluid particles gives rives to non-zero terms in the stress tensor $\Pi\munu$. We therefore use this to set the initial condition on $\Phi$ (\cref{app:pert:eq:init_Phi}). In addition, we expect to see that $\Psi + \Phi \simeq 0 $ before recombination for large-scale modes $k\lesssim k\ped{eq}$. For small-scale modes, fluctuations in the primordial plasma were large and gave rise to oscillating gravitational potentials. 
 
+    The initial condition for $\Psi$ comes from inflation. In~\citet{DodelsonBook} it is explained how this quantity is proportional to the curvature perturbation $\mathcal{R}$ immediately after inflation, and that this $\mathcal{R}$ is conserved in the super-horizon regime. In particular, the value of $\Psi$ post inflation is $\Psi\ped{init}=-\sfrac{2}{3}\mathcal{R}$. The value of $\mathcal{R}$ depends on the inflationary model one uses, and is for our purposes, essentially a question of normalisation. The simplest choice of $\mathcal{R}=1$ is the one we will use. 
 
 
 \subsubsection{Matter perturbations}\label[sec]{mil3:theo:sec:matter}
@@ -79,7 +85,7 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \end{equation}
     We denote the fluid (or ``bulk'') velocity of a species $s$ as $\vec{u}_s$, and its longitudinal component as $u_s$, such that
     \begin{equation}
-       \vec{u}_s = \vec{u}_s(\vec{k}, x) =  u_s(\vec{k}, x)\frac{\vec{k}}{k}.
+       \vec{u}_s = \vec{u}_s(x, \vec{k}) =  u_s(x, \vec{k})\frac{\vec{k}}{k}.
     \end{equation}
     In addition, we use the convention that $u_s \to \im u_s$.
 
@@ -95,11 +101,11 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \end{equation}
     where $c_s$ is the sound speed. $c_s^2 = w\ped{m}$ for baryons and CDM and $c_s^2=w\ped{r}$ for photons and neutrinos. In contrast with CDM, baryons interact with photons, giving rise to an additional term
     \begin{equation}\label{mil3:theo:eq:baryon_momentum_transfer}
-        \text{momentum transfer} = - \frac{4\Omega\gped{\textgamma}}{3\Omega\ped{b}}\dv{\tau}{x} \left(u_\gamma-u\ped{b}\right)=-\dv{\tau}{x} \frac{u_\gamma-u\ped{b}}{R},
+        \text{momentum transfer} = - \frac{4\Omega\gped{\textgamma}}{3\Omega\ped{b}}\dv{\tau}{x} \,\left(u_\gamma-u\ped{b}\right)=-\dv{\tau}{x} \frac{u_\gamma-u\ped{b}}{R},
     \end{equation}
     where $R=R(x)$ is the baryon-to-photon energy ratio as before (see~\cref{mil2:theo:eq:R_of_x}). 
 
-    The final differential equations for the density and velocity perturbations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:matter_perturbations}.
+    The final differential equations for the density and velocity perturbations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:matter_perturbations}. 
 
 
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
@@ -123,8 +129,13 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \begin{equation}\label{mil3:theo:eq:euler_photons}
         \dv{u_\gamma}{x} = - \frac{ck}{4\Hp} \delta_\gamma + \frac{2ck}{\Hp}\Theta_2 - \frac{ck}{\Hp}\Psi + \dv{\tau}{x}\left[u_\gamma -u\ped{b}\right].
     \end{equation}
-    The last term---the momentum transfer---ensures that photons and baryons behave as a single fluid ($u_\gamma=u\ped{b}$) early on when Compton scattering is efficient. We refer to this period as ``the tight coupling regime''. 
+    The last term---the momentum transfer---ensures that photons and baryons behave as a single fluid early on when Compton scattering is efficient. We refer to this period as ``the tight coupling regime''. As this is true for all scales in the early radiation dominated universe, we get the initial conditions for the first two multipoles from $\delta_\gamma=\sfrac{3}{4}\delta\ped{b}$ and $u_\gamma=u\ped{b}$.
 
+    The monopole in the CMB temperature anisotropy power spectrum, $\Theta_0$, is the average temperature of the CMB sky and is the same for any observer moving with the Hubble flow. The dipole term $\Theta_1$ corresponds to the temperature anisotropy resulting from our galaxy's motion with respect to the CMB rest frame. Arising from the variations across the CMB sky is the quadrupole, $\Theta_2$. Higher multipoles correspond to increasingly smaller angular scales. We therefore argue that 
+    \begin{equation}
+        \abs{\Theta_0} \gg \abs{\Theta_1} \gg \abs{\Theta_2} \gg \abs{\Theta_3} \gg \cdots. %\gg \abs{\Theta_{\ell\ped{max}}}
+    \end{equation}
+    
 
 \subsubsection{Tight coupling}
     Due to numerical obstacles, we cannot use the full set of equations from~\cref{app:pert:sec:full_system} in the tight coupling regime. As $u\ped{b}\simeq u_\gamma = -3\Theta_1$ in this period, and $\abs{\dv*{\tau}{x}}$ is very large at this time, the last term in~\cref{mil3:theo:eq:euler_photons} is unfortunate. The same factor appears in the continuity equation for baryons (\cref{mil3:theo:eq:baryon_momentum_transfer}). The good news is that in this regime, some very useful approximations are viable, eventually allowing us to replace the differential equations for $u\ped{b}$ and $\Theta_2$ with differential equations that are way more numerically friendly. We present these in~\cref{app:pert:sec:tight_coupling}.
@@ -138,38 +149,39 @@ In the following, we spare ourselves the eyesore that is the complete set of equ
     \end{align}
     \end{subequations}
 
-    The higher moments of the temperature fluctuations are very small in this regime ($\Theta_{\ell\geq 2}\ll 1$), and we can use the semi-analytical recursive relation in \cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
+    The higher moments of the temperature fluctuations are very small in this regime ($\Theta_{\ell\geq 2}\ll 1$), and we can use the semi-analytical recursive relations in~\cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
 
+    The relations in question show up when setting $\dv*{\Theta_\ell}{x}\to 00$ and using $\abs{\Theta_{\ell+1}} \ll \abs{\Theta_\ell}$ in~\cref{app:pert:eq:dThetaelldx}.
 
 
 \subsubsection{Line-of-sight integration}
-    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(k, x\!=\!0)$ to the temperature source function $\tilde{S}(k, x)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
+    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(x\!=\!0,k)$ to the temperature source function $\tilde{S}(x, k)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
     \begin{equation}\label{mil3:theo:eq:temp_multipole_and_source_func}
-        \Theta_\ell (k, x\!=\!0) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(k,x') \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
+        \Theta_\ell (x\!=\!0, k) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(x',k) \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
     \end{equation}
-    The full expression for $\Sti(k, x)$ is found in~\cref{app:app:source}.
+    The full expression for $\Sti(x, k)$ is found in~\cref{app:app:source}.
 
     Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apparent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
     
 
 
-\subsubsection{Initial conditions}
-    In the very early universe, shortly after inflation, all modes are outside the horizon; $k\eta\ll 1$. We refer to this mode-dependent period as the ``super-horizon regime''. Said regime allows for exact solutions, a very convenient property for setting initial conditions. Being able to express all of our desired quantities in terms of the gravitational potential $\Psi$, we only need this one value from inflation. See~\citet[Ch.~7,~8]{DodelsonBook} for more detail. We present the full set of initial conditions in~\cref{app:pert:sec:initial_conditions}. The choice $\Psi\ped{init}=-\sfrac{2}{3}$ is essentially a choice of normalisation, and does not actually violate~\cref{mil3:theo:eq:defining_h_munu}. %In particular, the choice is beneficial later 
+% \subsubsection{Initial conditions}
+%     In the very early universe, shortly after inflation, all modes are outside the horizon; $k\eta\ll 1$. We refer to this mode-dependent period as the ``super-horizon regime''. Said regime allows for exact solutions, a very convenient property for setting initial conditions. Being able to express all of our desired quantities in terms of the gravitational potential $\Psi$, we only need this one value from inflation. See~\citet[Ch.~7,~8]{DodelsonBook} for more detail. We present the full set of initial conditions in~\cref{app:pert:sec:initial_conditions}. The choice $\Psi\ped{init}=-\sfrac{2}{3}$ is essentially a choice of normalisation, and does not actually violate~\cref{mil3:theo:eq:defining_h_munu}. %In particular, the choice is beneficial later 
 
 
     
 
 
-\subsubsection{Predictions}
-    Without going into detail about how to obtain these relations, we present a few approximations that are useful to later be able to validate our results.
+% \subsubsection{Predictions}
+%     Without going into detail about how to obtain these relations, we present a few approximations that are useful to later be able to validate our results.
 
-    For large-scale modes, we expect to see that $\Phi$ has decreased 10\% from the radiation-dominated era to the matter-dominated era. For small-scale modes, $\Phi$ should resemble
-    \begin{equation}
-        \propto \frac{\sin{y}-y\cos{y}}{y^3/3}\,; y=\frac{k\eta}{\sqrt{3}}
-    \end{equation}
+%     For large-scale modes, we expect to see that $\Phi$ has decreased 10\% from the radiation-dominated era to the matter-dominated era. For small-scale modes, $\Phi$ should resemble
+%     \begin{equation}
+%         \propto \frac{\sin{y}-y\cos{y}}{y^3/3}\,; y=\frac{k\eta}{\sqrt{3}}
+%     \end{equation}
 
 
-    % As normal matter does not contribute to 
-    % In the early stages of the evolution of structure in the universe, the tightly coupled fluid ensured 
+%     % As normal matter does not contribute to 
+%     % In the early stages of the evolution of structure in the universe, the tightly coupled fluid ensured 
 
-    Shear stress in a tightly coupled fluid is manifestly absent, only anisotropic motion of fluid particles gives rives to non-zero terms. We therefore expect to see that $\Psi + \Phi \simeq 0 $ before recombination for large-scale modes $k\lesssim k\ped{eq}$. For small-scale modes, fluctuations in the primordial plasma were large and gave rise to oscillating gravitational potentials. Thus, for $k >k\ped{eq}$, oscillations around zero in $\Psi + \Phi$ should be visible from horizon entry 
+%     Shear stress in a tightly coupled fluid is manifestly absent, only anisotropic motion of fluid particles gives rives to non-zero terms. We therefore expect to see that $\Psi + \Phi \simeq 0 $ before recombination for large-scale modes $k\lesssim k\ped{eq}$. For small-scale modes, fluctuations in the primordial plasma were large and gave rise to oscillating gravitational potentials. Thus, for $k >k\ped{eq}$, oscillations around zero in $\Psi + \Phi$ should be visible from horizon entry 

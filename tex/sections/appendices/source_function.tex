@@ -4,35 +4,37 @@
 % labels: \label{app:source:[type]:[name]}
 % ----------------------------------------
 
-The purpose of this appendix is to give the full equation for the photon temperature source function $\Sti=\Sti(k, x)$.
+The purpose of this appendix is to give the full equation for the photon temperature source function $\Sti=\Sti(x, k)$ as defined in~\cref{mil3:theo:eq:temp_multipole_and_source_func}.
 
 We begin with the expression from~\citet[Eq.~(40)]{Callin2006}:
 \begin{equation}\label{app:source:eq:source_function}
 \begin{split}
-    \tilde{S} =& \gti \left[\Theta_0 + \Psi + \frac{\Theta_2}{4}\right] + \eu[-\tau]\left[ \dv{\Psi}{x} -\dv{\Phi}{x} \right] \\
-    &- \frac{1}{ck} \underbrace{\dv{}{x}\left(\Hp \gti u\ped{b} \right)}_{\expr_1}+ \frac{3}{4c^2k^2} \underbrace{\dv{}{x}\left[ \Hp \dv{}{x}\left(\Hp \gti\Theta_2 \right)  \right]}_{\expr_2}
+    \tilde{S} =& \gt \left[\Theta_0 + \Psi + \frac{\Theta_2}{4}\right] + \eu[-\tau]\left[ \dv{\Psi}{x} -\dv{\Phi}{x} \right] \\
+    &- \frac{1}{ck} \underbrace{\dv{}{x}\left(\Hp \gt u\ped{b} \right)}_{\expr_1}+ \frac{3}{4c^2k^2} \underbrace{\dv{}{x}\left[ \Hp \dv{}{x}\left(\Hp \gt\Theta_2 \right)  \right]}_{\expr_2}
 \end{split}
 \end{equation}
 The goal is to rewrite $\expr_1$ and $\expr_2$ in terms of quantities that we have already got. We assume that the perturbed system is already solved. The job is essentially to use the Leibniz over and over again. We make use of the shorthand $'\equiv \dv{}{x}$ from before. For $f=u\ped{b}, \Theta_2 $, the following will prove useful:
 \begin{subequations}
 \begin{align}
-    \left(\Hp \gti f \right)' &= \Hp'\gti f + \Hp \left( \gti' f + \gti f'\right)\\
-    \left(\Hp \gti f \right)''&= \Hp'' \gti f + 2\Hp' \left(\gti' f + \gti f'\right) + \Hp \left(\gti'' f + 2\gti' f' + \gti f'' \right)
+    \left(\Hp \gt f \right)' &= \Hp'\gt f + \Hp \left( \gt' f + \gt f'\right)\\
+    \left(\Hp \gt f \right)''&= \Hp'' \gt f + 2\Hp' \left(\gt' f + \gt f'\right) + \Hp \left(\gt'' f + 2\gt' f' + \gt f'' \right)
 \end{align}
 \end{subequations}
 We have got that 
 \begin{equation}
-    \left[\Hp (\Hp \gti \Theta_2)' \right]' = \Hp' (\Hp \gti \Theta_2)' + \Hp (\Hp \gti \Theta_2)'',
+    \left[\Hp (\Hp \gt \Theta_2)' \right]' = \Hp' (\Hp \gt \Theta_2)' + \Hp (\Hp \gt \Theta_2)'',
 \end{equation}
 so:
 \begin{subequations}\label{app:source:eq:expressions}
 \begin{align}
-    \expr_1 &= \Hp'\gti u\ped{b} + \Hp \left( \gti' u\ped{b} + \gti u\ped{b}'\right) \\
-    \expr_2 &= 3\Hp \Hp' \left(\gti' \Theta_2 + \gti \Theta_2'\right) + \Hp^2\left(\gti'' \Theta_2 +2 \gti' \Theta_2' + \gti \Theta_2''\right) \nonumber \\
-    & \quad + \left[(\Hp')^2 + \Hp \Hp''\right]\gti \Theta_2
+    \expr_1 &= \Hp'\gt u\ped{b} + \Hp \left( \gt' u\ped{b} + \gt u\ped{b}'\right) \\
+    \expr_2 &= 3\Hp \Hp' \left(\gt' \Theta_2 + \gt \Theta_2'\right) + \Hp^2\left(\gt'' \Theta_2 +2 \gt' \Theta_2' + \gt \Theta_2''\right) \nonumber \\
+    & \quad + \left[(\Hp')^2 + \Hp \Hp''\right]\gt \Theta_2
 \end{align}
 \end{subequations}
-In inserting~\cref{app:source:eq:expressions} into~\cref{app:source:eq:source_function}, we can compute the temperature source function from our quantities and their derivatives.
+In inserting~\cref{app:source:eq:expressions} into~\cref{app:source:eq:source_function}, we can compute the temperature source function from our quantities and their derivatives. 
+
+\textcolor{blue}{Show $\Theta''$ as well!}
 
 % \dots [something about why it is beneficial to do the following] \dots
 
