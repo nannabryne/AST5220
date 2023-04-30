@@ -96,13 +96,13 @@ int main(int narg, char **argv){
     //  ----------------------
 
     BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-    cosmo2.solve(false, 2e5);
+    cosmo2.solve(true, 2e5);
     RecombinationHistory rec2(&cosmo2, Yp);
     rec2.solve(false, 1e5, 1e5, 1e5);
 
     // Solve the perturbations
     Perturbations pert(&cosmo2, &rec2);
-    pert.info();
+    // pert.info();
     pert.solve();
     
     // Output perturbation quantities

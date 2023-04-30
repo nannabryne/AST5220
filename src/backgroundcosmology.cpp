@@ -126,6 +126,8 @@ void BackgroundCosmology::milestones(int nsteps){
   printf("----------------------------------------------------------------------\n");
   printf("conformal time today: %11.7f c Ga \n", eta_of_x(x_0)/Constants.c*conv);
   printf("----------------------------------------------------------------------\n");
+  printf("inverse conformal time at rad.-matter equality: %11.7f Mpc^-1 \n", 1/eta_of_x(x_eq)*Constants.Mpc); // k_eq
+  printf("----------------------------------------------------------------------\n");
 
   printf("\nUsed %d+1 points in x-array from x=%.1f to x=%.1f.\n\n", nsteps, x_start, x_end);
 }

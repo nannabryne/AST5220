@@ -25,7 +25,7 @@ class Perturbations{
     const double k_max   = Constants.k_max;
     
     // Start and end of the time-integration
-    const int n_x        = int(5e3)+1;
+    const int n_x        = int(5e4)+1;
     const double x_start = -20.;
     const double x_end   = 0.;
 

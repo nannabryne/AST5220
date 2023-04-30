@@ -66,84 +66,63 @@ void Perturbations::integrate_perturbations(){
   Vector Psi_array(nn);
 
 
-  //  loop over all wavenumbers:  
+  //  loop over all wavenumbers:   
+  #pragma omp parallel for //schedule(dynamic, 1)
   for(int ik=0; ik<n_k; ik++){
 
-    //  progress bar...
-    if( (10*ik) / n_k != (10*ik+10) / n_k ) {
-      std::cout << (100*ik+100)/n_k << "% " << std::flush;
-      if(ik == n_k-1) std::cout << std::endl;
-    }
+    // //  progress bar... (remove to improve performance)
+    // if( (10*ik) / n_k != (10*ik+10) / n_k ) {
+    //   std::cout << (100*ik+100)/n_k << "% " << std::flush;
+    //   if(ik == n_k-1) std::cout << std::endl;
+    // }
 
     double k = k_array[ik];   // current value of k
 
-    //  find value to integrate to:
+    //  Find value to integrate to
+
     double x_end_tight = get_tight_coupling_time(k);
     int n_x_tight = int(n_x*(x_end_tight-x_start)/(x_end-x_start));
     int idx_end_tight = n_x_tight - 1;
     int n_x_full = n_x-n_x_tight + 1;
-    // Vector x_array_tc = Utils::linspace(x_start, x_end_tight, n_x_tight);
-    // Vector x_array_full = Utils::linspace(x_end_tight, x_end, n_x_full);
 
     Vector x_array_tc = Vector(x_array.begin(), x_array.end()-(n_x_full-1));
     Vector x_array_full = Vector(x_array.begin()+idx_end_tight, x_array.end());
     x_end_tight = x_array_full[0];
-    // std::cout << x_array[idx_end_tight] <<", " << x_end_tight<< std::endl;
-    // std::cout << x_array_tc[idx_end_tight] << ", " <<  x_array_full[0] <<  "," << x_array_full[n_x_full-1] << std::endl;
-    
- 
 
-    //===================================================================
-    // TODO: Tight coupling integration
-    // Remember to implement the routines:
-    // set_ic : The IC at the start
-    // rhs_tight_coupling_ode : The dydx for our coupled ODE system
-    //===================================================================
+  
+
+    //  (1) TIGHT COUPLING INTEGRATION
     
 
     //  set up initial conditions in the tight coupling regime:
     auto y_tight_coupling_ini = set_ic(x_start, k);
 
-    // The tight coupling ODE system
-
+    //  the tight coupling ODE system:
     ODEFunction dydx_tight_coupling = [&](double x, const double *y, double *dydx){
       return rhs_tight_coupling_ode(x, k, y, dydx);
     };
 
    
-    // Integrate from x_start -> x_end_tight
-    // ...
-    // ...
-    // ...
-    // ...
-    // ...
-    // std::cout << y_tight_coupling_ini[Constants.ind_start_Theta_tc+1] << std::endl;
-
+    //  integrate from x_start -> x_end_tight:
     ODESolver ode_tight;
     ode_tight.set_accuracy(hstart, abserr, relerr);
     ode_tight.solve(dydx_tight_coupling, x_array_tc, y_tight_coupling_ini, stepper);
     Vector y_end_tight = ode_tight.get_final_data();
     Vector2D y_sol_tc = ode_tight.get_data();
 
-    // std::cout << y_tight_coupling[0] << ", " << y_tight_coupling[2] << std::endl;
 
 
-    //====i===============================================================
-    // TODO: Full equation integration
-    // Remember to implement the routines:
-    // set_ic_after_tight_coupling : The IC after tight coupling ends
-    // rhs_full_ode : The dydx for our coupled ODE system
-    //===================================================================
+    //  (2) FULL SYSTEM INTEGRATION
 
-    // Set up initial conditions (y_end_tight is the solution at the end of tight coupling)
+    //  set up initial conditions (y_end_tight is the solution at the end of tight coupling):
     auto y_full_ini = set_ic_after_tight_coupling(y_end_tight, x_end_tight, k);
 
-    // The full ODE system
+    //  the full ODE system:
     ODEFunction dydx_full = [&](double x, const double *y, double *dydx){
       return rhs_full_ode(x, k, y, dydx);
     };
 
-    // Integrate from x_end_tight -> x_end
+    //  integrate from x_end_tight -> x_end:
     ODESolver ode_full;
     ode_full.set_accuracy(hstart, abserr, relerr);
     ode_full.solve(dydx_full, x_array_full, y_full_ini, stepper);
@@ -239,20 +218,11 @@ void Perturbations::integrate_perturbations(){
     }
     
 
-    
-    
-
-
 
   }
   
 
-  //=============================================================================
-  // TODO: Make all splines needed: Theta0,Theta1,Theta2,Phi,Psi,...
-  //=============================================================================
-  // ...
-  // ...
-  // ...
+  //  make all the splines we need
 
   delta_c_spline.create(x_array, k_array, delta_c_array, "delta_c");
   delta_b_spline.create(x_array, k_array, delta_b_array, "delta_b");
