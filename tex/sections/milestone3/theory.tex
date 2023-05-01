@@ -28,7 +28,7 @@ Below is presented a short description of the quantities we aim to compute.
 We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the set of equations we will eventually use, but rather keep in mind that the quantities $\delta\ped{c,b}$, $u\ped{c,b}$, $\Theta_\ell$, $\Phi$ and $\Psi$ are deduced from the Einstein equation and first order linear perturbation theory. One should also keep in mind that the perturbation quantities are functions of time $x$ \textit{and} Fourier mode $k$ (to be elaborated shortly), as this section will suffer from somewhat sloppy notation. In the following, we spare ourselves the eyesore that is the complete set of equations we will use and save this for~\cref{app:app:pert}. 
 
 
-\subsubsection{Decomposition}\label[sec]{mil3:theo:sec:fourier}
+\subsubsection{Modes and scales}\label[sec]{mil3:theo:sec:fourier}
     Instead of real space of cosmic time $t$ and physical position $\vec{x}$, we will work in the Fourier space ($\vec{x}\to\vec{k}$), so that all our quantities will generally be functions of Fourier mode $k=\abs{\vec{k}}$ and our time variable $x = \ln{a(t)}$. That is, a function $f$ of space and time is
     \begin{equation}
         f(t, \vec{x}) = \int \frac{d^3 k}{(2\pi)^3} \eu^{\im \vec{k}\cdot \vec{x}}f(x(t), \vec{k}),
@@ -149,9 +149,9 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \end{align}
     \end{subequations}
 
-    The higher moments of the temperature fluctuations are very small in this regime ($\Theta_{\ell\geq 2}\ll 1$), and we can use the semi-analytical recursive relations in~\cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
+    The higher moments of the temperature fluctuations are very small in this regime ($\abs{\Theta_{\ell\geq 2}}\ll 1$), and we can use the semi-analytical recursive relations in~\cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
 
-    The relations in question show up when setting $\dv*{\Theta_\ell}{x}\to 00$ and using $\abs{\Theta_{\ell+1}} \ll \abs{\Theta_\ell}$ in~\cref{app:pert:eq:dThetaelldx}.
+    The relations in question show up when setting $\dv*{\Theta_\ell}{x}\to 0$ and using $\abs{\Theta_{\ell+1}} \ll \abs{\Theta_\ell}$ in~\cref{app:pert:eq:dThetaelldx}.
 
 
 \subsubsection{Line-of-sight integration}
@@ -159,7 +159,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \begin{equation}\label{mil3:theo:eq:temp_multipole_and_source_func}
         \Theta_\ell (x\!=\!0, k) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(x',k) \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
     \end{equation}
-    The full expression for $\Sti(x, k)$ is found in~\cref{app:app:source}.
+    The full expression for $\St(x, k)$ is found in~\cref{app:app:source}.
 
     Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apparent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
     

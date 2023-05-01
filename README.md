@@ -11,14 +11,23 @@ Relevant text found in Sect. 2 of the report. However, a [copy](https://github.c
 *(second draft 02/04/23)*
 Relevant text found in Sect. 3 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_020423.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_020423.pdf`.
 
+## Milestone III: Growth of structure
+*(third draft 01/05/23)*
+Relevant text found in Sect. 4 of the report. 
+
+
+
 
 # Code
 All code is located in the `src/` directory.
 ## Prerequisites <mark>INCOMPLETE</mark>
 For running code in `C++`, the following is needed:
 - `GSL`
+- `omp`
 For running `Python` code, one needs this:
 - `numpy`
+- `scipy`
+- `pandas`
 - `matplotlib`
 - `seaborn` 
 
@@ -39,20 +48,19 @@ make autorun
 ~~~
 To produce plots, run:
 ~~~
-make plotsX
+make plotsX     # X is the milestone number
 ~~~
-where `X` is the milestone number.
+
 
 ## Plotting source
-We produce plots using `Python` and relevant code is found in `src/plotting/`. 
-
-<mark>**NB**:</mark> This is a work in progress. Currently (03/03/23) it is complete chaos.
+We produce plots using `Python` and relevant code is found in `src/plotting/`. The file `analysis.py` ...
 
 # <mark>TO DO:
 ## Makefile
 - [ ] Create a makefile in parent directory (this)
+- [ ] Fix precompiled headers!
 ## Plotting
-- [ ] Clean up plotting code: get sensible structure etc.
+- [x] Clean up plotting code: get sensible structure etc.
 - [ ] Decide on style: time to give up on seaborn darkgrid (I think I am ready for a more professional style? Mom come pick me up I am scared)
 - [x] Fix units in plots (km/s $\to$ km s $^{-1}$ )
 - [ ] Fix colours in density parameters plot
