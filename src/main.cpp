@@ -31,7 +31,7 @@ void m2_Saha(BackgroundCosmology cosmo){
 }
 
 
-/* Temporary main-function */
+
 int main(int narg, char **argv){
 
     //=========================================================================
@@ -57,68 +57,81 @@ int main(int narg, char **argv){
     // Print tables?
     bool print = false;
 
-
-    // //  ----------------------
-    // //  Milestone I
-    // //  ----------------------
-
-    // // Set up and solve the background
-
-    // BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
-    // cosmo.info();
-    // cosmo.solve(print, 1e5);
     
+    // Run which milestones?
+    bool milestone1 = false;
+    bool milestone2 = false;
+    bool milestone3 = true;
+
+
+    //  ----------------------
+    //  Milestone I
+    //  ----------------------
+
+    if(milestone1){
+        // Set up and solve the background
+
+        BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
+        cosmo.info();
+        cosmo.solve(print, 1e5);
+        
+        // Output background evolution quantities
+        cosmo.output("background_cosmology.txt");
+
+        // m1_MCMC();
+        
+    }
+
+
+    //  ----------------------
+    //  Milestone II
+    //  ----------------------
+
+    if(milestone2){
+        // Solve the recombination history
+        RecombinationHistory rec(&cosmo, Yp);
+        rec.info();
+        rec.solve(print);
+
+        // Output recombination quantities
+        rec.output("recombination.txt");
+
+        // m2_Saha(cosmo);
+    }
     
-    // // Output background evolution quantities
-    // cosmo.output("background_cosmology.txt");
-
-    // // m1_MCMC();
-    
-
-    // //  ----------------------
-    // //  Milestone II
-    // //  ----------------------
-
-
-    // // Solve the recombination history
-    // RecombinationHistory rec(&cosmo, Yp);
-    // rec.info();
-    // rec.solve(print);
-
-    // // Output recombination quantities
-    // rec.output("recombination.txt");
-
-    // // m2_Saha(cosmo);
 
 
     //  ----------------------
     //  Milestone III
     //  ----------------------
 
-    BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-    cosmo2.solve(true, 2e5);
-    RecombinationHistory rec2(&cosmo2, Yp);
-    rec2.solve(false, 1e5, 1e5, 1e5);
+    if(milestone3){
 
-    // Solve the perturbations
-    Perturbations pert(&cosmo2, &rec2);
-    // pert.info();
-    pert.solve();
-    
-    // Output perturbation quantities
-    double kvalue;
-    kvalue = 0.001 / Constants.Mpc;
-    pert.output(kvalue, "perturbations_k0.001.txt");
-    kvalue = 0.01 / Constants.Mpc;
-    pert.output(kvalue, "perturbations_k0.01.txt");
-    kvalue = 0.1 / Constants.Mpc;
-    pert.output(kvalue, "perturbations_k0.1.txt");
+        BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+        cosmo2.solve(false, 2e5);
+        RecombinationHistory rec2(&cosmo2, Yp);
+        rec2.solve(false, 1e5, 1e5, 1e5);
 
-
-    /*
-    Sett Neff = 0, så får du de samme resultatene som Hans!
-    */
+        // Solve the perturbations
+        Perturbations pert(&cosmo2, &rec2);
+        pert.info();
+        pert.solve();
         
+        // Output perturbation quantities
+        double kvalue;
+        kvalue = 0.001 / Constants.Mpc;
+        pert.output(kvalue, "perturbations_k0.001.txt");
+        kvalue = 0.01 / Constants.Mpc;
+        pert.output(kvalue, "perturbations_k0.01.txt");
+        kvalue = 0.1 / Constants.Mpc;
+        pert.output(kvalue, "perturbations_k0.1.txt");
+
+
+    }
+
+   
+
+
 
 
     return 0;
