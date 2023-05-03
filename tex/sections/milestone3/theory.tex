@@ -81,7 +81,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \begin{equation}
         T_{00} = T^{(0)}_{00} +  \delta T_{00} = -\rho_s \left( 1 + \delta_s\right).
     \end{equation}
-    We denote the fluid (or ``bulk'') velocity of a species $s$ as $\vec{u}_s$, and its longitudinal component as $u_s$, such that
+    We denote the fluid (or ``bulk'') velocity of a species $s$ as $\vec{u}_s$, and its speed as $u_s$. We consider longitudinal velocities such that
     \begin{equation}
        \vec{u}_s = \vec{u}_s(x, \vec{k}) =  u_s(x, \vec{k})\frac{\vec{k}}{k}.
     \end{equation}
@@ -105,7 +105,15 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
 
     The final differential equations for the density and velocity perturbations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:matter_perturbations}. 
 
-    \textcolor{blue}{About (adiabatic) initial conditions!}
+    Without anticipating the course of events too much, we state that the initial conditions for the matter perturbations (\cref{app:pert:sec:initial_conditions},~\cref{app:pert:eq:initial_conditions}) follow from their relation to the photons' velocity and density perturbations, and the assumption that perturbations are adiabatic:
+    \begin{equation}\label{mil3:theo:eq:adiabatic_ic}
+    \begin{split}
+        \left(1+w_{s'}\right)  \delta_{s'} &= \left(1+w_s\right) \delta_s \\
+        u_{s'} &= u_s
+    \end{split}
+    \end{equation}
+
+    % \textcolor{blue}{About (adiabatic) initial conditions!} 
 
 
 \subsubsection{Temperature fluctuations}\label[sec]{mil3:theo:sec:temperature}
@@ -129,7 +137,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \begin{equation}\label{mil3:theo:eq:euler_photons}
         \dv{u_\gamma}{x} = - \frac{ck}{4\Hp} \delta_\gamma + \frac{2ck}{\Hp}\Theta_2 - \frac{ck}{\Hp}\Psi + \dv{\tau}{x}\left[u_\gamma -u\ped{b}\right].
     \end{equation}
-    The last term---the momentum transfer---ensures that photons and baryons behave as a single fluid early on when Compton scattering is efficient. We refer to this period as ``the tight coupling regime''. As this is true for all scales in the early radiation dominated universe, we get the initial conditions for the first two multipoles from $\delta_\gamma=\sfrac{3}{4}\delta\ped{b}$ and $u_\gamma=u\ped{b}$.
+    The last term---the momentum transfer---ensures that photons and baryons behave as a single fluid early on when Compton scattering is efficient. We refer to this period as ``the tight coupling regime''. As this is true for all scales in the early radiation dominated universe, we could get the initial conditions for the first two multipoles from $\delta_\gamma=\sfrac{3}{4}\delta\ped{b}$ and $u_\gamma=u\ped{b}$. However, we will instead go the other way around and use $\Theta_0$ and $\Theta_1$ to set the initial conditions for the matter perturbations. In the radiation-dominated era and super-horizon regime, a reasonable approximation to $\dv*{\Phi}{x}$ in~\cref{app:pert:eq:dPhidx} is $\Psi + 2\Theta_0$. This derivative is assumed to be very small in the early stages for all modes, so by setting this to zero, we get the initial value of the monopole. In~\citet[Eq.~(7.95)]{DodelsonBook} it is stated what value $\Theta_1$ takes at the beginning, which is what we use in~\cref{app:pert:sec:initial_conditions}.\footnote{\textcolor{blue}{Is this OK?}}
 
     The monopole in the CMB temperature anisotropy power spectrum, $\Theta_0$, is the average temperature of the CMB sky and is the same for any observer moving with the Hubble flow. The dipole term $\Theta_1$ corresponds to the temperature anisotropy resulting from our galaxy's motion with respect to the CMB rest frame (the Doppler effect). Arising from the variations across the CMB sky is the quadrupole, $\Theta_2$. Higher multipoles correspond to increasingly smaller angular scales. We therefore argue that 
     \begin{equation}
@@ -149,7 +157,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \end{align}
     \end{subequations}
 
-    The higher moments of the temperature fluctuations are very small in this regime ($\abs{\Theta_{\ell\geq 2}}\ll 1$), and we can use the semi-aWinalytical recursive relations in~\cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
+    The higher moments of the temperature fluctuations are very small in this regime ($\abs{\Theta_{\ell\geq 2}}\ll 1$), and we can use the semi-analytical recursive relations in~\cref{app:pert:eq:initial_conditions_Theta2ell}. However, we will not bother to compute others than $\Theta_2$, as this is the only one our set of equations rely on. As we will see, there is a much cleverer way of obtaining the higher order multipoles, if our overall goal is to study today's values.
 
     The relations in question show up when setting $\dv*{\Theta_\ell}{x}\to 0$ and using $\abs{\Theta_{\ell+1}} \ll \abs{\Theta_\ell}$ in~\cref{app:pert:eq:dThetaelldx}.
 
@@ -159,9 +167,9 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \begin{equation}\label{mil3:theo:eq:temp_multipole_and_source_func}
         \Theta_\ell (x\!=\!0, k) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(x',k) \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
     \end{equation}
-    The full expression for $\St(x, k)$ is found in~\cref{app:app:source}.
+    The full expression for $\St(x, k)$ is found in~\cref{app:app:source}, but we stress its dependence on $\Theta_2$.
 
-    Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apparent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\!\sim\! 6$ when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different. 
+    Using this so-called line-of-sight integration method, it seems we can compute all $\Theta_{\ell>2}$ given $\Theta_{\ell\leq 2}$. However, after tight coupling, the evolution of a multipole $\Theta_\ell$ depends on both $\Theta_{\ell-1}$ and $\Theta_{\ell+1}$. That is to say, to compute $\Theta_2$, we need $\Theta_3$ for which we need $\Theta_4$, and so on. The Boltzmann hierachy cutoff provides a solution to this apparent issue. The method allows us to only include $\ell=0, 1, \dots, \ell\ped{max}\sim$\,6--8 when solving the differential equations in~\cref{app:pert:eq:photon_multipoles} by treating $\Theta_{\ell\ped{max}}$ slightly different than $\Theta_{\ell<\ell\ped{max}}$. 
     
 
 

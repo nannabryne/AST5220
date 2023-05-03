@@ -8,11 +8,11 @@
 
 Revisit the general form of the first Friedmann equation from~\cref{mil1:theo:sec:approximations}, i.e.
 \begin{equation}\label{app:hubble_derivatives:eq:Hp_of_x}
-    \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}e^{-(1+3w_s)x}},
+    \Hp(x) = H_0 \sqrt{\sum_{s}\Omega_{s0}\eu^{-(1+3w_s)x}},
 \end{equation}
 where sum over $s$ is a sum over the constituents in the universe ($s\in\left\{\text{m, r, \textLambda, K} \right\}$) and $w_s$ represents the species' equation of state parameter. As a shorthand notation, we introduce $\varXi_m = \varXi_m(x)$ given by
 \begin{equation}\label{app:hubble_derivatives:eq:Xi_of_x}
-    \varXi_{m}(x)\equiv \sum_{s} (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x} \,; \quad m\in\mathbb{N},
+    \varXi_{m}(x)\equiv \sum_{s} (-1)^m(1+3w_s)^m \Omega_{s0}\eu^{-(1+3w_s)x} \,; \quad m\in\mathbb{N},
 \end{equation}
 s.t. $\dv*[n]{X_m}{x} = \varXi_{m+n}$. Now $\Hp = H_0\sqrt{\varXi_0}$ and its first derivative becomes
 \begin{equation}\label{app:hubble_derivatives:eq:dHp_dx}
@@ -30,7 +30,7 @@ The second derivative is obtained through the quotient rule, i.e.
 
 Now that we have these expressions, let us look at some special cases. Assume that the universe only consists of the substance $s$. Then
 \begin{equation}
-    \varXi_m = (-1)^m(1+3w_s)^m \Omega_{s0}e^{-(1+3w_s)x}.
+    \varXi_m = (-1)^m(1+3w_s)^m \Omega_{s0}\eu^{-(1+3w_s)x}.
 \end{equation}
 We obtain the following:
 \begin{subequations}
@@ -43,7 +43,7 @@ As for the conformal time, we get an expression that is ill-defined for some cas
 \begin{equation}
     \begin{split}
         \frac{\eta \Hp}{c} &= \Hp \int_{-\infty}^{x} \diff x'\, \frac{1}{\Hp} \\
-            &= e^{\frac{x}{2}(1+3w_s)} \int_{-\infty}^{x} \diff x' \,e^{-\frac{x'}{2}(1+3w_s)} \\
+            &= \eu[\frac{x}{2}(1+3w_s)] \int_{-\infty}^{x} \diff x' \,\eu[-\frac{x'}{2}(1+3w_s)] \\
             &= \begin{cases}
                 \frac{2}{1+3w_s} \quad& w_s > \sfrac{1}{3} \\
                 \infty & w_s \leq -\sfrac{1}{3}

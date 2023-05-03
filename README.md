@@ -11,10 +11,10 @@ Relevant text found in Sect. 2 of the report. However, a [copy](https://github.c
 *(second draft 02/04/23)*
 Relevant text found in Sect. 3 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_020423.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_020423.pdf`.
 
-## Milestone III: Growth of structure
-*(third draft 01/05/23)*
-Relevant text found in Sect. 4 of the report. 
 
+## Milestone III: Growth of structure
+*(third draft 03/05/23)*
+Relevant text found in Sect. 4 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_030523.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_030523.pdf`.
 
 
 
