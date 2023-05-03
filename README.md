@@ -69,8 +69,12 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`. T
 ## Coding
 - [ ] Structural changes
 - [x] (M1) What happened to the luminosity distance????
+- [x] Review after feedback from M1
+- [ ] Review after feedback from M2
 ## Report
 - [x] Write figure captions
+- [ ] Review after feedback from M1
+- [ ] Review after feedback from M2
 ## Readme
 - [ ] Complete list of prerequisites 
 - [ ] Structural changes
