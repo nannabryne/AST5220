@@ -149,7 +149,7 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
     legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
     ax.legend(**legend_kw)
 
-    __set_k_label(fig, k_handles, k_dict, (0.12, 0.18))
+    __set_k_label(fig, k_handles, k_dict, "upper right")
     ax.set_xlabel(tex.x)
     ax.set_xlim(-10,0)
     
