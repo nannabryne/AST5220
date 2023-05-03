@@ -6,8 +6,6 @@
 % PRESENT/FUTURE TENSE
 
 
-% The geometry of spacetime is described by the Einstein tensor $G\munu$, which relates to the distribution of energy and matter through the energy-momentum tensor $T\munu$ via the Einstein equation $G\munu = 8\pi G T\munu$. To account for perturbations, we can write the perturbed Einstein equation as $G^{(0)}\munu +\delta G\munu = 8\pi G \left( T^{(0)}\munu+\delta T_{\mu \nu} \right)$, where the superscript $(0)$ denotes the unperturbed quantity. The problem then is to solve the equation $\delta G\munu = 8\pi G, \delta T\munu$ efficiently, since direct solution is highly non-trivial. The Ricci tensor and scalar, denoted by $\mathcal{R}\munu$ and $\mathcal{R}$, respectively, are related to the Einstein tensor through $G\munu= \mathcal{R}\munu - \frac{1}{2}g\munu \mathcal{R}$.
-
 The geometry of the spacetime is encoded in the Einstein tensor $G\munu$ that relates to the energy-momentum tensor $T\munu$ through the Einstein equation $G\munu = 8\pi G T\munu$. The latter quantity describes the distribution of energy and matter. The perturbed Einstein equation can be written
 \begin{equation}
     G^{(0)}\munu +\delta G\munu = 8\pi G \left( T^{(0)}\munu+\delta T_{\mu \nu} \right),
@@ -60,7 +58,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
     \begin{equation}\label{mil3:theo:eq:defining_h_munu}
         g\munu = g^{(0)}\munu + h\munu\,; \quad \abs{h\munu } \ll 1,
     \end{equation}
-    where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is given in terms of the potentials $\Psi$ and $\Phi$. The resulting perturbed metric is now given by
+    where $g^{(0)}\munu $ is the zeroth order term---the FRW metric.\footnote{We use the term ``metric'' on both $g\munu$ and $ds^2 = g\munu\diff x^\mu \diff x^\nu$.} We will work the so-called conformal-Newtonian gauge, where the perturbation $h\munu$ is given in terms of the potentials $\Psi$ and $\Phi$. The resulting perturbed metric now reads
     \begin{equation}
         ds^2 = \eu[2x]\left[ -\left(1+2\Psi\right)\diff \eta^2 + \left(1+2\Phi\right) \deltasym{ij}\diff x^i \diff x^j\right] .
         % ds^2 = -\left(1+2\Psi\right)\diff t^2 + \eu[2x]\left(1+2\Phi\right) \deltasym{ij}\diff x^i \diff x^j .
@@ -69,7 +67,7 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
 
     It is the Poisson equation that determines the evolution of $\Phi$. The sum $\Phi + \Psi$ is given by an equation for anisotropic stress, resulting in a dynamical expression for $\Psi$. The equations are given in~\cref{app:pert:sec:full_system},~\cref{app:pert:eq:metric_perturbations}. 
     
-    The absence of anisotropic stress causes $\Phi=-\Psi$. Shear stress in a tightly coupled fluid is manifestly absent; only anisotropic motion of fluid particles gives rives to non-zero terms in the stress tensor $\Pi\munu$. We therefore use this to set the initial condition on $\Phi$ (\cref{app:pert:eq:init_Phi}). In addition, we expect to see that $\Psi + \Phi \simeq 0 $ before recombination for large-scale modes $k\lesssim k\ped{eq}$. For small-scale modes, fluctuations in the primordial plasma were large and gave rise to oscillating gravitational potentials. 
+    The absence of anisotropic stress causes $\Phi=-\Psi$. Shear stress in a tightly coupled fluid is manifestly absent; only anisotropic motion of fluid particles gives rives to non-zero terms in the stress tensor. We therefore use this to set the initial condition on $\Phi$ (\cref{app:pert:eq:init_Phi}). In addition, we expect to see that $\Psi + \Phi \simeq 0 $ before recombination for large-scale modes $k\lesssim k\ped{eq}$. For small-scale modes, fluctuations in the primordial plasma were large and gave rise to oscillating gravitational potentials. 
 
     The initial condition for $\Psi$ comes from inflation. In~\citet{DodelsonBook} it is explained how this quantity is proportional to the curvature perturbation $\mathcal{R}$ immediately after inflation, and that this $\mathcal{R}$ is conserved in the super-horizon regime. In particular, the value of $\Psi$ post inflation is $\Psi\ped{init}=-\sfrac{2}{3}\mathcal{R}$. The value of $\mathcal{R}$ depends on the inflationary model one uses, and is for our purposes, essentially a question of normalisation. The simplest choice of $\mathcal{R}=1$ is the one we will use. 
 
