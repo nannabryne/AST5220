@@ -29,12 +29,16 @@ so:
 \begin{align}
     \expr_1 &= \Hp'\gt u\ped{b} + \Hp \left( \gt' u\ped{b} + \gt u\ped{b}'\right) \\
     \expr_2 &= 3\Hp \Hp' \left(\gt' \Theta_2 + \gt \Theta_2'\right) + \Hp^2\left(\gt'' \Theta_2 +2 \gt' \Theta_2' + \gt \Theta_2''\right) \nonumber \\
-    & \quad + \left[(\Hp')^2 + \Hp \Hp''\right]\gt \Theta_2
+    & \quad + \left[(\Hp')^2 + \Hp \Hp''\right]\gt \Theta_2 \label{app:source:eq:expr1}
 \end{align}
 \end{subequations}
-In inserting~\cref{app:source:eq:expressions} into~\cref{app:source:eq:source_function}, we can compute the temperature source function from our quantities and their derivatives. 
-
-\textcolor{blue}{Show $\Theta''$ as well!}
+In inserting~\cref{app:source:eq:expressions} into~\cref{app:source:eq:source_function}, we can compute the temperature source function from our quantities and their derivatives. However, we want to avoid too many numerical vulnerabilities and will therefore provide the expression for $\Theta_2''$ as well. We differentiate~\cref{app:pert:eq:dThetaelldx} with $\ell=2$ and get
+\begin{align}\label{app:source:eq:Theta2_doubleder}
+    \Theta_2'' &= \frac{1}{5} \left( \ckH' \left[2\Theta_1 - 3\Theta_3\right] + \ckH\left[2\Theta_1' - 3\Theta_3' \right] \right)+ \frac{9}{10} \left(\tau''\Theta_2 + \tau ' \Theta_2 ' \right) \nonumber\\
+    &= \frac{\ckH}{5} \left( -\frac{\Hp'}{\Hp}\left[2\Theta_1 - 3\Theta_3\right] + \left[2\Theta_1' - 3\Theta_3' \right] \right)+ \frac{9}{10} \left(\tau''\Theta_2 + \tau ' \Theta_2 ' \right) \nonumber \\
+    &=\frac{2\ckH}{5} \left(\Theta_1'-\frac{\Hp'}{\Hp}\Theta_1 \right) - \frac{3\ckH}{5} \left(\Theta_3' -\frac{\Hp'}{\Hp}\Theta_3\right)+\frac{9}{10} \left(\tau''\Theta_2 + \tau ' \Theta_2 ' \right),
+\end{align}
+where in the second line we used that $\ckH'=(ck/\Hp)'= -\ckH \Hp'/\Hp$. Finally, by inserting~\cref{app:source:eq:Theta2_doubleder} in~\cref{app:source:eq:expr1}, we are ready to compute $\St(x,k)$ in a numerically stable fashion.
 
 % \dots [something about why it is beneficial to do the following] \dots
 
