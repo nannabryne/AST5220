@@ -74,8 +74,11 @@ void RecombinationHistory::solve_number_density_electrons(int nsteps){
   }
 
   Vector log_Xe_arr = log(Xe_arr);
+  Vector Xe_arr_new = exp(log_Xe_arr);
   // spline result:
-  log_Xe_of_x_spline.create(x_array, log_Xe_arr, "Xe");
+  Xe_of_x_spline.create(x_array, Xe_arr_new, "Xe");
+  log_Xe_of_x_spline.create(x_array, log_Xe_arr, "logXe");
+  
 
 }
 
@@ -115,14 +118,18 @@ void RecombinationHistory::solve_for_optical_depth_tau(int nsteps){
 
   //  Compute gt  and spline
   Vector gt_arr(npts);
+  Vector dgt_arr(npts);
   // gt_arr = -exp(-tau_arr)*dtau_arr;
-  double xi;
+  double xi, A;
   for(int i=0; i<npts; i++){
     xi = x_array[i];
-    gt_arr[i] = - exp(-tau_arr[i])*dtau_arr[i];
+    A = exp(-tau_arr[i]);
+    gt_arr[i] = - A*dtau_arr[i];
+    dgt_arr[i] = A*(ddtaudxx_of_x(xi) - dtau_arr[i]*dtau_arr[i]);
     // gt_arr[i] =  -exp(-tau_of_x_spline(xi)) * dtaudx_of_x_spline(xi);
   }
   gt_of_x_spline.create(x_array, gt_arr, "gt");
+  dgtdx_of_x_spline.create(x_array, dgt_arr, "dgtdx");
 
 }
 
@@ -173,36 +180,17 @@ void RecombinationHistory::solve(bool print_milestones, int nsteps_Xe, int nstep
 void RecombinationHistory::milestones(int nsteps){
 
   //  Locate milestones
-  Vector x_array = Utils::linspace(-10, -4, nsteps+1);
-  double gmax = 0., XXmin = 1., tauumin = 1.;
-  int i = 0;
 
-  double xa=0., xb=0., xc=0.;
+  std::pair<double,double>xrange(-10,-4);
   
-  double g_curr, XX_curr, tauu_curr, x_curr;
-  for(i=0; i<nsteps+1; i++){
-    x_curr = x_array[i];
-    g_curr = gt_of_x(x_curr);
-    tauu_curr = abs(tau_of_x(x_curr) - 1.);
-    XX_curr = abs(Xe_of_x(x_curr) - 0.1);
-   
-    if(XX_curr<XXmin){
-      XXmin = XX_curr;
-      xa = x_curr;
-    }
-    if(g_curr>gmax){
-      gmax = g_curr;
-      xb = x_curr;
-    }
-    if(tauu_curr<tauumin){
-      tauumin = tauu_curr;
-      xc = x_curr;
-    }
-   
-  }
+  double xc = Utils::binary_search_for_value(tau_of_x_spline, 1., xrange);
+  double xa = Utils::binary_search_for_value(Xe_of_x_spline, 0.1, xrange);
+
+  std::pair<double,double>xrange_narrow(xc-0.15, xc+0.15);
+  double xb = Utils::binary_search_for_value(dgtdx_of_x_spline, 0, xrange_narrow);
+
 
   double x_0 = 0.;
-
 
 
   //  Print table
@@ -342,11 +330,11 @@ double RecombinationHistory::gt_of_x(double x) const{
 }
 
 double RecombinationHistory::dgtdx_of_x(double x) const{
-  return gt_of_x_spline.deriv_x(x);
+  return dgtdx_of_x_spline(x);
 }
 
 double RecombinationHistory::ddgtdxx_of_x(double x) const{
-  return gt_of_x_spline.deriv_xx(x);
+  return dgtdx_of_x_spline.deriv_x(x);
 }
 
 
@@ -357,7 +345,8 @@ double RecombinationHistory::ddgtdxx_of_x(double x) const{
 
 
 double RecombinationHistory::Xe_of_x(double x) const{
-  return exp(log_Xe_of_x_spline(x));
+  // return exp(log_Xe_of_x_spline(x));
+  return Xe_of_x_spline(x);
 }
 
 double RecombinationHistory::ne_of_x(double x) const{

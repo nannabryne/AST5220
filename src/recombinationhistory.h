@@ -87,11 +87,13 @@ class RecombinationHistory{
 
 
     // splines contained in this class:
-    Spline log_Xe_of_x_spline{"Xe"};  // electron fraction spline
-    Spline tau_of_x_spline{"tau"};    // optical depth spline
-    Spline dtaudx_of_x_spline{"dtaudx"}; // derivative of optical depth spline
-    Spline gt_of_x_spline{"gt"};      // visibilty function spline
-    Spline rs_of_x_spline{"rs"};      // sound horizon spline
+    Spline log_Xe_of_x_spline{"logXe"};   // (log of) electron fraction spline
+    Spline Xe_of_x_spline{"Xe"};          // electron fraction spline
+    Spline tau_of_x_spline{"tau"};        // optical depth spline
+    Spline dtaudx_of_x_spline{"dtaudx"};  // derivative of optical depth spline
+    Spline gt_of_x_spline{"gt"};          // visibilty function spline
+    Spline dgtdx_of_x_spline{"dgtdx"};    // derivative of visibility spline
+    Spline rs_of_x_spline{"rs"};          // sound horizon spline
 
     // "Helper" variables:
     double _8pi = 8*M_PI;                         // 8π
