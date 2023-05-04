@@ -68,7 +68,7 @@ int main(int narg, char **argv){
     //  ----------------------
 
     if(milestone1){
-        
+
         // Set up and solve the background
         BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
         cosmo.info();
@@ -94,7 +94,7 @@ int main(int narg, char **argv){
         // Solve the recombination history
         RecombinationHistory rec(&cosmo, Yp);
         rec.info();
-        rec.solve(true);
+        rec.solve(print);
 
         // Output recombination quantities
         rec.output("recombination.txt");
@@ -111,9 +111,9 @@ int main(int narg, char **argv){
     if(milestone3){
 
         BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-        cosmo2.solve(true, 1e5);
+        cosmo2.solve(false, 1e5);
         RecombinationHistory rec2(&cosmo2, Yp);
-        rec2.solve(true, 1e5, 1e5, 1e5);
+        rec2.solve(false, 1e5, 1e5, 1e5);
 
         // Solve the perturbations
         Perturbations pert(&cosmo2, &rec2);

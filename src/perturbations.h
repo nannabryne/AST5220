@@ -47,6 +47,11 @@ class Perturbations{
     std::vector<Spline2D> Theta_spline;   //  Θ_ℓ spline, ℓ = 0, 1, 2
 
 
+    // misc:
+    Spline dtau{"abs_dtaudx"};
+    Spline dtau_over_Hp{"abs_dtaudx_over_Hp"};
+
+
 
     /**
      * @brief Set initial condition at the start (which is in tight coupling).

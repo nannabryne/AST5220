@@ -33,13 +33,7 @@ void Perturbations::solve(){
 
 
 void Perturbations::integrate_perturbations(){
-  
 
-  //===================================================================
-  // TODO: Set up the k-array for the k's we are going to integrate over
-  // Start at k_min end at k_max with n_k points with either a
-  // quadratic or a logarithmic spacing
-  //===================================================================
 
   const gsl_odeiv2_step_type * stepper = gsl_odeiv2_step_rk4;
   const double hstart = 1e-6;
@@ -51,6 +45,18 @@ void Perturbations::integrate_perturbations(){
   
 
   Vector x_array = Utils::linspace(x_start, x_end, n_x);
+
+  // // create helper splines:
+  // Vector dtau(n_x);
+  // Vector dtau_H(n_x);
+  // double x;
+  // for(int i; i<n_x; i++){
+  //   x = x_array[i]
+  //   dtau[i] = - rec->tau_of_x(x);
+  //   dtau_H[i] = dtau[i]/cosmo->Hp_of_x(x);
+
+
+  // }
 
   const int nn = n_x*n_k;
 
@@ -373,7 +379,6 @@ Vector Perturbations::set_ic_after_tight_coupling(
 
 double Perturbations::get_tight_coupling_time(const double k) const{
 
-  // FROM VETLE:
 
   double x_tc_end = 1000.0;
   int  idx_tc_end = n_x*10;
