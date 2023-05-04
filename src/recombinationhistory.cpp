@@ -123,10 +123,9 @@ void RecombinationHistory::solve_for_optical_depth_tau(int nsteps){
   double xi, A;
   for(int i=0; i<npts; i++){
     xi = x_array[i];
-    A = exp(-tau_arr[i]);
-    gt_arr[i] = - A*dtau_arr[i];
+    A = -exp(-tau_arr[i]);
+    gt_arr[i] = A*dtau_arr[i];
     dgt_arr[i] = A*(ddtaudxx_of_x(xi) - dtau_arr[i]*dtau_arr[i]);
-    // gt_arr[i] =  -exp(-tau_of_x_spline(xi)) * dtaudx_of_x_spline(xi);
   }
   gt_of_x_spline.create(x_array, gt_arr, "gt");
   dgtdx_of_x_spline.create(x_array, dgt_arr, "dgtdx");
@@ -188,7 +187,6 @@ void RecombinationHistory::milestones(int nsteps){
 
   std::pair<double,double>xrange_narrow(xc-0.15, xc+0.15);
   double xb = Utils::binary_search_for_value(dgtdx_of_x_spline, 0, xrange_narrow);
-
 
   double x_0 = 0.;
 
