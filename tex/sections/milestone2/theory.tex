@@ -40,11 +40,11 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
 % };
 
 \subsubsection{Optical depth and visibility}\label[sec]{mil2:theo:sec:optical_depth}
-    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or no absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This, and the assumption that the universe is transparent today, gives us the ODE for $\tau(x)$,
+    Photons travelling through a medium may be absorbed. The intensity of light emitted from a distance $x$ is reduced by the factor $\eu^{-\tau(x)}$ where $\tau(x)$ is the optical depth of the medium. An optically thin ($\tau \ll 1$) medium does little or no absorbing, whereas an optically thick ($\tau \gg 1$) substance does not let much, if any, light pass through. In cosmology, Thomson scattering is predominantly responsible for the absorption of photons universe. This gives us the ODE for $\tau(x)$,
     \begin{equation}\label{mil2:theo:eq:ode_tau_of_x}
         \dv{\tau}{x} = - \frac{cn_e \sigma\ped{T}\eu^{x}}{\Hp(x)},
     \end{equation}
-    with $\tau(0)=0$, where $\sigma\ped{T}$ is the Thomson scattering cross-section and $n_e$ the electron density. A related quantity is the visibility function
+    with $\tau(0)=0$ by definition, where $\sigma\ped{T}$ is the Thomson scattering cross-section and $n_e$ the electron density. A related quantity is the visibility function
     \begin{equation}\label{mil2:theo:eq:gt_of_x}
         \gt(x)= - \eu^{-\tau(x)} \dv{\tau(x)}{x},
     \end{equation}

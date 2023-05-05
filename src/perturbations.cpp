@@ -379,6 +379,8 @@ Vector Perturbations::set_ic_after_tight_coupling(
 
 double Perturbations::get_tight_coupling_time(const double k) const{
 
+  // FIX THIS!
+
 
   double x_tc_end = 1000.0;
   int  idx_tc_end = n_x*10;
@@ -394,11 +396,8 @@ double Perturbations::get_tight_coupling_time(const double k) const{
     bool cond1 = dtaudx < 10.0;
     bool cond2 = dtaudx < 10.0 * ckH;
     bool cond3 = x > -8.3;  
-    // bool cond3 = rec->Xe_of_x(x) < 0.99;  
 
     if (cond1 || cond2 || cond3) {
-      // Tight-coupling regime not valid 
-      // DOUBLE CHECK THAT IT'S NOT X-DX AND I-1
       idx_tc_end = i - 1;
       x_tc_end = x_array[idx_tc_end];
       break; 
@@ -470,7 +469,7 @@ void Perturbations::compute_source_functions(){
       double ckH            = c*k/Hp;
       double ck_inv         = 1./(c*k);
       const double Psi      = get_Psi(x, k);        // Ψ(x,k)
-      const double Phi      = get_Phi(x, k);        // 
+      const double Phi      = get_Phi(x, k);        // Φ(x,k)
       const double Theta0   = get_Theta(x, k, 0);   //
       const double Theta2   = get_Theta(x, k, 2);   //
       const double u_b      = get_u_b(x, k);        //
@@ -479,7 +478,7 @@ void Perturbations::compute_source_functions(){
       const double dPsidx       = Psi_spline.deriv_x(x, k);
       const double du_bdx       = u_b_spline.deriv_x(x, k);
       const double dTheta2dx    = Theta_spline[2].deriv_x(x, k);
-      const double ddTheta2dxx  = Theta_spline[2].deriv_xx(x, k);
+      const double ddTheta2dxx  = Theta_spline[2].deriv_xx(x, k);   // fixme!
 
       double term1, term2, term3, term4;
 
@@ -493,6 +492,8 @@ void Perturbations::compute_source_functions(){
               ( 3*Hp*dHpdx * ( dgtdx*Theta2 + gt*dTheta2dx )
               + Hp*Hp * ( ddgtdxx*Theta2 + 2*dgtdx*dTheta2dx + gt*ddTheta2dxx ) 
               + ( dHpdx*dHpdx + Hp*ddHpdxx ) * gt*Theta2 );
+
+        
 
 
       // Temperature source

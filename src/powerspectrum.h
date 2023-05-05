@@ -23,9 +23,9 @@ class PowerSpectrum {
     Perturbations *pert        = nullptr;
 
     // Parameters defining the primordial power-spectrum
-    double A_s        = 2.1e-9;
-    double n_s        = 0.965;
-    double kpivot_mpc = 0.05;
+    double A_s        = 2.1e-9; // primordial amplitude
+    double n_s        = 0.965;  // spectral index
+    double kpivot_mpc = 0.05;   // fidducial scale
 
     // The k-values we compute Theta_ell(k) etc. for
     const int n_k      = 100;
