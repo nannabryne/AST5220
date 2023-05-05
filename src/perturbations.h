@@ -39,6 +39,8 @@ class Perturbations{
     Spline2D Phi_spline{"Phi"};           // Φ spline
     // Spline2D Pi_spline{"Pi"};   
     Spline2D Psi_spline{"Psi"};           // Ψ spline
+
+
    
     // Splines of source functions (ST for temperature; SE for polarization)
     Spline2D ST_spline{"ST"};   // St spline
@@ -142,6 +144,18 @@ class Perturbations{
      * @return Θ_2(x,k)
     */
     double expr_Theta2(double x, double k, double Theta1) const;
+
+    /**
+     * @brief Expression for quadrupole Θ_ℓ(x,k), ℓ > 2,  in tight coupling regime.
+     * @param x the time point x = ln(a)
+     * @param k the wavenumber k 
+     * @param ell moment ℓ
+     * @param Theta_prev current Θ_{ℓ-1}(x,k)
+     * @return Θ_ℓ(x,k)
+    */
+    double expr_Thetaell(double x, double k, int ell, double Thetaell_prev) const;
+
+
 
   public:
 

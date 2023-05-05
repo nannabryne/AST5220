@@ -74,9 +74,32 @@ void PowerSpectrum::generate_bessel_function_splines(){
   // NB: you don't want to go larger than z ~ 40000, then the bessel routines
   // might break down. Use j_ell(z) = Utils::j_ell(ell, z)
   //=============================================================================
+  const int n_x = 1e5;
+  const double x_start = -16.;
+  const double x_end = 0.;
+  const double dx = (x_end - x_start)/n_x;
+
+  const double eta0 = cosmo->eta(0);
+
+  const double z_start = k_max * (eta0 - cosmo->eta(x_start));
+  const double z_end   = k_min * (eta0 - cosmo->eta(x_end));
+
+  const double n_z = 1e7;
+  Vector z_array = Utils::linspace(z_start, z_end, n_z);
+
+  const int ellmax = ells[ells.size()-1];
+  const int n_ells = ells.size();
+
+  std::vector<Spline> j_ell_splines(n_ells);
 
   for(size_t i = 0; i < ells.size(); i++){
     const int ell = ells[i];
+
+    Vector j_ell_arr(n_z);
+
+    for(int iz=0; iz<n_z; iz++){
+      j_ell_arr[iz] = Utils::j_ell(ell, z_array[iz]);
+    }
 
     // ...
     // ...
@@ -84,6 +107,8 @@ void PowerSpectrum::generate_bessel_function_splines(){
     // ...
 
     // Make the j_ell_splines[i] spline
+
+    j_ell_splines[i].create(z_array, j_ell_arr, "j_%d", ell);
   }
 
   Utils::EndTiming("besselspline");
@@ -101,7 +126,14 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
 
   // Make storage for the results
   Vector2D result = Vector2D(ells.size(), Vector(k_array.size()));
+  
+  const int n_x = 1e5;
+  const double x_start = -16.;
+  const double x_end = 0.;
+  const double dx = (x_end - x_start)/n_x;
 
+  // Vector x_array = Utils::linspace(x_start, x_end, n_x);
+  
   for(size_t ik = 0; ik < k_array.size(); ik++){
 
     //=============================================================================
@@ -112,6 +144,17 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
     // ...
     // ...
     // ...
+    
+    double sum = 0;
+    double integrand;
+    double xprev = x_start;
+    double x;
+    for(int ix=1; ix<n_x; ix++){
+      x = xprev + ix*dx;
+      integrand = ( pert->get_Source_T(xprev, k) + pert->get_Source_T(x, k)) * j_ell_splines();
+      sum = sum + integrand;
+      xprev = x;
+    }
 
     // Store the result for Source_ell(k) in results[ell][ik]
   }

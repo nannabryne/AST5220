@@ -68,6 +68,7 @@ void Perturbations::integrate_perturbations(){
   Vector Theta0_array(nn);
   Vector Theta1_array(nn);
   Vector Theta2_array(nn);
+  Vector Theta3_array(nn);
   Vector Psi_array(nn);
 
 
@@ -188,6 +189,7 @@ void Perturbations::integrate_perturbations(){
       Theta0_array[i]     = y_sol_curr[Constants.ind_start_Theta_tc];
       Theta1_array[i]     = y_sol_curr[Constants.ind_start_Theta_tc+1];
       Theta2_array[i]     = expr_Theta2(x, k, Theta1_array[i]);
+      Theta3_array[i]     = expr_Thetaell(x, k, 3, Theta2_array[i]);
       Phi_array[i]        = y_sol_curr[Constants.ind_Phi_tc];
       Psi_array[i]        = expr_Psi(x, k, Phi_array[i], Theta2_array[i]);
 
@@ -208,6 +210,7 @@ void Perturbations::integrate_perturbations(){
       Theta0_array[i]     = y_sol_curr[Constants.ind_start_Theta];
       Theta1_array[i]     = y_sol_curr[Constants.ind_start_Theta+1];
       Theta2_array[i]     = y_sol_curr[Constants.ind_start_Theta+2];
+      Theta3_array[i]     = y_sol_curr[Constants.ind_start_Theta+3];
       Phi_array[i]        = y_sol_curr[Constants.ind_Phi];
       Psi_array[i]        = expr_Psi(x, k, Phi_array[i], Theta2_array[i]);
 
@@ -229,10 +232,11 @@ void Perturbations::integrate_perturbations(){
   Phi_spline.create(x_array, k_array, Phi_array, "Phi");
   Psi_spline.create(x_array, k_array, Psi_array, "Psi");
 
-  Theta_spline = std::vector<Spline2D>(3);
+  Theta_spline = std::vector<Spline2D>(4);
   Theta_spline[0].create(x_array, k_array, Theta0_array, "Theta0");
   Theta_spline[1].create(x_array, k_array, Theta1_array, "Theta1");
   Theta_spline[2].create(x_array, k_array, Theta2_array, "Theta2");
+  Theta_spline[3].create(x_array, k_array, Theta3_array, "Theta3");
   
 
 }
@@ -413,21 +417,12 @@ double Perturbations::get_tight_coupling_time(const double k) const{
 
 void Perturbations::compute_source_functions(){
   
-
-  //=============================================================================
-  // TODO: Make the x and k arrays to evaluate over and use to make the splines
-  //=============================================================================
-  // ...
-  // ...
-
-
   Vector k_array = exp(Utils::linspace(log(k_min), log(k_max), n_k));
   Vector x_array = Utils::linspace(x_start, x_end, n_x);
 
   // Make storage for the source functions (in 1D array to be able to pass it to the spline)
 
   Vector ST_array(k_array.size() * x_array.size());   // temperature source
-  Vector SE_array(k_array.size() * x_array.size());
 
   //  fetch constants and variables:
   const double c              = Constants.c;              // c
@@ -470,47 +465,38 @@ void Perturbations::compute_source_functions(){
       double ck_inv         = 1./(c*k);
       const double Psi      = get_Psi(x, k);        // Ψ(x,k)
       const double Phi      = get_Phi(x, k);        // Φ(x,k)
-      const double Theta0   = get_Theta(x, k, 0);   //
-      const double Theta2   = get_Theta(x, k, 2);   //
-      const double u_b      = get_u_b(x, k);        //
+      const double Theta0   = get_Theta(x, k, 0);   // Θ_0(x,k)
+      const double Theta1   = get_Theta(x, k, 1);   // Θ_1(x,k)
+      const double Theta2   = get_Theta(x, k, 2);   // Θ_2(x,k)
+      const double Theta3   = get_Theta(x, k, 3);   // Θ_3(x,k)
+      const double u_b      = get_u_b(x, k);        // u_b(x,k)
 
-      const double dPhidx       = Phi_spline.deriv_x(x, k);
-      const double dPsidx       = Psi_spline.deriv_x(x, k);
-      const double du_bdx       = u_b_spline.deriv_x(x, k);
-      const double dTheta2dx    = Theta_spline[2].deriv_x(x, k);
+      const double dPhidx       = Phi_spline.deriv_x(x, k);         // d/dx[Φ(x,k)]
+      const double dPsidx       = Psi_spline.deriv_x(x, k);         // d/dx[Ψ(x,k)]
+      const double du_bdx       = u_b_spline.deriv_x(x, k);         // d/dx[u_b(x,k)]
+      const double dTheta2dx    = Theta_spline[2].deriv_x(x, k);    // d/dx[Θ_2(x,k)]
       const double ddTheta2dxx  = Theta_spline[2].deriv_xx(x, k);   // fixme!
 
-      double term1, term2, term3, term4;
+      double ISW_term, SW_term, Doppler_term, pol_term;
 
-      term1 = gt * (Theta0 + Psi + 0.25*Theta2);
+      SW_term = gt * (Theta0 + Psi + 0.25*Theta2);
 
-      term2 = exp(-tau)* ( dPsidx - dPhidx );
+      ISW_term = exp(-tau)* ( dPsidx - dPhidx );
 
-      term3 = - ck_inv * ( dHpdx*gt*u_b + Hp*( dgtdx*u_b + gt*du_bdx ) );
+      Doppler_term = - ck_inv * ( dHpdx*gt*u_b + Hp*( dgtdx*u_b + gt*du_bdx ) );
 
-      term4 = .75*ck_inv*ck_inv * 
+      pol_term = .75*ck_inv*ck_inv * 
               ( 3*Hp*dHpdx * ( dgtdx*Theta2 + gt*dTheta2dx )
               + Hp*Hp * ( ddgtdxx*Theta2 + 2*dgtdx*dTheta2dx + gt*ddTheta2dxx ) 
               + ( dHpdx*dHpdx + Hp*ddHpdxx ) * gt*Theta2 );
 
-        
-
-
       // Temperature source
-      ST_array[index] = term1 + term2 + term3 + term4;
-
-      // Polarization source
-      // if(Constants.polarization){
-      //   SE_array[index] = 0.0;
-      // }
+      ST_array[index] = SW_term + ISW_term + Doppler_term + pol_term;
     }
   }
 
   // Spline the source functions
   ST_spline.create (x_array, k_array, ST_array, "Source_Temp_x_k");
-  // if(Constants.polarization){
-  //   SE_spline.create (x_array, k_array, SE_array, "Source_Pol_x_k");
-  // }
 }
 
 
@@ -715,6 +701,11 @@ double Perturbations::expr_Psi(double x, double k, double Phi, double Theta2) co
 double Perturbations::expr_Theta2(double x, double k, double Theta1) const{
   double fac =  (20. * Constants.c*k ) / ( 45. * cosmo->Hp_of_x(x) * rec->dtaudx_of_x(x) );
   return -fac*Theta1;
+}
+
+double Perturbations::expr_Thetaell(double x, double k, int ell, double Thetaell_prev) const{
+  double fac =  ell/(2.*ell + 1.)*( Constants.c*k ) / (cosmo->Hp_of_x(x) * rec->dtaudx_of_x(x) );
+  return -fac*Thetaell_prev;
 }
 
 
