@@ -30,7 +30,7 @@
 % \usepackage[caption=false]{subfig}
 \usepackage{bbold}
 \usepackage{relsize}
-\usepackage{txfonts}	% Important for the A&A style!
+\usepackage[varg]{txfonts}	% Important for the A&A style!
 \bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 \usepackage{ifthen} 
 \usepackage{tcolorbox}
@@ -166,6 +166,7 @@
 % Substript for freeze-out:
 \newcommand{\pedfo}[1]{_{#1,\mathrm{fo}}}
 
+\newcommand{\dOmg}[1][p]{d\varOmega_{\hat{\vec{#1}}}}  % solid angle intergral
 
 
 

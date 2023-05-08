@@ -4,3 +4,101 @@
 % labels: \label{mil4:theo:[type]:[name]}
 % ---------------------------------------
 % PRESENT/FUTURE TENSE
+
+\please
+
+The angular CMB power spectrum is given by
+\begin{equation}
+    C(\ell)= \frac{2}{\pi} \int \frac{d^3 k}{(2\pi)^2} P_P(k) \mathcal{T}_\ell^2 (k),
+\end{equation}
+where
+\begin{equation}
+    \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x\!=\!0, k)}{\mathcal{R(\vec{k})}}
+\end{equation}
+is the transfer function and $P_P(k)$ is the primordial power spectrum given by
+\begin{equation}
+    \frac{k^3}{2\pi^2} P_P (k) = A\ped{S}\left( \frac{k}{H_0}\right)^{n\ped{S}-1},
+\end{equation}
+$n\ped{S}$ being the spectral index (scalar perturbation).
+
+
+Define $\mathcal{D}_\ell \equiv \ell (\ell+1)/(2\pi) \cdot C(\ell) $.
+
+\sendhelp
+
+\please
+
+The angular CMB power spectrum is given by
+\begin{equation}
+    C(\ell)= \frac{2}{\pi} \int_0^\infty \dx{k} k^2 P_\mathcal{R}(k) \abs{\mathcal{T}_\ell (k)}^2,
+\end{equation}
+where
+\begin{equation}
+    \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x_0, k)}{\mathcal{R(\vec{k})}}
+\end{equation}
+is the transfer function and $P_\mathcal{R}(k)$ is the primordial power spectrum given by
+\begin{equation}
+    \frac{k^3}{2\pi^2} P_\mathcal{R} (k) = \mathcal{A}\ped{S}\left( \frac{k}{k\ped{p}}\right)^{n\ped{S}-1},
+\end{equation}
+$n\ped{S}$ being the spectral index and $\mathcal{A}\ped{S}$ the primordial amplitude.
+
+
+Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
+
+
+% Using~\cref{mil3:theo:eq:temp_multipole_and_source_func}, we find that 
+% \begin{equation}
+%     C(\ell) = 
+% \end{equation}
+
+
+\sendhelp
+
+
+
+\textcolor{blue}{blah blah blah intro something}
+
+
+We begin by expanding the temperature perturbation $\Theta(t, \vec{x}, \hat{\vec{p}})$ into spherical harmonics,
+i.e.
+\begin{equation}
+    \Theta(t, \dots) = \sum_{\ell=1}^{\infty} \sum_{m=-\ell}^{\ell} a_{\ell m}(t, \vec{x}) Y_{\ell m} (\hat{\vec{p}}).
+\end{equation}
+The orthogonality of the spherical harmonics $Y_{\ell m}$ gives
+\begin{equation}
+    a_{\ell m} = \int \dOmg[p] Y^*_{\ell m} (\hat{\vec{p}}) \Theta(t, \vec{x}, \hat{\vec{p}}),
+\end{equation}
+where $d\varOmega_{\hat{\vec{p}}} = \diff \theta + \sin^2{\theta}\diff \phi$ is the solid angle of $\hat{\vec{p}}$. \textcolor{orange}{(Or something like that---needs to be checked!)} Further expanding into Fourier modes and multipoles:
+\begin{equation}
+\begin{split}
+    a_{\ell m} = \int \dOmg[p] Y^*_{\ell m} (\hat{\vec{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \hat{\vec{p}}) 
+\end{split}
+\end{equation}
+
+
+\subsubsection{Source function - line-of-sight integration}
+    The temperature source function $\St(x,k)$ can be written as the sum of four terms,
+    \begin{equation}\label{mil4:theo:eq:source_function_four_terms}
+        \St(x,k) = \text{(SW)} + \text{(ISW)} + \text{(Doppler)} + \text{(quadrupole)}.
+    \end{equation}
+    The first term---the Sachs-Wolfe term---is the main contribution to the source function and is given by
+    \begin{equation}
+        \text{(SW)} = \gt(x) \left[\Theta_0(x,k) + \Psi(x,k) + \frac{1}{4}\Theta_2(x,k) \right].
+    \end{equation}
+    The term originates in the gravitational redshifting of CMB photons as they propagate through the gravitational field.
+
+    The Integrated Sachs-Wolfe effect %shows up in the second term in~\cref{mil4:theo:eq:source_function_four_terms}
+    \begin{equation}
+        \text{(ISW)} = \eu[-\tau(x)] \left[ \dv{\Psi(x,k)}{x}-  \dv{\Phi(x,k)}{x} \right]
+    \end{equation}
+    arises from the time-dependent nature of the gravitational potential.
+
+    The Doppler effect due to our galaxy's motion relative to the CMB rest frame contributes to the source function in the form of
+    \begin{equation}
+        \text{(Doppler)} = - \frac{1}{ck} \dv{}{x} \left[\Hp(x) \gt(x) u\ped{b}(x,k) \right].
+    \end{equation}
+
+    The smallest contribution is the quadrupole term 
+    \begin{equation}
+        \text{(quadrupole)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right).
+    \end{equation}
