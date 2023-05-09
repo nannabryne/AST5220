@@ -308,6 +308,24 @@ def Milestone3():
 
 
 
+'''
+****************************************
+MILESTONE IV: CMB & MATTER POWER SPECTRA
+****************************************
+'''
+
+def Milestone4():
+
+    import plotsrc_milestone_four as PLOT4
+
+    # INSERT CODE HERE WHEN FINISED
+
+
+
+
+
+
+
 if __name__ == "__main__":
 
 
@@ -316,7 +334,7 @@ if __name__ == "__main__":
 
     milestoneI, milestoneII, milestoneIII, milestoneIV = False, False, False, False 
 
-    milestoneIII = True
+    milestoneIV = True
 
     if milestoneI:
         Milestone1()
@@ -324,6 +342,8 @@ if __name__ == "__main__":
         Milestone2()
     if milestoneIII:
         Milestone3()
+    if milestoneIV:
+        Milestone4()
     
     plt.show()
 

@@ -25,7 +25,7 @@ class PowerSpectrum {
     // Parameters defining the primordial power-spectrum
     double A_s        = 2.1e-9; // primordial amplitude
     double n_s        = 0.965;  // spectral index
-    double kpivot_mpc = 0.05;   // fidducial scale
+    double kpivot_mpc = 0.05;   // fiducial scale
 
     // The k-values we compute Theta_ell(k) etc. for
     const int n_k      = 100;
@@ -79,15 +79,21 @@ class PowerSpectrum {
     // General method to solve for Cells (allowing for cross-correlations)
     // For auto spectrum (C_TT) then call with f_ell = g_ell = Theta_ell
     // For polarization C_TE call with f_ell = Theta_ell and g_ell = ThetaE_ell
-    Vector solve_for_cell(
-        Vector & logk_array,
+    Vector solve_for_Cell(
+        Vector & log_k_array,
         std::vector<Spline> & f_ell, 
         std::vector<Spline> & g_ell);
 
     // Splines with the power-spectra
-    Spline cell_TT_spline{"cell_TT_spline"};
-    Spline cell_TE_spline{"cell_TE_spline"};
-    Spline cell_EE_spline{"cell_EE_spline"};
+    Spline Cell_TT_spline{"Cell_TT_spline"};
+    Spline Cell_TE_spline{"Cell_TE_spline"};
+    Spline Cell_EE_spline{"Cell_EE_spline"};
+
+
+    double integrate_trapezodial(std::function<double(double)> &F, double z_start, double z_stop, const double dz);
+
+    double integrate_trapezodial(std::function<double(double)> &F, Vector z_array);
+
 
   public:
 
@@ -111,9 +117,11 @@ class PowerSpectrum {
     double get_matter_power_spectrum(const double x, const double k_mpc) const;
 
     // Get the quantities we have computed
-    double get_cell_TT(const double ell) const;
-    double get_cell_TE(const double ell) const;
-    double get_cell_EE(const double ell) const;
+    double get_Cell_TT(const double ell) const;
+    double get_Cell_TE(const double ell) const;
+    double get_Cell_EE(const double ell) const;
+
+    double get_Dell(const double ell) const;
 
     // Output Cells in units of l(l+1)/2pi (muK)^2
     void output(std::string filename) const;

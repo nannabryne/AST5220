@@ -51,7 +51,7 @@ OBJ3 = perturbations
 OBJ4 = powerspectrum
 OBJ0 = main utils spline ODESolver
 
-OBJS_ = main.o utils.o backgroundcosmology.o recombinationhistory.o perturbations.o spline.o ODESolver.o
+OBJS_ = main.o utils.o backgroundcosmology.o recombinationhistory.o perturbations.o powerspectrum.o spline.o ODESolver.o
 OBJS = $(addprefix $(BUILD_DIR)/, $(OBJS_))
 
 main.o					: backgroundcosmology.h
@@ -112,3 +112,6 @@ plots2:
 
 plots3:
 	cd plotting && python3 milestone_three.py
+
+plots4:
+	cd plotting && python3 milestone_four.py

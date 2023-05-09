@@ -3,6 +3,7 @@
 #include "supernovafitting.h"
 #include "recombinationhistory.h"
 #include "perturbations.h"
+#include "powerspectrum.h"
 
 
 
@@ -60,8 +61,9 @@ int main(int narg, char **argv){
     
     // Run which milestones?
     bool milestone1 = false;
-    bool milestone2 = true;
-    bool milestone3 = true;
+    bool milestone2 = false;
+    bool milestone3 = false;
+    bool milestone4 = true;
 
     //  ----------------------
     //  Milestone I
@@ -129,6 +131,26 @@ int main(int narg, char **argv){
         kvalue = 0.1 / Constants.Mpc;
         pert.output(kvalue, "perturbations_k0.1.txt");
 
+
+    }
+
+    //  ----------------------
+    //  Milestone IV
+    //  ----------------------
+
+    if(milestone4){
+
+        BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+        cosmo.solve(false, 1e5);
+        RecombinationHistory rec(&cosmo, Yp);
+        rec.solve(false, 1e5, 1e5, 1e5);
+        Perturbations pert(&cosmo, &rec);
+        pert.solve();
+
+
+        PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
+        power.solve();
+        power.output("cells.txt");
 
     }
 

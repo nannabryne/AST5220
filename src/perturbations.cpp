@@ -496,7 +496,7 @@ void Perturbations::compute_source_functions(){
   }
 
   // Spline the source functions
-  ST_spline.create (x_array, k_array, ST_array, "Source_Temp_x_k");
+  ST_spline.create(x_array, k_array, ST_array, "Source_Temp_x_k");
 }
 
 
