@@ -18,21 +18,21 @@ Perturbations::Perturbations(
 //  ----------------------------------
 
 
-void Perturbations::solve(){
+void Perturbations::solve(int nsteps_x_perturbations, int npts_x_source, int npts_k_perturbations, int npts_k_source){
 
   //  integrate all the perturbation equation and spline the result:
   Utils::StartTiming("integrateperturbation");
-  integrate_perturbations();
+  integrate_perturbations(nsteps_x_perturbations, npts_k_perturbations);
   Utils::EndTiming("integrateperturbation");
 
   //  compute source functions and spline the result:
   Utils::StartTiming("source");
-  compute_source_functions();
+  compute_source_functions(npts_x_source, npts_k_source);
   Utils::EndTiming("source");
 }
 
 
-void Perturbations::integrate_perturbations(){
+void Perturbations::integrate_perturbations(int nsteps_x, int npts_k){
 
 
   const gsl_odeiv2_step_type * stepper = gsl_odeiv2_step_rk4;
@@ -41,9 +41,10 @@ void Perturbations::integrate_perturbations(){
   const double relerr = 1e-8;
 
   //  set up k-array for the k's we are to integrate over:
+  const int n_k = npts_k;
   Vector k_array = exp(Utils::linspace(log(k_min), log(k_max), n_k));
   
-
+  const int n_x = nsteps_x + 1;
   Vector x_array = Utils::linspace(x_start, x_end, n_x);
 
   // // create helper splines:
@@ -73,7 +74,7 @@ void Perturbations::integrate_perturbations(){
 
 
   //  loop over all wavenumbers:   
-  #pragma omp parallel for //schedule(dynamic, 1)
+  #pragma omp parallel for schedule(dynamic, 1)
   for(int ik=0; ik<n_k; ik++){
 
     // //  progress bar... (remove to improve performance)
@@ -415,7 +416,10 @@ double Perturbations::get_tight_coupling_time(const double k) const{
 
 
 
-void Perturbations::compute_source_functions(){
+void Perturbations::compute_source_functions(int npts_x, int npts_k){
+
+  const int n_k = npts_k;
+  const int n_x = npts_x;
   
   Vector k_array = exp(Utils::linspace(log(k_min), log(k_max), n_k));
   Vector x_array = Utils::linspace(x_start, x_end, n_x);

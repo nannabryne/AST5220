@@ -94,7 +94,7 @@ void PowerSpectrum::generate_bessel_function_splines(){
   const int n_z = (int)((z_end - z_start)/dz);
   Vector z_array = Utils::linspace(z_start, z_end, n_z);
 
-
+  // #pragma omp parallel for schedule(dynamic, 1)
   for(size_t iell = 0; iell < ells.size(); iell++){
     const int ell = ells[iell];
 
@@ -135,7 +135,7 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
 
   //  For each k, solve the LOS integral for all the ell values
 
-  #pragma omp parallel for
+  #pragma omp parallel for schedule(dynamic, 1)
   for(size_t ik=0; ik<k_array.size(); ik++){
 
     double k = k_array[ik];
@@ -228,23 +228,9 @@ Vector PowerSpectrum::solve_for_Cell(
       return std::pow(k, n_s-1.) * f_ell_spline[iell](k)*g_ell_spline[iell](k);
     };
 
-    // double sum = 0;
-    // double k = k_min;
-
-    // sum += 0.5 * F(log(k));
-
-    // for(int ik=1; ik<n_k-1; ik++){
-    //   sum += F(log_k_array[ik]);
-    // }
-
-    // k = k_max;
-    // sum += 0.5*F(log(k));
-    // sum *= fac;
-
     result[iell] = fac*integrate_trapezodial(F, log_k_array);
     
   }
-  
 
   return result;
 }
@@ -272,23 +258,10 @@ double PowerSpectrum::integrate_trapezodial(std::function<double(double)> &F, do
 
 double PowerSpectrum::integrate_trapezodial(std::function<double(double)> &F, Vector z_array){
 
-  double sum = 0;
   const int nz = z_array.size();
   const double dz = z_array[1] - z_array[0];
-  
-  double z = z_array[0];
-  sum += 0.5 * F(z);
 
-  for(int iz=1; iz<nz-1; iz++){
-    z = z_array[iz];
-    sum += F(z);
-
-  }
-
-  z = z_array[nz-1];
-  sum += 0.5*F(z);
-
-  return sum*dz;
+  return integrate_trapezodial(F, z_array[0], z_array[nz-1], dz);
 
 }
 

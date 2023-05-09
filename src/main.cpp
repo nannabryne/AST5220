@@ -145,7 +145,7 @@ int main(int narg, char **argv){
         RecombinationHistory rec(&cosmo, Yp);
         rec.solve(false, 1e5, 1e5, 1e5);
         Perturbations pert(&cosmo, &rec);
-        pert.solve();
+        pert.solve(5e3, 5e3, 100, 100);
 
 
         PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);

@@ -25,7 +25,7 @@ class Perturbations{
     const double k_max   = Constants.k_max; // maximum wavenumber k
     
     // Start and end of the time-integration
-    const int n_x        = int(5e4)+1;    // #points in x-array
+    const int n_x        = int(1e4)+1;    // #points in x-array
     const double x_start = -20.;          // start of x-array
     const double x_end   = 0.;            // end of x-array
 
@@ -113,18 +113,18 @@ class Perturbations{
 
     /**
      * @brief Integrate perturbation equations and spline the result.
+     * @param nsteps_x number of steps to integrate over
+     * @param npts_k number of k-values
     */
-    void integrate_perturbations();
-    
-    //==========================================================
-    // [4] Compute source functions from the result
-    //==========================================================
+    void integrate_perturbations(int nsteps_x=1e4, int npts_k=100);
     
 
     /**
      * @brief Compute source function St(x,k) and spline result.
+     * @param npts_x number of x-values
+     * @param npts_k number of k-values
     */
-    void compute_source_functions();
+    void compute_source_functions(int npts_x=1e4+1, int npts_k=100);
 
     /**
      * @brief Expression for gravitational potential Ψ(x,k).
@@ -191,8 +191,12 @@ class Perturbations{
 
     /**
      * @brief Do all the solving.
+     * @param nsteps_x_perturbations number of steps in x-integration of perturbations
+     * @param npts_k_perturbations number of points in k-array for which to integrate perturbations
+     * @param npts_x_source number of points in x-array for which to compute source function
+     * @param npts_k_source number of points in k-array for which to compute source function
     */
-    void solve();
+    void solve(int nsteps_x_perturbations=1e4, int npts_x_source=1e4+1, int npts_k_perturbations=100, int npts_k_source=100);
 
 
     // >> get-methods:
