@@ -125,6 +125,7 @@ class PowerSpectrum {
 
     // Output Cells in units of l(l+1)/2pi (muK)^2
     void output(std::string filename) const;
+    void output(int ell, std::string filename) const;
 };
 
 #endif

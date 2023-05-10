@@ -80,8 +80,12 @@ all: $(BUILD_DIR)/$(TARGETS)
 run: 
 	./$(BUILD_DIR)/$(TARGETS) $(ARGS)
 
+
+# Command to build and run in one go (temporary)
+cmb: all run
+
 # Command to clean, build and run in one go (temporary)
-autorun: clean all run
+cleanrun: clean all run
 
 # Command to link
 $(BUILD_DIR)/cmb: $(OBJS)

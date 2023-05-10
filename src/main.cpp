@@ -152,6 +152,12 @@ int main(int narg, char **argv){
         power.solve();
         power.output("cells.txt");
 
+        int ellvalue;
+        ellvalue = 2;
+        power.output(ellvalue, "power_something_ell2.txt");
+        ellvalue = 6;
+        power.output(ellvalue, "power_something_ell6.txt");
+
     }
 
    
