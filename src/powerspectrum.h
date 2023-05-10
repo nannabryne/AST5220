@@ -124,8 +124,10 @@ class PowerSpectrum {
     double get_Dell(const double ell) const;
 
     // Output Cells in units of l(l+1)/2pi (muK)^2
-    void output(std::string filename) const;
-    void output(int ell, std::string filename) const;
+    void output(const std::string filename) const;
+    // void output(int ell, std::string filename) const;
+
+    void output(const std::string filename, std::vector<int> & for_ells);
 };
 
 #endif

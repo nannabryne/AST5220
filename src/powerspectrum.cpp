@@ -282,6 +282,8 @@ double PowerSpectrum::get_matter_power_spectrum(const double x, const double k_m
   // // ...
   // // ...
   // ...
+
+
   double P_R = A_s * pow( k_mpc/kpivot_mpc, n_s-1.) * 2*M_PI*M_PI/ (k_mpc*k_mpc*k_mpc);
   // double P_of_k = DeltaM*DeltaM * primordial_power_spectrum(k) * 2*M_PI*M_PI /(k*k*k);
   double P_of_k = DeltaM*DeltaM * P_R;
@@ -306,7 +308,7 @@ double PowerSpectrum::get_Dell(const double ell) const{
 // Output the Cells to file
 //====================================================
 
-void PowerSpectrum::output(std::string filename) const{
+void PowerSpectrum::output(const std::string filename) const{
 
   // Output in standard units of muK^2
   std::ofstream fp(OUTPUT_PATH + filename.c_str());
@@ -331,33 +333,47 @@ void PowerSpectrum::output(std::string filename) const{
   };
   std::for_each(ellvalues.begin(), ellvalues.end(), print_data);
 
-
 }
 
 
-void PowerSpectrum::output(int ell, std::string filename) const{
-  const int ell_target = ell;
-  int ellval, ellidx;
-  int diff = 1000;
-  int curr_diff, curr_ell;
-  for(int iell=0; iell<ells.size(); iell++){
-    curr_ell = ells[iell];
-    curr_diff = abs(curr_ell - ell_target);
-    if(curr_diff == 0){
-      ellval = ell_target;
-      ellidx = iell;
-      break;
+
+void PowerSpectrum::output(const std::string filename, 
+std::vector<int> & for_ells){
+
+  const int n_ells = for_ells.size();
+  std::vector<int> ell_values(n_ells);
+  std::vector<int> ell_indices(n_ells);
+
+
+  for(int i=0; i<n_ells; i++){
+    const int ell_target = for_ells[i];
+    int ellval=ells[ells.size()-1], ellidx=ells.size()-1;
+    int diff = 100;
+    int curr_diff, curr_ell;
+
+    for(int iell=0; iell<ells.size(); iell++){
+      curr_ell = ells[iell];
+      curr_diff = abs(curr_ell - ell_target);
+      if(curr_diff == 0){
+        ellval = ell_target;
+        ellidx = iell;
+        break;
+      }
+      else if(curr_diff < diff){
+        diff = curr_diff;
+        ellval = curr_ell;
+        ellidx = iell;
+      }
     }
-    else if(curr_diff < diff){
-      diff = curr_diff;
-      ellval = curr_ell;
-      ellidx = iell;
+    ell_values[i] = ellval;
+    ell_indices[i] = ellidx;
+    if(ellval != ell_target){
+      std::cout << "The value of ell that was requested," << ell_target << ", does not exist in 'ells'-array. Using ell = " << ellval << " instead." << std::endl; 
     }
-  }
-  if(ellval != ell_target){
-    std::cout << "The value of ell that was requested does not exist in 'ells'-array. Using ell = " << ellval << " instead." << std::endl; 
+
   }
 
+  for_ells = ell_values;
 
   std::ofstream fp(OUTPUT_PATH + filename.c_str());
 
@@ -375,12 +391,74 @@ void PowerSpectrum::output(int ell, std::string filename) const{
 
     fp << k_mpc/cosmo->get_h()                  << " ";
     fp << get_matter_power_spectrum(0, k_mpc)   << " ";
-    fp << ThetaT_ell_of_k_spline[ellidx](k_SI)  << " ";
+    for(int i=0; i<n_ells; i++){
+      fp << ThetaT_ell_of_k_spline[ell_indices[i]](k_SI)  << " ";
+    }
     fp << "\n";
   };
   std::for_each(k_array.begin(), k_array.end(), print_data);
 
 
 }
+
+
+
+
+
+
+
+// void PowerSpectrum::output(int ell, std::string filename) const{
+//   const int ell_target = ell;
+//   int ellval, ellidx;
+//   int diff = 1000;
+//   int curr_diff, curr_ell;
+//   for(int iell=0; iell<ells.size(); iell++){
+//     curr_ell = ells[iell];
+//     curr_diff = abs(curr_ell - ell_target);
+//     if(curr_diff == 0){
+//       ellval = ell_target;
+//       ellidx = iell;
+//       break;
+//     }
+//     else if(curr_diff < diff){
+//       diff = curr_diff;
+//       ellval = curr_ell;
+//       ellidx = iell;
+//     }
+//   }
+//   if(ellval != ell_target){
+//     std::cout << "The value of ell that was requested does not exist in 'ells'-array. Using ell = " << ellval << " instead." << std::endl; 
+//   }
+
+
+//   std::ofstream fp(OUTPUT_PATH + filename.c_str());
+
+//   const int npts = 5000;
+//   const double Mpc = Constants.Mpc;
+//   const double Mpc_inv = 1./Mpc;
+
+//   auto log_k_array = Utils::linspace(log(k_min), log(k_max), npts);
+//   auto k_array = exp(log_k_array);
+
+//   auto print_data = [&] (const double k) {
+
+//     double k_SI = k;
+//     double k_mpc = k_SI*Mpc;
+
+//     fp << k_mpc/cosmo->get_h()                  << " ";
+//     fp << get_matter_power_spectrum(0, k_mpc)   << " ";
+//     fp << ThetaT_ell_of_k_spline[ellidx](k_SI)  << " ";
+//     fp << "\n";
+//   };
+//   std::for_each(k_array.begin(), k_array.end(), print_data);
+
+
+// }
+
+
+
+
+
+
 
 

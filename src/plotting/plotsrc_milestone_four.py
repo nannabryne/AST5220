@@ -4,3 +4,118 @@ SET_SUBDIR("milestone4")
 tex = LaTeX()
 
 
+k_axis_label = tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" )
+
+klims0 = (8e-4, 6e-1)
+k_axis_label = tex("k/h" + tex.unit("[" + tex.inv("Mpc")+"]") )
+klims0 = (0.001, 0.1)
+
+
+def TransferFunction_old(df, savefig=True):
+    k = df["k"]
+    df = df.drop("k", 1)
+
+    fig1, ax1 = plt.subplots()
+
+    '''
+    labels: as in pert-plots!!
+    '''
+
+    for ell in list(df.columns):
+        ax1.plot(k, df[ell], alpha=.6, label=tex(tex.Theta + tex.ped(ell)))
+
+    ax1.set_ylim(-0.012, 0.012)
+
+
+    fig2, ax2 = plt.subplots()
+
+    for ell in list(df.columns):
+        ax2.plot(k, df[ell]*df[ell]/k, alpha=.6, label=tex(tex.Theta + tex.ped(ell) + "^2" +  "/k"))
+
+    ax2.set_ylim(0, 2e-3)
+
+    
+    for ax in [ax1, ax2]:
+        # ax.set_xscale("log")
+        ax.set_xlabel(k_axis_label)
+        ax.set_xlim(klims0)
+        ax.legend()
+    
+
+
+def TransferFunction(df, savefig=True):
+    k = df["k"]
+    df = df.drop("k", 1)
+
+    fig, axes = plt.subplots(figsize=(10,7), nrows=2, sharex=True)
+
+    '''
+    labels: as in pert-plots!!
+    '''
+
+    c = ColourCycles()
+
+    ax1, ax2 = axes.flat
+
+    Theta_kw = dict(alpha=.7, lw=1.8)
+    for i, ell in enumerate(list(df.columns)):
+        ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
+        ax2.plot(k, df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
+
+    ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
+    ax1.legend(**legend_box_kw)
+
+    ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" +  "/k"), **Theta_kw)
+    ax2.legend(**legend_box_kw)
+
+
+    ax1.set_ylim(-0.012, 0.012)
+    ax2.set_ylim(0, 2e-3)
+
+    ax2.set_xlabel(k_axis_label)
+    ax2.set_xlim(klims0)
+
+    
+    # for ax in [ax1, ax2]:
+    #     # ax.set_xscale("log")
+    #     # ax.set_xlabel(k_axis_label)
+    #     # ax.set_xlim(klims0)
+    #     ax.legend()
+    
+    if savefig:
+        save("Theta_ell")
+    
+
+
+
+
+    
+
+def CMBPowerSpectrum(df, savefig=True):
+    fig, ax = plt.subplots()
+
+    ax.plot(df["ell"], df["D_ell"], label=tex("D_\ell"))
+
+    ax.set_xlabel(tex(tex.ell))
+    ax.set_ylabel(tex(tex.unit("\mu K" + "^2") ))
+    
+    ax.set_xscale("log")
+
+    ax.legend()
+
+
+
+
+def MatterPowerSpectrum(df, savefig=True):
+    fig, ax = plt.subplots()
+
+    ax.plot(df["k"], df["P"], label=tex("P"))
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+
+    ax.set_xlabel(tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" ))
+    ax.set_xlabel(k_axis_label)
+    ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
+
+    ax.legend()
+    

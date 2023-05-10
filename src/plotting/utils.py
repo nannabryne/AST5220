@@ -65,6 +65,7 @@ class LaTeX:
         self.x = r"$x$"
         self.eta = r"$\eta$"
         self.tau = r"$\tau$"
+        self.ell = r"$\ell$"
 
         self.X_e = r"X_e"
         self.Y_p = r"Y_p"
@@ -129,6 +130,8 @@ overplot_kw = dict(color="darkslategrey", ls="-.", alpha=.5, lw=2.2)
 f_of_x_kw =     dict(color="royalblue",   alpha=.9)
 dfdx_of_x_kw =  dict(color="forestgreen", alpha=.7, lw=1.4)
 ddfdxx_of_x_kw =dict(color="dodgerblue",  alpha=.7, lw=1.4)
+
+legend_box_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
 
 
 

@@ -85,7 +85,7 @@ run:
 cmb: all run
 
 # Command to clean, build and run in one go (temporary)
-cleanrun: clean all run
+restart: clean all run
 
 # Command to link
 $(BUILD_DIR)/cmb: $(OBJS)
