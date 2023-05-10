@@ -34,8 +34,16 @@ df_transfer = pd.DataFrame(dict(k=power_data[:,0], **Theta_dict))
 
 
 
-PLOT.TransferFunction(df_transfer)
-PLOT.CMBPowerSpectrum(df_Dell)
-PLOT.MatterPowerSpectrum(df_power)
+Planck_data = read_ASCII("planck_low_ell_TT.txt")
+
+df_Planck = pd.DataFrame(dict(ell=Planck_data[:,0], 
+                              D_ell=Planck_data[:,1],
+                              err_up=Planck_data[:,2],
+                              err_down=Planck_data[:,3]))
+
+
+# PLOT.TransferFunction(df_transfer)
+PLOT.CMBPowerSpectrum(df_Dell, df_Planck)
+# PLOT.MatterPowerSpectrum(df_power)
 
 plt.show()

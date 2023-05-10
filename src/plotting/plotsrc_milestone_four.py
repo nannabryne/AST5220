@@ -8,7 +8,9 @@ k_axis_label = tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" )
 
 klims0 = (8e-4, 6e-1)
 k_axis_label = tex("k/h" + tex.unit("[" + tex.inv("Mpc")+"]") )
-klims0 = (0.001, 0.1)
+klims0 = (0.001, 0.08)
+
+k_eq = 0.0115/0.67
 
 
 
@@ -89,14 +91,14 @@ def TransferFunction(df, savefig=True):
     ax2.legend(**legend_box_kw)
 
 
-    ax1.set_ylim(-0.012, 0.012)
+    ax1.set_ylim(-0.009, 0.009)
     ax2.set_ylim(0, 2e-3)
 
     ax2.set_xlabel(k_axis_label)
     # ax2.set_xlim(klims0)
 
     ax1.set_xlim(klims0)
-    ax2.set_xlim(klims0[0], klims0[1]/2.)
+    ax2.set_xlim(klims0)#[0], klims0[1]/2.)
 
     
     for ax in [ax1, ax2]:
@@ -116,10 +118,18 @@ def TransferFunction(df, savefig=True):
 
     
 
-def CMBPowerSpectrum(df, savefig=True):
+def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots()
 
-    ax.plot(df["ell"], df["D_ell"], label=tex("D_\ell"))
+    c = ColourCycles()
+
+    ax.plot(df["ell"], df["D_ell"], c=c[4], label=tex("\mathcal{D}_\ell"))
+
+    err = np.zeros((2,len(df_obs["ell"])))
+    err[0] = df_obs["err_up"]
+    err[1] = df_obs["err_down"]
+    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, color=c[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
+
 
     ax.set_xlabel(tex(tex.ell))
     ax.set_ylabel(tex(tex.unit("\mu K" + "^2") ))
@@ -137,6 +147,8 @@ def CMBPowerSpectrum(df, savefig=True):
 def MatterPowerSpectrum(df, savefig=True):
     fig, ax = plt.subplots()
 
+    
+
     ax.plot(df["k"], df["P"], label=tex("P"))
     ax.set_xscale("log")
     ax.set_yscale("log")
@@ -144,6 +156,8 @@ def MatterPowerSpectrum(df, savefig=True):
     ax.set_xlabel(tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" ))
     ax.set_xlabel(k_axis_label)
     ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
+
+    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq"))])
 
     ax.legend()
 
