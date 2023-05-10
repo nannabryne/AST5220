@@ -11,6 +11,22 @@ k_axis_label = tex("k/h" + tex.unit("[" + tex.inv("Mpc")+"]") )
 klims0 = (0.001, 0.1)
 
 
+
+def __set_ell_label(fig, handles, ell_list, loc="center right"):
+
+    ell_labels = [f"{ell:.0f}" for ell in ell_list]
+    ell_title = tex("\ell = ")
+
+    fig.legend(handles=handles, labels=ell_labels, title=ell_title, 
+               loc=loc, ncols=len(ell_labels)+1, alignment="left", title_fontsize=16,
+               handlelength=.8, fontsize=16, labelspacing=.3, columnspacing=.8, handletextpad=.4, 
+               frameon=False)
+
+
+
+
+
+
 def TransferFunction_old(df, savefig=True):
     k = df["k"]
     df = df.drop("k", 1)
@@ -47,20 +63,24 @@ def TransferFunction(df, savefig=True):
     k = df["k"]
     df = df.drop("k", 1)
 
-    fig, axes = plt.subplots(figsize=(10,7), nrows=2, sharex=True)
+    fig, axes = plt.subplots(figsize=(10,8), nrows=2, sharex=False)
 
     '''
     labels: as in pert-plots!!
     '''
 
     c = ColourCycles()
+    ell_handles = []
+    ell_list = []
 
     ax1, ax2 = axes.flat
 
     Theta_kw = dict(alpha=.7, lw=1.8)
     for i, ell in enumerate(list(df.columns)):
-        ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
+        line, = ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
         ax2.plot(k, df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
+        ell_handles.append(line)
+        ell_list.append(int(ell))
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
     ax1.legend(**legend_box_kw)
@@ -73,14 +93,19 @@ def TransferFunction(df, savefig=True):
     ax2.set_ylim(0, 2e-3)
 
     ax2.set_xlabel(k_axis_label)
-    ax2.set_xlim(klims0)
+    # ax2.set_xlim(klims0)
+
+    ax1.set_xlim(klims0)
+    ax2.set_xlim(klims0[0], klims0[1]/2.)
 
     
-    # for ax in [ax1, ax2]:
-    #     # ax.set_xscale("log")
-    #     # ax.set_xlabel(k_axis_label)
-    #     # ax.set_xlim(klims0)
-    #     ax.legend()
+    for ax in [ax1, ax2]:
+        # ax.set_xscale("log")
+        # ax.set_xlabel(k_axis_label)
+        # ax.set_xlim(klims0)
+        ax.legend(**legend_box_kw)
+
+    __set_ell_label(fig, ell_handles, ell_list)
     
     if savefig:
         save("Theta_ell")
@@ -103,6 +128,9 @@ def CMBPowerSpectrum(df, savefig=True):
 
     ax.legend()
 
+    if savefig:
+        save("CMB_power_spectrum")
+
 
 
 
@@ -118,4 +146,7 @@ def MatterPowerSpectrum(df, savefig=True):
     ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
 
     ax.legend()
+
+    if savefig:
+        save("matter_power_spectrum")
     
