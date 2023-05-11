@@ -13,6 +13,11 @@ klims0 = (0.001, 0.08)
 k_eq = 0.0115/0.67
 
 
+# ["#ffa500","#5d00ff", "#ef495e"]
+
+ColourCMB = ColourCycles() + "#ffa500"
+ColourMatter = ColourCycles() + "#5d00ff"
+
 
 def __set_ell_label(fig, handles, ell_list, loc="center right"):
 
@@ -121,14 +126,13 @@ def TransferFunction(df, savefig=True):
 def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots()
 
-    c = ColourCycles()
 
-    ax.plot(df["ell"], df["D_ell"], c=c[4], label=tex("\mathcal{D}_\ell"))
+    ax.plot(df["ell"], df["D_ell"], c=ColourCMB[-1], label=tex("\mathcal{D}_\ell"))
 
     err = np.zeros((2,len(df_obs["ell"])))
-    err[0] = df_obs["err_up"]
-    err[1] = df_obs["err_down"]
-    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, color=c[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
+    err[0] = df_obs["err_down"]
+    err[1] = df_obs["err_up"]
+    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
 
 
     ax.set_xlabel(tex(tex.ell))
@@ -145,19 +149,21 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
 def MatterPowerSpectrum(df, savefig=True):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10,4))
 
     
-
-    ax.plot(df["k"], df["P"], label=tex("P"))
+    
+    ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
     ax.set_xscale("log")
     ax.set_yscale("log")
+
+    # ax.set_xlim(8e-5, 4e-1)
 
     ax.set_xlabel(tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" ))
     ax.set_xlabel(k_axis_label)
     ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
 
-    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq"))])
+    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") + "/h")])
 
     ax.legend()
 

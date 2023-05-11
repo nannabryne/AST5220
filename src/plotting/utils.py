@@ -244,6 +244,10 @@ class ColourCycles:
     def __call__(self):
         return self.colours
     
+    def __add__(self, colour):
+        self.colours.append(colour)
+        return self
+    
 
 
 

@@ -44,6 +44,6 @@ df_Planck = pd.DataFrame(dict(ell=Planck_data[:,0],
 
 # PLOT.TransferFunction(df_transfer)
 PLOT.CMBPowerSpectrum(df_Dell, df_Planck)
-# PLOT.MatterPowerSpectrum(df_power)
+PLOT.MatterPowerSpectrum(df_power)
 
 plt.show()
