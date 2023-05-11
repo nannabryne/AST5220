@@ -13,10 +13,16 @@ klims0 = (0.001, 0.08)
 k_eq = 0.0115/0.67
 
 
+
 # ["#ffa500","#5d00ff", "#ef495e"]
+
 
 ColourCMB = ColourCycles() + "#ffa500"
 ColourMatter = ColourCycles() + "#5d00ff"
+
+err_kws = dict(color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
+
+
 
 
 def __set_ell_label(fig, handles, ell_list, loc="center right"):
@@ -132,7 +138,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     err = np.zeros((2,len(df_obs["ell"])))
     err[0] = df_obs["err_down"]
     err[1] = df_obs["err_up"]
-    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
+    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, **err_kws)
 
 
     ax.set_xlabel(tex(tex.ell))
@@ -148,12 +154,17 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
 
-def MatterPowerSpectrum(df, savefig=True):
+def MatterPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots(figsize=(10,4))
 
     
     
     ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
+
+    err = np.zeros((2,len(df_obs["k"])))
+    err[0] = df_obs["err_down"]
+    err[1] = df_obs["err_up"]
+    ax.errorbar(df_obs["k"], df_obs["P"], err, **err_kws)
     ax.set_xscale("log")
     ax.set_yscale("log")
 

@@ -25,9 +25,9 @@ PowerSpectrum::PowerSpectrum(
 void PowerSpectrum::solve(){
 
   //  choose range of k's and the resolution to compute Theta_ell(k)
-  double n_sampling = 32;
-  double dk = 2.*M_PI/n_sampling * 1./cosmo->eta_of_x(0);
-  int n_k = ( k_max - k_min ) / dk + 1;
+  const double n_sampling = 32;
+  const double dk = 2.*M_PI/n_sampling * 1./cosmo->eta_of_x(0);
+  const int n_k = ( k_max - k_min ) / dk + 1;
 
   Vector log_k_array = Utils::linspace(log(k_min), log(k_max), n_k);
   Vector k_array = exp(log_k_array);
@@ -49,7 +49,52 @@ void PowerSpectrum::solve(){
   auto Cell_TT = solve_for_Cell(log_k_array, ThetaT_ell_of_k_spline, ThetaT_ell_of_k_spline);
   Cell_TT_spline.create(ells, Cell_TT, "Cell_TT_of_ell");
   Utils::EndTiming("C_ell");
+
+
+
+  // (temporary solution)
+  //  get the different contributions to Cell
+  Utils::StartTiming("C_ell_decomp");
+
+  // const int n_k        = k_array.size();
+  const int nells      = ells.size();
+  //  make storage for the splines we are to create:
   
+  Cell_decomp = std::vector<Spline>(4);
+
+  for(int term=1; term<=4; term++){
+
+    std::cout << term << "..." << std::endl;
+
+    tmp_ThetaT_ell_of_k_spline = std::vector<Spline>(nells);
+
+    // Function returning the source function:
+    std::function<double(double,double)> source_function_T = [&](double x, double k){
+      return pert->get_Source_T(x,k,term);
+    };
+
+    //  do the line of sight integration
+    Vector2D ThetaT_ell_of_k = line_of_sight_integration_single(k_array, source_function_T);
+
+    //  spline the result and store it in tmp_ThetaT_ell_of_k_spline
+    for(int iell=0; iell<nells; iell++){
+      tmp_ThetaT_ell_of_k_spline[iell].create(k_array, ThetaT_ell_of_k[iell], "idk");
+    }
+  
+    // solve for Cell:
+    auto Cell = solve_for_Cell(log_k_array, tmp_ThetaT_ell_of_k_spline, tmp_ThetaT_ell_of_k_spline);
+    Cell_decomp[term-1].create(ells, Cell, "idk");
+
+    std::cout  << "done!" << std::endl;
+
+
+  }
+
+  Utils::EndTiming("C_ell_decomp");
+
+
+  
+
 
 }
 
@@ -276,13 +321,15 @@ double PowerSpectrum::get_matter_power_spectrum(const double x, const double k_m
 
   double DeltaM = fac*fac * 2.* pert->get_Phi(x,k) * exp(x) / (3.*cosmo->get_OmegaM(0));
 
-  // double fac2 = 3*Hp/(c*k);
-  // double Deltab = pert->get_delta_b(x,k) - fac2 * pert->get_u_b(x,k);
-  // double Deltac = pert->get_delta_c(x,k) - fac2 * pert->get_u_c(x,k);
+  double fac2 = 3*Hp/(c*k);
+  double Deltab = pert->get_delta_b(x,k) - fac2 * pert->get_u_b(x,k);
+  double Deltac = pert->get_delta_c(x,k) - fac2 * pert->get_u_c(x,k);
+  // DeltaM = Deltab + Deltac;
+
+
   // // ...
   // // ...
   // ...
-
 
   double P_R = A_s * pow( k_mpc/kpivot_mpc, n_s-1.) * 2*M_PI*M_PI/ (k_mpc*k_mpc*k_mpc);
   // double P_of_k = DeltaM*DeltaM * primordial_power_spectrum(k) * 2*M_PI*M_PI /(k*k*k);
@@ -302,6 +349,13 @@ double PowerSpectrum::get_Dell(const double ell) const{
   double normfactor = (ell * (ell+1.)) / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
   return Cell_TT_spline(ell) * normfactor;
 }
+
+
+double PowerSpectrum::get_Dell_comp(const double ell, const int term) const{
+  double normfactor = (ell * (ell+1.)) / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
+  return Cell_decomp[term-1](ell) * normfactor;
+}
+
 
 
 //====================================================
@@ -324,11 +378,15 @@ void PowerSpectrum::output(const std::string filename) const{
     fp << ell                                 << " ";
     // fp << Cell_TT_spline( ell ) * normfactor  << " ";
     fp << get_Dell(ell)                       << " ";
+    // fp << get_Dell_comp(ell,1)                     << " ";
+    // fp << get_Dell_comp(ell,2)                     << " ";
+    // fp << get_Dell_comp(ell,3)                     << " ";
+    // fp << get_Dell_comp(ell,4)                     << " ";
 
-    if(Constants.polarization){
-      fp << Cell_EE_spline( ell ) * normfactor  << " ";
-      fp << Cell_TE_spline( ell ) * normfactor  << " ";
-    }
+    // if(Constants.polarization){
+    //   fp << Cell_EE_spline( ell ) * normfactor  << " ";
+    //   fp << Cell_TE_spline( ell ) * normfactor  << " ";
+    // }
     fp << "\n";
   };
   std::for_each(ellvalues.begin(), ellvalues.end(), print_data);

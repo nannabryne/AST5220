@@ -44,6 +44,13 @@ class Perturbations{
    
     // Splines of source functions (ST for temperature; SE for polarization)
     Spline2D ST_spline{"ST"};   // St spline
+
+    Spline2D ST_SW_spline{"ST_Sachs_Wolfe"};
+    Spline2D ST_ISW_spline{"ST_integrated_Sachs_Wolfe"};
+    Spline2D ST_Doppler_spline{"ST_Doppler"};
+    Spline2D ST_pol_spline{"ST_polarisation"};  //??????
+
+
     
     //  splines of multipole quantities:
     std::vector<Spline2D> Theta_spline;   //  Θ_ℓ spline, ℓ = 0, 1, 2
@@ -275,6 +282,8 @@ class Perturbations{
      * @return St(x,k)
     */
     double get_Source_T(const double x, const double k) const;
+
+    double get_Source_T(const double x, const double k, const int term) const;
 
 };
 
