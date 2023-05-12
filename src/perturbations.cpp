@@ -426,7 +426,14 @@ void Perturbations::compute_source_functions(int npts_x, int npts_k){
 
   // Make storage for the source functions (in 1D array to be able to pass it to the spline)
 
-  Vector ST_array(k_array.size() * x_array.size());   // temperature source
+  const int nn = n_k*n_x;
+
+  Vector ST_array(nn);   // temperature source
+
+  Vector SW_array(nn);
+  Vector ISW_array(nn);
+  Vector Doppler_array(nn);
+  Vector pol_array(nn);
 
   //  fetch constants and variables:
   const double c              = Constants.c;              // c
@@ -496,11 +503,25 @@ void Perturbations::compute_source_functions(int npts_x, int npts_k){
 
       // Temperature source
       ST_array[index] = SW_term + ISW_term + Doppler_term + pol_term;
+
+      SW_array[index]       = SW_term;
+      ISW_array[index]      = ISW_term;
+      Doppler_array[index]  = Doppler_term;
+      pol_array[index]      = pol_term;
+
     }
   }
 
   // Spline the source functions
   ST_spline.create(x_array, k_array, ST_array, "Source_Temp_x_k");
+
+  //  spline the different parts:
+  ST_SW_spline.create(x_array, k_array, SW_array, "Source_Temp_x_k_SW");
+  ST_ISW_spline.create(x_array, k_array, ISW_array, "Source_Temp_x_k_ISW");
+  ST_Doppler_spline.create(x_array, k_array, Doppler_array, "Source_Temp_x_k_Doppler");
+  ST_pol_spline.create(x_array, k_array, pol_array, "Source_Temp_x_k_polarisation");
+
+
 }
 
 
@@ -743,6 +764,20 @@ double Perturbations::get_Pi(const double x, const double k) const{
 double Perturbations::get_Source_T(const double x, const double k) const{
   return ST_spline(x,k);
 }
+double Perturbations::get_Source_T(const double x, const double k, const int term) const{
+  if(term==1)
+    return ST_SW_spline(x,k);
+  else if(term==2)
+    return ST_ISW_spline(x,k);
+  else if(term==3)
+    return ST_Doppler_spline(x,k);
+  else if(term==4)
+    return ST_pol_spline(x,k);
+  else
+    return ST_spline(x,k);
+}
+
+
 double Perturbations::get_Theta(const double x, const double k, const int ell) const{
   return Theta_spline[ell](x,k);
 }

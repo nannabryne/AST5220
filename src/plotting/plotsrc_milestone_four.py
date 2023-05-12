@@ -8,7 +8,20 @@ k_axis_label = tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" )
 
 klims0 = (8e-4, 6e-1)
 k_axis_label = tex("k/h" + tex.unit("[" + tex.inv("Mpc")+"]") )
-klims0 = (0.001, 0.1)
+klims0 = (0.001, 0.08)
+
+k_eq = 0.0115/0.67
+
+
+
+# ["#ffa500","#5d00ff", "#ef495e"]
+
+
+ColourCMB = ColourCycles() + "#fffb00" + "#ffa500"
+ColourMatter = ColourCycles() + "#5d00ff"
+
+err_kws = dict(color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
+
 
 
 
@@ -89,14 +102,14 @@ def TransferFunction(df, savefig=True):
     ax2.legend(**legend_box_kw)
 
 
-    ax1.set_ylim(-0.012, 0.012)
+    ax1.set_ylim(-0.009, 0.009)
     ax2.set_ylim(0, 2e-3)
 
     ax2.set_xlabel(k_axis_label)
     # ax2.set_xlim(klims0)
 
     ax1.set_xlim(klims0)
-    ax2.set_xlim(klims0[0], klims0[1]/2.)
+    ax2.set_xlim(klims0)#[0], klims0[1]/2.)
 
     
     for ax in [ax1, ax2]:
@@ -116,10 +129,28 @@ def TransferFunction(df, savefig=True):
 
     
 
-def CMBPowerSpectrum(df, savefig=True):
+def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots()
 
-    ax.plot(df["ell"], df["D_ell"], label=tex("D_\ell"))
+    main_kws = dict(c=ColourCMB[-1])
+    part_kws = dict(c=ColourCMB[-2], lw=1.8, alpha=.7)#, ls="--")
+
+    ax.plot(df["ell"], df["D_ell"], label=tex("\mathcal{D}_\ell"), **main_kws)
+    
+    ls_list = ["-", "--", "-.", ":"]
+    for i, part in enumerate(["SW","ISW","Doppler","pol"]):
+        ax.plot(df["ell"], df[f"D_ell_{part}"], label=tex("\mathcal{D}_\ell" + tex.ap(part)), ls=ls_list[i], **part_kws)
+
+    # ax.plot(df["ell"], df["D_ell_SW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_ISW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_Doppler"], label=tex("\mathcal{D}_\ell" + tex.ap("Doppler")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_pol"], label=tex("\mathcal{D}_\ell" + tex.ap("pol")), **part_kws)
+
+    err = np.zeros((2,len(df_obs["ell"])))
+    err[0] = df_obs["err_down"]
+    err[1] = df_obs["err_up"]
+    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, **err_kws)
+
 
     ax.set_xlabel(tex(tex.ell))
     ax.set_ylabel(tex(tex.unit("\mu K" + "^2") ))
@@ -134,16 +165,27 @@ def CMBPowerSpectrum(df, savefig=True):
 
 
 
-def MatterPowerSpectrum(df, savefig=True):
-    fig, ax = plt.subplots()
+def MatterPowerSpectrum(df, df_obs, savefig=True):
+    fig, ax = plt.subplots(figsize=(10,4))
 
-    ax.plot(df["k"], df["P"], label=tex("P"))
+    
+    
+    ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
+
+    err = np.zeros((2,len(df_obs["k"])))
+    err[0] = df_obs["err_down"]
+    err[1] = df_obs["err_up"]
+    ax.errorbar(df_obs["k"], df_obs["P"], err, **err_kws)
     ax.set_xscale("log")
     ax.set_yscale("log")
+
+    # ax.set_xlim(8e-5, 4e-1)
 
     ax.set_xlabel(tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" ))
     ax.set_xlabel(k_axis_label)
     ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
+
+    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") + "/h")])
 
     ax.legend()
 
