@@ -36,8 +36,10 @@ OPTIONS += -D_SPLINE_WARNINGS_ON#					show warnings if atempting to evaluate a s
 
 ifeq ($(strip $(PARALLEL)),yes)
 OPTIONS += -D_USEOPENMP
-CXX += -fopenmp
+# CXX +=-fopenmp
+CXX += -Xpreprocessor -fopenmp -lomp
 endif
+
 
 
 #	-	-	-	-	-	-	-	-	-	-	-	-
