@@ -519,7 +519,7 @@ void Perturbations::compute_source_functions(int npts_x, int npts_k){
   ST_SW_spline.create(x_array, k_array, SW_array, "Source_Temp_x_k_SW");
   ST_ISW_spline.create(x_array, k_array, ISW_array, "Source_Temp_x_k_ISW");
   ST_Doppler_spline.create(x_array, k_array, Doppler_array, "Source_Temp_x_k_Doppler");
-  ST_pol_spline.create(x_array, k_array, SW_array, "Source_Temp_x_k_SW");
+  ST_pol_spline.create(x_array, k_array, pol_array, "Source_Temp_x_k_polarisation");
 
 
 }

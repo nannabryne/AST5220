@@ -17,7 +17,7 @@ k_eq = 0.0115/0.67
 # ["#ffa500","#5d00ff", "#ef495e"]
 
 
-ColourCMB = ColourCycles() + "#ffa500"
+ColourCMB = ColourCycles() + "#fffb00" + "#ffa500"
 ColourMatter = ColourCycles() + "#5d00ff"
 
 err_kws = dict(color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
@@ -132,8 +132,19 @@ def TransferFunction(df, savefig=True):
 def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots()
 
+    main_kws = dict(c=ColourCMB[-1])
+    part_kws = dict(c=ColourCMB[-2], lw=1.8, alpha=.7)#, ls="--")
 
-    ax.plot(df["ell"], df["D_ell"], c=ColourCMB[-1], label=tex("\mathcal{D}_\ell"))
+    ax.plot(df["ell"], df["D_ell"], label=tex("\mathcal{D}_\ell"), **main_kws)
+    
+    ls_list = ["-", "--", "-.", ":"]
+    for i, part in enumerate(["SW","ISW","Doppler","pol"]):
+        ax.plot(df["ell"], df[f"D_ell_{part}"], label=tex("\mathcal{D}_\ell" + tex.ap(part)), ls=ls_list[i], **part_kws)
+
+    # ax.plot(df["ell"], df["D_ell_SW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_ISW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_Doppler"], label=tex("\mathcal{D}_\ell" + tex.ap("Doppler")), **part_kws)
+    # ax.plot(df["ell"], df["D_ell_pol"], label=tex("\mathcal{D}_\ell" + tex.ap("pol")), **part_kws)
 
     err = np.zeros((2,len(df_obs["ell"])))
     err[0] = df_obs["err_down"]

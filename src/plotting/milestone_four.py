@@ -9,9 +9,13 @@ tex = LaTeX()
 
 
 C_ell_data = read_ASCII("cells.txt")
-ell, Dell = C_ell_data[:,0], C_ell_data[:,1]
 
-df_Dell = pd.DataFrame(dict(ell=C_ell_data[:,0], D_ell=C_ell_data[:,1]))
+df_Dell = pd.DataFrame(dict(ell=C_ell_data[:,0], 
+                            D_ell=C_ell_data[:,1],
+                            D_ell_SW=C_ell_data[:,2],
+                            D_ell_ISW=C_ell_data[:,3],
+                            D_ell_Doppler=C_ell_data[:,4],
+                            D_ell_pol=C_ell_data[:,5]))
 
 
 
@@ -63,6 +67,6 @@ df_obs_matter["err_down"] = df_obs_matter["err_up"]
 
 # PLOT.TransferFunction(df_transfer)
 PLOT.CMBPowerSpectrum(df_Dell, df_obs_CMB)
-PLOT.MatterPowerSpectrum(df_power, df_obs_matter)
+# PLOT.MatterPowerSpectrum(df_power, df_obs_matter)
 
 plt.show()

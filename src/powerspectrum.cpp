@@ -371,17 +371,17 @@ void PowerSpectrum::output(const std::string filename) const{
   auto ellvalues = Utils::linspace(2, ellmax, ellmax-1);
 
   auto print_data = [&] (const double ell) {
-    double normfactor  = (ell * (ell+1)) / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
-    double normfactorN = (ell * (ell+1)) / (2.0 * M_PI) 
-      * pow(1e6 * cosmo->get_TCMB() *  pow(4.0/11.0, 1.0/3.0), 2);
-    double normfactorL = (ell * (ell+1)) * (ell * (ell+1)) / (2.0 * M_PI);
+    // double normfactor  = (ell * (ell+1)) / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
+    // double normfactorN = (ell * (ell+1)) / (2.0 * M_PI) 
+    //   * pow(1e6 * cosmo->get_TCMB() *  pow(4.0/11.0, 1.0/3.0), 2);
+    // double normfactorL = (ell * (ell+1)) * (ell * (ell+1)) / (2.0 * M_PI);
     fp << ell                                 << " ";
     // fp << Cell_TT_spline( ell ) * normfactor  << " ";
     fp << get_Dell(ell)                       << " ";
-    // fp << get_Dell_comp(ell,1)                     << " ";
-    // fp << get_Dell_comp(ell,2)                     << " ";
-    // fp << get_Dell_comp(ell,3)                     << " ";
-    // fp << get_Dell_comp(ell,4)                     << " ";
+    fp << get_Dell_comp(ell,1)                     << " ";
+    fp << get_Dell_comp(ell,2)                     << " ";
+    fp << get_Dell_comp(ell,3)                     << " ";
+    fp << get_Dell_comp(ell,4)                     << " ";
 
     // if(Constants.polarization){
     //   fp << Cell_EE_spline( ell ) * normfactor  << " ";

@@ -59,22 +59,32 @@ Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
 \textcolor{blue}{blah blah blah intro something}
 
 
-We begin by expanding the temperature perturbation $\Theta(t, \vec{x}, \hat{\vec{p}})$ into spherical harmonics,
-i.e.
+We begin by expanding the temperature perturbation $\Theta(t, \vec{x}, \vec{\hat{p}})$ into spherical harmonics, i.e.
 \begin{equation}
-    \Theta(t, \dots) = \sum_{\ell=1}^{\infty} \sum_{m=-\ell}^{\ell} a_{\ell m}(t, \vec{x}) Y_{\ell m} (\hat{\vec{p}}).
+    \Theta(t, \dots) = \sum_{\ell=1}^{\infty} \sum_{m=-\ell}^{\ell} a_{\ell m}(t, \vec{x}) Y_{\ell m} (\vec{\hat{p}})
 \end{equation}
-The orthogonality of the spherical harmonics $Y_{\ell m}$ gives
+The orthogonality of the spherical harmonics $Y_{\ell m}$\footnote{$\int \dOmg[n] Y\ellm(\vec{\hat{n}}) Y\ellmp^*(\vec{\hat{n}}) = \deltasym{\ell \ell'} \deltasym{m m'} $.} gives the coefficients
 \begin{equation}
-    a_{\ell m} = \int \dOmg[p] Y^*_{\ell m} (\hat{\vec{p}}) \Theta(t, \vec{x}, \hat{\vec{p}}),
+    a\ellm = a\ellm(t,\vec{x}) = \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \Theta(t, \vec{x}, \vec{\hat{p}}),
 \end{equation}
-where $d\varOmega_{\hat{\vec{p}}} = \diff \theta \sin{\theta}\diff \phi$ is the infinitesimal solid angle element of $\hat{\vec{p}}$. \textcolor{orange}{(Or something like that---needs to be checked!)} Further expanding into Fourier modes and multipoles:
+where $d\varOmega_{\vec{\hat{p}}} = \sin{\vartheta} \diff \vartheta\diff \varphi$ is the infinitesimal solid angle element of $\vec{\hat{p}} = (\vartheta, \varphi)$. Further expanding into Fourier modes and multipoles:
 \begin{equation}
 \begin{split}
-    a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\hat{\vec{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \hat{\vec{p}})  \\
-    &= \int \dOmg[p] Y^*_{\ell m} (\hat{\vec{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{{\ell=1}}^{\infty} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, k)
+    a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \vec{\hat{p}})  \\
+    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{{\ell=1}}^{\infty} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, k)
 \end{split}
 \end{equation}
+In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{k}/k$ to let $\Theta(x,\vec{k}, \vec{\hat{p}}) \to\Theta(x,k,\mu) $.
+
+
+To calculate the \textit{angular} correlation function $\langle a\ellm a^*\ellmp \rangle$, we need the \textcolor{blue}{two-point correlation function $\langle \Theta() \Theta^*()\rangle$} 
+% \begin{equation}
+% \begin{split}
+%     a\ellm a\ellmp = 
+% \end{split}
+% \end{equation}
+
+
 
 
 
