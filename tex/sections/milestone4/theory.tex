@@ -54,8 +54,25 @@ Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
 
 \sendhelp
 
+\subsubsection{power spectra, priomordial blah blah}
+    We revisit the curvature perturbation $\mathcal{R}(\vec{k})$ immediately after inflation, that which determines the initial conditions for each Fourier mode. During the generation of fluctuations, there should be no preferred position nor direction in space, resulting in statistical homogeneity and isotropy of said fluctuations. We let $\avg{\cdot}$ denote the statistical expectation value over many realisations of the universe. Thus, the primordial power spectrum $P_\mathcal{R}(k)$ is given by
+    \begin{equation}
+        k^3 \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} = 2\pi^2P_\mathcal{R}(k).
+    \end{equation}
+    Further, we assume fluctuations to be gaussian. The perturbations are adiabatic and their averages vanish. Now, the power spectrum of perturbation variable $\hat{f}$ is the convolution \textcolor{blue}{(check this)} between initial power spectrum and the deterministic transfer function $f^2$:
+    \begin{equation}
+    \begin{split}
+        k^3\avg{ \hat{f}(t,\vec{k}) \hat{f}^\ast (t,\vec{k'})} &= 2\pi^2 \deltafunc{\vec{k}-\vec{k'}} P_f (x,k) \\
+        P_f(x,k) &= f^2(x,k) P_\mathcal{R}(k)
+    \end{split}
+    \end{equation}
 
 
+
+    Recall: $d^3k = k^2 \dx{k} \dOmg[k]$
+
+
+\subsubsection{SOMETHING TITLE PHOTON I GUESS}
 \textcolor{blue}{blah blah blah intro something}
 
 
@@ -71,7 +88,7 @@ where $d\varOmega_{\vec{\hat{p}}} = \sin{\vartheta} \diff \vartheta\diff \varphi
 \begin{equation}
 \begin{split}
     a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \vec{\hat{p}})  \\
-    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{{\ell=1}}^{\infty} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, \vec{k})
+    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{\ell} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, \vec{k})
 \end{split}
 \end{equation}
 In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{k}/k$ to let $\Theta(x,\vec{k}, \vec{\hat{p}}) \to\Theta(x,\vec{k},\mu) $.
