@@ -71,13 +71,33 @@ where $d\varOmega_{\vec{\hat{p}}} = \sin{\vartheta} \diff \vartheta\diff \varphi
 \begin{equation}
 \begin{split}
     a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \vec{\hat{p}})  \\
-    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{{\ell=1}}^{\infty} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, k)
+    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{{\ell=1}}^{\infty} \frac{2\ell + 1}{\im^\ell} \mathcal{P}_\ell(\mu) \Theta_\ell(x, \vec{k})
 \end{split}
 \end{equation}
-In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{k}/k$ to let $\Theta(x,\vec{k}, \vec{\hat{p}}) \to\Theta(x,k,\mu) $.
+In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{k}/k$ to let $\Theta(x,\vec{k}, \vec{\hat{p}}) \to\Theta(x,\vec{k},\mu) $.
 
 
 To calculate the \textit{angular} correlation function $\langle a\ellm a^*\ellmp \rangle$, we need the \textcolor{blue}{two-point correlation function $\langle \Theta() \Theta^*()\rangle$} 
+
+
+
+We reintroduce the curvature perturbation $\mathcal{R}(\vec{k})$ by letting $\Theta_\ell(x,\vec{k}) \to \Theta_\ell(x,k) \mathcal{R}(\vec{k})$ in the equations above, where $\Theta_\ell(x, k)$ are the perturbations we computed in~\cref{sec:mil3}. To find the ensamble average $\langle a\ellm a^*\ellmp \rangle = C(\ell) \deltasym{\ell \ell'} \deltasym{mm'}$, we can factor out everything except for that which depends on the initial amplitude of a mode. Now, with our substitution, we get the only relevant average distrubution:
+%let $\langle \dot \rangle$ denote the average o
+\begin{equation}
+\begin{split}
+    \langle \Theta_\ell(x,\vec{k}) \Theta_\ell^*(x,\vec{k'})\rangle \to& \Theta_\ell(x,k) \Theta_\ell^*(x,k') \langle \mathcal{R}(\vec{k}) \mathcal{R}^*(\vec{k'}) \rangle \\
+    &=  \Theta_\ell(x,k) \Theta_\ell^*(x,k')(2\pi)^3 \deltafunc{\vec{k}-\vec{k'}} P_\mathcal{R}(k) \\
+    &= (2\pi)^3 \abs{\Theta_\ell(x,k)}^2 P_\mathcal{R}(k) 
+\end{split}
+\end{equation}
+We can write the monster as
+\begin{equation}
+\begin{split}
+    \langle a\ellm a^*\ellmp \rangle =& \sum_{\ell_1 \ell_2} (2\ell_1 +1) (2\ell_2 +1) \int \frac{d^3k}{(2\pi)^3} \int \frac{d^3k'}{(2\pi)^3}\eu[\im (\vec{k}-\vec{k'})\cdot \vec{x}] \\
+    &\int \dOmg[p] \int \dOmg[p'] Y_{\ell m}^*(\vec{\hat{p}}) Y_{\ell' m'}(\vec{\hat{p}'}) \mathcal{P}_{\ell_1}(\mu)\mathcal{P}_{\ell_2}(\mu') P_\mathcal{R}(\vec{k})
+\end{split}
+\end{equation}
+
 % \begin{equation}
 % \begin{split}
 %     a\ellm a\ellmp = 
