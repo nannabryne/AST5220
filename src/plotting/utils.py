@@ -235,6 +235,9 @@ class ColourCycles:
     def derivatives(self):
         self.colours = ["royalblue", "forestgreen", "dodgerblue"]
 
+    def miscellaneous(self):
+        self.colours = ["cornflowerblue", "orangered", "crimson", "lightseagreen", "darkslateblue", "peru"]
+
     def set_cycle(self, ax):
         ax.set_prop_cycle(cycler("color", self.colours))
 
@@ -321,58 +324,5 @@ def plot_colours():
     plt.show()
 
 # plot_colours()
-
-
-
-
-
-""" not ready to delete this """
-
-
-
-
-
-# background = "#313332"
-# face = background
-# title_font = "MathJax_SansSerif"
-
-
-# # reset_matplotlib()
-#STIX MathJax SansSerif
-
-# title_font = fm.FontProperties(["sans-serif"])
-
-# title_props = {"fontweight":"bold", "fontsize":22, "fontfamily":"cursive"}
-
-# sns.set_style("darkgrid", {"axes.facecolor": face})
-# matplotlib.rcParams["figure.figsize"] = (10,6)
-
-# plt.rcParams["mathtext.fontset"] = "stix"
-# plt.rcParams["font.family"] = "sans-serif"#"STIXGeneral"
-# plt.rcParams["font.serif"] = ["Times New Roman"]#"STIXGeneral"
-# plt.rcParams["text.usetex"] = True
-# plt.rcParams["savefig.bbox"] = "tight"
-# plt.rcParams["figure.autolayout"] = True
-
-
-# plt.rc("axes", **{"titlesize":24, "labelsize":16, "titlelocation":"left", "titleweight":"bold"})
-# plt.rc("figure", autolayout=True)
-# plt.rc("lines", linewidth=2)
-
-# sns.set(rc={'figure.figsize':(12, 6), "lines.linewidth":2.2}, font_scale=1.1, font="sans-serif")
-# #FIXME
-# colors = [
-#     sns.color_palette('husl')[-3],
-#     sns.color_palette('husl')[-2],
-#     sns.color_palette('husl')[-1],
-#     'mediumorchid',
-#     sns.color_palette('deep')[-1],
-#     sns.color_palette('dark')[-1]
-# ]
-
-# plt.rc("axes", titlesize=18, labelsize=16, prop_cycle=cycler('color', colors), titlelocation="left", titleweight="bold")
-# plt.rc("axes", titlesize=18, labelsize=16, titlelocation="left", titleweight="bold")
-# plt.rc("legend", fontsize=14, shadow=True, fancybox=True)
-# plt.rc("figure", figsize=(10,6))
 
 

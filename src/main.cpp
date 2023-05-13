@@ -7,29 +7,13 @@
 
 
 
-void m1_MCMC(){
-    Utils::StartTiming("MCMC");
-    BackgroundCosmology new_cosmo = mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
-    std::cout << "\n\n";
-    Utils::EndTiming("MCMC");
-    std::cout << "\n\n";
+//  Functions to run extra time-demanding stuff:
 
-    new_cosmo.info();
-    new_cosmo.solve(false, 1e5);
-
-    new_cosmo.output("revised_background_cosmology.txt");
-}
+void m1_MCMC();
+void m2_Saha(BackgroundCosmology cosmo);
+void m4_decomp(PowerSpectrum power);
 
 
-void m2_Saha(BackgroundCosmology cosmo){
-    // Compare with solution using only Saha
-    RecombinationHistory rec_noPee(&cosmo, 0);
-    rec_noPee.set_Saha_limit(0.0);
-    rec_noPee.solve(false);
-
-    // Output recombination quantities
-    rec_noPee.output("recombination_Saha_only.txt");
-}
 
 
 
@@ -55,6 +39,8 @@ int main(int narg, char **argv){
     double n_s         = 0.965;
     double kpivot_mpc  = 0.05;
 
+
+
     // Print tables?
     bool print = false;
 
@@ -64,6 +50,10 @@ int main(int narg, char **argv){
     bool milestone2 = false;
     bool milestone3 = false;
     bool milestone4 = true;
+
+
+    Utils::StartTiming("CMB");
+
 
     //  ----------------------
     //  Milestone I
@@ -150,7 +140,7 @@ int main(int narg, char **argv){
 
         PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
         power.solve();
-        power.output("cells.txt");
+        power.output("dells.txt");
 
         std::vector<int> ellvalues{6, 100, 200, 500, 1000};
         power.output("power.txt", ellvalues);
@@ -159,10 +149,7 @@ int main(int narg, char **argv){
 
     }
 
-   
-
-
-
+    Utils::EndTiming("CMB");
 
     return 0;
 }
@@ -175,3 +162,37 @@ int main(int narg, char **argv){
 
 
 
+
+
+
+void m1_MCMC(){
+    Utils::StartTiming("MCMC");
+    BackgroundCosmology new_cosmo = mcmc_fit_to_supernova_data("supernovadata.txt", "mcmc_fitting.txt");
+    std::cout << "\n\n";
+    Utils::EndTiming("MCMC");
+    std::cout << "\n\n";
+
+    new_cosmo.info();
+    new_cosmo.solve(false, 1e5);
+
+    new_cosmo.output("revised_background_cosmology.txt");
+}
+
+
+void m2_Saha(BackgroundCosmology cosmo){
+    // Compare with solution using only Saha
+    RecombinationHistory rec_noPee(&cosmo, 0);
+    rec_noPee.set_Saha_limit(0.0);
+    rec_noPee.solve(false);
+
+    // Output recombination quantities
+    rec_noPee.output("recombination_Saha_only.txt");
+}
+
+
+void m4_decomp(PowerSpectrum power){
+    // Decompose Cell/Dell into different contributions
+    power.solve_decomposed();
+    power.output_decomposed("dells_decomp.txt");
+
+}

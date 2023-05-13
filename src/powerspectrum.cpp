@@ -51,8 +51,22 @@ void PowerSpectrum::solve(){
   Utils::EndTiming("C_ell");
 
 
+}
+
+
+
+void PowerSpectrum::solve_decomposed(){
 
   // (temporary solution)
+
+  //  choose range of k's and the resolution to compute Theta_ell(k)
+  const double n_sampling = 32;
+  const double dk = 2.*M_PI/n_sampling * 1./cosmo->eta_of_x(0);
+  const int n_k = ( k_max - k_min ) / dk + 1;
+
+  Vector log_k_array = Utils::linspace(log(k_min), log(k_max), n_k);
+  Vector k_array = exp(log_k_array);
+
   //  get the different contributions to Cell
   Utils::StartTiming("C_ell_decomp");
 
@@ -63,8 +77,6 @@ void PowerSpectrum::solve(){
   Cell_decomp = std::vector<Spline>(4);
 
   for(int term=1; term<=4; term++){
-
-    std::cout << term << "..." << std::endl;
 
     tmp_ThetaT_ell_of_k_spline = std::vector<Spline>(nells);
 
@@ -85,15 +97,10 @@ void PowerSpectrum::solve(){
     auto Cell = solve_for_Cell(log_k_array, tmp_ThetaT_ell_of_k_spline, tmp_ThetaT_ell_of_k_spline);
     Cell_decomp[term-1].create(ells, Cell, "idk");
 
-    std::cout  << "done!" << std::endl;
-
 
   }
 
   Utils::EndTiming("C_ell_decomp");
-
-
-  
 
 
 }
@@ -378,6 +385,35 @@ void PowerSpectrum::output(const std::string filename) const{
     fp << ell                                 << " ";
     // fp << Cell_TT_spline( ell ) * normfactor  << " ";
     fp << get_Dell(ell)                       << " ";
+
+    // if(Constants.polarization){
+    //   fp << Cell_EE_spline( ell ) * normfactor  << " ";
+    //   fp << Cell_TE_spline( ell ) * normfactor  << " ";
+    // }
+    fp << "\n";
+  };
+  std::for_each(ellvalues.begin(), ellvalues.end(), print_data);
+
+}
+
+
+
+void PowerSpectrum::output_decomposed(const std::string filename) const{
+
+  // Output in standard units of muK^2
+  std::ofstream fp(OUTPUT_PATH + filename.c_str());
+
+  const int ellmax = int(ells[ells.size()-1]);
+  auto ellvalues = Utils::linspace(2, ellmax, ellmax-1);
+
+  auto print_data = [&] (const double ell) {
+    // double normfactor  = (ell * (ell+1)) / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
+    // double normfactorN = (ell * (ell+1)) / (2.0 * M_PI) 
+    //   * pow(1e6 * cosmo->get_TCMB() *  pow(4.0/11.0, 1.0/3.0), 2);
+    // double normfactorL = (ell * (ell+1)) * (ell * (ell+1)) / (2.0 * M_PI);
+    fp << ell                                 << " ";
+    // fp << Cell_TT_spline( ell ) * normfactor  << " ";
+    fp << get_Dell(ell)                       << " ";
     fp << get_Dell_comp(ell,1)                     << " ";
     fp << get_Dell_comp(ell,2)                     << " ";
     fp << get_Dell_comp(ell,3)                     << " ";
@@ -392,6 +428,9 @@ void PowerSpectrum::output(const std::string filename) const{
   std::for_each(ellvalues.begin(), ellvalues.end(), print_data);
 
 }
+
+
+
 
 
 
@@ -461,57 +500,6 @@ std::vector<int> & for_ells){
 
 
 
-
-
-
-
-// void PowerSpectrum::output(int ell, std::string filename) const{
-//   const int ell_target = ell;
-//   int ellval, ellidx;
-//   int diff = 1000;
-//   int curr_diff, curr_ell;
-//   for(int iell=0; iell<ells.size(); iell++){
-//     curr_ell = ells[iell];
-//     curr_diff = abs(curr_ell - ell_target);
-//     if(curr_diff == 0){
-//       ellval = ell_target;
-//       ellidx = iell;
-//       break;
-//     }
-//     else if(curr_diff < diff){
-//       diff = curr_diff;
-//       ellval = curr_ell;
-//       ellidx = iell;
-//     }
-//   }
-//   if(ellval != ell_target){
-//     std::cout << "The value of ell that was requested does not exist in 'ells'-array. Using ell = " << ellval << " instead." << std::endl; 
-//   }
-
-
-//   std::ofstream fp(OUTPUT_PATH + filename.c_str());
-
-//   const int npts = 5000;
-//   const double Mpc = Constants.Mpc;
-//   const double Mpc_inv = 1./Mpc;
-
-//   auto log_k_array = Utils::linspace(log(k_min), log(k_max), npts);
-//   auto k_array = exp(log_k_array);
-
-//   auto print_data = [&] (const double k) {
-
-//     double k_SI = k;
-//     double k_mpc = k_SI*Mpc;
-
-//     fp << k_mpc/cosmo->get_h()                  << " ";
-//     fp << get_matter_power_spectrum(0, k_mpc)   << " ";
-//     fp << ThetaT_ell_of_k_spline[ellidx](k_SI)  << " ";
-//     fp << "\n";
-//   };
-//   std::for_each(k_array.begin(), k_array.end(), print_data);
-
-
-// }
 
 
 

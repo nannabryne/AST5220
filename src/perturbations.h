@@ -37,7 +37,6 @@ class Perturbations{
     Spline2D u_c_spline{"u_c"};           // u_c spline
     Spline2D u_b_spline{"u_b"};           // u_b spline
     Spline2D Phi_spline{"Phi"};           // Φ spline
-    // Spline2D Pi_spline{"Pi"};   
     Spline2D Psi_spline{"Psi"};           // Ψ spline
 
 

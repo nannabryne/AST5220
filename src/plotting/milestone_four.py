@@ -8,7 +8,7 @@ tex = LaTeX()
 
 
 
-C_ell_data = read_ASCII("cells.txt")
+C_ell_data = read_ASCII("dells_decomp.txt")
 
 df_Dell = pd.DataFrame(dict(ell=C_ell_data[:,0], 
                             D_ell=C_ell_data[:,1],
@@ -16,7 +16,6 @@ df_Dell = pd.DataFrame(dict(ell=C_ell_data[:,0],
                             D_ell_ISW=C_ell_data[:,3],
                             D_ell_Doppler=C_ell_data[:,4],
                             D_ell_pol=C_ell_data[:,5]))
-
 
 
 

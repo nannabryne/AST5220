@@ -120,6 +120,8 @@ class PowerSpectrum {
     // Do all the solving: bessel functions, LOS integration and then compute Cells
     void solve();
 
+    void solve_decomposed();
+
     // The dimensionless primordial power-spectrum Delta = 2pi^2/k^3 P(k)
     double primordial_power_spectrum(const double k) const;
 
@@ -139,7 +141,7 @@ class PowerSpectrum {
 
     // Output Cells in units of l(l+1)/2pi (muK)^2
     void output(const std::string filename) const;
-    // void output(int ell, std::string filename) const;
+    void output_decomposed(const std::string filename) const;
 
     void output(const std::string filename, std::vector<int> & for_ells);
 };
