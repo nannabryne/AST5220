@@ -135,11 +135,13 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     main_kws = dict(c=ColourCMB[-1])
     part_kws = dict(c=ColourCMB[-2], lw=1.8, alpha=.7)#, ls="--")
 
-    ax.plot(df["ell"], df["D_ell"], label=tex("\mathcal{D}_\ell"), **main_kws)
+    ell = df["ell"]
+
+    ax.plot(ell, df["D_ell"], label=tex("\mathcal{D}_\ell"), **main_kws)
     
     ls_list = ["-", "--", "-.", ":"]
     for i, part in enumerate(["SW","ISW","Doppler","pol"]):
-        ax.plot(df["ell"], df[f"D_ell_{part}"], label=tex("\mathcal{D}_\ell" + tex.ap(part)), ls=ls_list[i], **part_kws)
+        ax.plot(ell, df[f"D_ell_{part}"], label=tex("\mathcal{D}_\ell" + tex.ap(part)), ls=ls_list[i], **part_kws)
 
     # ax.plot(df["ell"], df["D_ell_SW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
     # ax.plot(df["ell"], df["D_ell_ISW"], label=tex("\mathcal{D}_\ell" + tex.ap("SW")), **part_kws)
@@ -150,6 +152,9 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     err[0] = df_obs["err_down"]
     err[1] = df_obs["err_up"]
     ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, **err_kws)
+
+    var = (np.sqrt(2/(2*ell+1))*df["D_ell"])
+    ax.fill_between(ell, df["D_ell"]-var, df["D_ell"]+var, color=ColourCMB[-2], alpha=.4)
 
 
     ax.set_xlabel(tex(tex.ell))

@@ -21,23 +21,23 @@ LIBS = -L$(HOME)/local/lib -lgsl -lgslcblas
 
 
 
-# # Precompiled headers
-# PCHS = spline.h.gch ODESolver.h.gch
-# $(BUILD_DIR)/%.h.gch: %.h
-# 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 #	-	-	-	-	-	-	-	-	-	-	-	-	
 # 	Options:
 #	-	-	-	-	-	-	-	-	-	-	-	-
 OPTIONS = 
 OPTIONS += -D_GLIBCXX_DEBUG# 						add bounds checking
-OPTIONS += -D_SPLINE_WARNINGS_ON#					show warnings if atempting to evaluate a spli ne out of bounds
+OPTIONS += -D_SPLINE_WARNINGS_ON#					show warnings if atempting to evaluate a spline out of bounds
 # OPTIONS += -D_FIDUCIAL_VERBOSE_ODE_SOLVER_TRUE #	show info about the solution as we integrate
 
 ifeq ($(strip $(PARALLEL)),yes)
 OPTIONS += -D_USEOPENMP
-# CXX +=-fopenmp
-CXX += -Xpreprocessor -fopenmp -lomp
+ifeq ($(shell uname -s),Darwin)
+	CXX += -Xpreprocessor -fopenmp 
+	LIBS += -lomp
+else
+	CXX += -fopenmp
+endif
 endif
 
 
