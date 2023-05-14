@@ -171,7 +171,7 @@ def LuminosityDistance(df_obs, df_pri, df_post, savefig=True):
     ax.set_xscale("log")
 
     z = df_obs["z"]
-    ax.errorbar(z, df_obs["dL"]/z, df_obs["err"]/z, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, label=tex("d_L"+ tex.ap("obs") + "/z"))
+    ax.errorbar(z, df_obs["dL"]/z, df_obs["err"]/z, label=tex("d_L"+ tex.ap("obs") + "/z"), **obs_err_kw)
     
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
@@ -187,7 +187,7 @@ def LuminosityDistance(df_obs, df_pri, df_post, savefig=True):
     ax.plot(z, df_post["dL"]/z, alpha=.7, c=COLOURS[5], label=r"$d_L/z$ (post MCMC) ")
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
-    ax.errorbar(z, df_obs["dL"]/z, df_obs["err"]/z, elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, c=COLOURS[0]) # overplot ...
+    ax.errorbar(z, df_obs["dL"]/z, df_obs["err"]/z, **obs_err_kw) # overplot ...
 
     ax.set_xlabel(r"$z$")
     ax.set_ylabel(r"Gpc")

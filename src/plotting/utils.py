@@ -134,6 +134,9 @@ ddfdxx_of_x_kw =dict(color="dodgerblue",  alpha=.7, lw=1.4)
 legend_box_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
 
 
+obs_err_kw    = dict(color="k", elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.4)
+
+
 
 def pinpoint_x(ax, x_list, x_label_list=None, colour="slategrey", style=":", width=.9, alpha=.5, top=False, tick=True, line=True):
     if x_label_list is None:

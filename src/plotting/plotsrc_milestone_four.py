@@ -24,9 +24,6 @@ k_eq = 0.0115/0.67
 
 
 
-err_kws = dict(color=ColourCMB[0], elinewidth=1.1, capsize=2, linestyle="", marker="o", ms=4, alpha=.7)
-
-
 
 
 def __set_ell_label(fig, handles, ell_list, loc="center right"):
@@ -41,6 +38,15 @@ def __set_ell_label(fig, handles, ell_list, loc="center right"):
 
 
 
+def __set_D_ell_part_label(fig, handles, ap="[comp]", loc="center right"):
+
+    comp_labels = [comp for comp in ["SW", "ISW", "Doppler", "pol"]]
+    comp_title = tex("\mathrm{%s}=" %ap)
+
+    fig.legend(handles=handles, labels=comp_labels, title=comp_title, 
+               loc=loc, ncols=len(comp_labels)+1, alignment="left", title_fontsize=16,
+               handlelength=.8, fontsize=16, labelspacing=.3, columnspacing=.8, handletextpad=.4, 
+               frameon=False)
 
 
 
@@ -141,21 +147,43 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
     ell = df["ell"]
 
-    ax.plot(ell, df["D_ell"], label=tex("\mathcal{D}_\ell"), **main_kws)
+
+    #   actual function:
+
+    ax.plot(ell, df["D_ell"], label=tex("\mathcal{D}"), **main_kws)
+
+    #   cosmic variance:
+
+    var = (np.sqrt( 2./(2.*ell+1.)) * df["D_ell"])
+    ax.fill_between(ell, df["D_ell"]-var, df["D_ell"]+var, color=ColourCMB[-2], alpha=.1, ec="darkslategrey")
     
+    #   components:
 
     c = ColourCycles("miscellaneous", ax)
     part_list = ["SW", "ISW", "Doppler", "pol"]
+    handles = []
     for i, part in enumerate(part_list):
-        ax.plot(ell, df[f"D_ell_{part}"], label=tex("\mathcal{D}_\ell" + tex.ap(part)), **part_kws)
+        line, = ax.plot(ell, df[f"D_ell_{part}"], **part_kws)
+        handles.append(line)
+
+
+    ax.plot(np.nan, np.nan, c="slategrey", label=tex("\mathcal{D}" + tex.ap("[comp]")), **part_kws)
+    __set_D_ell_part_label(fig, handles, loc=(0.14, 0.82))
+
+
+    #   observational data:
 
     err = np.zeros((2,len(df_obs["ell"])))
     err[0] = df_obs["err_down"]
     err[1] = df_obs["err_up"]
-    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, **err_kws)
+    ax.errorbar(df_obs["ell"], df_obs["D_ell"], err, label=tex("\mathcal{D}" + tex.ap("obs")), **obs_err_kw)
 
-    var = (np.sqrt(2/(2*ell+1))*df["D_ell"])
-    ax.fill_between(ell, df["D_ell"]-var, df["D_ell"]+var, color=ColourCMB[-2], alpha=.4)
+    #   actual function (again...):
+
+    ax.plot(ell, df["D_ell"], **main_kws)
+
+    
+    # ----------
 
 
     ax.set_xlabel(tex(tex.ell))
@@ -167,7 +195,6 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
     if savefig:
         save("CMB_power_spectrum")
-        print("saved?")
 
 
 
@@ -175,24 +202,34 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 def MatterPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots(figsize=(10,4))
 
-    
+
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+
+    # actual function:
     
     ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
+
+    # observational data:
 
     err = np.zeros((2,len(df_obs["k"])))
     err[0] = df_obs["err_down"]
     err[1] = df_obs["err_up"]
-    ax.errorbar(df_obs["k"], df_obs["P"], err, **err_kws)
-    ax.set_xscale("log")
-    ax.set_yscale("log")
+    ax.errorbar(df_obs["k"], df_obs["P"], err, label=tex("P" + tex.ap("obs")), **obs_err_kw)
+
+    # vertical lines:
+
+    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") + "/h")])
+
+    # --------
+
 
     # ax.set_xlim(8e-5, 4e-1)
 
     ax.set_xlabel(tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" ))
     ax.set_xlabel(k_axis_label)
     ax.set_ylabel(tex(tex.unit("h") + "^3" + tex.unit("Mpc") + "^{-3}"))
-
-    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") + "/h")])
+    
 
     ax.legend()
 
