@@ -8,6 +8,12 @@
 
 
 
+
+
+
+A small notational note: \dots
+
+
 \subsubsection{From quantum to classical field theory}
     \dots
 
@@ -22,45 +28,45 @@
     \end{equation}
 
 
-\please
+% \please
 
-The angular CMB power spectrum is given by
-\begin{equation}
-    C(\ell)= \frac{2}{\pi} \int \frac{d^3 k}{(2\pi)^2} P_P(k) \mathcal{T}_\ell^2 (k),
-\end{equation}
-where
-\begin{equation}
-    \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x\!=\!0, k)}{\mathcal{R(\vec{k})}}
-\end{equation}
-is the transfer function and $P_P(k)$ is the primordial power spectrum given by
-\begin{equation}
-    \frac{k^3}{2\pi^2} P_P (k) = A\ped{S}\left( \frac{k}{H_0}\right)^{n\ped{S}-1},
-\end{equation}
-$n\ped{S}$ being the spectral index (scalar perturbation).
-
-
-Define $\mathcal{D}_\ell \equiv \ell (\ell+1)/(2\pi) \cdot C(\ell) $.
-
-\sendhelp
-
-\please
-
-The angular CMB power spectrum is given by
-\begin{equation}
-    C(\ell)= \frac{2}{\pi} \int_0^\infty \dx{k} k^2 P_\mathcal{R}(k) \abs{\mathcal{T}_\ell (k)}^2,
-\end{equation}
-where
-\begin{equation}
-    \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x_0, k)}{\mathcal{R(\vec{k})}}
-\end{equation}
-is the transfer function and $P_\mathcal{R}(k)$ is the primordial power spectrum given by
-\begin{equation}
-    \frac{k^3}{2\pi^2} P_\mathcal{R} (k) = \mathcal{A}\ped{S}\left( \frac{k}{k\ped{p}}\right)^{n\ped{S}-1},
-\end{equation}
-$n\ped{S}$ being the spectral index and $\mathcal{A}\ped{S}$ the primordial amplitude.
+% The angular CMB power spectrum is given by
+% \begin{equation}
+%     C(\ell)= \frac{2}{\pi} \int \frac{d^3 k}{(2\pi)^2} P_P(k) \mathcal{T}_\ell^2 (k),
+% \end{equation}
+% where
+% \begin{equation}
+%     \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x\!=\!0, k)}{\mathcal{R(\vec{k})}}
+% \end{equation}
+% is the transfer function and $P_P(k)$ is the primordial power spectrum given by
+% \begin{equation}
+%     \frac{k^3}{2\pi^2} P_P (k) = A\ped{S}\left( \frac{k}{H_0}\right)^{n\ped{S}-1},
+% \end{equation}
+% $n\ped{S}$ being the spectral index (scalar perturbation).
 
 
-Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
+% Define $\mathcal{D}_\ell \equiv \ell (\ell+1)/(2\pi) \cdot C(\ell) $.
+
+% \sendhelp
+
+% \please
+
+% The angular CMB power spectrum is given by
+% \begin{equation}
+%     C(\ell)= \frac{2}{\pi} \int_0^\infty \dx{k} k^2 P_\mathcal{R}(k) \abs{\mathcal{T}_\ell (k)}^2,
+% \end{equation}
+% where
+% \begin{equation}
+%     \mathcal{T}_\ell(k) \equiv \frac{\Theta_\ell(x_0, k)}{\mathcal{R(\vec{k})}}
+% \end{equation}
+% is the transfer function and $P_\mathcal{R}(k)$ is the primordial power spectrum given by
+% \begin{equation}
+%     \frac{k^3}{2\pi^2} P_\mathcal{R} (k) = \mathcal{A}\ped{S}\left( \frac{k}{k\ped{p}}\right)^{n\ped{S}-1},
+% \end{equation}
+% $n\ped{S}$ being the spectral index and $\mathcal{A}\ped{S}$ the primordial amplitude.
+
+
+% Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
 
 
 % Using~\cref{mil3:theo:eq:temp_multipole_and_source_func}, we find that 
@@ -96,9 +102,13 @@ Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
 
 We begin by expanding the temperature perturbation $\Theta(t, \vec{x}, \vec{\hat{p}})$ into spherical harmonics, i.e.
 \begin{equation}
-    \Theta(t, \dots) = \sum_{\ell=1}^{\infty} \sum_{m=-\ell}^{\ell} a_{\ell m}(t, \vec{x}) Y_{\ell m} (\vec{\hat{p}})
+    \Theta(t, \vec{x}, \vec{\hat{p}}) = \sum_{\ell} \sum_{m=-\ell}^{\ell} a_{\ell m}(t, \vec{x}) Y_{\ell m} (\vec{\hat{p}}),
 \end{equation}
-The orthogonality of the spherical harmonics $Y_{\ell m}$\footnote{$\int \dOmg[n] Y\ellm(\vec{\hat{n}}) Y\ellmp^*(\vec{\hat{n}}) = \deltasym{\ell \ell'} \deltasym{m m'} $.} gives the coefficients
+where
+\begin{equation}
+    \avg{a\ellm a\ellmp^*} = \deltasym{\ell \ell'} \deltasym{m m'} C(\ell)
+\end{equation}
+defines the power spectrum $C(\ell)$ in this context. The orthogonality of the spherical harmonics $Y_{\ell m}$\footnote{$\int \dOmg[n] Y\ellm(\vec{\hat{n}}) Y\ellmp^*(\vec{\hat{n}}) = \deltasym{\ell \ell'} \deltasym{m m'} $.} gives the coefficients
 \begin{equation}
     a\ellm = a\ellm(t,\vec{x}) = \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \Theta(t, \vec{x}, \vec{\hat{p}}),
 \end{equation}
@@ -116,7 +126,7 @@ To calculate the \textit{angular} correlation function $\langle a\ellm a^*\ellmp
 
 
 
-We reintroduce the curvature perturbation $\mathcal{R}(\vec{k})$ by letting $\Theta_\ell(x,\vec{k}) \to \Theta_\ell(x,k) \mathcal{R}(\vec{k})$ in the equations above, where $\Theta_\ell(x, k)$ are the perturbations we computed in~\cref{sec:mil3}. To find the ensamble average $\langle a\ellm a^*\ellmp \rangle = C(\ell) \deltasym{\ell \ell'} \deltasym{mm'}$, we can factor out everything except for that which depends on the initial amplitude of a mode. Now, with our substitution, we get the only relevant average distrubution:
+We reintroduce the curvature perturbation $\mathcal{R}(\vec{k})$ by letting $\Theta_\ell(x,\vec{k}) \to \Theta_\ell(x,k) \mathcal{R}(\vec{k})$ in the equations above, where $\Theta_\ell(x, k)$ are the perturbations we computed in~\cref{sec:mil3}. To find the ensamble average $\langle a\ellm a^*\ellmp \rangle = C(\ell) \deltasym{\ell \ell'} \deltasym{mm'}$, we can factor out everything except for that which depends on the initial amplitude of a mode. Now, with our substitution, we get the only relevant average distribution:
 %let $\langle \dot \rangle$ denote the average o
 \begin{equation}
 \begin{split}
@@ -139,36 +149,64 @@ We can write the monster as
 % \end{split}
 % \end{equation}
 
+\noindent\dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots 
+
+Now, the angular CMB power spectrum is given by
+\begin{equation}\label{mil4:theo:eq:C_of_ell_final}
+    C(\ell) = 4\pi \int_0^{\infty} \dx{k} \frac{\abs{\Theta_\ell(0,k)}^2}{k} \Delta_\mathcal{R}^2(k),
+\end{equation}
+however, it is customary to present is in a scaled version $\mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} \TCMB^2 C(\ell)$.
+% \begin{equation}
+%     \mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} \TCMB^2 C(\ell)
+% \end{equation}
 
 
 
 
-\subsubsection{Source function---line-of-sight integration}
-    The temperature source function $\St(x,k)$ can be written as the sum of four terms,
-    \begin{equation}\label{mil4:theo:eq:source_function_four_terms}
-        \St(x,k) = \text{(SW)} + \text{(ISW)} + \text{(Doppler)} + \text{(quadrupole)}.
+
+\subsubsection{Source function}
+    The line-of-sight integral that gives the photon temperature multipoles $\Theta_\ell(0,k)$ can be written
+    \begin{equation}\label{mil4:theo:eq:los_integration}
+    \begin{split}
+        \Theta_\ell (0, k) &= \int_{-\infty}^{0} \dx{x} \St(x,k) j_\ell(k\left[\eta_0 -\eta(x)\right]) \\
+        &\simeq  \int_{\lesssim x_*}^{0} \dx{x} \St(x,k) j_\ell(k\left[\eta_0 -\eta(x)\right]),
+    \end{split}
     \end{equation}
-    The first term---the Sachs-Wolfe term---is the main contribution to the source function and is given by
+    since (as we will see) $\St(x,k)$ vanishes before decoupling. The temperature source function $\St(x,k)$ can be written as the sum of four terms,
+    \begin{equation}\label{mil4:theo:eq:source_function_four_terms}
+        \St(x,k) = \text{(SW)} + \text{(ISW)} + \text{(Doppler)} + \text{(pol)}.
+    \end{equation}
+    We will break this expression down, term by term. 
+
+    \begin{subequations}\label{mil4:theo:eq:source_terms}
+    The first term---the Sachs-Wolfe term---is the predominant contribution to the source functions and is given by
     \begin{equation}
         \text{(SW)} = \gt(x) \left[\Theta_0(x,k) + \Psi(x,k) + \frac{1}{4}\Theta_2(x,k) \right].
     \end{equation}
-    The term originates in the gravitational redshifting of CMB photons as they propagate through the gravitational field.
+    The term originates in the gravitational redshifting of CMB photons at the surface of last scattering. For the largest scales ($\ell \lesssim 20$), the corresponding contribution to the CMB anisotropy, $C(\ell)^\mathrm{SW}$, to plateau---hence the name ``Sachs-Wolfe plateau''.
 
-    The Integrated Sachs-Wolfe effect %shows up in the second term in~\cref{mil4:theo:eq:source_function_four_terms}
+    Also due to gravitational redshift is the integrated Sachs-Wolfe effect,
     \begin{equation}
-        \text{(ISW)} = \eu[-\tau(x)] \left[ \dv{\Psi(x,k)}{x}-  \dv{\Phi(x,k)}{x} \right]
+        \text{(ISW)} = \eu[-\tau(x)] \left[ \dv{\Psi(x,k)}{x}-  \dv{\Phi(x,k)}{x} \right].
     \end{equation}
-    arises from the time-dependent nature of the gravitational potential.
+    It occurs between the last scatting surface and us, thus not relevant in the primordial CMB. The phenomenon arises when there is a time dependence in the gravitational potentials. Hence, in the era dominated by normal matter, this effect vanishes (there is little or no evolution to the gravitational wells and hills). We therefore speak of two sides to this effect---before and after matter domination. Following the generation of the primordial CMB, by courtesy of the (non-integrated) SW effect, the ``early-time'' ISW take immediate effect. As with the presence of radiation, dark energy affects the expansion of the universe and disturbs the gravitational potential. We expect to see the ``late-time'' ISW affecting the large-modes that entered (and enters) the horizon after matter-dark energy equality.
 
-    The Doppler effect due to our galaxy's motion relative to the CMB rest frame contributes to the source function in the form of
+    The Doppler effect due to our galaxy's peculiar motion relative to the CMB rest frame contributes to the source function in the form of
     \begin{equation}
         \text{(Doppler)} = - \frac{1}{ck} \dv{}{x} \left[\Hp(x) \gt(x) u\ped{b}(x,k) \right].
     \end{equation}
+    The shifted frequency and apparent deflection of the CMB photons distort $a\ellm$ at all $\ell$s.
 
     The smallest contribution is the quadrupole term 
     \begin{equation}
-        \text{(quadrupole)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right).
+        \text{(pol)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right).
     \end{equation}
+    \end{subequations}
+
+
+    \dots \dots \dots
+
+    
 
 
 

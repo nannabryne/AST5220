@@ -7,9 +7,40 @@
 
 
 
-% \begin{equation}\label{mil4:imp:eq:trapezodial_uniform}
+% \begin{equation}\label{mil4:imp:eq:trapezoidal_uniform}
 %     \int_{a}^{b} \dx{z} f(z) \approx \Delta z \left( \sum_{j=1}^{N-1}f(z_j) + \frac{f(z_0) + f(z_{N})}{2} \right)\,; \quad \Delta z= \frac{b-a}{N}
 % \end{equation}
-\begin{equation}\label{mil4:imp:eq:trapezodial_uniform}
-    \int_{z_0}^{z_N} \dx{z} f(z) \approx \Delta z \left( \sum_{j=1}^{N-1}f(z_j) + \frac{f(z_0) + f(z_{N})}{2} \right)\,; \quad \Delta z= \frac{z_N-z_0}{N}
+
+We wrote a \verb|C++| code that uses the class objects from the previous sections and three additional parameters; primordial amplitude $\mathcal{A}\ped{S}$, spectral index $n\ped{S}$ and pivot scale $k\ped{p}$. We used the following fiducial values:
+\begin{equation}
+\begin{split}
+    \mathcal{A}\ped{S}  &=  2.1\cross 10^{-9}   \\
+    n\ped{S}            &=  0.965               \\
+    k\ped{p}            &=  0.05\unit{Mpc^{-1}}
+\end{split}
 \end{equation}
+
+
+There were three main computations to this problem: the work of finding $j_\ell(z)$, where $z= k(\eta_0-\eta(x))$, and $\Theta_\ell(0,k)$ for a set of $\ell$s, then computing (and interpolating) $C(\ell)$.
+% for $\ell=2,3, \dots,\ell\ped{MAX}$, where $\ell\ped{MAX}=2000$ is where we stop the line-of-sight integration from \textcolor{blue}{(ref to sec.!)}. 
+We do not solve any differential equations, but rather use the very powerful trapezoidal rule to evaluate our integrals. For a fixed step size $\Delta z$, this rule takes the simple form
+\begin{equation}\label{mil4:imp:eq:trapezoidal_uniform}
+    \int_{z_0}^{z_N} \dx{z} f(z) \approx \Delta z \left( \sum_{j=1}^{N-1}f(z_j) + \frac{f(z_0) + f(z_{N})}{2} \right)\,; \quad N= \frac{z_N-z_0}{\Delta z}.
+\end{equation}
+
+
+In preparation of the necessary computations, we chose a set of $\ell$s, call it $L$, for which to perform the line-of-sight integration. We let $L\subset \mathcal{L}\equiv \{\,2,\,3,\, \dots,\,  \ell\ped{MAX}\,\}$ be a clever choice of a number of integers\footnote{63, to be exact.} $\ell\in \mathcal{L}$. The resolution in the subdomain $L$ needs to be such that oscillatory information is not lost in going from $C(\ell\in L)\to C(\ell\in\mathcal{L})$. We let $\ell\ped{MAX}=2000 \in L$ be the highest multipole we consider. 
+
+% GSL: "http://www.gnu.org/software/gsl/"
+% BESSEL FUNCTIONS
+To generate the spherical Bessel functions, we utilised the functionalities of the GNU Scientific Library (GSL). We loop through $\ell \in L$ and, for each iteration, collected the $j_\ell(z)$'s from GSL for $z=0,\,\Delta z,\, 2\Delta z,\, \dots,\, k\ped{max}\eta_0$, where $\Delta z = 2\pi/n\ped{samp}$. To properly sample the oscillations, we used $n\ped{samp}=20$. 
+
+% LOS INTEGRATION
+For the computation of $\Theta_\ell(0,k)$, we designed a grid of $\ell$, $k$ and $x$-values. Naturally, we considered $\ell \in L$. The resolution for $k\in [k\ped{min},\,k\ped{max}]$ will be addressed shortly. The integration in~\cref{mil4:theo:eq:los_integration} was started from $x=-8.3$ with step size $\Delta x= 2\pi/n\ped{samp}$ in~\cref{mil4:imp:eq:trapezoidal_uniform}. This time we used $n\ped{samp}=500$. 
+
+% C(\ell) COMPUTATION
+We solved~\cref{mil4:theo:eq:C_of_ell_final} for $C(\ell\in L)$ using the trapezoidal rule in~\cref{mil4:imp:eq:trapezoidal_uniform} with $z\to\ln{k}$. That is, we solved
+\begin{equation}
+    C(\ell) = 4\pi \int_{\ln{k\ped{min}}}^{\ln{k\ped{max}}} \dx{\ln{k}} \abs{\Theta_\ell(0,k)}^2 \Delta_\mathcal{R}^2(k)
+\end{equation}
+with a fixed step size $\Delta\!\ln{k}$. \textcolor{blue}{EXPLAIN k-ARRAY}

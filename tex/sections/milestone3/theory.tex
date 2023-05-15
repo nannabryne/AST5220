@@ -163,7 +163,11 @@ We will not go into detail in how to get from~\cref{mil3:theo:eq:delta_G} to the
 
 
 \subsubsection{Line-of-sight integration}
-    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(x\!=\!0,k)$ to the temperature source function $\tilde{S}(x, k)$ and spherical Bessel functions $j_\ell(\xi\!\in\!\mathbb{R})$, eventually obtaining
+    \citet{Callin2006} explains how one can relate the current value of the temperature multipoles $\Theta_\ell(x\!=\!0,k)$ to the temperature source function $\tilde{S}(x, k)$ and spherical Bessel functions  
+    \begin{equation}
+        j_\ell(z) = \frac{\im^{\ell}}{2} \int_{1}^{-1}\dx{\mu}  \mathcal{P}_\ell(\mu) \eu[-\im \mu z],
+    \end{equation}
+    eventually obtaining
     \begin{equation}\label{mil3:theo:eq:temp_multipole_and_source_func}
         \Theta_\ell (x\!=\!0, k) = \int_{-\infty}^{0}\dx{x'} \tilde{S}(x',k) \cdot j_\ell(k \left[\eta_0 - \eta(x')\right]).
     \end{equation}

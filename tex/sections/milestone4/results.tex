@@ -14,18 +14,27 @@
 \label[fig]{mil4:res:fig:transfer}
 \end{figure}
 
-The CMB power spectrum is presented in~\cref{mil4:res:fig:CMB_power}. The different contributions to the CMB anisotropy were overplotted, as well as the cosmic variance. We included observational data from~\citet{Planckdata} for low $\ell$. Observational data become less relevant for $\ell \gtrsim 200$ as effects of e.g.\ neutrinos are non-negligible at these scales.
+The CMB power spectrum is presented in~\cref{mil4:res:fig:CMB_power}. Note that we used the scaled quantity $\mathcal{D}(\ell)$. The different contributions to the CMB anisotropy were overplotted, as well as the cosmic variance. We included observational data from~\citet{Planckdata} for low $\ell$. Observational data become less relevant for $\ell \gtrsim 200$ as effects of e.g.\ neutrinos are non-negligible at these scales.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{milestone4/CMB_power_spectrum.png} 
     \caption{The scaled CMB power spectrum $D(\ell)$ as function of multipole moment $\ell$. The shaded region represents the fundamental cosmic variance.} 
 \label[fig]{mil4:res:fig:CMB_power}
 \end{figure}
+The contributions to the CMB spectrum are calculated as follows, were $\mathrm{[comp]}\in \{\,\mathrm{SW},\,\mathrm{ISW},\,\mathrm{Doppler},\,\mathrm{pol} \,\}$ are the terms in the source function (\cref{mil4:theo:eq:source_function_four_terms}) given by~\cref{mil4:theo:eq:source_terms}:
+\begin{equation}
+\begin{split}
+    &\mathcal{D}(\ell)^\mathrm{[comp]} = \frac{\ell (\ell +1 ) \TCMB^2}{2\pi} C(\ell)^\mathrm{[comp]}\,; \\
+    &\quad C(\ell)^\mathrm{[comp]} =  4\pi \int_0^{\infty} \dx{k} \frac{\abs{\Theta_\ell^{\mathrm{[comp]}}(0,k)}^2}{k} \Delta_\mathcal{R}^2(k)\,; \\
+    &\quad\quad \Theta_\ell^\mathrm{[comp]}(0,k) = \int_{-\infty}^0 \dx{x}(\mathrm{[comp]}) j_\ell(k\left[\eta_0 -\eta(x)\right] )
+\end{split}
+\end{equation}
+
 
 In figure~\cref{mil4:res:fig:matter_power} is plotted the total matter power spectrum. Observational data from~\citet{wmap_act} and \textcolor{blue}{CITE} is shown in the same figure. Discrepancy is significantly larger for smaller scales.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{milestone4/matter_power_spectrum.png} 
-    \caption{The total matter power spectrum $P(k)$ as function of wavenumber $k$. Both axes are logarithmic. The equality scale $k\ped{eq}$ is demonstrated by a vertical dotted line.} 
+    \caption{The total matter power spectrum (today) $P(0,k)$ as function of wavenumber $k$. Both axes are logarithmic. The equality scale $k\ped{eq}$ is demonstrated by a vertical dotted line.} 
 \label[fig]{mil4:res:fig:matter_power}
 \end{figure}
