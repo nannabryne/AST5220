@@ -100,9 +100,9 @@ class PowerSpectrum {
     std::vector<Spline> Cell_decomp;
 
 
-    double integrate_trapezodial(std::function<double(double)> &F, double z_start, double z_stop, const double dz);
+    double integrate_trapezoidal(std::function<double(double)> &F, double z_start, double z_stop, const double dz);
 
-    double integrate_trapezodial(std::function<double(double)> &F, Vector z_array);
+    double integrate_trapezoidal(std::function<double(double)> &F, Vector z_array);
 
 
   public:

@@ -160,7 +160,7 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
   Vector2D result = Vector2D(ells.size(), Vector(k_array.size()));
   
   //  define x-grid:
-  const double x_start = -10.;
+  const double x_start = -8.3;
   const double x_end = 0.;
   const double n_sampling = 500;
   const double dx = 2.*M_PI/n_sampling;
@@ -177,14 +177,14 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
     for(int iell=0; iell<ells.size(); iell++){
       int ell = ells[iell];
 
-      //  Solve using the trapezodial rule
+      //  Solve using the trapezoidal rule
 
       std::function<double(double)> F = [&](double x){
         double z = k * ( eta0 - cosmo->eta_of_x(x) );
         return source_function(x, k) * j_ell_splines[iell](z);
       }; 
 
-      result[iell][ik] = integrate_trapezodial(F, x_start, x_end, dx);
+      result[iell][ik] = integrate_trapezoidal(F, x_start, x_end, dx);
 
     }
 
@@ -254,14 +254,14 @@ Vector PowerSpectrum::solve_for_Cell(
 
     int ell = ells[iell];
 
-    //  Solve using the trapezodial rule
+    //  Solve using the trapezoidal rule
 
     std::function<double(double)> F = [&](double log_k){
       double k = exp(log_k);
       return std::pow(k, n_s-1.) * f_ell_spline[iell](k)*g_ell_spline[iell](k);
     };
 
-    result[iell] = fac*integrate_trapezodial(F, log_k_array);
+    result[iell] = fac*integrate_trapezoidal(F, log_k_array);
     
   }
 
@@ -269,7 +269,7 @@ Vector PowerSpectrum::solve_for_Cell(
 }
 
 
-double PowerSpectrum::integrate_trapezodial(std::function<double(double)> &F, double z_start, double z_stop, const double dz){
+double PowerSpectrum::integrate_trapezoidal(std::function<double(double)> &F, double z_start, double z_stop, const double dz){
 
   double sum = 0;
   double z = z_start;
@@ -287,10 +287,10 @@ double PowerSpectrum::integrate_trapezodial(std::function<double(double)> &F, do
 }
 
 
-double PowerSpectrum::integrate_trapezodial(std::function<double(double)> &F, Vector z_array){
+double PowerSpectrum::integrate_trapezoidal(std::function<double(double)> &F, Vector z_array){
   const double dz = z_array[1] - z_array[0];
 
-  return integrate_trapezodial(F, z_array[0], z_array[z_array.size()-1], dz);
+  return integrate_trapezoidal(F, z_array[0], z_array[z_array.size()-1], dz);
 
 }
 

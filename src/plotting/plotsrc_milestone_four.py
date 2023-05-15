@@ -50,35 +50,35 @@ def __set_D_ell_part_label(fig, handles, ap="[comp]", loc="center right"):
 
 
 
-def TransferFunction_old(df, savefig=True):
-    k = df["k"]
-    df = df.drop("k", 1)
+# def TransferFunction_old(df, savefig=True):
+#     k = df["k"]
+#     df = df.drop("k", 1)
 
-    fig1, ax1 = plt.subplots()
+#     fig1, ax1 = plt.subplots()
 
-    '''
-    labels: as in pert-plots!!
-    '''
+#     '''
+#     labels: as in pert-plots!!
+#     '''
 
-    for ell in list(df.columns):
-        ax1.plot(k, df[ell], alpha=.6, label=tex(tex.Theta + tex.ped(ell)))
+#     for ell in list(df.columns):
+#         ax1.plot(k, df[ell], alpha=.6, label=tex(tex.Theta + tex.ped(ell)))
 
-    ax1.set_ylim(-0.012, 0.012)
+#     ax1.set_ylim(-0.012, 0.012)
 
 
-    fig2, ax2 = plt.subplots()
+#     fig2, ax2 = plt.subplots()
 
-    for ell in list(df.columns):
-        ax2.plot(k, df[ell]*df[ell]/k, alpha=.6, label=tex(tex.Theta + tex.ped(ell) + "^2" +  "/k"))
+#     for ell in list(df.columns):
+#         ax2.plot(k, df[ell]*df[ell]/k, alpha=.6, label=tex(tex.Theta + tex.ped(ell) + "^2" +  "/k"))
 
-    ax2.set_ylim(0, 2e-3)
+#     ax2.set_ylim(0, 2e-3)
 
     
-    for ax in [ax1, ax2]:
-        # ax.set_xscale("log")
-        ax.set_xlabel(k_axis_label)
-        ax.set_xlim(klims0)
-        ax.legend()
+#     for ax in [ax1, ax2]:
+#         # ax.set_xscale("log")
+#         ax.set_xlabel(k_axis_label)
+#         ax.set_xlim(klims0)
+#         ax.legend()
     
 
 
@@ -86,49 +86,91 @@ def TransferFunction(df, savefig=True):
     k = df["k"]
     df = df.drop("k", 1)
 
-    fig, axes = plt.subplots(figsize=(10,8), nrows=2, sharex=False)
+    
+    
+    def plot_functions():
 
-    '''
-    labels: as in pert-plots!!
-    '''
+        c = ColourCycles()
+        ell_handles = []
+        ell_list = []
 
-    c = ColourCycles()
-    ell_handles = []
-    ell_list = []
+        Theta_kw = dict(alpha=.7, lw=1.8)
+        for i, ell in enumerate(list(df.columns)):
+            line, = ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
+            ax2.plot(k, df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
+            ell_handles.append(line)
+            ell_list.append(int(ell))
 
+        ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
+        ax1.legend(**legend_box_kw)
+
+        ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" + "h" + "/k"), **Theta_kw)
+        ax2.legend(**legend_box_kw)
+
+        for ax in [ax1, ax2]:
+            ax.legend(**legend_box_kw)
+
+        
+        __set_ell_label(fig, ell_handles, ell_list, "upper right")
+
+
+    #   create sexy figure:
+
+    subpl_kw = dict(top=0.903,bottom=0.068,left=0.103,right=0.974,hspace=0.324)
+    grids_kw = dict(height_ratios=(7,5))
+
+    fig, axes = plt.subplots(figsize=(10,7.2), nrows=2, sharex=False, gridspec_kw=grids_kw)
+    fig.set_tight_layout(False)
+    fig.subplots_adjust(**subpl_kw)
     ax1, ax2 = axes.flat
 
-    Theta_kw = dict(alpha=.7, lw=1.8)
-    for i, ell in enumerate(list(df.columns)):
-        line, = ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
-        ax2.plot(k, df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
-        ell_handles.append(line)
-        ell_list.append(int(ell))
-
-    ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
-    ax1.legend(**legend_box_kw)
-
-    ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" +  "/k"), **Theta_kw)
-    ax2.legend(**legend_box_kw)
-
-
-    ax1.set_ylim(-0.009, 0.009)
-    ax2.set_ylim(0, 2e-3)
-
-    ax2.set_xlabel(k_axis_label)
-    # ax2.set_xlim(klims0)
-
-    ax1.set_xlim(klims0)
-    ax2.set_xlim(klims0)#[0], klims0[1]/2.)
 
     
-    for ax in [ax1, ax2]:
-        # ax.set_xscale("log")
-        # ax.set_xlabel(k_axis_label)
-        # ax.set_xlim(klims0)
-        ax.legend(**legend_box_kw)
 
-    __set_ell_label(fig, ell_handles, ell_list)
+    ax1.set_ylim(-0.0066, 0.0066)
+    ax2.set_ylim(0, 2.1e-3)
+    ax2.set_ylabel(tex(tex.unit("Mpc")))
+
+    ax1.set_xlabel(k_axis_label)
+    # ax2.set_xlabel(k_axis_label)
+
+    kmin1 = 0.001
+    kmin2 = 0.001
+    kmax1 = 0.14
+    kmax2 = 0.069
+    ax1.set_xlim(kmin1, kmax1)
+    ax2.set_xlim(kmin2, kmax2)
+
+    #   plot connection line:
+
+    from matplotlib.patches import ConnectionPatch
+
+    con_kw = dict(color=plt.rcParams["axes.facecolor"], linestyle="--", alpha=.9, linewidth=1.1)
+
+    con_l = ConnectionPatch(xyA=(kmin1,1), coordsA=ax2.get_xaxis_transform(), 
+                            xyB=(kmin2,0), coordsB=ax1.get_xaxis_transform(),
+                            **con_kw)
+
+    con_r = ConnectionPatch(xyA=(1,1), coordsA=ax2.transAxes, 
+                            xyB=(kmax2,0), coordsB=ax1.get_xaxis_transform(),
+                            **con_kw)
+    fig.add_artist(con_l)
+    fig.add_artist(con_r)
+
+    line_kw = dict(**con_kw)
+    line_kw["color"] = "w"
+    line_kw["alpha"] = line_kw["alpha"]*0.6
+
+    for ax in [ax1, ax2]:
+        ax.axvline(kmin2, **line_kw)
+        ax.axvline(kmax2, **line_kw)
+
+
+    # plot actual functions:
+
+    plot_functions()
+    
+
     
     if savefig:
         save("Theta_ell")
@@ -142,8 +184,8 @@ def TransferFunction(df, savefig=True):
 def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots(figsize=(10,6))
 
-    main_kws = dict(c=ColourCMB[-1])
-    part_kws = dict(lw=1.4, alpha=.7, ls="--")
+    main_kws = dict(c=ColourCMB[-1], alpha=.9)
+    part_kws = dict(lw=1.4, alpha=.69, ls="--")
 
     ell = df["ell"]
 
@@ -180,7 +222,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
     #   actual function (again...):
 
-    ax.plot(ell, df["D_ell"], **main_kws)
+    # ax.plot(ell, df["D_ell"], **main_kws)
 
     
     # ----------
