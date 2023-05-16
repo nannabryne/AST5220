@@ -65,7 +65,7 @@ df_obs_matter["err_down"] = df_obs_matter["err_up"]
 #   DO ALL THE PLOTTING
 
 PLOT.TransferFunction(df_transfer)
-# PLOT.CMBPowerSpectrum(df_Dell, df_obs_CMB)
+PLOT.CMBPowerSpectrum(df_Dell, df_obs_CMB)
 # PLOT.MatterPowerSpectrum(df_power, df_obs_matter)
 
 plt.show()
