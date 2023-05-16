@@ -90,7 +90,9 @@ def TransferFunction(df, savefig=True):
     
     def plot_functions():
 
-        c = ColourCycles()
+        cc = ColourCycles()
+        c = ColourCycles([cc[0], cc[4], cc[5], cc[1], cc[2], cc[3]])
+
         ell_handles = []
         ell_list = []
 

@@ -254,6 +254,11 @@ class ColourCycles:
         self.colours.append(colour)
         return self
     
+    def __setitem__(self, it, colour):
+        self.colours[it] = colour
+    
+
+    
 
 
 
