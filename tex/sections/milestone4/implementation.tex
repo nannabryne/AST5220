@@ -33,7 +33,7 @@ In preparation of the necessary computations, we chose a set of $\ell$s, call it
 
 % GSL: "http://www.gnu.org/software/gsl/"
 % BESSEL FUNCTIONS
-To generate the spherical Bessel functions, we utilised the functionalities of the GNU Scientific Library (GSL). We loop through $\ell \in L$ and, for each iteration, collected the $j_\ell(z)$'s from GSL for $z=0,\,\Delta z,\, 2\Delta z,\, \dots,\, k\ped{max}\eta_0$, where $\Delta z = 2\pi/n\ped{samp}$. To properly sample the oscillations, we used $n\ped{samp}=20$. 
+To generate the spherical Bessel functions, we utilised the functionalities of GSL. We loop through $\ell \in L$ and, for each iteration, collected the $j_\ell(z)$'s from GSL for $z=0,\,\Delta z,\, 2\Delta z,\, \dots,\, k\ped{max}\eta_0$, where $\Delta z = 2\pi/n\ped{samp}$. To properly sample the oscillations, we used $n\ped{samp}=20$. 
 
 % LOS INTEGRATION
 For the computation of $\Theta_\ell(0,k)$, we designed a grid of $\ell$, $k$ and $x$-values. Naturally, we considered $\ell \in L$. The resolution for $k\in [k\ped{min},\,k\ped{max}]$ will be addressed shortly. The integration in~\cref{mil4:theo:eq:los_integration} was started from $x=-8.3$ with step size $\Delta x= 2\pi/n\ped{samp}$ in~\cref{mil4:imp:eq:trapezoidal_uniform}. This time we used $n\ped{samp}=500$. 
