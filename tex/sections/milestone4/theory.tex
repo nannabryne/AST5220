@@ -13,7 +13,7 @@
 
 A small notational note: To not be overwhelmed by notation in this section, we let $t$ be the time variable in real space and $x$ the time variable in Fourier space, such that in general,
 \begin{equation}
-    f(t, \vec{x}) = \int \frac{d^3 k}{(2\pi)^3} f(x, \vec{k}).
+    f(t, \vec{x}) = \int \dkkk f(x, \vec{k}).
 \end{equation}
 We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f(x, k) \mathcal{R}(\vec{k})$, where $f(x,k)$ is a computed perturbation quantity from~\cref{sec:mil3}.
 
@@ -83,11 +83,17 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
 % \sendhelp
 
 
-\subsubsection{Power spectrum}\label{mil4:theo:sec:power_spectrum}
+\subsubsection{Power spectra}\label{mil4:theo:sec:power_spectrum}
     We revisit the curvature perturbation $\mathcal{R}(\vec{k})$ immediately after inflation, that which determines the initial conditions for each Fourier mode. During the generation of fluctuations, there should be no preferred position nor direction in space, resulting in statistical homogeneity and isotropy of said fluctuations. We let $\avg{\cdot}$ denote the statistical expectation value over many realisations of the universe. Thus, the primordial power spectrum $P_\mathcal{R}(k)$ is given by
-    \begin{equation}
+    \begin{equation}\label{mil4:theo:eq:primordial_power_spectum}
         \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} = (2\pi)^3 \deltafunc{\vec{k}-\vec{k'}}P_\mathcal{R}(k).
     \end{equation}
+    The inflationary model we consider predicts the dimensionless primordial power spectrum
+    \begin{equation}\label{mil4:theo:eq:Delta_R_of_k}
+        \Delta^2_\mathcal{R} (k) = \frac{k^3}{2\pi^2} P_\mathcal{R} (k)= \mathcal{A}\ped{S} \left( \frac{k}{k\ped{p}} \right)^{n\ped{S} -1},
+    \end{equation}
+    where $\mathcal{A}\ped{S}$ is the primordial amplitude, $n\ped{S}$ the scaler spectral index and $k\ped{p}$ a fundamental pivot scale.
+
     Further, we assume fluctuations to be gaussian. The perturbations are adiabatic and their averages vanish. Now, the power spectrum of perturbation variable $f$ is the combination between the initial power spectrum and a deterministic transfer function $f^2$:
     \begin{equation}\label{mil4:theo:eq:defining_power_spectrum}
     \begin{split}
@@ -105,7 +111,7 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
     \begin{equation}\label{mil4:theo:eq:defining_angular_power_spectrum}
         \avg{a\ellm(t_0, \vec{x}) a^\ast\ellmp(t_0, \vec{x})}= \deltasym{\ell \ell'} \deltasym{m m'} C(\ell).
     \end{equation}
-    
+
 
 
 \subsubsection{The CMB power spectrum}
@@ -124,10 +130,10 @@ The orthogonality of $Y_{\ell m}(\vec{\hat{p}})$\footnote{$\int \dOmg[n] Y\ellm(
     a\ellm = a\ellm(t,\vec{x}) = \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \Theta(t, \vec{x}, \vec{\hat{p}}),
 \end{equation}
 where $d\varOmega_{\vec{\hat{p}}} = \sin{\vartheta} \diff \vartheta\diff \varphi$ is the infinitesimal solid angle element of $\vec{\hat{p}} = (\vartheta, \varphi)$. Further, we expand the coefficients into Fourier modes and multipoles:
-\begin{equation}
+\begin{equation}\label{mil4:theo:eq:a_ellm_expansions}
 \begin{split}
-    a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \vec{\hat{p}})  \\
-    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \frac{d^3 k}{(2\pi)^3} \eu[\im \vec{k}\cdot \vec{x}]\sum_{\ell'} \frac{2\ell' + 1}{\im^{\ell'}} \mathcal{P}_{\ell'}(\mu) \Theta_{\ell'}(x, \vec{k})
+    a_{\ell m} &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \dkkk \eu[\im \vec{k}\cdot \vec{x}] \Theta(x, \vec{k}, \vec{\hat{p}})  \\
+    &= \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \int \dkkk \eu[\im \vec{k}\cdot \vec{x}]\sum_{\ell'} \frac{2\ell' + 1}{\im^{\ell'}} \mathcal{P}_{\ell'}(\mu) \Theta_{\ell'}(x, \vec{k})
 \end{split}
 \end{equation}
 In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{\hat{k}}$ ($\vec{\hat{k}}\equiv \vec{k}/k$) to let $\Theta(x,\vec{k}, \vec{\hat{p}}) \to\Theta(x,\vec{k},\mu) $. Taking the ensemble average $\langle a\ellm a^*\ellmp \rangle$ will only affect the $\Theta_{\ell'}(x, \vec{k})$'s in the expression above, as this depends on the initial amplitude of a mode. As explained in~\cref{mil4:theo:sec:power_spectrum}, we reintroduce the curvature perturbation $\mathcal{R}(\vec{k})$ by substituting $\Theta_\ell(x,\vec{k}) \to \Theta_\ell(x,k) \mathcal{R}(\vec{k})$, where $\Theta_\ell(x, k)$ are the perturbations we computed in~\cref{sec:mil3}. We get the only relevant average distribution:
@@ -140,41 +146,43 @@ In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{\hat{k}}$ ($\vec{\h
     % &= (2\pi)^3 \abs{\Theta_\ell(x,k)}^2 \Delta ^2_\mathcal{R}(k) 
 \end{split}
 \end{equation}
-We can write the monster as
-\begin{equation}
+Writing it out, we get
+\begin{equation}\label{mil4:theo:full_expr_idk}
 \begin{split}
     \langle a\ellm a^*\ellmp \rangle =&  \int \dOmg[p] \int \dOmg[p'] Y_{\ell m}^*(\vec{\hat{p}}) Y_{\ell' m'}(\vec{\hat{p}'})  \\
-    &\cdot \int \frac{d^3k}{(2\pi)^3}  P_\mathcal{R}(k)  \sum_{\ell_1 \ell_2} (2\ell_1 +1) (2\ell_2 +1) \\
+    &\cdot \int \dkkk P_\mathcal{R}(k)  \sum_{\ell_1 \ell_2} (2\ell_1 +1) (2\ell_2 +1) \\
     &\cdot \mathcal{P}_{\ell_1}(\mu)\mathcal{P}_{\ell_2}(\mu')\Theta_{\ell_1}(x,k) \Theta^{*}_{\ell_2}(x,k) ,
 \end{split}
 \end{equation} 
-where we used the Dirac-Delta function from~\cref{mil4:theo:eq:substitution_idk} to eliminate $\int d^3k' (2\pi)^{-3} \eu[\im (\vec{k}-\vec{k'})\cdot \vec{x}]$. The identity 
+where we used the Dirac-Delta function from~\cref{mil4:theo:eq:substitution_idk} to eliminate $\int \! d^3k' (2\pi)^{-3} \eu[\im (\vec{k}-\vec{k'})\cdot \vec{x}]$. The identity 
 \begin{equation}
     \int \dOmg[p] Y\ellm (\vec{\hat{p}}) \mathcal{P}_{\ell'}(\vec{\hat{k}}\cdot \vec{\hat{p}}) = \deltasym{\ell \ell'} \frac{4\pi}{2\ell +1}Y\ellm (\vec{\hat{k}})
 \end{equation}
-gives rise to factors $\deltasym{\ell \ell_1}$ and $\deltasym{\ell' \ell_2}$, killing the infinite sums. We are left with
+gives rise to factors $\deltasym{\ell \ell_1}$ and $\deltasym{\ell' \ell_2}$, killing the infinite sums in~\cref{mil4:theo:full_expr_idk}. We are left with
 \begin{equation}
-    \langle a\ellm a^*\ellmp \rangle =  (4\pi)^2 \int \frac{d^3k}{(2\pi)^3} Y_{\ell m}^*(\vec{\hat{k}}) Y_{\ell' m'}(\vec{\hat{k}})  \Theta_{\ell}(x,k) \Theta^{*}_{\ell'}(x,k) P_\mathcal{R}(k).
+    \langle a\ellm a^*\ellmp \rangle =  (4\pi)^2 \int \dkkk Y_{\ell m}^*(\vec{\hat{k}}) Y_{\ell' m'}(\vec{\hat{k}})  \Theta_{\ell}(x,k) \Theta^{*}_{\ell'}(x,k) P_\mathcal{R}(k).
 \end{equation}
-Spherical symmetry ($d^3k \to \dx{k} k^2 \dOmg[k]$) gives 
+Spherical symmetry ($d^3k \to k^2 \, \dx{k} \,\dOmg[k]$) gives 
 \begin{equation}
-    \langle a\ellm a^*\ellmp \rangle = \frac{2}{\pi} \int \dOmg[k] Y_{\ell m}^*(\vec{\hat{k}}) Y_{\ell' m'}(\vec{\hat{k}}) \int \dx{k} k^2  \Theta_{\ell}(x,k) \Theta^{*}_{\ell'}(x,k)  P_\mathcal{R}(k),
+    \langle a\ellm a^*\ellmp \rangle = \frac{2}{\pi} \int \dOmg[k] Y_{\ell m}^\ast(\vec{\hat{k}}) Y_{\ell' m'}(\vec{\hat{k}}) \int \dx{k} k^2  \Theta_{\ell}(x,k) \Theta^{*}_{\ell'}(x,k)  P_\mathcal{R}(k),
 \end{equation}
 and we use the orthogonality relation of the spherical harmonics to find
 \begin{equation}
-    \langle a\ellm a^*\ellmp \rangle = \frac{2}{\pi}\int \dx{k} k^2  \abs{\Theta_{\ell}(x,k)}^2P_\mathcal{R}(k) \cross \deltasym{\ell \ell'} \deltasym{m m'}.
+    \langle a\ellm a^*\ellmp \rangle = \deltasym{\ell \ell'} \deltasym{m m'} \cross \frac{2}{\pi}\int \dx{k} k^2  \abs{\Theta_{\ell}(x,k)}^2P_\mathcal{R}(k).
 \end{equation}
-Evaluated at $x=x_0=0$, we find the expression for the angular CMB power spectrum today. We can rewrite this in terms of the dimensionless primordial power spectrum $\Delta^2_\mathcal{R} = k^3/(2\pi^2) P_\mathcal{R}(k)$. Now, the angular CMB power spectrum is given by
+Evaluated at $x=x_0=0$, we find the expression for the angular CMB power spectrum today (see~\cref{mil4:theo:eq:defining_angular_power_spectrum}). We can rewrite this in terms of the dimensionless primordial power spectrum $\Delta^2_\mathcal{R} = k^3/(2\pi^2) P_\mathcal{R}(k)$. Now, the angular CMB power spectrum is given by
 \begin{equation}\label{mil4:theo:eq:C_of_ell_final}
     C(\ell) = 4\pi \int_0^{\infty} \dx{k} \frac{\abs{\Theta_\ell(0,k)}^2}{k} \Delta_\mathcal{R}^2(k),
 \end{equation}
 however, it is customary to present is in a scaled version $\mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} \TCMB^2 C(\ell)$.
-% \begin{equation}
-%     \mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} \TCMB^2 C(\ell)
-% \end{equation}
 
+The cosmic variance is an unavoidable error in the estimation of $C(\ell)$, given by 
+\begin{equation}\label{mil4:theo:eq:cosmic_variance}
+    \left( \frac{\Delta C(\ell)}{C(\ell)}\right)_\text{cosmic variance} = \sqrt{\frac{2}{2\ell +1}}.
+\end{equation}
+Due to the fact that this is very large for small $\ell$, the sums over multipole moment $\ell$ (in e.g.~\cref{mil4:theo:eq:a_ellm_expansions}) will normally start at $\ell=2$ and stop at some $\ell\ped{MAX}$. The monopole term ($\ell=0$) is simply the average temperature across the CMB sky, whereas the dipole term ($\ell=1$) is affected by our motion relative to the CMB rest frame. 
 
-
+We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by $\theta \sim 180^{\circ} /\ell$. 
 
 
 \subsubsection{Source function}

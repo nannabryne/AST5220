@@ -174,7 +174,9 @@
 % Substript for freeze-out:
 \newcommand{\pedfo}[1]{_{#1,\mathrm{fo}}}
 
-\newcommand{\dOmg}[1][p]{d\varOmega_{\vec{\hat{#1}}}}  % solid angle intergral
+\newcommand{\dOmg}[1][p]{\!\! d\varOmega_{\vec{\hat{#1}}}}  % solid angle intergral
+
+\newcommand{\dkkk}[1][k]{\!\! \frac{d^3 {#1}}{(2\pi)^3} }      % integral over k
 
 
 
