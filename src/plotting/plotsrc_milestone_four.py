@@ -1,5 +1,7 @@
 from utils import *
 
+import matplotlib.ticker as ticker
+
 from plotsrc_milestone_one import ColourCyclesI
 __maincolours = ColourCyclesI("densityparams")
 __subcolours = ColourCyclesI("densityparams_shy")
@@ -50,38 +52,6 @@ def __set_D_ell_part_label(fig, handles, ap="[comp]", loc="center right"):
 
 
 
-# def TransferFunction_old(df, savefig=True):
-#     k = df["k"]
-#     df = df.drop("k", 1)
-
-#     fig1, ax1 = plt.subplots()
-
-#     '''
-#     labels: as in pert-plots!!
-#     '''
-
-#     for ell in list(df.columns):
-#         ax1.plot(k, df[ell], alpha=.6, label=tex(tex.Theta + tex.ped(ell)))
-
-#     ax1.set_ylim(-0.012, 0.012)
-
-
-#     fig2, ax2 = plt.subplots()
-
-#     for ell in list(df.columns):
-#         ax2.plot(k, df[ell]*df[ell]/k, alpha=.6, label=tex(tex.Theta + tex.ped(ell) + "^2" +  "/k"))
-
-#     ax2.set_ylim(0, 2e-3)
-
-    
-#     for ax in [ax1, ax2]:
-#         # ax.set_xscale("log")
-#         ax.set_xlabel(k_axis_label)
-#         ax.set_xlim(klims0)
-#         ax.legend()
-    
-
-
 def TransferFunction(df, savefig=True):
     k = df["k"]
     df = df.drop("k", 1)
@@ -91,7 +61,7 @@ def TransferFunction(df, savefig=True):
     def plot_functions():
 
         cc = ColourCycles()
-        c = ColourCycles([cc[0], cc[4], cc[5], cc[1], cc[2], cc[3]])
+        c = ColourCycles([cc[0], cc[4], cc[1], cc[5], cc[2], cc[3]])
 
         ell_handles = []
         ell_list = []
@@ -184,6 +154,10 @@ def TransferFunction(df, savefig=True):
     
 
 def CMBPowerSpectrum(df, df_obs, savefig=True):
+
+    
+
+
     fig, ax = plt.subplots(figsize=(10,6))
 
     main_kws = dict(c=ColourCMB[-1], alpha=.9)
@@ -234,6 +208,11 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     ax.set_ylabel(tex(tex.unit("\mu K" + "^2") ))
     
     ax.set_xscale("log")
+    ax.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
+
+    # minors = [5,50,500]
+    # ax.get_xaxis().set_minor_locator(ticker.FixedLocator(minors))
+    # ax.get_xaxis().set_minor_formatter(ticker.FixedFormatter([str(l) for l in minors]))
 
     def ang_scale(l):
         theta = np.array(l, float)
@@ -242,23 +221,31 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
         theta[~near_zero] = 180/l[~near_zero]
         return theta
     
+    def inverse(theta):
+        l = np.array(theta, float)
+        near_zero = np.isclose(theta, 0)
+        l[near_zero] = np.inf
+        l[~near_zero] = 180/theta[~near_zero]
+        return l
 
-
-    inverse = ang_scale
     secax = ax.secondary_xaxis("top", functions=(ang_scale, inverse))
 
-    from matplotlib.ticker import FixedLocator, NullLocator
+    
     # secax.set_xlabel(tex(tex.theta + tex.unit("[^\circ]")))
     
-    majors = [90,45,20, 10,2,1,0.2]
+    majors = [90,45,10,2,1,0.2]
     labels = [tex("%s ^\circ") %str(theta) for theta in majors]
     colour = "slategrey"
-    tick_kw = dict(reset=True, direction="out", length=7, width=.9, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False)
+    width = .7
+    tick_kw = dict(reset=True, direction="out", length=0, width=width, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False, grid_alpha=.4, grid_color=colour, grid_linewidth=width, grid_linestyle="-")
     # secax.set_xlabel(tex(tex.theta), fontdict={"color":colour})
-    secax.xaxis.set_major_locator(FixedLocator(majors))
-    secax.xaxis.set_minor_locator(NullLocator())
+    secax.xaxis.set_major_locator(ticker.FixedLocator(majors))
+    secax.xaxis.set_minor_locator(ticker.NullLocator())
+    secax.grid(True)
     secax.xaxis.set_tick_params("major", **tick_kw)
     secax.set_xticklabels(labels)
+
+
     
     
 
@@ -278,6 +265,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     ax.set_xscale("log")
     ax.set_yscale("log")
+    # ax.get_yaxis().set_major_formatter(ticker.ScalarFormatter())
 
     # actual function:
     
