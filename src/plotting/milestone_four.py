@@ -9,9 +9,10 @@ tex = LaTeX()
 
 
 C_ell_data = read_ASCII("dells_decomp.txt")
+C_ell_data_pure = read_ASCII("dells.txt")
 
-df_Dell = pd.DataFrame(dict(ell=C_ell_data[:,0], 
-                            D_ell=C_ell_data[:,1],
+df_Dell = pd.DataFrame(dict(ell=C_ell_data_pure[:,0], 
+                            D_ell=C_ell_data_pure[:,1],
                             D_ell_SW=C_ell_data[:,2],
                             D_ell_ISW=C_ell_data[:,3],
                             D_ell_Doppler=C_ell_data[:,4],
@@ -64,7 +65,7 @@ df_obs_matter["err_down"] = df_obs_matter["err_up"]
 
 #   DO ALL THE PLOTTING
 
-PLOT.TransferFunction(df_transfer)
+# PLOT.TransferFunction(df_transfer)
 PLOT.CMBPowerSpectrum(df_Dell, df_obs_CMB)
 # PLOT.MatterPowerSpectrum(df_power, df_obs_matter)
 

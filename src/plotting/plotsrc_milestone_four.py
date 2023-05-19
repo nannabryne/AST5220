@@ -235,6 +235,16 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     
     ax.set_xscale("log")
 
+    # def ang_scale(l):
+    #     l = np.array(l, float)
+    #     return 1/l
+    
+    # inverse = ang_scale
+    # secax = ax.secondary_xaxis("top", functions=(ang_scale, inverse))
+    # secax.set_xlabel(r"$\theta $")
+
+    
+
     ax.legend()
 
     if savefig:
