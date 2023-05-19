@@ -212,7 +212,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex("\mathcal{D}" + tex.ap("[comp]")), **part_kws)
-    __set_D_ell_part_label(fig, handles, loc=(0.14, 0.82))
+    __set_D_ell_part_label(fig, handles, loc=(0.14, 0.76))
 
 
     #   observational data:
@@ -235,13 +235,32 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     
     ax.set_xscale("log")
 
-    # def ang_scale(l):
-    #     l = np.array(l, float)
-    #     return 1/l
+    def ang_scale(l):
+        theta = np.array(l, float)
+        near_zero = np.isclose(l, 0)
+        theta[near_zero] = np.inf
+        theta[~near_zero] = 180/l[~near_zero]
+        return theta
     
-    # inverse = ang_scale
-    # secax = ax.secondary_xaxis("top", functions=(ang_scale, inverse))
-    # secax.set_xlabel(r"$\theta $")
+
+
+    inverse = ang_scale
+    secax = ax.secondary_xaxis("top", functions=(ang_scale, inverse))
+
+    from matplotlib.ticker import FixedLocator, NullLocator
+    # secax.set_xlabel(tex(tex.theta + tex.unit("[^\circ]")))
+    
+    majors = [90,45,20, 10,2,1,0.2]
+    labels = [tex("%s ^\circ") %str(theta) for theta in majors]
+    colour = "slategrey"
+    tick_kw = dict(reset=True, direction="out", length=7, width=.9, color=colour, labelcolor=colour, top=True, bottom=False, labeltop=True, labelbottom=False)
+    # secax.set_xlabel(tex(tex.theta), fontdict={"color":colour})
+    secax.xaxis.set_major_locator(FixedLocator(majors))
+    secax.xaxis.set_minor_locator(NullLocator())
+    secax.xaxis.set_tick_params("major", **tick_kw)
+    secax.set_xticklabels(labels)
+    
+    
 
     
 

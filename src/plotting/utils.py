@@ -66,6 +66,7 @@ class LaTeX:
         self.eta = r"$\eta$"
         self.tau = r"$\tau$"
         self.ell = r"$\ell$"
+        self.theta = r"$\theta$"
 
         self.X_e = r"X_e"
         self.Y_p = r"Y_p"
