@@ -204,7 +204,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}
         \text{(SW)} = \gt(x) \left[\Theta_0(x,k) + \Psi(x,k) + \frac{1}{4}\Theta_2(x,k) \right].
     \end{equation}
-    The term originates in the gravitational redshifting of CMB photons at the surface of last scattering. For the largest scales ($\ell \lesssim 20$), the corresponding contribution to the CMB anisotropy, $C(\ell)^\mathrm{SW}$, to plateau---hence the name ``Sachs-Wolfe plateau''. By a rough approximation, we can get to $\Theta_\ell(0,k) \approx \left( \Theta_0(x_*,k) + \Psi(x_*, k)\right) j_\ell(k\eta_0)$. Leaving the steps out, we take note that the effective temperature perturbation $\left[\Theta_0 + \Psi\right](x\!\leq \! x_*, k)$ can be used to study the basic structures of the CMB power spectrum. We do this in~\cref{mil4:theo:sec:eff_temp_pert}
+    The term originates in the gravitational redshifting of CMB photons at the surface of last scattering. For the largest scales ($\ell \lesssim 20$), the corresponding contribution to the CMB anisotropy, $C(\ell)^\mathrm{SW}$, to plateau---hence the name ``Sachs-Wolfe plateau''. By a rough approximation, we can get to $\Theta_\ell(0,k) \approx \left( \Theta_0(x_*,k) + \Psi(x_*, k)\right) j_\ell(k\eta_0)$. Leaving the steps out, we take note that the effective temperature perturbation $\left[\Theta_0 + \Psi\right](x\!\leq \! x_*, k)$ can be used to study the basic structures of the CMB power spectrum. We do this in~\cref{mil4:theo:sec:eff_temp_pert}.
 
     Also due to gravitational redshift is the integrated Sachs-Wolfe effect,
     \begin{equation}
@@ -231,14 +231,31 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 \subsubsection{Effective temperature perturbation}\label[sec]{mil4:theo:sec:eff_temp_pert}
     We intend to give a high-level analysis of the CMB power spectrum to be able to extract physics from it. For more details, see SITE HANS!
 
-    The equation for this quantity describes a driven harmonic oscillator, and going back to real space and ignoring the driving force, we obtain an equation for $\delta_\gamma(t, \vec{x})$ describing waves moving at the speed of sound $c_s=1/\sqrt{3}$. Further, it can be shown that $\left[\Theta_0 + \Psi\right](x, k) \propto \cos(ks(x))$ if we keep neglecting the driving force. A rough mapping $k\to \ell/\eta_0$ lets us predict the position of the peaks in $C(\ell)$,
+    The equation for this quantity describes a driven harmonic oscillator, and going back to real space and ignoring the driving force, we obtain an equation for $\delta_\gamma(t, \vec{x})$ describing waves moving at the speed of sound $c_s=1/\sqrt{3}$. Further, it can be shown that 
     \begin{equation}
-        \ell\ped{pk} \sim n \cross \frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
+        \left[\Theta_0 + \Psi\right](x, k) \approx \left[\Theta_0 + \Psi\right](x\ped{init}, k)\cos(ks(x))
     \end{equation}
-    Likewise, the throughs will be positioned at
+    if we keep neglecting the driving force. A rough mapping $k\to \ell/\eta_0$ lets us predict the position of the peaks in $C(\ell) \supset \abs{\cos{ks(x)}}^2$,
     \begin{equation}
-        \ell\ped{pk} \sim \left(n+\frac{1}{2}\right) \cross \frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
+        \ell\ped{pk} \sim n \cross \pi\frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
     \end{equation}
+    Likewise, the troughs will be positioned at
+    \begin{equation}
+        \ell\ped{tr} \sim \left(n+\frac{1}{2}\right)\cross \pi\frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
+    \end{equation}
+    The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decomressed at this time. 
+
+
+    We consider the effect of baryon loading. The slightly less simplified analysis gives
+    \begin{equation}
+    \begin{split}
+        \left[\Theta_0 + \Psi\right](x, k) \approx& \left[\Theta_0 + (1+R)\Psi\right](x\ped{init}, k)\cos(ks(x)) \\
+        &- R(x_*)\Psi(x_*, k),
+    \end{split}
+    \end{equation}
+    where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$. The offsat oscillations in $\Theta_\ell(0,k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed.
+
+
 
 
 
