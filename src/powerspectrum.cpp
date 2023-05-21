@@ -306,7 +306,21 @@ double PowerSpectrum::primordial_power_spectrum(const double k) const{
 }
 
 
+double PowerSpectrum::Delta2_R_of_k(const double k) const{
+   return A_s * pow( Constants.Mpc * k / kpivot_mpc , n_s - 1.0);
+}
 
+double PowerSpectrum::P_R_of_k(const double k) const{
+   return k*k*k/(2.*M_PI*M_PI) * Delta2_R_of_k(k);
+}
+
+double PowerSpectrum::get_primordial_spectrum(const double k_mpc) const{
+    // double k = k_mpc*Constants.Mpc;
+    double h = cosmo->get_h();
+    double P_R = A_s * pow( k_mpc/kpivot_mpc, n_s-1.) * 2*M_PI*M_PI/ (k_mpc*k_mpc*k_mpc);
+    return P_R*h*h*h;
+
+}
 
 
 
@@ -316,6 +330,37 @@ double PowerSpectrum::primordial_power_spectrum(const double k) const{
 //====================================================
 
 
+double PowerSpectrum::get_matter_power_spectrum_comp(const double x, const double k_mpc, int comp) const{
+  const double k = k_mpc / Constants.Mpc;
+  const double c = Constants.c;
+  const double Hp = cosmo->Hp_of_x(x);
+
+  const double OmegaM = cosmo->get_OmegaM(x);
+  double Omega_s, delta_s, u_s;
+
+  if(comp==1){
+    // CDM
+    Omega_s = cosmo->get_Omegac(x);
+    delta_s = pert->get_delta_c(x, k);
+    u_s = pert->get_u_c(x, k);
+  }
+
+  else if(comp==2){
+    // baryons
+    Omega_s = cosmo->get_Omegab(x);
+    delta_s = pert->get_delta_b(x, k);
+    u_s = pert->get_u_b(x, k);
+  }
+
+  double fac = 3.*Hp/(c*k);
+  double Delta_s = Omega_s/OmegaM * (delta_s - fac*u_s);
+
+
+  return Delta_s*Delta_s * get_primordial_spectrum(k_mpc);
+
+
+}
+
 
 double PowerSpectrum::get_matter_power_spectrum(const double x, const double k_mpc) const{
   //=============================================================================
@@ -323,27 +368,42 @@ double PowerSpectrum::get_matter_power_spectrum(const double x, const double k_m
   //=============================================================================
   const double k = k_mpc / Constants.Mpc;
   const double c = Constants.c;
-  const double fac = c*k/cosmo->get_H0();
+  // const double fac = c*k/cosmo->get_H0();
   const double Hp = cosmo->Hp_of_x(x);
 
-  double DeltaM = fac*fac * 2.* pert->get_Phi(x,k) * exp(x) / (3.*cosmo->get_OmegaM(0));
+  // double DeltaM = fac*fac * 2.* pert->get_Phi(x,k) * exp(x) / (3.*cosmo->get_OmegaM(0));
 
-  double fac2 = 3*Hp/(c*k);
-  double Deltab = pert->get_delta_b(x,k) - fac2 * pert->get_u_b(x,k);
-  double Deltac = pert->get_delta_c(x,k) - fac2 * pert->get_u_c(x,k);
+  // double fac2 = 3*Hp/(c*k);
+  // double Deltab = pert->get_delta_b(x,k) - fac2 * pert->get_u_b(x,k);
+  // double Deltac = pert->get_delta_c(x,k) - fac2 * pert->get_u_c(x,k);
   // DeltaM = Deltab + Deltac;
+
+  const double OmegaM = cosmo->get_OmegaM(x);
+  const double OmegabM = cosmo->get_Omegab(x)/OmegaM;
+  const double OmegacM = cosmo->get_Omegac(x)/OmegaM;
+  // double deltam = (Omegac*pert->get_delta_c(x, k) + Omegab*pert->get_delta_b(x, k) )/OmegaM;
+
+  // double um = (Omegac*pert->get_u_c(x, k) + Omegab*pert->get_u_b(x, k) )/OmegaM;
+
+  double fac = 3.*Hp/(c*k);
+  double Deltac = OmegacM * ( pert->get_delta_c(x, k) - fac * pert->get_u_c(x, k) );
+  double Deltab = OmegabM * ( pert->get_delta_b(x, k) - fac * pert->get_u_b(x, k) );
+
+  double DeltaM = Deltab + Deltac;
+
+  // DeltaM = deltam - fac * um;
 
 
   // // ...
   // // ...
   // ...
 
-  double P_R = A_s * pow( k_mpc/kpivot_mpc, n_s-1.) * 2*M_PI*M_PI/ (k_mpc*k_mpc*k_mpc);
-  // double P_of_k = DeltaM*DeltaM * primordial_power_spectrum(k) * 2*M_PI*M_PI /(k*k*k);
-  double P_of_k = DeltaM*DeltaM * P_R;
-  double conv = cosmo->get_h()/Constants.Mpc;
-  double h = cosmo->get_h();
-  return P_of_k * h*h*h;
+  // double P_R = A_s * pow( k_mpc/kpivot_mpc, n_s-1.) * 2*M_PI*M_PI/ (k_mpc*k_mpc*k_mpc);
+  // // double P_of_k = DeltaM*DeltaM * primordial_power_spectrum(k) * 2*M_PI*M_PI /(k*k*k);
+  // double P_of_k = DeltaM*DeltaM * get_primordial_spectrum(k_mpc);
+  // double conv = cosmo->get_h()/Constants.Mpc;
+  // double h = cosmo->get_h();
+  return DeltaM*DeltaM * get_primordial_spectrum(k_mpc);
 }
 
 //====================================================
@@ -486,11 +546,14 @@ std::vector<int> & for_ells){
     double k_SI = k;
     double k_mpc = k_SI*Mpc;
 
-    fp << k_mpc/cosmo->get_h()                  << " ";
-    fp << get_matter_power_spectrum(0, k_mpc)   << " ";
+    fp << k_mpc/cosmo->get_h()                        << " ";
+    fp << get_matter_power_spectrum(0, k_mpc)         << " ";
+    fp << get_matter_power_spectrum_comp(0, k_mpc, 1) << " ";
+    fp << get_matter_power_spectrum_comp(0, k_mpc, 2) << " ";
     for(int i=0; i<n_ells; i++){
       fp << ThetaT_ell_of_k_spline[ell_indices[i]](k_SI)  << " ";
     }
+    fp << get_primordial_spectrum(k_mpc)        << " ";
     fp << "\n";
   };
   std::for_each(k_array.begin(), k_array.end(), print_data);

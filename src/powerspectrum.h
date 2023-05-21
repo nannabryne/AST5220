@@ -126,7 +126,17 @@ class PowerSpectrum {
     double primordial_power_spectrum(const double k) const;
 
     // Get P(k,x) for a given x in units of (Mpc)^3
+    // double get_dark_matter_power_spectrum(const double x, const double k_mpc) const;
+    // double get_baryon_power_spectrum(const double x, const double k_mpc) const;
+    double get_matter_power_spectrum_comp(const double x, const double k_mpc, int comp) const;
     double get_matter_power_spectrum(const double x, const double k_mpc) const;
+
+    double get_primordial_spectrum(const double k_mpc) const;
+
+
+    double Delta2_R_of_k(const double k) const;
+
+    double P_R_of_k(const double k) const;
 
     std::pair<double, double> get_matter_power_spectra(const double x, const double k_mpc) const;
 

@@ -18,8 +18,8 @@ tex = LaTeX()
 
 k_axis_label = tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" )
 
-klims0 = (8e-4, 6e-1)
-k_axis_label = tex("k/h" + tex.unit("[" + tex.inv("Mpc")+"]") )
+# klims0 = (8e-4, 6e-1)
+# k_axis_label = tex("k" + tex.unit("[" + tex("h") + tex.inv("Mpc")+"]") )
 klims0 = (0.001, 0.08)
 
 k_eq = 0.0115/0.67
@@ -76,7 +76,7 @@ def TransferFunction(df, savefig=True):
         ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
         ax1.legend(**legend_box_kw)
 
-        ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" + "h" + "/k"), **Theta_kw)
+        ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" + "/k"), **Theta_kw)
         ax2.legend(**legend_box_kw)
 
         for ax in [ax1, ax2]:
@@ -101,7 +101,7 @@ def TransferFunction(df, savefig=True):
 
     ax1.set_ylim(-0.0066, 0.0066)
     ax2.set_ylim(0, 2.1e-3)
-    ax2.set_ylabel(tex(tex.unit("Mpc")))
+    ax2.set_ylabel(tex(tex.unit(tex.inv("h")) + tex.unit("Mpc")))
 
     ax1.set_xlabel(k_axis_label)
     # ax2.set_xlabel(k_axis_label)
@@ -225,7 +225,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
         l = np.array(theta, float)
         near_zero = np.isclose(theta, 0)
         l[near_zero] = np.inf
-        l[~near_zero] = 180/theta[~near_zero]
+        l[~near_zero] = np.pi/theta[~near_zero]
         return l
 
     secax = ax.secondary_xaxis("top", functions=(ang_scale, inverse))
@@ -260,7 +260,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
 def MatterPowerSpectrum(df, df_obs, savefig=True):
-    fig, ax = plt.subplots(figsize=(10,4))
+    fig, ax = plt.subplots(figsize=(10,6))
 
 
     ax.set_xscale("log")
@@ -268,8 +268,30 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
     # ax.get_yaxis().set_major_formatter(ticker.ScalarFormatter())
 
     # actual function:
-    
     ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
+    ylims = ax.get_ylim()
+    # ax.set_ylim(ylims)
+
+    comp_kw = dict(c="darkslategrey", alpha=.3)
+    comp_kw = dict(c=ColourMatter[-2], alpha=.3)
+
+    ax.plot(df["k"], df["P_c"], label=tex("P" + tex.ped("c")), **comp_kw)
+    ax.plot(df["k"], df["P_b"], label=tex("P" + tex.ped("b")), ls="--", **comp_kw)
+
+    # # primordial:
+    # ax.plot(df["k"], df["P_R"], c="darkslategrey", label=tex("P_\mathcal{R}"), alpha=.3)
+    
+
+    # ks = 0.0144790*4
+    # ks = np.pi*0.67/147 *4
+    # ax.axvline(ks*1, ls="--", c="r")
+    # ax.axvline(ks*2, ls="--", c="r")
+    # ax.axvline(ks*3, ls="--", c="r")
+    # ax.axvline(ks*4, ls="--", c="r")
+    # ax.axvline(ks*5, ls="--", c="r")
+    # ax.axvline(ks*6, ls="--", c="r")
+    # ax.axvline(ks*7, ls="--", c="r")
+    # ax.axvline(ks*8, ls="--", c="r")
 
     # observational data:
 
@@ -280,7 +302,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     # vertical lines:
 
-    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") + "/h")])
+    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") )])
 
     # --------
 

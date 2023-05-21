@@ -333,15 +333,17 @@ def Milestone4():
 
 
     power_data = read_ASCII("power.txt")
-    k = power_data[:,0]
-    P = power_data[:,1]
-    Theta_ell = power_data[:,2:].T
+
 
     ells = np.array([6, 100, 200, 500, 1000], dtype="int")
 
-    df_power = pd.DataFrame(dict(k=power_data[:,0], P=power_data[:,1]))
+    df_power = pd.DataFrame(dict(k=power_data[:,0], 
+                                 P=power_data[:,1], 
+                                 P_c=power_data[:,2],
+                                 P_b=power_data[:,3],
+                                 P_R=power_data[:,-1]))
 
-
+    Theta_ell = power_data[:,4:-1].T
     Theta_dict = {f"{ells[i]:d}": Theta_ell[i] for i in range(len(ells))}
 
     df_transfer = pd.DataFrame(dict(k=power_data[:,0], **Theta_dict))
