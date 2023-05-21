@@ -45,9 +45,9 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
 % \end{equation}
 % is the transfer function and $P_P(k)$ is the primordial power spectrum given by
 % \begin{equation}
-%     \frac{k^3}{2\pi^2} P_P (k) = A\ped{S}\left( \frac{k}{H_0}\right)^{n\ped{S}-1},
+%     \frac{k^3}{2\pi^2} P_P (k) = A\ped{S}\left( \frac{k}{H_0}\right)^{\ns-1},
 % \end{equation}
-% $n\ped{S}$ being the spectral index (scalar perturbation).
+% $\ns$ being the spectral index (scalar perturbation).
 
 
 % Define $\mathcal{D}_\ell \equiv \ell (\ell+1)/(2\pi) \cdot C(\ell) $.
@@ -66,9 +66,9 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
 % \end{equation}
 % is the transfer function and $P_\mathcal{R}(k)$ is the primordial power spectrum given by
 % \begin{equation}
-%     \frac{k^3}{2\pi^2} P_\mathcal{R} (k) = \mathcal{A}\ped{S}\left( \frac{k}{k\ped{p}}\right)^{n\ped{S}-1},
+%     \frac{k^3}{2\pi^2} P_\mathcal{R} (k) = \As\left( \frac{k}{k\ped{p}}\right)^{\ns-1},
 % \end{equation}
-% $n\ped{S}$ being the spectral index and $\mathcal{A}\ped{S}$ the primordial amplitude.
+% $\ns$ being the spectral index and $\As$ the primordial amplitude.
 
 
 % Define $\mathcal{D}_\ell \equiv \ell (\ell+1)(2\pi)^{-1} C(\ell) $.
@@ -83,16 +83,16 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
 % \sendhelp
 
 
-\subsubsection{Power spectra}\label{mil4:theo:sec:power_spectrum}
+\subsubsection{Power spectra}\label[sec]{mil4:theo:sec:power_spectrum}
     We revisit the curvature perturbation $\mathcal{R}(\vec{k})$ immediately after inflation, that which determines the initial conditions for each Fourier mode. During the generation of fluctuations, there should be no preferred position nor direction in space, resulting in statistical homogeneity and isotropy of said fluctuations. We let $\avg{\cdot}$ denote the statistical expectation value over many realisations of the universe. Thus, the primordial power spectrum $P_\mathcal{R}(k)$ is given by
     \begin{equation}\label{mil4:theo:eq:primordial_power_spectum}
         \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} = (2\pi)^3 \deltafunc{\vec{k}-\vec{k'}}P_\mathcal{R}(k).
     \end{equation}
     The inflationary model we consider predicts the dimensionless primordial power spectrum
     \begin{equation}\label{mil4:theo:eq:Delta_R_of_k}
-        \Delta^2_\mathcal{R} (k) = \frac{k^3}{2\pi^2} P_\mathcal{R} (k)= \mathcal{A}\ped{S} \left( \frac{k}{k\ped{p}} \right)^{n\ped{S} -1},
+        \Delta^2_\mathcal{R} (k) = \frac{k^3}{2\pi^2} P_\mathcal{R} (k)= \As \left( \frac{k}{k\ped{p}} \right)^{\ns -1},
     \end{equation}
-    where $\mathcal{A}\ped{S}$ is the primordial amplitude, $n\ped{S}$ the scaler spectral index and $k\ped{p}$ a fundamental pivot scale.
+    where $\As$ is the primordial amplitude, $\ns$ the scaler spectral index and $k\ped{p}$ a fundamental pivot scale.
 
     Further, we assume fluctuations to be gaussian. The perturbations are adiabatic and their averages vanish. Now, the power spectrum of perturbation variable $f$ is the combination between the initial power spectrum and a deterministic transfer function $f^2$:
     \begin{equation}\label{mil4:theo:eq:defining_power_spectrum}
@@ -150,7 +150,7 @@ Writing it out, we get
 \begin{equation}\label{mil4:theo:full_expr_idk}
 \begin{split}
     \langle a\ellm a^*\ellmp \rangle =&  \int \dOmg[p] \int \dOmg[p'] Y_{\ell m}^*(\vec{\hat{p}}) Y_{\ell' m'}(\vec{\hat{p}'})  \\
-    &\cdot \int \dkkk P_\mathcal{R}(k)  \sum_{\ell_1 \ell_2} (2\ell_1 +1) (2\ell_2 +1) \\
+    &\cdot \int \dkkk P_\mathcal{R}(k)  \sum_{\ell_1 \ell_2} (2\ell_1 +1) (2\ell_2 +1) (-\im)^{\ell_1-\ell_2} \\
     &\cdot \mathcal{P}_{\ell_1}(\mu)\mathcal{P}_{\ell_2}(\mu')\Theta_{\ell_1}(x,k) \Theta^{*}_{\ell_2}(x,k) ,
 \end{split}
 \end{equation} 
@@ -200,11 +200,11 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     We will break this expression down, term by term. 
 
     \begin{subequations}\label{mil4:theo:eq:source_terms}
-    The first term---the Sachs-Wolfe term---is the predominant contribution to the source functions and is given by
+    The first term---the Sachs-Wolfe term---is the predominant contribution to the source function and is given by
     \begin{equation}
         \text{(SW)} = \gt(x) \left[\Theta_0(x,k) + \Psi(x,k) + \frac{1}{4}\Theta_2(x,k) \right].
     \end{equation}
-    The term originates in the gravitational redshifting of CMB photons at the surface of last scattering. For the largest scales ($\ell \lesssim 20$), the corresponding contribution to the CMB anisotropy, $C(\ell)^\mathrm{SW}$, to plateau---hence the name ``Sachs-Wolfe plateau''.
+    The term originates in the gravitational redshifting of CMB photons at the surface of last scattering. For the largest scales ($\ell \lesssim 20$), the corresponding contribution to the CMB anisotropy, $C(\ell)^\mathrm{SW}$, to plateau---hence the name ``Sachs-Wolfe plateau''. By a rough approximation, we can get to $\Theta_\ell(0,k) \approx \left( \Theta_0(x_*,k) + \Psi(x_*, k)\right) j_\ell(k\eta_0)$. Leaving the steps out, we take note that the effective temperature perturbation $\left[\Theta_0 + \Psi\right](x\!\leq \! x_*, k)$ can be used to study the basic structures of the CMB power spectrum. We do this in~\cref{mil4:theo:sec:eff_temp_pert}
 
     Also due to gravitational redshift is the integrated Sachs-Wolfe effect,
     \begin{equation}
@@ -227,20 +227,62 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     \dots \dots \dots
 
+
+\subsubsection{Effective temperature perturbation}\label[sec]{mil4:theo:sec:eff_temp_pert}
+    We intend to give a high-level analysis of the CMB power spectrum to be able to extract physics from it. For more details, see SITE HANS!
+
+    The equation for this quantity describes a driven harmonic oscillator, and going back to real space and ignoring the driving force, we obtain an equation for $\delta_\gamma(t, \vec{x})$ describing waves moving at the speed of sound $c_s=1/\sqrt{3}$. Further, it can be shown that $\left[\Theta_0 + \Psi\right](x, k) \propto \cos(ks(x))$ if we keep neglecting the driving force. A rough mapping $k\to \ell/\eta_0$ lets us predict the position of the peaks in $C(\ell)$,
+    \begin{equation}
+        \ell\ped{pk} \sim n \cross \frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
+    \end{equation}
+    Likewise, the throughs will be positioned at
+    \begin{equation}
+        \ell\ped{pk} \sim \left(n+\frac{1}{2}\right) \cross \frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
+    \end{equation}
+
+
+
+
+    
+
     
 
 
 
 \subsubsection{Matter power spectrum}
-    \textcolor{blue}{blah blah blah something something}
-    The dimensionless function \dots
+    The dimensionless function
     \begin{equation}\label{mil4:theo:eq:Delta_s_of_x_k}
         \Delta_s (x,k) = \delta_s(x,k) - \frac{3(1+w_s)\Hp(x)}{ck}u_s(x,k)
     \end{equation}
-
-    \begin{equation}\label{mil4:theo:eq:matter_power_spectrum}
-        P(x,k) = \abs{\Delta\ped{m}(x,k)}^2 P_\mathcal{R}(k)
+    is a gauge-invariant density perturbation used to measure the linear power spectrum of species $s$ at time $x$ and comoving wavenumber $k$. For the total (linear) matter power spectrum $P(k)$, we use
+    \begin{equation}
+    \begin{split}
+        \delta\ped{m}(x,k) &= \frac{\delta\ped{c}(x,k) \Omega\ped{c}(x) + \delta\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)} \\
+        u\ped{m}(x,k) &= \frac{u\ped{c}(x,k) \Omega\ped{c}(x) + u\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)}
+    \end{split}
     \end{equation}
+    in~\cref{mil4:theo:eq:Delta_s_of_x_k} to find
+    \begin{equation}\label{mil4:theo:eq:matter_power_spectrum}
+        P(x,k) = \abs{\Delta\ped{m}(x,k)}^2 P_\mathcal{R}(k).
+    \end{equation}
+    We focus on this spectrum today, $P(x\!=\!0,k)$. In short, this function is broad and has a turnover at $k\simeq k\ped{eq}$, i.e. $\max{P(0,k)} \simeq P(0,k\ped{eq})$. As density perturbations hardly grow inside the horizon in the radiation-dominated era, the small-scale power spectrum is suppressed relative to its large-scale counterpart. The largest scale for which we get suppression is represented by the $k$-mode that enters the horizon at matter-radiation equality---hence the peak at the equality scale.
+
+    \citet{DodelsonBook} shows that at late times, the approximation
+    \begin{equation}\label{mil4:theo:eq:dimless_matter_power_spectrum}
+        \Delta\ped{m}(x,k) = \frac{c^2k^2 \eu[x]}{\sfrac{3}{2} \OmgM H_0^2 } \Phi(x,k)\,; \quad x \gtrsim x\ped{\Lambda} ,\quad  k \gg \Hp(x)
+    \end{equation}
+    suffices when neglecting massive neutrinos. Thus, for the power spectrum today, we expect $P(0,k\!\ll\!k\ped{eq}) \propto k^4P_\mathcal{R}(k) \propto k^{\ns}$. 
+
+    \dots
+
+    A key feature of inflation is that it stretches the quantum fluctuations to cosmological scales, resulting in a nearly scale-invariant power spectrum (see~\cref{mil4:theo:eq:Delta_R_of_k}, where $\ns\approx 1$). 
+
+    We consider a single perturbation (a peak) of normal and matter and relativistic matter in real space at early times. Once photons decoupled from baryons and travelled freely, a spherical shell of baryonic matter surrounding our peak is dragged somewhat out from the sound horizon at decoupling before it remains in place. As time goes by, CDM starts to cluster around this shell. The linearity of the perturbations lets us imagine many such peaks with equally large shells of matter surrounding them. In Fourier space, this corresponds to oscillatory behaviour in $k$ of scale $\sim r_s$. Thus, we expect to see small oscillations in the small-scale part of the total matter power spectrum.
+    
+    
+    % That is to say, in the radiation-dominated era, radiation pressure hindered growth of overdensities, resulting in a relatively flat matter power spectrum.
+
+
 
 
     
