@@ -220,17 +220,15 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     The smallest contribution is the quadrupole term 
     \begin{equation}
-        \text{(pol)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right).
+        \text{(pol)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right),
     \end{equation}
     \end{subequations}
-
-
-    \dots \dots \dots
+    for which we do not have a statisfying physical intuition. In any case, this term will not provide any new insights in our polarisation-free neutrino-neglecting model.
 
 
 \subsubsection{Effective temperature perturbation}\label[sec]{mil4:theo:sec:eff_temp_pert}
-    We intend to give a high-level analysis of the CMB power spectrum to be able to extract physics from it. For more details, see SITE HANS!
-
+    We intend to give a high-level analysis of the CMB power spectrum to be able to extract physics from it. For more details, see~\citet{WintherIsComing} and~\citet{DodelsonBook}.
+    
     The equation for this quantity describes a driven harmonic oscillator, and going back to real space and ignoring the driving force, we obtain an equation for $\delta_\gamma(t, \vec{x})$ describing waves moving at the speed of sound $c_s=1/\sqrt{3}$. Further, it can be shown that 
     \begin{equation}
         \left[\Theta_0 + \Psi\right](x, k) \approx \left[\Theta_0 + \Psi\right](x\ped{init}, k)\cos(ks(x))
@@ -243,7 +241,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}
         \ell\ped{tr} \sim \left(n+\frac{1}{2}\right)\cross \pi\frac{\eta_0}{r_s}\, ; \quad n\in \mathbb{N}.
     \end{equation}
-    The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decomressed at this time. 
+    The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decompressed at this time. 
 
 
     We consider the effect of baryon loading. The slightly less simplified analysis gives
@@ -255,9 +253,13 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \end{equation}
     where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$. The offsat oscillations in $\Theta_\ell(0,k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed.
 
+    \dots
 
-
-
+    Recombination did not occur instantaneously, and as such, the photons bounce around the baryons during the short period it takes for the universe to recombine. Consider a photon in a sea of electrons. Should a random walk take said photon from one region of temperature perturbation scale to another, the photon will try to blend in with other photons, resulting in a mixed temperatures at the scales in question. For fluctuations with wavelength smaller than the mean comoving distance a photon travels of order
+    \begin{equation}
+        \lambda_D \sim \lambda\ped{mfp}\sqrt{n_e\sigma\ped{T}H^{-1}} = \frac{1}{\sqrt{n_e(x)\sigma\ped{T}\Hp(x) \eu[x]}},
+    \end{equation}
+    hot and cold photons will mix. As a result, the temperature perturbations are washed out for $k\gtrsim  k_D = 2\pi/\lambda_D$. We expect to see this as a \textit{damping tail} in the CMB power spectrum at particularly small scales.
 
 
     
@@ -292,9 +294,12 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     \dots
 
-    A key feature of inflation is that it stretches the quantum fluctuations to cosmological scales, resulting in a nearly scale-invariant power spectrum (see~\cref{mil4:theo:eq:Delta_R_of_k}, where $\ns\approx 1$). 
+    A key feature of inflation is that it stretches the quxantum fluctuations to cosmological scales, resulting in a nearly scale-invariant power spectrum (see~\cref{mil4:theo:eq:Delta_R_of_k}, where $\ns\approx 1$). 
 
     We consider a single perturbation (a peak) of normal and matter and relativistic matter in real space at early times. Once photons decoupled from baryons and travelled freely, a spherical shell of baryonic matter surrounding our peak is dragged somewhat out from the sound horizon at decoupling before it remains in place. As time goes by, CDM starts to cluster around this shell. The linearity of the perturbations lets us imagine many such peaks with equally large shells of matter surrounding them. In Fourier space, this corresponds to oscillatory behaviour in $k$ of scale $\sim r_s$. Thus, we expect to see small oscillations in the small-scale part of the total matter power spectrum.
+
+
+
     
     
     % That is to say, in the radiation-dominated era, radiation pressure hindered growth of overdensities, resulting in a relatively flat matter power spectrum.
