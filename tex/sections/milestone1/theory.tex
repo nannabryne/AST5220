@@ -95,20 +95,27 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
 
 
 \subsubsection{Distance measures}\label[sec]{mil1:theo:sec:distances}
-    Say we want to allow for the possibility of an open ($k=-1$) or closed ($k=+1$) universe, as opposed to the initial flatness ($k=0$) assumption. In spherical coordinates, the FRW line element (\cref{mil1:theo:eq:FRW}) is
+    Say we want to allow for the possibility of an open ($\kappa<0$) or closed ($\kappa>0$) universe, as opposed to the initial flatness ($\kappa=0$) assumption. In spherical coordinates, the FRW line element (\cref{mil1:theo:eq:FRW}) is
     \begin{equation}\label{mil1:theo:eq:FRW_spherical}
-        ds^2 = \eu^{2x} \left( -\diff\eta^2  + \frac{\diff r^2}{1-kr^2} + r^2\diff\theta^2+ r^2 \sin^2\!{\theta} \,\diff \phi^2 \right),
+        ds^2 = \eu^{2x} \left( -\diff\eta^2  + \frac{\diff r^2}{1-\kappa r^2} + r^2 d\varOmega^2  \right),
     \end{equation}
-    and $k=-\OmgK \sfrac{H_0^2}{c^2}$. Consider a radially moving ($\diff r<0;\, \diff\theta^2 = \diff\phi^2 =0$) photon ($d s^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$).~\cref{mil1:theo:eq:FRW_spherical} gives
+    where $d\varOmega^2 = \diff\theta^2+ \sin^2\!{\theta} \,\diff \phi^2$ and $\kappa\equiv -\OmgK \sfrac{H_0^2}{c^2}$. Consider a radial null curve, e.g. a radially moving ($\diff r<0;\, d\varOmega^2=0$) photon ($ds^2=0$) travelling from a distance $r$ at conformal time $\eta$ to reach Earth ($r=0$) today ($\eta=\eta_0$).~\cref{mil1:theo:eq:FRW_spherical} gives
     \begin{equation}\label{mil1:theo:eq:integral_for_r}
-        \int_r^0\dx{r'} \frac{-1}{\sqrt{1-kr'^2}}=  \int_{\eta}^{\eta_0}\dx{\eta'}
+        \int_r^0\dx{r'} \frac{-1}{\sqrt{1-\kappa r'^2}}=  \int_{\eta}^{\eta_0}\dx{\eta'}
     \end{equation}
     of which the right-hand side (r.h.s.) is the comoving distance $\chi= \eta_0-\eta$. We evaluate the left integral in~\cref{mil1:theo:eq:integral_for_r} and find
+    % \begin{equation}\label{mil1:theo:eq:r_of_chi}
+    %     r(\chi) = \begin{cases}
+    %         \chi \cdot \frac{\sin{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c\right) } }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\
+    %         \chi                                                                                     &\OmgK = 0\\
+    %         \chi \cdot \frac{\sinh{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c  \right)}}{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK > 0
+    %     \end{cases}.
+    % \end{equation}
     \begin{equation}\label{mil1:theo:eq:r_of_chi}
         r(\chi) = \begin{cases}
-            \chi \cdot \frac{\sin{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c\right) } }{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK < 0\\
+            \sin{\left(\sqrt{\abs{\kappa}}\chi\right) } /\sqrt{\abs{\kappa}}  &\OmgK < 0\\
             \chi                                                                                     &\OmgK = 0\\
-            \chi \cdot \frac{\sinh{\left(\sqrt{\abs{\OmgK}} H_0 \chi/c  \right)}}{\sqrt{\abs{\OmgK}} H_0 \chi/c } &\OmgK > 0
+            \sinh{\left(\sqrt{\abs{\kappa}}\chi\right) } /\sqrt{\abs{\kappa}}  &\OmgK > 0
         \end{cases}.
     \end{equation}
     

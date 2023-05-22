@@ -81,9 +81,15 @@
 % Color boxes?
 \newtcbox{\mybox}[1]{colback=blue!5!white, colframe=black, fonttitle=\bfseries, title={#1}}
 
+
+
+
 %.............................
 % tex shortcuts
 %.............................
+
+
+\newcommand{\subsubsubsec}[1]{\noindent\textbf{\textit{#1}}:}
 
 % notes to self:
 
@@ -155,9 +161,11 @@
 \renewcommand{\Phi}{\ensuremath{\varPhi}}   % metric pert.
 
 
+% things I cannot decide on...
+\newcommand{\ns}{\ensuremath{n\ped{s}}}             % scalar spectral index
+\newcommand{\As}{\ensuremath{\mathcal{A}\ped{s}}}   % primordial amplitude
+\newcommand{\sh}{\ensuremath{s_*}}                  % sound horizon at decoupling, s(x_*)
 
-\newcommand{\ns}{\ensuremath{n\ped{s}}} % scalar spectral index
-\newcommand{\As}{\ensuremath{\mathcal{A}\ped{s}}} % primordial amplitude
 
 
 % Density parameters (much used):
