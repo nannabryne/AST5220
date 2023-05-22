@@ -193,6 +193,13 @@ void RecombinationHistory::milestones(int nsteps){
 
   //  Print table
 
+  // (other things ...)
+  double x_star = xb;
+  double s_star = rs_of_x(x_star);
+  double sigma_star = s_star / cosmo->r_of_Chi(cosmo->Chi_of_x(x_star));
+  // double sigma_star = s_star * exp(x_star) / cosmo->dA_of_x(x_star);
+
+
   double conv = 1/Constants.s_per_Gyr*1e6;
   printf("______________________________________________________________________\n");
   printf("                            |      x           z             t       | \n");
@@ -205,8 +212,10 @@ void RecombinationHistory::milestones(int nsteps){
   printf(" %11.7f %11.3f %11.3f ka |\n", xb, cosmo->z_of_x(xb), cosmo->t_of_x(xb)*conv);
   printf("----------------------------------------------------------------------\n");
   printf("f-o abundance of free electrons today: %11.7e \n", Xe_of_x(x_0));
-  printf("sound horizon at decoupling:           %11.3f Mpc\n", rs_of_x(xb)/Constants.Mpc);
+  printf("sound horizon at decoupling:           %11.3f Mpc\n", s_star/Constants.Mpc);
+  printf("angular scale at decoupling:           %11.3f deg\n", sigma_star*180./M_PI);
   printf("----------------------------------------------------------------------\n");
+
 
   // printf("\nUsed %d+1 points in x-array from x=%.1f to x=%.1f.\n\n", nsteps, x_start, x_end);
 }

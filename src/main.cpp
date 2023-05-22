@@ -49,7 +49,8 @@ int main(int narg, char **argv){
     bool milestone1 = false;
     bool milestone2 = false;
     bool milestone3 = false;
-    bool milestone4 = true;
+    bool milestone4 = false;
+
 
 
     Utils::StartTiming("CMB");
@@ -148,6 +149,20 @@ int main(int narg, char **argv){
 
 
     }
+
+    // TESTING
+
+
+    BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+    cosmo2.solve(true, 1e5);
+    RecombinationHistory rec2(&cosmo2, Yp);
+    rec2.solve(true, 1e5, 1e5, 1e5);
+
+    // // Solve the perturbations
+    // Perturbations pert(&cosmo2, &rec2);
+    // pert.info();
+    // pert.solve();
+
 
     Utils::EndTiming("CMB");
 
