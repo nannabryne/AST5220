@@ -179,6 +179,8 @@ Evaluated at $x=x_0=0$, we find the expression for the angular CMB power spectru
 \end{equation}
 however, it is customary to present is in a scaled version $\mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} \TCMB^2 C(\ell)$.
 
+OR IS IT $\mathcal{D}(\ell) \equiv \ell (\ell +1) (2\pi)^{-1} (\TCMB\unit{[\text{\textmu} K]})^2 C(\ell)$???
+
 The cosmic variance is an unavoidable error in the estimation of $C(\ell)$, given by 
 \begin{equation}\label{mil4:theo:eq:cosmic_variance}
     \left( \frac{\Delta C(\ell)}{C(\ell)}\right)_\text{cosmic variance} = \sqrt{\frac{2}{2\ell +1}}.
@@ -245,7 +247,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}\label{mil4:theo:eq:theta0_psi_first}
         \left[\Theta_0 + \Psi\right](x, k) \approx \left[\Theta_0 + \Psi\right](x\ped{init}, k)\cos(ks(x))
     \end{equation}
-    if we keep neglecting the driving force. For fixed $x$, the $k$-modes that correspond to extrema follow a harmonic relationship $k_n= \pi/s(x)$. The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. A rough mapping from Fourier space to harmonic space, $k\mapsto \ell/\chi_*$ (assuming no curvature), implies a coherent series of acoustic peaks in $C(\ell)\leftsquigarrow  \cos^2{(k\sh)}$ at $\ell_n\approx n\ell\ped{pk}$, where $\ell\ped{pk}\equiv \pi \chi_*/\sh$. In the limit where $k\sh \ll 1$, the perturbation is frozen into its initial state. That is, for the largest scales in the CMB anisotropy where $\ell\ll \chi_*/\sh$, there should be no remnants of primordial acoustic oscillations. 
+    if we keep neglecting the driving force. For fixed $x$, the $k$-modes that correspond to extrema follow a harmonic relationship $k_n= \pi/s(x)$. The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. A rough mapping from Fourier space to harmonic space, $k\mapsto \ell \sim k\chi_*$ (assuming no curvature), implies a coherent series of acoustic peaks in $C(\ell)\leftsquigarrow  \cos^2{(k\sh)}$ at $\ell_n\approx n\ell\ped{pk}$, where $\ell\ped{pk}\equiv \pi \chi_*/\sh$. In the limit where $k\sh \ll 1$, the perturbation is frozen into its initial state. That is, for the largest scales in the CMB anisotropy where $\ell\ll \chi_*/\sh$, there should be no remnants of primordial acoustic oscillations. 
 
     The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a $k$-mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decompressed at this time. 
 
@@ -290,7 +292,8 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligable compared to that of the dark matter. In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g. $\Omega\ped{b0}/\OmgM$).
     
-    \subsubsubsec{Radiation driving} \dots
+    \subsubsubsec{Radiation driving} 
+    Radiation 
     
     \subsubsubsec{Diffusion damping}
     Recombination did not occur instantaneously, and as such, the photons bounce around the baryons during the short period it takes for the universe to recombine. Consider a photon in a sea of electrons. Should a random walk take said photon from one region of temperature perturbation scale to another, the photon will try to blend in with other photons, resulting in a mixed temperatures at the scales in question. For fluctuations with wavelength smaller than the mean comoving distance a photon travels of order
