@@ -379,9 +379,9 @@ def Milestone4():
 
     #   DO ALL THE PLOTTING
 
-    # PLOT4.TransferFunction(df_transfer)
+    PLOT4.TransferFunction(df_transfer)
     # PLOT4.CMBPowerSpectrum(df_Dell, df_obs_CMB)
-    PLOT4.MatterPowerSpectrum(df_power, df_obs_matter)
+    # PLOT4.MatterPowerSpectrum(df_power, df_obs_matter)
 
     plt.show()
 

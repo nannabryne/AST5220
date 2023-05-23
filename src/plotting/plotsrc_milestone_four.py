@@ -67,16 +67,17 @@ def TransferFunction(df, savefig=True):
         ell_list = []
 
         Theta_kw = dict(alpha=.7, lw=1.8)
+    
         for i, ell in enumerate(list(df.columns)):
             line, = ax1.plot(k, df[ell],  c=c[i],  **Theta_kw)
-            ax2.plot(k, df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
+            ax2.plot(k, (int(ell)*(int(ell)+1))*df[ell]*df[ell]/k, c=c[i],  **Theta_kw)
             ell_handles.append(line)
             ell_list.append(int(ell))
 
         ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell"), **Theta_kw)
         ax1.legend(**legend_box_kw)
 
-        ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_\ell" + "^2" + "/k"), **Theta_kw)
+        ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex("\ell(\ell+1)") +tex.Theta + "_\ell" + "^2" + "/k"), **Theta_kw)
         ax2.legend(**legend_box_kw)
 
         for ax in [ax1, ax2]:
@@ -100,8 +101,11 @@ def TransferFunction(df, savefig=True):
     
 
     ax1.set_ylim(-0.0066, 0.0066)
-    ax2.set_ylim(0, 2.1e-3)
+    ax2.set_ylim(0, 80)
     ax2.set_ylabel(tex(tex.unit(tex.inv("h")) + tex.unit("Mpc")))
+
+    # ax1.set_xscale("log")
+    # ax2.set_xscale("log")
 
     ax1.set_xlabel(k_axis_label)
     # ax2.set_xlabel(k_axis_label)
@@ -110,6 +114,7 @@ def TransferFunction(df, savefig=True):
     kmin2 = 0.001
     kmax1 = 0.14
     kmax2 = 0.069
+    kmax2 = 0.12
     ax1.set_xlim(kmin1, kmax1)
     ax2.set_xlim(kmin2, kmax2)
 
