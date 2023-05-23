@@ -153,21 +153,30 @@ int main(int narg, char **argv){
     // TESTING
 
 
-    BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-    cosmo2.solve(true, 1e5);
-    RecombinationHistory rec2(&cosmo2, Yp);
-    rec2.solve(true, 1e5, 1e5, 1e5);
+    BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+    // cosmo.info();
+    cosmo.solve(false, 1e5);
+    RecombinationHistory rec(&cosmo, Yp);
+    rec.solve(false, 1e5, 1e5, 1e5);
 
-    // // Solve the perturbations
-    // Perturbations pert(&cosmo2, &rec2);
+    // Solve the perturbations
+    Perturbations pert(&cosmo, &rec);
     // pert.info();
-    // pert.solve();
+    pert.solve();
 
+    PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
+    // power.info();
+    power.solve();
 
+    std::cout << "-------------------------------------------" << std::endl;
     Utils::EndTiming("CMB");
 
     return 0;
 }
+
+
+
+
 
 
 

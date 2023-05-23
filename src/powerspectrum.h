@@ -18,9 +18,9 @@ using Vector2D = std::vector<Vector>;
 class PowerSpectrum {
   private:
 
-    BackgroundCosmology *cosmo = nullptr;
-    RecombinationHistory *rec  = nullptr;
-    Perturbations *pert        = nullptr;
+    BackgroundCosmology *cosmo = nullptr;   // background
+    RecombinationHistory *rec  = nullptr;   // recombination history
+    Perturbations *pert        = nullptr;   // perturbations
 
     // Parameters defining the primordial power-spectrum
     double A_s        = 2.1e-9; // primordial amplitude
@@ -28,9 +28,9 @@ class PowerSpectrum {
     double kpivot_mpc = 0.05;   // fiducial scale
 
     // The k-values we compute Theta_ell(k) etc. for
-    const int n_k      = 100;
-    const double k_min = Constants.k_min;
-    const double k_max = Constants.k_max;
+    const int n_k        = 200;             // #k's to consider
+    const double k_min   = Constants.k_min; // minimum wavenumber k
+    const double k_max   = Constants.k_max; // maximum wavenumber k
     
     // The ells's we will compute Theta_ell and Cell for
     Vector ells{ 
@@ -41,74 +41,110 @@ class PowerSpectrum {
         900,  950,  1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 
         1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850, 
         1900, 1950, 2000};
-   
-    //=====================================================================
-    // [1] Create bessel function splines needed for the LOS integration
-    //=====================================================================
+
+    
+
+    // Normalisation factor without ell's
+    const double __normfactor_ish = 1. / (2.0 * M_PI) * pow(1e6 * cosmo->get_TCMB(), 2);
+
 
     // Splines of bessel-functions for each value of ell in the array above
-    std::vector<Spline> j_ell_splines;
-    
-    // Generate splines of bessel-functions for each ell needed
-    // to do the LOS integration
+    std::vector<Spline> j_ell_splines;  // j_ℓ(z) spline
+
+    // Splines of the reusult of the LOS integration
+    // Theta_ell(k) and ThetaE_ell(k) for polarization
+    std::vector<Spline> ThetaT_ell_of_k_spline;     // Θ_ℓ(0,k) spline
+
+    //  ... has to be a better way....
+    std::vector<Spline> tmp_ThetaT_ell_of_k_spline;
+
+
+    // Splines with the power-spectra
+    Spline Cell_TT_spline{"Cell_TT_spline"};
+    std::vector<Spline> Cell_decomp;
+   
+
+    /*
+    Workflow:
+        [1] Create bessel function splines needed for the LOS integration
+        [2] Do the line of sight integration and spline the result
+        [3] Integrate to get power-spectrum
+    */
+
+    /**
+     * @brief Generate splines of bessel-functions for each ell needed to do the LOS integration.
+     */
     void generate_bessel_function_splines();
     
-    //=====================================================================
-    // [2] Do the line of sight integration and spline the result
-    //=====================================================================
     
-    // Do LOS integration for all ells and all k's in the given k_array
-    // and for all the source functions (temperature, polarization, ...)
+    /**
+     * @brief Do LOS integration for all ells and all k's in the given k_array.
+     * @param k_array values to integrate over
+     */
     void line_of_sight_integration(Vector & k_array);
   
-    // Do the line of sight integration for a single quantity
-    // for all ells by providing a source_function(x,k) (can be temp, pol, ...)
+
+    /**
+     * @brief Do the line of sight integration for a single quantity for all ells.
+     * @param k_array values to integrate over
+     * @param source_function source function
+     * @return Θ_ℓ(0,k) 
+     */
     Vector2D line_of_sight_integration_single(
         Vector & k_array, 
         std::function<double(double,double)> &source_function);
     
-    // Splines of the reusult of the LOS integration
-    // Theta_ell(k) and ThetaE_ell(k) for polarization
-    std::vector<Spline> ThetaT_ell_of_k_spline;
-
-    //  ... has to be a better way....
-
-    std::vector<Spline> tmp_ThetaT_ell_of_k_spline;
-
-
     
-    //=====================================================================
-    // [3] Integrate to get power-spectrum
-    //=====================================================================
-    
-    // General method to solve for Cells (allowing for cross-correlations)
-    // For auto spectrum (C_TT) then call with f_ell = g_ell = Theta_ell
-    // For polarization C_TE call with f_ell = Theta_ell and g_ell = ThetaE_ell
+
+
+    /**
+     * @brief General method to solve for Cells (allowing for cross-correlations).
+     * @param log_k_array the log(k)-values to integrate over
+     * @param f_ell transfer function one   ( for us: Θ_ℓ(0,k) )
+     * @param g_ell transfer function two   ( for us: Θ_ℓ(0,k) )
+     * @return Cell 
+     */
     Vector solve_for_Cell(
         Vector & log_k_array,
         std::vector<Spline> & f_ell, 
         std::vector<Spline> & g_ell);
 
-    // Splines with the power-spectra
-    Spline Cell_TT_spline{"Cell_TT_spline"};
+    
 
-    Spline Cell_SW_spline{"Cell_Sachs_Wolfe"};
-    Spline Cell_ISW_spline{"Cell_integrated_Sachs_Wolfe"};
-    Spline Cell_Doppler_spline{"Cell_Doppler"};
-    Spline Cell_pol_spline{"Cell_polarisation"};
-
-    std::vector<Spline> Cell_decomp;
-
-
+    /**
+     * @brief Integrate a function F(z) using the trapezoidal rule for a uniform grid z.
+     * @param F integrand
+     * @param z_start lower limit in integration
+     * @param z_stop upper limit in integration
+     * @param dz step size in z-dir.
+     * @return result 
+     */
     double integrate_trapezoidal(std::function<double(double)> &F, double z_start, double z_stop, const double dz);
 
+    /**
+     * @brief Integrate a function F(z) using the trapezoidal rule for a uniform grid z.
+     * @param F integrand
+     * @param z_array the values of z to integrate over (must be linearly spaced)
+     * @return result
+     */
     double integrate_trapezoidal(std::function<double(double)> &F, Vector z_array);
 
 
   public:
 
-    // Constructors
+    // Constructors:
+
     PowerSpectrum() = delete;
+    /**
+     * @brief Create an instance of the PowerSpectrum-class with defined background, recombination history and perturbations.
+     * @param cosmo instance of the Backgroundcosmology-class, solved 
+     * @param rec instance of the RecombinationHistory-class, solved
+     * @param pert instance of the Perturbations-class, solved
+     * @param A_s primordial amplitude
+     * @param n_s scalar spectral index
+     * @param k_p pivot scale
+     * @return Perturbations-object
+    */
     PowerSpectrum(
         BackgroundCosmology *cosmo, 
         RecombinationHistory *rec, 
@@ -118,41 +154,107 @@ class PowerSpectrum {
         double kpivot_mpc);
     
     // Do all the solving: bessel functions, LOS integration and then compute Cells
+    // Methods:
+
+    /**
+     * @brief Do all the solving.
+     * @details [1] Bessel functions, [2] LOS integration and then [3] compute Cells
+     */
     void solve();
 
+    /**
+     * @brief Solve for C(ℓ) by component of the source function. Slow and stupid method...
+     */
     void solve_decomposed();
 
-    // The dimensionless primordial power-spectrum Delta = 2pi^2/k^3 P(k)
-    double primordial_power_spectrum(const double k) const;
 
-    // Get P(k,x) for a given x in units of (Mpc)^3
-    // double get_dark_matter_power_spectrum(const double x, const double k_mpc) const;
-    // double get_baryon_power_spectrum(const double x, const double k_mpc) const;
+
+    /**
+     * @brief Get the matter power spectrum by component.
+     * 
+     * @param x time point x = ln(a)
+     * @param k_mpc comoving wavenumber in Mpc^(-1)
+     * @param comp component key: 1 = CDM, 2 = baryons, 3 = photons
+     * @return P_s(k) 
+     */
     double get_matter_power_spectrum_comp(const double x, const double k_mpc, int comp) const;
+
+    /**
+     * @brief Get the total matter power spectrum P_m(x,k) in units of Mpc^3 h^(-3).
+     * @param x time point x = ln(a)
+     * @param k_mpc comoving wavenumber in Mpc^(-1)
+     * @return P_m(x,k)
+     */
     double get_matter_power_spectrum(const double x, const double k_mpc) const;
 
-    double get_primordial_spectrum(const double k_mpc) const;
+    /**
+     * @brief Get the primordial power spectrum P_R(k) in units of Mpc^3 h^(-3).
+     * @param k_mpc comoving wavenumber in Mpc^(-1)
+     * @return P_R(k)
+     */
+    double get_primordial_power_spectrum(const double k_mpc) const;
 
-
+    /**
+     * @brief Get the dimensionless primordial power spectrum Δ^2_R(k).
+     * @param k_mpc comoving wavenumber in Mpc^(-1)
+     * @return Δ^2_R(k)
+     */
     double Delta2_R_of_k(const double k) const;
 
+    /**
+     * @brief Get the primordial power spectrum P_R(k).
+     * @param k_mpc comoving wavenumber in Mpc^(-1)
+     * @return P_R(k)
+     */
     double P_R_of_k(const double k) const;
 
-    std::pair<double, double> get_matter_power_spectra(const double x, const double k_mpc) const;
 
-
-    // Get the quantities we have computed
+    /**
+     * @brief Get the CMB anisotropy spectrum C(ℓ).
+     * @param ell multipole moment ℓ
+     * @return C(ℓ)
+     */
     double get_Cell_TT(const double ell) const;
-    double get_Cell_TE(const double ell) const;
-    double get_Cell_EE(const double ell) const;
 
+    /**
+     * @brief Get the scaled CMB anisotropy spectrum D(ℓ).
+     * @param ell multipole moment ℓ
+     * @return D(ℓ) 
+     */
     double get_Dell(const double ell) const;
+
+    /**
+     * @brief Get the scaled CMB anisotropy spectrum D(ℓ) by component.
+     * @param ell multipole moment ℓ
+     * @param term component key: 1 = SW, 2 = ISW, 3 = Doppler, 4 = pol
+     * @return D(ℓ)^[comp]
+     */
     double get_Dell_comp(const double ell, const int term) const;
 
-    // Output Cells in units of l(l+1)/2pi (muK)^2
+
+    /**
+     * @brief Print some (not so) useful information about the class.
+     */
+    void info(); 
+
+
+    /**
+     * @brief Output D(ℓ) in units of (muK)^2.
+     * @param filename the scaled CMB anisotropy spectrum
+     */
     void output(const std::string filename) const;
+
+    /**
+     * @brief Output D(ℓ) in units of (muK)^2 by contributions from the different terms in the source function.
+     * @param filename name of file to be stored in output-directory
+     */
     void output_decomposed(const std::string filename) const;
 
+    /**
+     * @brief Output results for today as functions of wavenumber.
+     * @param filename the scaled CMB anisotropy spectrum
+     * @param for_ells the ℓ's for which we want Θ_ℓ(0,k)
+     */
     void output(const std::string filename, std::vector<int> & for_ells);
 };
 

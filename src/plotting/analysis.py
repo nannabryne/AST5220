@@ -341,9 +341,11 @@ def Milestone4():
                                  P=power_data[:,1], 
                                  P_c=power_data[:,2],
                                  P_b=power_data[:,3],
+                                 P_g=power_data[:,4],
                                  P_R=power_data[:,-1]))
 
-    Theta_ell = power_data[:,4:-1].T
+    ell_start_idx = 5
+    Theta_ell = power_data[:,ell_start_idx:-1].T
     Theta_dict = {f"{ells[i]:d}": Theta_ell[i] for i in range(len(ells))}
 
     df_transfer = pd.DataFrame(dict(k=power_data[:,0], **Theta_dict))
@@ -377,8 +379,8 @@ def Milestone4():
 
     #   DO ALL THE PLOTTING
 
-    PLOT4.TransferFunction(df_transfer)
-    PLOT4.CMBPowerSpectrum(df_Dell, df_obs_CMB)
+    # PLOT4.TransferFunction(df_transfer)
+    # PLOT4.CMBPowerSpectrum(df_Dell, df_obs_CMB)
     PLOT4.MatterPowerSpectrum(df_power, df_obs_matter)
 
     plt.show()

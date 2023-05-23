@@ -47,18 +47,7 @@ void Perturbations::integrate_perturbations(int nsteps_x, int npts_k){
   const int n_x = nsteps_x + 1;
   Vector x_array = Utils::linspace(x_start, x_end, n_x);
 
-  // // create helper splines:
-  // Vector dtau(n_x);
-  // Vector dtau_H(n_x);
-  // double x;
-  // for(int i; i<n_x; i++){
-  //   x = x_array[i]
-  //   dtau[i] = - rec->tau_of_x(x);
-  //   dtau_H[i] = dtau[i]/cosmo->Hp_of_x(x);
-
-
-  // }
-
+ 
   const int nn = n_x*n_k;
 
   Vector delta_c_array(nn);

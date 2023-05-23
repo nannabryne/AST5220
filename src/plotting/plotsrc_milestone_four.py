@@ -174,6 +174,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
     var = (np.sqrt( 2./(2.*ell+1.)) * df["D_ell"])
     ax.fill_between(ell, df["D_ell"]-var, df["D_ell"]+var, color=ColourCMB[-2], alpha=.1, ec="darkslategrey")
+
     
     #   components:
 
@@ -262,24 +263,34 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 def MatterPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots(figsize=(10,6))
 
+    Ps0 = lambda s="m": tex("P" + tex.ped("%s0"%(s)))
+    Pm0 = tex("P"+tex.ped("m0"))
+    Pm0 = Ps0()
+
+    k_arr = df["k"]
+
 
     ax.set_xscale("log")
     ax.set_yscale("log")
     # ax.get_yaxis().set_major_formatter(ticker.ScalarFormatter())
 
     # actual function:
-    ax.plot(df["k"], df["P"], c=ColourMatter[-1], label=tex("P"))
+    ax.plot(k_arr, df["P"], c=ColourMatter[-1], label=Pm0)
     ylims = ax.get_ylim()
     # ax.set_ylim(ylims)
 
     comp_kw = dict(c="darkslategrey", alpha=.3)
     comp_kw = dict(c=ColourMatter[-2], alpha=.3)
 
-    ax.plot(df["k"], df["P_c"], label=tex("P" + tex.ped("c")), **comp_kw)
-    ax.plot(df["k"], df["P_b"], label=tex("P" + tex.ped("b")), ls="--", **comp_kw)
+    # ped = lambda s: tex("\frac{\mathrm{%s}}{\mathrm{m}}0"%(s))
+    ped = lambda s: tex("\mathrm{%s}/\mathrm{m}0"%(s))
+    label = lambda s : tex("P_{%s}"%(ped(s)))
+    ax.plot(k_arr, df["P_c"], label=label("c"), **comp_kw)
+    ax.plot(k_arr, df["P_b"], label=label("b"), ls="--", **comp_kw)
 
     # # primordial:
     # ax.plot(df["k"], df["P_R"], c="darkslategrey", label=tex("P_\mathcal{R}"), alpha=.3)
+    
     
 
     # ks = 0.0144790*4
@@ -298,7 +309,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
     err = np.zeros((2,len(df_obs["k"])))
     err[0] = df_obs["err_down"]
     err[1] = df_obs["err_up"]
-    ax.errorbar(df_obs["k"], df_obs["P"], err, label=tex("P" + tex.ap("obs")), **obs_err_kw)
+    ax.errorbar(df_obs["k"], df_obs["P"], err, label=tex(Pm0 + tex.ap("obs")), **obs_err_kw)
 
     # vertical lines:
 
@@ -318,4 +329,15 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     if savefig:
         save("matter_power_spectrum")
-    
+
+
+
+    # fig, ax = plt.subplots()
+
+    # Pg_arr =df["P_g"]*k_arr**3 
+    # Pg_arr = Pg_arr/np.max(Pg_arr)
+    # rd = (k_arr>=k_eq)
+    # ax.plot(k_arr[rd], Pg_arr[rd])
+
+
+    # plt.show()
