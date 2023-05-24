@@ -108,16 +108,16 @@ clean:
 
 # Command to produce all plots (needs fix)
 plots: 
-	cd plotting && python3 analysis.py 
+	cd plotting && python3 analysis.py 4
 
 plots1:
-	cd plotting && python3 milestone_one.py
+	cd plotting && python3 analysis.py 1
 
 plots2:
-	cd plotting && python3 milestone_two.py
+	cd plotting && python3 analysis.py 2
 
 plots3:
-	cd plotting && python3 milestone_three.py
+	cd plotting && python3 analysis.py 3
 
 plots4:
-	cd plotting && python3 milestone_four.py
+	cd plotting && python3 analysis.py 4

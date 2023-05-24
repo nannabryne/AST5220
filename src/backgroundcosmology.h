@@ -31,6 +31,7 @@ class BackgroundCosmology{
   
     // Splines to be made:
     Spline eta_of_x_spline{"eta"};  // conformal time spline
+    Spline inv_eta_Mpc_of_x_spline{"eta_inv"};  // inverse conformal time spline in Mpc
     Spline t_of_x_spline{"t"};      // cosmic time spline
 
     // Helper functions:
@@ -285,6 +286,8 @@ class BackgroundCosmology{
     */
     double get_comoving_distance_of_x(double x) const;
 
+
+    double find_horizon_entry(double k_mpc, double x_min, double x_max);
 
     
 

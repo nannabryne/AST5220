@@ -60,6 +60,16 @@ void BackgroundCosmology::solve_conformal_time(int nsteps){
 
   eta_of_x_spline.create(x_array, sol, "eta");
 
+  Vector eta_inv(nsteps+1);
+  for(int i=0; i<=nsteps; i++){
+    eta_inv[i] = Constants.Mpc / sol[i];
+  }
+
+  inv_eta_Mpc_of_x_spline.create(x_array, eta_inv, "eta_inv");
+
+
+  
+
 }
 
 void BackgroundCosmology::solve_cosmic_time(int nsteps){
@@ -391,4 +401,18 @@ void BackgroundCosmology::output(const std::string filename) const{
   };
   std::for_each(x_array.begin(), x_array.end(), print_data);
 
+}
+
+
+
+// OTHER:
+
+double BackgroundCosmology::find_horizon_entry(double k_mpc, double x_min, double x_max){
+    // double k_inv = Constants.Mpc/k_mpc;
+    std::pair<double,double>xrange(x_min, x_max);
+    // double x_enter = Utils::binary_search_for_value(eta_of_x_spline, k_inv, xrange, 1e-20);
+    
+    double x_enter = Utils::binary_search_for_value(inv_eta_Mpc_of_x_spline, k_mpc, xrange);
+
+    return x_enter;
 }

@@ -138,9 +138,9 @@ def Milestone1():
 
 
     obs_data = read_ASCII("supernovadata", 1)   
-    z_obs = obs_data[:,0]   
-    dL_obs = obs_data[:,1]  
-    err_obs = obs_data[:,2]
+    # z_obs = obs_data[:,0]   
+    # dL_obs = obs_data[:,1]  
+    # err_obs = obs_data[:,2]
 
     obs_df = pd.DataFrame(dict(
         z  =  obs_data[:,0],
@@ -190,13 +190,13 @@ def Milestone2():
     rec = read_ASCII("recombination")
     rec_Saha = read_ASCII("recombination_Saha_only")
 
-    x_rec = -6.985
-    Xe_fo = 2.026e-4
+    # x_rec = -6.985
+    # Xe_fo = 2.026e-4
     INFO = dict(x_rec=-6.985, Xe_fo=2.026e-4)
 
 
     x, Xe = rec[:,0], rec[:,1]
-    x_Saha, Xe_Saha = rec_Saha[:,0], rec_Saha[:,1]
+    # x_Saha, Xe_Saha = rec_Saha[:,0], rec_Saha[:,1]
 
 
     # dunno
@@ -253,8 +253,10 @@ def Milestone3():
 
     import plotsrc_milestone_three as PLOT3
 
-    x_eq = -8.132   # RM-equality
+    # x_eq = -8.132   # RM-equality
+    x_eq = -8.66    # RM-equality
     x_rec = -6.985  # recombination onset
+    x_Lambda = -0.256
 
     PLOT3.INIT(x_eq, x_rec)
 
@@ -280,6 +282,7 @@ def Milestone3():
 
 
     k_list = [0.001, 0.01, 0.1]
+    k_enter_list = [-5.2, -8.5, -11.]
     df_list = []
 
     for k in k_list:
@@ -296,7 +299,8 @@ def Milestone3():
                 val_str   = [str(k) for k in k_list],
                 colour    = k_colour(),
                 value     = k_list,
-                value_SI  = [k/const.Mpc for k in k_list])
+                value_SI  = [k/const.Mpc for k in k_list],
+                x_enter   = k_enter_list)
 
 
     PLOT3.VelocityPerturbations(df_list, k_dict)
@@ -318,6 +322,8 @@ def Milestone4():
 
     import plotsrc_milestone_four as PLOT4
 
+    PLOT4.INIT(0.0115, 0.67)
+
 
     C_ell_data = read_ASCII("dells_decomp.txt")
     C_ell_data_pure = read_ASCII("dells.txt")
@@ -328,8 +334,23 @@ def Milestone4():
                                 D_ell_ISW=C_ell_data[:,3],
                                 D_ell_Doppler=C_ell_data[:,4],
                                 D_ell_pol=C_ell_data[:,5]))
+    
 
+    Dell_copy = C_ell_data_pure[:,1]
+    ell_copy = np.array(C_ell_data_pure[:,0], dtype=int)
+    ell1 = ell_copy[np.nanargmax(Dell_copy)]
+    ell2 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>400) & (ell_copy<600)])][0]
+    ell3 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>600)])][0]
 
+    # damping tail:
+
+    ell4 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>900) & (ell_copy<1120)])][0]
+    ell5 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>1120) & (ell_copy<1450)])][0]
+    ell6 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>1450) & (ell_copy<1710)])][0]
+    ell7 = ell_copy[Dell_copy == np.max(Dell_copy[(ell_copy>1710)])][0]
+
+    print(f"ell1 = {ell1}, ell2 = {ell2}, ell3 = {ell3}")
+    print(f"ell4 = {ell4}, ell5 = {ell5}, ell6 = {ell6}, ell7 ={ell7}")
 
 
     power_data = read_ASCII("power.txt")
@@ -380,8 +401,8 @@ def Milestone4():
     #   DO ALL THE PLOTTING
 
     PLOT4.TransferFunction(df_transfer)
-    # PLOT4.CMBPowerSpectrum(df_Dell, df_obs_CMB)
-    # PLOT4.MatterPowerSpectrum(df_power, df_obs_matter)
+    PLOT4.CMBPowerSpectrum(df_Dell, df_obs_CMB)
+    PLOT4.MatterPowerSpectrum(df_power, df_obs_matter)
 
     plt.show()
 
@@ -393,23 +414,14 @@ def Milestone4():
 
 if __name__ == "__main__":
 
+    try:
+        milestones  = [int(n) for n in sys.argv[1:]]
+    except ValueError:
+        # assume all ...
+        milestones = [1,2,3,4]
 
-    # n_milestones = len(sys.argv[1:])
-    
 
-    milestoneI, milestoneII, milestoneIII, milestoneIV = False, False, False, False 
-
-    milestoneIV = True
-
-    if milestoneI:
-        Milestone1()
-    if milestoneII:
-        Milestone2()
-    if milestoneIII:
-        Milestone3()
-    if milestoneIV:
-        Milestone4()
-    
-    plt.show()
-
+    for n in milestones:
+        eval(f"Milestone{n}()")
+        plt.show()
 

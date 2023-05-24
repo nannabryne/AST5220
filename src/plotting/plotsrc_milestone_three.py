@@ -10,19 +10,19 @@ def INIT(x_RM_equality, x_recombination):
     x_eq = x_RM_equality
     x_rec = x_recombination
 
-    global x_eq_args0, x_eq_args1, x_rec_args0, x_rec_args1, x_eq_rec_args0, x_eq_rec_args1
+    # global x_eq_args0, x_eq_args1, x_rec_args0, x_rec_args1, x_eq_rec_args0, x_eq_rec_args1
 
-    # for only eq:
-    x_eq_args0  = dict(x_list=[x_eq], x_label_list=[tex("x" + tex.ped("eq"))], style="-.", top=True)
-    x_eq_args1  = dict(x_list=[x_eq], style="-.")
+    # # for only eq:
+    # x_eq_args0  = dict(x_list=[x_eq], x_label_list=[tex("x" + tex.ped("eq"))], style="-.", top=True)
+    # x_eq_args1  = dict(x_list=[x_eq], style="-.")
 
-    # for only rec:
-    x_rec_args0 = dict(x_list=[x_rec], x_label_list=[tex("x" + tex.ped("*"))], style="-.", top=True)
-    x_rec_args1 = dict(x_list=[x_rec], style="-.")
+    # # for only rec:
+    # x_rec_args0 = dict(x_list=[x_rec], x_label_list=[tex("x" + tex.ped("*"))], style="-.", top=True)
+    # x_rec_args1 = dict(x_list=[x_rec], style="-.")
 
-    # for both:
-    x_eq_rec_args0  = dict(x_list=[x_eq, x_rec], x_label_list=[tex("x" + tex.ped("eq")), tex("x" + tex.ped("*"))], style="-.", top=True)
-    x_eq_rec_args1  = dict(x_list=[x_eq, x_rec], style="-.")
+    # # for both:
+    # x_eq_rec_args0  = dict(x_list=[x_eq, x_rec], x_label_list=[tex("x" + tex.ped("eq")), tex("x" + tex.ped("*"))], style="-.", top=True)
+    # x_eq_rec_args1  = dict(x_list=[x_eq, x_rec], style="-.")
 
 
 
@@ -49,6 +49,30 @@ def __set_k_label(fig, handles, k_dict, loc="center right"):
 
 
 
+def __vertical_lines(ax, k_dict, labels_on=True):
+
+    pinpoint_args = dict(x_list=[(x_eq-.1, x_eq+.22), (x_rec-0.12, x_rec+0.22)], top=True, alpha=.12, style=None)
+
+    if labels_on:
+        pinpoint_args["x_label_list"] = [tex("\sim x" + tex.ped("eq")), tex("\sim x" + tex.ped("*"))]
+
+    pinpoint_span_x(ax, **pinpoint_args)
+
+    # line_kw = dict(alpha=.9, lw=1.9, dashes=(0.3, 1.2), gapcolor="w")
+    # line_kw = dict(alpha=.9, marker="o", picker=0.1)       
+    for i in range(len(k_dict["value"])):
+        # ax.axvline(k_dict["x_enter"][i], color=k_dict["colour"][i], **line_kw)
+        x_enter = k_dict["x_enter"][i]
+        pad_x = 0.07
+        hatch = "----"
+        hatch = "/////"
+        ax.axvspan(x_enter-pad_x, x_enter+pad_x, color=k_dict["colour"][i], ec=None, alpha=.5, hatch=hatch)
+
+
+
+
+
+
 def __MatterPerturbations(which, df_list, k_dict):
 
     fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,6), gridspec_kw=gs_kw0)
@@ -71,9 +95,9 @@ def __MatterPerturbations(which, df_list, k_dict):
         
         ax2.plot(df["x"], df[f"{which}gamma"], c=k_dict["colour"][i], **gg_kw)
         k_handles.append(line)
-    
-    pinpoint_x(ax1, **x_eq_rec_args1)
-    pinpoint_x(ax2, **x_eq_rec_args0)
+
+    __vertical_lines(ax1, k_dict, False)
+    __vertical_lines(ax2, k_dict, True)
         
     if which == "delta":
         which = "\delta"
@@ -145,13 +169,13 @@ def PhotonQuadrupole(df_list, k_dict, savefig=True):
         k_handles.append(line)
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Theta + "_2"), **Theta2_kw)
-    pinpoint_x(ax, **x_eq_rec_args0)
+    __vertical_lines(ax, k_dict, True)
     legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
     ax.legend(**legend_kw)
 
     __set_k_label(fig, k_handles, k_dict, "upper right")
     ax.set_xlabel(tex.x)
-    ax.set_xlim(-10,0)
+    ax.set_xlim(-11.2,0)
     
 
 
@@ -177,8 +201,9 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
         ax2.plot(df["x"], (df["Phi"] + df["Psi"])*kval*kval, c=k_dict["colour"][i], **Phi_Psi_kw)
         k_handles.append(line)
     
-    pinpoint_x(ax1, **x_eq_rec_args1)
-    pinpoint_x(ax2, **x_eq_rec_args0)
+
+    __vertical_lines(ax1, k_dict, False)
+    __vertical_lines(ax2, k_dict, True)
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
     ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Psi + "+" + tex.Phi), **Phi_Psi_kw)

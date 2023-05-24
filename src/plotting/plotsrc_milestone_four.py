@@ -22,7 +22,11 @@ k_axis_label = tex("k" + tex.unit("[h") + tex.unit(tex.inv("Mpc"))+"]" )
 # k_axis_label = tex("k" + tex.unit("[" + tex("h") + tex.inv("Mpc")+"]") )
 klims0 = (0.001, 0.08)
 
-k_eq = 0.0115/0.67
+
+def INIT(equality_scale, hubble_constant=0.67):
+    global k_eq, h0
+    h0 = hubble_constant
+    k_eq = equality_scale
 
 
 
@@ -101,7 +105,7 @@ def TransferFunction(df, savefig=True):
     
 
     ax1.set_ylim(-0.0066, 0.0066)
-    ax2.set_ylim(0, 80)
+    ax2.set_ylim(0, 40)
     ax2.set_ylabel(tex(tex.unit(tex.inv("h")) + tex.unit("Mpc")))
 
     # ax1.set_xscale("log")
@@ -114,7 +118,7 @@ def TransferFunction(df, savefig=True):
     kmin2 = 0.001
     kmax1 = 0.14
     kmax2 = 0.069
-    kmax2 = 0.12
+    kmax2 = 0.07
     ax1.set_xlim(kmin1, kmax1)
     ax2.set_xlim(kmin2, kmax2)
 
@@ -318,7 +322,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     # vertical lines:
 
-    pinpoint_x(ax, [k_eq], [tex("k" + tex.ped("eq") )])
+    pinpoint_x(ax, [k_eq/h0], [tex("k" + tex.ped("eq") )])
 
     # --------
 

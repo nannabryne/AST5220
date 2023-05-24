@@ -158,6 +158,29 @@ def pinpoint_x(ax, x_list, x_label_list=None, colour="slategrey", style=":", wid
         ax.set_xticks(x_list, labels=x_label_list, minor=True)
 
 
+def pinpoint_span_x(ax, x_list, x_label_list=None, colour="slategrey", style="////", width=0, alpha=.5, top=False, tick=True, line=True):
+    if x_label_list is None:
+        tick = False
+
+    if line: # span
+        span_kw = dict(color=colour, lw=.1, hatch=style, alpha=alpha, ec=None)
+        for x in x_list:
+            ax.axvspan(x[0], x[1], **span_kw)
+
+    if tick:
+        if top:
+            tick_kw = dict(reset=True, direction="out", color=colour, labelcolor=colour, top=False, bottom=False, labeltop=True, labelbottom=False)
+        else:
+            tick_kw = dict(reset=True, direction="out", color=colour, labelcolor=colour, top=False, bottom=False, labeltop=False, labelbottom=True)
+            
+        ax.xaxis.set_tick_params("minor", **tick_kw)
+
+        x_mid_list = [x[0] + (x[1]-x[0])/2 for x in x_list]
+        ax.set_xticks(x_mid_list, labels=x_label_list, minor=True)
+    
+
+    
+
 
 def pinpoint_y(ax, y_list, y_label_list, colour="slategrey", style=":", width=.9, alpha=.5, right=False):
     line_kw = dict(color=colour, lw=width, ls=style, alpha=alpha)

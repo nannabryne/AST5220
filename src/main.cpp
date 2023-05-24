@@ -155,18 +155,29 @@ int main(int narg, char **argv){
 
     BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
     // cosmo.info();
-    cosmo.solve(false, 1e5);
+    cosmo.solve(true, 1e4);
     RecombinationHistory rec(&cosmo, Yp);
-    rec.solve(false, 1e5, 1e5, 1e5);
+    rec.solve(true, 1e5, 1e5, 1e5);
+
+
+
+    std::cout << "k/Mpc = 0.1:   " << cosmo.find_horizon_entry(0.1, -13, -8) << std::endl;
+    std::cout << "k/Mpc = 0.01:  " << cosmo.find_horizon_entry(0.01, -11, -6) << std::endl;
+    std::cout << "k/Mpc = 0.001: " << cosmo.find_horizon_entry(0.001, -8, -3) << std::endl;
+
+
 
     // Solve the perturbations
     Perturbations pert(&cosmo, &rec);
     // pert.info();
     pert.solve();
 
+
+
     PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
     // power.info();
-    power.solve();
+    // power.solve();
+
 
     std::cout << "-------------------------------------------" << std::endl;
     Utils::EndTiming("CMB");
