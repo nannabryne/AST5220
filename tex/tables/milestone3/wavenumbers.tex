@@ -1,7 +1,7 @@
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l *{1}{d{1.4}} *{1}{d{3.3}} *{1}{d{3.3}} }
     \toprule
     % & \multicolumn{3}{c}{Time of event} \\
-    & \multicolumn{1}{c}{$k\unit{[Mpc^{-1}]}$} & \multicolumn{1}{c}{$k/k_1$} & \multicolumn{1}{c}{$x\,| \,k\eta(x)\stackrel{!}{=}1$} \\
+    & \multicolumn{1}{c}{$k\unit{[Mpc^{-1}]}$} & \multicolumn{1}{c}{$k/k_1$\tablefootmark{a}} & \multicolumn{1}{c}{$x\,| \,k\eta(x)\stackrel{!}{=}1$} \\
     \midrule
     $k_l$ ($\leadsto$ large scales)         & 0.001 & 0.052 & -10.98  \\
     $k_i$ ($\leadsto$ intermediate scales)  & 0.01  & 0.52 & -8.490  \\
@@ -13,10 +13,14 @@
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l r}
     Sound horizon at decoupling:    & $\sh = 164.0\unit{Mpc}$\\
     Comoving distance at decoupling:& $\chi_* =  13.94  \unit{Gpc}$\\
-    Fundamental mode:               & $k_1=\pi/\sh = 191.6 \unit{Gpc^{-1}}$ \\
-    Fundamental tone:               & $\ell\ped{pk}=\chi_* k_1 \approx 267 $ \\
+    Fundamental mode:\tablefootmark{a}               & $k_1 =191.6 \unit{Gpc^{-1}}$ \\
+    Fundamental tone:\tablefootmark{b}               & $\ell\ped{pk} \approx 267 $ \\
     \bottomrule
 \end{tabular*}
+\tablefoot{The top panels show useful dimesions for the modes we consider. The bottom panel lists values that will be useful when analysing and predicting the results. All values are computed with $N\ped{eff}=0$. \\
+    \tablefoottext{a}{$k_1\equiv\pi/\sh$ is the fundamental Fourier mode. }
+    \tablefoottext{b}{$\ell\ped{pk}\equiv\chi_* k_1$ is related to the (loosly defined) fundamental tone $\ell_1\approx n\ell\ped{pk}$, which locates the first peak of the CMB power spectrum.}
+}
 
 % \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l *{1}{d{1.4}} *{1}{d{3.3}} *{1}{d{3.3}} }
 %     \toprule

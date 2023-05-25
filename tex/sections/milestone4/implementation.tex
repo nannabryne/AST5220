@@ -38,7 +38,7 @@ To generate the spherical Bessel functions, we utilised the functionalities of G
 
 % LOS INTEGRATION
 \paragraph*{(2)} 
-For the computation of $\Theta_\ell(0,k)$, we designed a grid of $\ell$, $k$ and $x$-values. Naturally, we considered $\ell \in L$. The resolution for $k\in [k\ped{min},\,k\ped{max}]$ will be addressed shortly. The integration in~\cref{mil4:theo:eq:los_integration} was started from $x=-8.3$ with step size $\Delta x= 2\pi/n\ped{samp}$ in~\cref{mil4:imp:eq:trapezoidal_uniform}. This time we used $n\ped{samp}=500$. 
+For the computation of $\Theta_\ell(0,k)$, we designed a grid of $\ell$-, $k$- and $x$-values. Naturally, we considered $\ell \in L$. The resolution for $k\in [k\ped{min},\,k\ped{max}]$ will be addressed shortly. The integration in~\cref{mil4:theo:eq:los_integration} was started from $x=-8.3$ with step size $\Delta x= 2\pi/n\ped{samp}$ in~\cref{mil4:imp:eq:trapezoidal_uniform}. This time we used $n\ped{samp}=500$. 
 
 % C(\ell) COMPUTATION
 \paragraph*{(3)}
@@ -46,4 +46,13 @@ We solved~\cref{mil4:theo:eq:C_of_ell_final} for $C(\ell\in L)$ using the trapez
 \begin{equation}
     C(\ell) = 4\pi \int_{\ln{k\ped{min}}}^{\ln{k\ped{max}}} \dx{\ln{k}} \abs{\Theta_\ell(0,k)}^2 \Delta_\mathcal{R}^2(k)
 \end{equation}
-with a fixed step size $\Delta\!\ln{k}$. \textcolor{blue}{EXPLAIN k-ARRAY}
+with a fixed step size $\Delta\!\ln{k}$, determined by the sampling
+\begin{equation}
+    \eta_0 \Delta k \stackrel{!}{=} \frac{2\pi}{n\ped{samp}} \leadsto N_k = \frac{k\ped{max}-k\ped{min}}{\Delta k}\stackrel{!}{=} N_{\ln{k}} = \frac{\ln{k\ped{max}}-\ln{k\ped{min}}}{\Delta \!\ln{k}}.
+\end{equation} 
+In this case, we used $n\ped{samp}=32$. We interpolated over $L$ to find $C(\ell \in \mathcal{L})$.
+
+
+
+\subsubsection{Parallelisation}
+    A large part of these computations are independent and could therefore be executed in parallel. We applied OpenMP parallelisation to all three jobs, improving their individual performances significantly. The details will not be discussed in this paper.
