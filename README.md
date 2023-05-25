@@ -58,7 +58,7 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`. T
 # <mark>TO DO:
 ## Makefile
 - [ ] Create a makefile in parent directory (this)
-- [ ] Fix precompiled headers!
+- [x] Fix precompiled headers!
 ## Plotting
 - [x] Clean up plotting code: get sensible structure etc.
 - [ ] Decide on style: time to give up on seaborn darkgrid (I think I am ready for a more professional style? Mom come pick me up I am scared)
@@ -70,11 +70,13 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`. T
 - [ ] Structural changes
 - [x] (M1) What happened to the luminosity distance????
 - [x] Review after feedback from M1
-- [ ] Review after feedback from M2
+- [x] Review after feedback from M2
+- [ ] Review after feedback from M3
 ## Report
 - [x] Write figure captions
 - [ ] Review after feedback from M1
 - [ ] Review after feedback from M2
+- [ ] Review after feedback from M3
 ## Readme
 - [ ] Complete list of prerequisites 
 - [ ] Structural changes
