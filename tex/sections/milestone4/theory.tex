@@ -8,10 +8,19 @@
 
 
 
+The power spectrum, denoted $P(\vec{k})$, is defined as the Fourier transform of the two-point correlation function, denoted $\xi(\vec{x})$. That is
+\begin{equation}
+    \xi(\vec{x}) = \int \dkkk  \eu[\im \vec{k}\cdot \vec{x}] P(\vec{k}),
+\end{equation}
+and by performing a Henkel transform we get
+\begin{equation}
+    \xi(r) = \int\dx{k}\frac{k^2}{2\pi^2} \frac{\sin(kr)}{kr} P(k) = \int\!\!\frac{\diff k}{k} \frac{\sin(kr)}{kr} \frac{k^3P(k)}{2\pi^2},
+\end{equation}
+where $r=\abs{\vec{x}}$.
 
 
-
-A small notational note: To not be overwhelmed by notation in this section, we let $t$ be the time variable in real space and $x$ the time variable in Fourier space, such that in general,
+\paragraph{Notational note} 
+To not be overwhelmed by notation in this section, we let $t$ be the time variable in real space and $x$ the time variable in Fourier space, such that in general,
 \begin{equation}
     f(t, \vec{x}) = \int \dkkk f(x, \vec{k}).
 \end{equation}
@@ -299,7 +308,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}
         \lambda_D \sim \lambda\ped{mfp}\sqrt{n_e\sigma\ped{T}H^{-1}} = \frac{1}{\sqrt{n_e(x)\sigma\ped{T}\Hp(x) \eu[x]}},
     \end{equation}
-    hot and cold photons will mix. As a result, the temperature perturbations are washed out for $k\gtrsim  k_D = 2\pi/\lambda_D$. We expect to see this as a \textit{damping tail} in the CMB power spectrum at particularly small scales.
+    hot and cold photons will mix. As a result, the temperature perturbations are washed out for $k\gtrsim  k_D = 2\pi/\lambda_D$. We expect to see this as a \textit{damping tail} in the CMB power spectrum at particularly small scales. %The mean free path of the photons $\lambda\ped{mfp}$ grows extremely fast in this era, so at some point immediately beyond the last scattering surface, 
 
 
     
@@ -328,7 +337,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     \citet{DodelsonBook} shows that at late times, the approximation
     \begin{equation}\label{mil4:theo:eq:dimless_matter_power_spectrum}
-        \Delta\ped{m}(x,k) = \frac{c^2k^2 \eu[x]}{\sfrac{3}{2} \OmgM H_0^2 } \Phi(x,k)\,; \quad x \gtrsim x\ped{\Lambda} ,\quad  k \gg \Hp(x)
+        \Delta\ped{m}(x,k) = \frac{c^2k^2 \eu[x]}{\sfrac{3}{2} \OmgM H_0^2 } \Phi(x,k)\,; \quad x \gtrsim x\ped{\Lambda} ,\quad  k \gg \Hp(x),
     \end{equation}
     suffices when neglecting massive neutrinos. Thus, for the power spectrum today, we expect $P\ped{m0}(k\!\ll\!k\ped{eq}) \propto k^4P_\mathcal{R}(k) \propto k^{\ns}$. 
 
