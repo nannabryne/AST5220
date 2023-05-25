@@ -197,7 +197,12 @@ void RecombinationHistory::milestones(int nsteps){
   double x_star = xb;
   double s_star = rs_of_x(x_star);
   double sigma_star = s_star / cosmo->r_of_Chi(cosmo->Chi_of_x(x_star));
+
+  double chi_star = cosmo->get_comoving_distance_of_x(x_star);
   // double sigma_star = s_star * exp(x_star) / cosmo->dA_of_x(x_star);
+
+  double k1 = M_PI/s_star;
+  double ell_pk = chi_star*k1;
 
 
   double conv = 1/Constants.s_per_Gyr*1e6;
@@ -213,7 +218,10 @@ void RecombinationHistory::milestones(int nsteps){
   printf("----------------------------------------------------------------------\n");
   printf("f-o abundance of free electrons today: %11.7e \n", Xe_of_x(x_0));
   printf("sound horizon at decoupling:           %11.3f Mpc\n", s_star/Constants.Mpc);
+  printf("com. dist. horizon at decoupling:      %11.3f Mpc\n", chi_star/Constants.Mpc);
   printf("angular scale at decoupling:           %11.3f deg\n", sigma_star*180./M_PI);
+  printf("fundamental mode:                      %11.7e Mpc^{-1}\n", k1*Constants.Mpc);
+  printf("fundamental tone:                      %11.0f \n", ell_pk);
   printf("----------------------------------------------------------------------\n");
 
 

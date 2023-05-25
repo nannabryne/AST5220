@@ -113,12 +113,11 @@ def TransferFunction(df, savefig=True):
 
     ax1.set_xlabel(k_axis_label)
     # ax2.set_xlabel(k_axis_label)
-
-    kmin1 = 0.001
-    kmin2 = 0.001
-    kmax1 = 0.14
-    kmax2 = 0.069
-    kmax2 = 0.07
+    # print(np.min(k))
+    kmin1 = 1e-5
+    kmin2 = 1e-3
+    kmax1 = 0.15
+    kmax2 = 0.12
     ax1.set_xlim(kmin1, kmax1)
     ax2.set_xlim(kmin2, kmax2)
 
@@ -128,7 +127,7 @@ def TransferFunction(df, savefig=True):
 
     con_kw = dict(color=plt.rcParams["axes.facecolor"], linestyle="--", alpha=.9, linewidth=1.1)
 
-    con_l = ConnectionPatch(xyA=(kmin1,1), coordsA=ax2.get_xaxis_transform(), 
+    con_l = ConnectionPatch(xyA=(0,1), coordsA=ax2.transAxes, 
                             xyB=(kmin2,0), coordsB=ax1.get_xaxis_transform(),
                             **con_kw)
 
@@ -145,6 +144,28 @@ def TransferFunction(df, savefig=True):
     for ax in [ax1, ax2]:
         ax.axvline(kmin2, **line_kw)
         ax.axvline(kmax2, **line_kw)
+
+    # temp:
+    k1 = 0.01916/0.67
+    # n_list = range(1,4)
+    ax2.xaxis.set_major_locator(ticker.MultipleLocator(k1))
+    ax2.xaxis.set_minor_locator(ticker.MultipleLocator(k1/2))
+
+    @ticker.FuncFormatter
+    def formatter(k, pos):
+        val = k/k1
+        c_val = np.ceil(val)
+        if abs(c_val-val) < 1e-4:
+            s = "k_{%.0f}" %val
+        else:
+            s = "k_{%.0f}/2" %val
+        return tex(s)
+    
+    ax2.xaxis.set_major_formatter(formatter)
+    # ax2.xaxis.set_minor_formatter(formatter)
+    
+
+    # pinpoint_x(ax2, [n*k1 for n in n_list], [tex("k_%d"%n) for n in n_list], line=False, width=0)
 
 
     # plot actual functions:

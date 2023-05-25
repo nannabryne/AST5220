@@ -51,7 +51,7 @@ def __set_k_label(fig, handles, k_dict, loc="center right"):
 
 def __vertical_lines(ax, k_dict, labels_on=True):
 
-    pinpoint_args = dict(x_list=[(x_eq-.1, x_eq+.22), (x_rec-0.12, x_rec+0.22)], top=True, alpha=.12, style=None)
+    pinpoint_args = dict(x_list=[(x_eq-.1, x_eq+.22), (x_rec-0.14, x_rec+0.26)], top=True, alpha=.12, style=None)
 
     if labels_on:
         pinpoint_args["x_label_list"] = [tex("\sim x" + tex.ped("eq")), tex("\sim x" + tex.ped("*"))]
