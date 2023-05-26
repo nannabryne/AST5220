@@ -26,11 +26,11 @@ The aforementioned equations originate from the Boltzmann equation, which can ta
 \end{equation}
 for a reaction $(1) + (2) \getsto (3) + (4)$, where $n_j$ ($n_j^{(0)}$) denotes the (equilibrium) number density of $j=1,2,3,4$. The interaction rate $\Gamma_1 = n_2 \langle\sigma v\rangle$ depends on the thermally averaged cross-section $\langle\sigma v\rangle$ that we get from quantum field theory (QFT). We provide a qualitative discussion of this equation below.
 
-If $\Gamma_1 \gg \Hp\eu^{-x}$ (recall: $\Hp(x)\eu^{-x}= H$, the expansion rate of the universe), the rate at which the interaction is happening is large enough to keep up with the expansion of the surroundings, and the system is driven towards equilibrium ($n_j = n_j^{(0)}$). When the interactions are sufficiently efficient, we will have equilibrium and the bracket in \cref{mil2:theo:eq:Boltzmann} goes to zero. This is how the Saha equation arises. One may wonder why we consider this approximation at all when we have a completely fine ODE. However, in numerical analysis, the subtraction in said bracket may result in a ``catastrophic cancellation'', hence the Saha approximation for the equilibrium case is necessary.
+If $\Gamma_1 \gg \Hp\eu^{-x}$ (recall: $\Hp(x)\eu^{-x}= H$, the expansion rate of the universe), the rate at which the interaction is happening is large enough to keep up with the expansion of the surroundings, and the system is driven towards equilibrium ($n_j = n_j^{(0)}$). When the interactions are sufficiently efficient, we will have equilibrium and the bracket in~\cref{mil2:theo:eq:Boltzmann} goes to zero. This is how the Saha equation arises. One may wonder why we consider this approximation at all when we have a completely fine ODE. However, in numerical analysis, the subtraction in said bracket may result in a ``catastrophic cancellation'', hence the Saha approximation for the equilibrium case is necessary.
 
 Once $\Gamma_1 \sim \Hp\eu^{-x}$, the interaction rate is comparable to the expansion rate and this dynamic equilibrium is no longer upheld. We say that the particles involved \textit{decouple} from the primordial plasma. After decoupling, a species evolves independently.
 
-When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of \cref{mil2:theo:eq:Boltzmann} is practically zero and $n_1$ goes as $\eu^{-3x}$, meaning that the number density of $(1)$ is constant in a comoving volume. If $(1)$ is massive, we say that it \textit{freezes out} at this point, and expect to find the same fractional abundance today. \footnote{\textcolor{blue}{Comment about reionisation?}}
+When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of~\cref{mil2:theo:eq:Boltzmann} is practically zero and $n_1$ goes as $\eu^{-3x}$, meaning that the number density of $(1)$ is constant in a comoving volume. If $(1)$ is massive, we say that it \textit{freezes out} at this point, and expect to find the same fractional abundance today. \footnote{\textcolor{blue}{Comment about reionisation?}}
 
 
 % \feynmandiagram [horizontal=a to b] {
@@ -116,7 +116,7 @@ When $\Gamma_1 \ll \Hp\eu^{-x}$, the interaction is irrelevant and the r.h.s. of
     \end{subequations}
     A detailed description of~\cref{mil2:theo:eq:Peebles_add} is found in~\citet{Peebles1968}. We provide a brief summary of the model.
     
-    The decay rates $\Lambda_\alpha$ and $\Lambda_{2\gamma}$ are the rates of the processes $2p\to 1s$ and $2s\to 1s$ mentioned in the beginning of \cref{mil2:sec:theo}, respectively. $\beta^{(2)}$ represents the Lyman alpha production.
+    The decay rates $\Lambda_\alpha$ and $\Lambda_{2\gamma}$ are the rates of the processes $2p\to 1s$ and $2s\to 1s$ mentioned in the beginning of~\cref{mil2:sec:theo}, respectively. $\beta^{(2)}$ represents the Lyman alpha production.
     Thus, the correction factor $C_r$ is the ratio between the net decay rate and the combined decay and ionisation rates from the first excited level. In other terms, $C_r$ is the probability that a hydrogen atom in $n=2$ actually reaches $n=1$ through emission of a Lyman-\textalpha~photon or two photons. The approximation of the number density of \element{H} in the ground state $n_{1s}$ is sensible for $T\ped{b}\ll 10^5\unit{K}$, i.e.~for $x \ll \ln{\TCMB} -5\ln{10} \approx -10 $. Finally, $\beta$ is the ionization rate and $\alpha^{(2)}$ the recombination rate, where $\phi_2$ is also a good approximation at low temperatures.~\citep{DodelsonBook,ChungPei1995,Peebles1968}
 
     

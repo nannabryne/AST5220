@@ -306,6 +306,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     # actual function:
     ax.plot(k_arr, df["P"], c=ColourMatter[-1], label=Pm0)
+    ax.plot(k_arr, df["P_R"]*np.mean(df["P"]), c="slategrey")
     ylims = ax.get_ylim()
     # ax.set_ylim(ylims)
 
@@ -320,19 +321,7 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     # # primordial:
     # ax.plot(df["k"], df["P_R"], c="darkslategrey", label=tex("P_\mathcal{R}"), alpha=.3)
-    
-    
 
-    # ks = 0.0144790*4
-    # ks = np.pi*0.67/147 *4
-    # ax.axvline(ks*1, ls="--", c="r")
-    # ax.axvline(ks*2, ls="--", c="r")
-    # ax.axvline(ks*3, ls="--", c="r")
-    # ax.axvline(ks*4, ls="--", c="r")
-    # ax.axvline(ks*5, ls="--", c="r")
-    # ax.axvline(ks*6, ls="--", c="r")
-    # ax.axvline(ks*7, ls="--", c="r")
-    # ax.axvline(ks*8, ls="--", c="r")
 
     # observational data:
 
