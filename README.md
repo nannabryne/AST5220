@@ -1,6 +1,20 @@
-# [SOME_TITLE]
+# Microwave music: Finding the cosmic symphony
+
 ### Project in AST5220 Cosmology II (autumn 2023)
 The project report is found [here](https://github.com/nannabryne/AST5220/blob/main/tex/main.pdf), or as `tex/main.pdf`.
+
+#### ABSTRACT
+> **Context.** Project in the master-level subject AST5220 Cosmology II at the University of Oslo (UiO).
+> **Aims.** Write a self-contained program to compute theoretical CMB and matter power spectra, starting from fundamental principles.
+> **Methods.** By perturbing the background and considering the recombination history, we obtained the necessary quantities for calcu-
+lating the CMB and matter power spectra. To get there, we used the Boltzmann and Einstein equations and linear perturbation theory,
+amongst other things. We condidered the conformal Newtonian gauge, and we neglected effects from neutrinos, helium, reionisation
+and polarisation. We used numerical methods s.a. Runge-Kutta and the trapezoidal rule for integrating.
+> **Results.** Our code provided satisfactory results to the point where neglegcted ingredients s.a. neutrinos were bound to play a role. All
+results prior to the power spectra essentially substantiate the physics we drew from the latter.
+> **Conclusions.** We succeded in building a code for our simple ΛCDM model with results that can be used to understand the governing
+physics at large and intermediate scales. However, small-scale physics can be understood better by relatively simple generalisations
+and improvents to the code.
 
 ## Milestone I: Background cosmology 
 *(first draft 05/03/23)*
@@ -24,7 +38,7 @@ Relevant text found in Sect. 5 of the report. However, a [copy](https://github.c
 
 # Code
 All code is located in the `src/` directory.
-## Prerequisites <mark>INCOMPLETE</mark>
+## Prerequisites
 For running code in `C++`, the following is needed:
 - `GSL`
 - `omp`
@@ -57,7 +71,7 @@ make plotsX     # X is the milestone number
 
 
 ## Plotting source
-We produce plots using `Python` and relevant code is found in `src/plotting/`. The file `analysis.py` ...
+We produce plots using `Python` and relevant code is found in `src/plotting/`. The file `analysis.py` contains all the data reading and function calls, but plotting scripts are found as `plotsrc_milestone_*.py`.
 
 # <mark>TO DO:
 ## Makefile
@@ -71,7 +85,7 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`. T
 - [ ] Coordinate fonts to be the same as in tex document
 - [x] Fix labels in H, dHdx, ...-plots
 ## Coding
-- [ ] Structural changes
+- [x] Structural changes
 - [x] (M1) What happened to the luminosity distance????
 - [x] Review after feedback from M1
 - [x] Review after feedback from M2
@@ -82,5 +96,5 @@ We produce plots using `Python` and relevant code is found in `src/plotting/`. T
 - [ ] Review after feedback from M2
 - [ ] Review after feedback from M3
 ## Readme
-- [ ] Complete list of prerequisites 
+- [x] Complete list of prerequisites 
 - [ ] Structural changes
