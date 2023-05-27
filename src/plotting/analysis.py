@@ -258,7 +258,7 @@ def Milestone3():
     x_rec = -6.985  # recombination onset
     x_Lambda = -0.256
 
-    PLOT3.INIT(x_eq, x_rec)
+    PLOT3.INIT(x_eq, x_rec, x_Lambda)
 
     def create_dataframe(data):
         dic = dict(
@@ -303,10 +303,12 @@ def Milestone3():
                 x_enter   = k_enter_list)
 
 
-    PLOT3.VelocityPerturbations(df_list, k_dict)
-    PLOT3.DensityPerturbations(df_list, k_dict)
-    PLOT3.PhotonQuadrupole(df_list, k_dict)
+    # PLOT3.VelocityPerturbations(df_list, k_dict)
+    # PLOT3.DensityPerturbations(df_list, k_dict)
+    # PLOT3.PhotonQuadrupole(df_list, k_dict)
     PLOT3.GravitationalPotential(df_list, k_dict)
+
+    # PLOT3.GravitationalPotential_alternative(df_list, k_dict)
     # PLOT3.SanityChecks(df_list)
 
 

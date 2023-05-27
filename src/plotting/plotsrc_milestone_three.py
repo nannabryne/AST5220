@@ -5,10 +5,11 @@ tex = LaTeX()
 
 
 # this is dumb
-def INIT(x_RM_equality, x_recombination):
-    global x_eq, x_rec, x_eq_args0, x_eq_args1
+def INIT(x_RM_equality, x_recombination, x_DE_domination):
+    global x_eq, x_rec, x_Lambda#, x_eq_args0, x_eq_args1
     x_eq = x_RM_equality
     x_rec = x_recombination
+    x_Lambda = x_DE_domination
 
     # global x_eq_args0, x_eq_args1, x_rec_args0, x_rec_args1, x_eq_rec_args0, x_eq_rec_args1
 
@@ -192,13 +193,14 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
 
     Phi_kw      = dict(alpha=alpha0, lw=lw0, ls=ls0)
     Phi_Psi_kw  = dict(alpha=alpha0, lw=lw0, ls=ls0)
+    Psi_kw      = dict(alpha=.3,     lw=lw0, dashes=(6.3, 1.1))
 
     for i, df in enumerate(df_list):
         line, = ax1.plot(df["x"], df["Phi"], c=k_dict["colour"][i], **Phi_kw)
-        kval = k_dict["value"][i]
-        kval = 1
+        ax1.plot(df["x"], -df["Psi"], c=k_dict["colour"][i], **Psi_kw)
 
-        ax2.plot(df["x"], (df["Phi"] + df["Psi"])*kval*kval, c=k_dict["colour"][i], **Phi_Psi_kw)
+
+        ax2.plot(df["x"], (df["Phi"] + df["Psi"]), c=k_dict["colour"][i], **Phi_Psi_kw)
         k_handles.append(line)
     
 
@@ -206,7 +208,52 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
     __vertical_lines(ax2, k_dict, True)
 
     ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
+    ax1.plot(np.nan, np.nan, c="slategrey", label=tex("-" + tex.Psi), **Psi_kw)
     ax2.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Psi + "+" + tex.Phi), **Phi_Psi_kw)
+    legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0., ncols=1)
+    ax1.legend(**legend_kw)
+    ax2.legend(**legend_kw)
+    ax2.set_xlim(*xlims0)
+
+    __set_k_label(fig, k_handles, k_dict)
+    ax2.set_xlabel(tex.x)
+    # ax1.axvline(x_Lambda)
+
+    # ylim = ax1.get_ylim()
+    # ylims = (ylim[0], ylim[1]+0.08)
+    # ax1.set_ylim(ylims)
+
+
+    
+
+    if savefig:
+        save("gravitational_potential")
+
+
+def GravitationalPotential_alternative(df_list, k_dict, savefig=False):
+
+    fig, axes = plt.subplots(nrows=2, sharex=True, figsize=(10,6), gridspec_kw=gs_kw0)
+    ax1, ax2 = axes.flat
+    k_handles = []
+
+    Phi_kw      = dict(alpha=alpha0, lw=lw0, ls=ls0)
+    Phi_Psi_kw  = dict(alpha=alpha0, lw=lw0, ls=ls0)
+    Psi_kw      = dict(alpha=.5, lw=lw0, ls="--")
+
+    for i, df in enumerate(df_list):
+        line, = ax1.plot(df["x"], df["Phi"], c=k_dict["colour"][i], **Phi_kw)
+        kval = k_dict["value"][i]
+        ax1.plot(df["x"], np.abs(df["Psi"]), c=k_dict["colour"][i], **Psi_kw)
+
+        ax2.plot(df["x"], np.abs(df["Psi"]), c=k_dict["colour"][i], **Phi_Psi_kw)
+        k_handles.append(line)
+    
+
+    __vertical_lines(ax1, k_dict, False)
+    __vertical_lines(ax2, k_dict, True)
+
+    ax1.plot(np.nan, np.nan, c="slategrey", label=tex(tex.Phi), **Phi_kw)
+    ax2.plot(np.nan, np.nan, c="slategrey", label=tex("|" + tex.Psi + "|"), **Phi_Psi_kw)
     legend_kw = dict(bbox_to_anchor=(0., 1.02, 1., .102), loc='upper left', borderaxespad=0.)
     ax1.legend(**legend_kw)
     ax2.legend(**legend_kw)
@@ -215,10 +262,10 @@ def GravitationalPotential(df_list, k_dict, savefig=True):
     __set_k_label(fig, k_handles, k_dict)
     ax2.set_xlabel(tex.x)
 
-    
+
 
     if savefig:
-        save("gravitational_potential")
+        save("gravitational_potential_alt")
 
 
 

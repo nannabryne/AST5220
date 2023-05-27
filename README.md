@@ -17,6 +17,10 @@ Relevant text found in Sect. 3 of the report. However, a [copy](https://github.c
 Relevant text found in Sect. 4 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_030523.pdf) of the paper as it was prior to moving on to the next milestone is found as `deliverables/report_030523.pdf`.
 
 
+## Milestone IV: CMB and matter power spectra
+*(fourth draft 27/05/23)*
+Relevant text found in Sect. 5 of the report. However, a [copy](https://github.com/nannabryne/AST5220/blob/main/deliverables/report_270523.pdf) of the paper as it was prior to revising it one last time is found as `deliverables/report_270523.pdf`.
+
 
 # Code
 All code is located in the `src/` directory.

@@ -191,7 +191,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     fig, ax = plt.subplots(figsize=(10,6))
 
     main_kws = dict(c=ColourCMB[-1], alpha=.9)
-    part_kws = dict(lw=1.4, alpha=.69, ls="--")
+    part_kws = dict(lw=1.4, alpha=.5, dashes=(6.9,0.9))
 
     ell = df["ell"]
 
@@ -208,7 +208,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     
     #   components:
 
-    c = ColourCycles("miscellaneous", ax)
+    c = ColourCycles(["blue", "limegreen", "red", "cornflowerblue"], ax)
     part_list = ["SW", "ISW", "Doppler", "pol"]
     handles = []
     for i, part in enumerate(part_list):
@@ -264,7 +264,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
     
     # secax.set_xlabel(tex(tex.theta + tex.unit("[^\circ]")))
     
-    majors = [90,45,10,2,1,0.2]
+    majors = [90,10,1,0.2]
     labels = [tex("%s ^\circ") %str(theta) for theta in majors]
     colour = "slategrey"
     width = .7
@@ -291,7 +291,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
 def MatterPowerSpectrum(df, df_obs, savefig=True):
-    fig, ax = plt.subplots(figsize=(10,6))
+    fig, ax = plt.subplots(figsize=(10,5))
 
     Ps0 = lambda s="m": tex("P" + tex.ped("%s0"%(s)))
     Pm0 = tex("P"+tex.ped("m0"))
@@ -306,9 +306,10 @@ def MatterPowerSpectrum(df, df_obs, savefig=True):
 
     # actual function:
     ax.plot(k_arr, df["P"], c=ColourMatter[-1], label=Pm0)
-    ax.plot(k_arr, df["P_R"]*np.mean(df["P"]), c="slategrey")
-    ylims = ax.get_ylim()
-    # ax.set_ylim(ylims)
+    # ax.plot(k_arr, df["P_R"]*np.mean(df["P"]), c="slategrey")
+    ylim = ax.get_ylim()
+    ylims = (1e2, ylim[1])
+    ax.set_ylim(ylims)
 
     comp_kw = dict(c="darkslategrey", alpha=.3)
     comp_kw = dict(c=ColourMatter[-2], alpha=.3)
