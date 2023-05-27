@@ -42,6 +42,7 @@ All code is located in the `src/` directory.
 For running code in `C++`, the following is needed:
 - `GSL`
 - `omp`
+
 For running `Python` code, one needs this:
 - `numpy`
 - `scipy`
@@ -56,14 +57,9 @@ make dir
 ```
 To run all simulations, type:
 ```
-make clean
-make all
-make run
+make cmb
 ```
-An alias for these commands is:
-~~~
-make autorun
-~~~
+
 To produce plots, run:
 ~~~
 make plotsX     # X is the milestone number
