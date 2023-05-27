@@ -200,7 +200,7 @@ Due to the fact that this is very large for small $\ell$, the sums over multipol
 We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by $\theta \sim 180^{\circ} /\ell$. 
 
 
-\subsubsection{Source function}
+\paragraph{Source function}
     The line-of-sight integral that gives the photon temperature multipoles $\Theta_\ell(0,k)$ can be written
     \begin{equation}\label{mil4:theo:eq:los_integration}
     \begin{split}
@@ -259,17 +259,18 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}\label{mil4:theo:eq:theta0_psi_first}
         \left[\Theta_0 + \Psi\right](x, k) \approx \left[\Theta_0 + \Psi\right](x\ped{init}, k)\cos(ks(x))
     \end{equation}
-    if we keep neglecting the driving force. For fixed $x$, the $k$-modes that correspond to extrema follow a harmonic relationship $k_n= \pi/s(x)$. The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. A rough mapping from Fourier space to harmonic space, $k\mapsto \ell \cor k\chi_*$ (assuming no curvature), implies a coherent series of acoustic peaks in $C(\ell)\cong \cos^2{(k\sh)}$ at $\ell_n\approx n\ell\ped{pk}$, where $\ell\ped{pk}\equiv \pi \chi_*/\sh$. In the limit where $k\sh \ll 1$, the perturbation is frozen into its initial state. That is, for the largest scales in the CMB anisotropy where $\ell\ll \chi_*/\sh$, there should be no remnants of primordial acoustic oscillations. 
+    if we keep neglecting the driving force. For fixed $x$, the $k$-modes that correspond to extrema follow a harmonic relationship $k_n= \pi/s(x)$. The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. A rough mapping from Fourier space to harmonic space, $k\mapsto \ell \cor k\chi_*$ (assuming no curvature), implies a coherent series of acoustic peaks in $C(\ell) \sim\cos^2{(k\sh)}$ at $\ell_n\approx n\ell\ped{pk}$, where $\ell\ped{pk}\equiv \pi \chi_*/\sh$. In the limit where $k\sh \ll 1$, the perturbation is frozen into its initial state. That is, for the largest scales in the CMB anisotropy where $\ell\ll \chi_*/\sh$, there should be no remnants of primordial acoustic oscillations. 
 
     The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a $k$-mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decompressed at this time. 
 
-    The peak locations are sensitive to the presence of curvature. We rewind a little in order to study the effect of curvature. The angular size $\theta$ of a spatial extent $\lambda\ped{phys}$ is $\theta\approx\lambda\ped{phys}/d_A$, where $d_A$ is the angular diameter distance from~\cref{mil1:theo:sec:distances}. The substitution $\lambda\ped{phys}  \cor \sfrac{a}{k}$ and~\cref{mil1:theo:eq:dA_of_x} gives $\theta \cor  k^{-1}/r(\chi) $, where $r(\chi)$ is defined in~\cref{mil1:theo:eq:r_of_chi}. Now, the angular size of the sound horizon is $\varsigma(x) = s(x)/(r\circ\chi )(x)$, and evaluated at decoupling gives $\varsigma_*\equiv \varsigma(x_*)=\sh/r(\chi_*)$. This angular scale describes the typical extent of a large clump in a CMB temperature map. Now, the lowest angular wavenumber to peak in the anisotropy spectrum should be close to $\ell\ped{pk}\equiv \sfrac{\pi}{\varsigma_*}$, hence $\ell\ped{pk}\propto r(\chi_*) $. Studying~\cref{mil1:theo:eq:r_of_chi} we can see that the this lenght is smaller in a closed universe ($\OmgK < 0$) than in a flat one ($\OmgK = 0$), and the opposite for an open universe ($\OmgK > 0$), i.e.~$\ell\ped{pk}\ap{closed}< \ell\ped{pk}\ap{flat}<\ell\ped{pk}\ap{open}$.\footnote{One arrives at the same conclusion from a geometrical analysis of the perturbation scales (angular size) in the three different realisations of the background geometry.} Thus, the position of the first peak (and second and third, for that matter) can be used to constrain the curvature density $\OmgK$. Since the Eucledian analysis predicts $\ell\ped{pk}\ap{flat} = \pi \chi_*/s_*$, if the actual (observed) peak is shifted e.g.~towards higher multipoles (usually to the left), one could argue that the universe must be hyperbolic. However, one need keep in mind the potential parameter degeneracy and the ambiguity of our mapping from Fourier space to spherical harmonic space. %It is advantageous to use the first few peaks 
+    The peak locations are sensitive to the presence of curvature. We rewind a little in order to study the effect of curvature. The angular size $\theta$ of a spatial extent $\lambda\ped{phys}$ is $\theta\approx\lambda\ped{phys}/d_A$, where $d_A$ is the angular diameter distance from~\cref{mil1:theo:sec:distances}. The substitution $\lambda\ped{phys} \to \sfrac{a}{k}$ and~\cref{mil1:theo:eq:dA_of_x} gives $\theta \cor  k^{-1}/r(\chi) $, where $r(\chi)$ is defined in~\cref{mil1:theo:eq:r_of_chi}. Now, the angular size of the sound horizon is $\varsigma(x) = s(x)/(r\circ\chi )(x)$, and evaluated at decoupling gives $\varsigma_*\equiv \varsigma(x_*)=\sh/r(\chi_*)$. This angular scale describes the typical extent of a large clump in a CMB temperature map. Now, the lowest angular wavenumber to peak in the anisotropy spectrum should be close to $\ell\ped{pk}\equiv \sfrac{\pi}{\varsigma_*}$, hence $\ell\ped{pk}\propto r(\chi_*) $. Studying~\cref{mil1:theo:eq:r_of_chi} we can see that the this lenght is smaller in a closed universe ($\OmgK < 0$) than in a flat one ($\OmgK = 0$), and the opposite for an open universe ($\OmgK > 0$), i.e.~$\ell\ped{pk}\ap{closed}< \ell\ped{pk}\ap{flat}<\ell\ped{pk}\ap{open}$.\footnote{One arrives at the same conclusion from a geometrical analysis of the perturbation scales (angular size) in the three different realisations of the background geometry.} Thus, the position of the first peak (and second and third, for that matter) can be used to constrain the curvature density $\OmgK$. Since the Eucledian analysis predicts $\ell\ped{pk}\ap{flat} = \pi \chi_*/s_*$, if the actual (observed) peak is shifted e.g.~towards higher multipoles (usually to the left), one could argue that the universe must be hyperbolic. However, one need keep in mind the parameter degeneracy and the ambiguity of our mapping from Fourier space to spherical harmonic space.
+    %It is advantageous to use the first few peaks 
     
 
     
-    \textcolor{red}{COOL SYMBOLS:} $\sphericalangle $: spherical angle,$\quad \leadsto $: leads to $\quad\pitchfork$: proper intersection $\quad \vdash$: reduces to 
-    $\quad\cor$: corresponds to  $\quad\cong$: congruent?  $\quad\asymp$: asymptotic to
-    \textcolor{red}{LITTE O-NOTATION:} $f\sim g \Leftrightarrow (f-g)\in o(g)  $
+    % \textcolor{red}{COOL SYMBOLS:} $\sphericalangle $: spherical angle,$\quad \leadsto $: leads to $\quad\pitchfork$: proper intersection $\quad \vdash$: reduces to 
+    % $\quad\cor$: corresponds to  $\quad\cong$: congruent?  $\quad\asymp$: asymptotic to
+    % \textcolor{red}{LITTE O-NOTATION:} $f\sim g \Leftrightarrow (f-g)\in o(g)  $
     
     
     % The Eucledian analysis predicts $\ell\ped{pk}\ap{flat} = $
@@ -289,7 +290,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     % \end{equation}
 
     
-    \paragraph{Baryon loading}
+    \paragraph{Baryon loading}\label{test}
     We consider the effect of baryon loading. The slightly less simplified analysis gives
     \begin{equation}
         \left[\Theta_0 +(1+R) \Psi\right](x, k) \approx \left[\Theta_0 + (1+R)\Psi\right](x\ped{init}, k)\cos(ks(x)) 
@@ -302,11 +303,14 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     % \end{equation}
     where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$ as before. The offsat oscillations in the effective tempeature $\left[\Theta_0 +\Psi\right](x, k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed. 
 
-    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligable compared to that of the dark matter. In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$).
+    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligable compared to that of the dark matter. In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$). 
     
     \paragraph{Radiation driving} 
-    What actually is producing the acoustic waves
-    
+    Radiation drives acoustic oscillations by introducing temporal variations in the gravitational potential. The always-decreasing background density will cause potentials to decay \emph{unless} there are unimpeded growth in the density perturbations in the dominant energy component. For a mode entering the horizon in the radiation dominated era, the radiation pressure begins fighting gravity at the first point of maximal fluid compression, and the gravitational potentials necessarily must decay. The subsequent phase of rarification does not include this fight and the amplitude is driven up. Thus, sub-horizon modes in the radiation dominated universe will be enhanced. This relates the power of the (average) CMB power spectrum at these scales ($\ell \ga 100$) to the ratio of dark matter and radiation in the universe. In eliminating gravitational potentials, acoustic oscillations in the photon-baryon plasma eliminate the heights in the alternating peaks from baryon loading. Note that it is separable from the baryonic effects with the first three peaks or more.
+
+
+
+    % We know that the background density is decreasing with time, so unless the density fluctuations in the dominant component grow unimpeded by pressure, potentials will decay. 
 
 
     \paragraph{Diffusion damping}
@@ -347,11 +351,11 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \end{equation}
     suffices when neglecting massive neutrinos. Thus, for the power spectrum today, we expect $P\ped{m0}(k\!\ll\!k\ped{eq}) \propto k^4P_\mathcal{R}(k) \propto k^{\ns}$. 
 
-    \dots
 
-    A key feature of inflation is that it stretches the quxantum fluctuations to cosmological scales, resulting in a nearly scale-invariant power spectrum (see~\cref{mil4:theo:eq:Delta_R_of_k}, where $\ns\approx 1$). 
 
-    We consider a single perturbation (a peak) of normal and matter and relativistic matter in real space at early times. Once photons decoupled from baryons and travelled freely, a spherical shell of baryonic matter surrounding our peak is dragged somewhat out from the sound horizon at decoupling before it remains in place. As time goes by, CDM starts to cluster around this shell. The linearity of the perturbations lets us imagine many such peaks with equally large shells of matter surrounding them. In Fourier space, this corresponds to oscillatory behaviour in $k$ of scale $\sim \sh$. Thus, we expect to see small oscillations in the small-scale part of the total matter power spectrum.
+    % A key feature of inflation is that it stretches the quantum fluctuations to cosmological scales, resulting in a nearly scale-invariant power spectrum (see~\cref{mil4:theo:eq:Delta_R_of_k}, where $\ns\approx 1$). 
+
+    We consider a single perturbation (a peak) of normal and matter and relativistic matter in real space at early times. Once photons decoupled from baryons and travelled freely, a spherical shell of baryonic matter surrounding our peak is dragged somewhat out from the sound horizon at decoupling before it falls into potential wells with the CDM. As time goes by, CDM starts to cluster around this shell. The linearity of the perturbations lets us imagine many such peaks with equally large shells of matter surrounding them. In Fourier space, this corresponds to oscillatory behaviour in $k$ of scale $\sim \sh$. Thus, we expect to see small oscillations in the small-scale part of the total matter power spectrum.
 
 
 
