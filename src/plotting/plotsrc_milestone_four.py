@@ -217,7 +217,7 @@ def CMBPowerSpectrum(df, df_obs, savefig=True):
 
 
     ax.plot(np.nan, np.nan, c="slategrey", label=tex("\mathcal{D}" + tex.ap("[comp]")), **part_kws)
-    __set_D_ell_part_label(fig, handles, loc=(0.14, 0.76))
+    __set_D_ell_part_label(fig, handles, loc=(0.14, 0.78))
 
 
     #   observational data:
