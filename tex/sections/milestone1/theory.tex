@@ -9,8 +9,8 @@
 The FRW line element in flat space is given by
 \begin{equation}\label{mil1:theo:eq:FRW}
     \begin{split}
-        d s^2 &= -c^2\diff t^2 + a^2(t) \deltasym{ij} \diff x^i \diff x^j && |\, \diff \eta \equiv c\diff t\, a^{-1}(t) \\%\frac{\diff t}{a(t)}  \\
-                &= a^2(t) \left( -\diff \eta^2 + \deltasym{ij} \diff x^i \diff x^j \right).
+        d s^2 &= -c^2\diff t^2 + a^2(t) \kroneckerdelta{ij} \diff x^i \diff x^j && |\, \diff \eta \equiv c\diff t\, a^{-1}(t) \\%\frac{\diff t}{a(t)}  \\
+                &= a^2(t) \left( -\diff \eta^2 + \kroneckerdelta{ij} \diff x^i \diff x^j \right).
     \end{split}
 \end{equation}
 Before we proceed, we substitute $a\to \eu^x$ (recall: $x=\ln{a}$). The cosmic time $t$ and Hubble parameter $H$ ($=\diff x/\diff t$) will be replaced by the conformal time $\eta$ ($\diff \eta = c\eu^{-x}\diff t$) and conformal Hubble parameter $\Hp\equiv aH$ ($=c\diff x/\diff \eta$). We write the Friedmann equations in terms of our preferred variables, which for the first one becomes
@@ -30,7 +30,7 @@ proves useful, giving both the ordinary differential equation (ODE) for $\eta(x)
 \end{subequations}
 where, in theory, $x\ped{init}\to -\infty$ and the initial conditions $t\ped{init},\, \eta\ped{init} \to 0$. However, we can solve~\cref{mil1:theo:eq:odes_time} analytically in the very early universe and in~\cref{mil1:theo:sec:approximations} we present these expressions (\cref{mil1:theo:eq:time_initial_conditions}). 
 
-The conformal time is a useful time measure for large-scale cosmology as it takes into account the expansion of the universe. $\eta(x)$ measures the comoving distance that non-interacting photons could have travelled since the beginning where $x=-\infty$ ($t=0$). Thus, the conformal time represents an upper limit to how far information could possibly travel. We say that regions that are separated by distances larger than this quantity are causally \textit{dis}connected. For this reason, some books refer to $\eta(x)$ as the comoving horizon.~\citep{DodelsonBook}
+The conformal time is a useful time measure for large-scale cosmology as it takes into account the expansion of the universe. $\eta(x)$ measures the comoving distance that non-interacting photons could have travelled since the beginning where $x=-\infty$ ($t=0$). Thus, the conformal time represents an upper limit to how far information could possibly travel. We say that regions that are separated by distances larger than this quantity are \emph{causally \emph{dis}connected}. For this reason, some books refer to $\eta(x)$ as the comoving horizon.~\citep{DodelsonBook}
 
 %That said, the quantity $\eta(x)/c$ can be viewed as the time it took a
 
@@ -41,13 +41,13 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \begin{equation}\label{mil1:theo:eq:evolution_density_param}
         \Omega_s(x) = \frac{\Omega_{s0}}{\eu^{(1+3w_s)x} \Hp^2(x)/H_0^2}\,;\quad \Omega_{s0} \equiv \Omega_{s}(x=x_0),
     \end{equation}
-    where $H_0$ is the Hubble constant, $x_0=\ln{a_0}=0$ means \textit{today} and the \textit{equation of state} parameter $w_s$ is a constant intrinsic to the species $s$. As a notational relief, we introduce the parameters associated with total matter (m) and relativistic particles (r) such that $w\ped{m}=0$, $w\ped{r}=\sfrac{1}{3}$, $w_\Lambda=-1$ and $w\ped{K}=-\sfrac{1}{3}$, and
+    where $H_0$ is the Hubble constant, $x_0=\ln{a_0}=0$ means \emph{today} and the equation of state parameter $w_s$ is a constant intrinsic to the species $s$. As a notational relief, we introduce the parameters associated with total matter (m) and relativistic particles (r) such that $w\ped{m}=0$, $w\ped{r}=\sfrac{1}{3}$, $w_\Lambda=-1$ and $w\ped{K}=-\sfrac{1}{3}$, and
     \begin{equation}\label{mil1:theo:eq:density_params_totals}
         \OmgM[] = \Omega_{\mathrm{c}} + \Omega_{\mathrm{b}} \quad \mathrm{and} 
             \quad \OmgR[]= \Omega\gped{\textgamma} + \Omega\gped{\textnu}.
     \end{equation}
 
-   ~\cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
+   \cref{mil1:theo:eq:evolution_density_param} requires the current values of the density parameters. The observed CMB temperature today $\TCMB$ gives today's photon density
     \begin{equation}
         \Omega\gped{\textgamma 0} = 2 \frac{\pi^2}{30} \frac{\left( k\ped{B} \TCMB \right)^4}{\hbar^3 c^5}  \frac{8\pi G}{3H_0^2},
     \end{equation}
@@ -55,7 +55,7 @@ Finally, the cosmological redshift $z=\eu^{-x}-1$ will be used as an auxiliary t
     \begin{equation}
         \Omega\gped{\textnu 0} = N\ped{eff} \cdot \frac{7}{8} \left(\frac{4}{11}\right)^{\sfrac{4}{3}} \Omega\gped{\textgamma 0},
     \end{equation}
-    $N\ped{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal---the ``radiation-matter equality''---as $\OmgM[](x\!=\!x\ped{eq}) = \OmgR[](x\!=\!x\ped{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. We obtain the analytical expressions
+    $N\ped{eff}$ being the effective number of massless neutrinos. From the Friedmann equations, the total density adds up to one, so we can determine the cosmological constant through $\OmgL = 1-\sum_{s\neq\text{\textLambda}} \Omega_{s0}$. Together with current values for the remaining densities, we have the evolution of all the considered constituents' densities as functions of $x$. This allows us to pinpoint the time when the total matter and radiation densities are equal---the ``radiation-matter equality''---as $\OmgM[](x\!=\!x\ped{eq}) = \OmgR[](x\!=\!x\ped{eq})$. Further, we find the time at which the universe becomes dominated by the cosmological constant as $\OmgL[](x\!=\!x_{\Lambda}) = \OmgM[](x\!=\!x_{\Lambda})$. We obtain the analytical expressions
     \begin{equation}\label{mil1:theo:eq:x_eq_Lambda}
         x\ped{eq} = \ln{\frac{\OmgR}{\OmgM}}  \quad\text{and}\quad 
             x\ped{\Lambda} = \frac{1}{3}\ln{\frac{\OmgM}{\OmgL}}.

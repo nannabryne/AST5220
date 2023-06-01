@@ -16,7 +16,7 @@ We ran an additional simulation where we assumed equilibrium all the way, that i
         X_e(x) = \frac{\expr}{2}\left( -1+\sqrt{1+4\expr^{-1}}\right)\,; \quad 
             \expr = \frac{1}{n\ped{b}} \left( \frac{m_e k\ped{B} T\ped{b} }{2\pi \hbar^2} \right)^{\sfrac{3}{2}} \eu^{\epskT},
     \end{equation}
-    blows up for large values of $\expr$. Analytically we have $X_e\to 1$ as $\expr\to \infty$, so we circumvented the issue by letting $X_e=1 \,\forall\, \expr > 10^7$. Outside the Saha regime, we used the last value of $X_e(x)$ ($\approx 0.99$) as initial condition on the Peebles ODE (\cref{mil2:theo:eq:Peebles}) and solved this for the remaining values of $x$. Here as well, we needed to address numerical stability concerns. Specifically, $\beta^{(2)}$ in~\cref{mil2:theo:eq:Peebles_beta2} was set to zero when the exponent was too large; $\epskT> 200$, i.e.\ at later times when $T\ped{b} < 0.005 \epsilon_0/k\ped{B} \sim 800$~K. 
+    blows up for large values of $\expr$. Analytically we have $X_e\to 1$ as $\expr\to \infty$, so we circumvented the issue by letting $X_e=1 \,\forall\, \expr > 10^7$. Outside the Saha regime, we used the last value of $X_e(x)$ ($\approx 0.99$) as initial condition on the Peebles ODE (\cref{mil2:theo:eq:Peebles}) and solved this for the remaining values of $x$. Here as well, we needed to address numerical stability concerns. Specifically, $\beta^{(2)}$ in~\cref{mil2:theo:eq:Peebles_beta2} was set to zero when the exponent was too large; $\epskT> 200$, i.e.~at later times when $T\ped{b} < 0.005 \epsilon_0/k\ped{B} \sim 800$~K. 
     
     The numerical integration was performed using RK4.
 

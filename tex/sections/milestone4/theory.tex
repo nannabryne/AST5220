@@ -101,7 +101,7 @@ We will also account for the primordial fluctuations by setting $f(x,\vec{k})= f
 \paragraph{Power spectra}
 We revisit the curvature perturbation $\mathcal{R}(\vec{k})$ immediately after inflation, that which determines the initial conditions for each Fourier mode. During the generation of fluctuations, there should be no preferred position nor direction in space, resulting in statistical homogeneity and isotropy of said fluctuations. We let $\avg{\cdot}$ denote the statistical expectation value over many realisations of the universe. Thus, the primordial power spectrum $P_\mathcal{R}(k)$ is given by
 \begin{equation}\label{mil4:theo:eq:primordial_power_spectum}
-    \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} = (2\pi)^3 \deltafunc{\vec{k}-\vec{k'}}P_\mathcal{R}(k).
+    \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} = (2\pi)^3 \diracdeltafunc{\vec{k}-\vec{k'}}P_\mathcal{R}(k).
 \end{equation}
 The inflationary model we consider predicts the dimensionless primordial power spectrum
 \begin{equation}\label{mil4:theo:eq:Delta_R_of_k}
@@ -113,7 +113,7 @@ Further, we assume fluctuations to be gaussian. The perturbations are adiabatic 
 \begin{equation}\label{mil4:theo:eq:defining_power_spectrum}
 \begin{split}
     \avg{f(x,\vec{k}) f^\ast(x,\vec{k'})} &= f(x,k)f^\ast(x,k') \avg{\mathcal{R}(\vec{k})\mathcal{R}^*(\vec{k'})} \\
-    &= (2\pi)^3 \deltafunc{\vec{k}-\vec{k'}} \abs{f(x,k)}^2 P_\mathcal{R}(k)
+    &= (2\pi)^3 \diracdeltafunc{\vec{k}-\vec{k'}} \abs{f(x,k)}^2 P_\mathcal{R}(k)
 \end{split}
 \end{equation}
 
@@ -124,7 +124,7 @@ For a field on a 3D sphere $g(\vec{\hat{n}})$, we can expand the directional dep
 \end{equation}
 and the (angular) power spectrum $C(\ell)$ today is given by
 \begin{equation}\label{mil4:theo:eq:defining_angular_power_spectrum}
-    \avg{a\ellm(t_0, \vec{x}) a^\ast\ellmp(t_0, \vec{x})}= \deltasym{\ell \ell'} \deltasym{m m'} C(\ell).
+    \avg{a\ellm(t_0, \vec{x}) a^\ast\ellmp(t_0, \vec{x})}= \kroneckerdelta{\ell \ell'} \kroneckerdelta{m m'} C(\ell).
 \end{equation}
 
 
@@ -137,10 +137,10 @@ We begin by expanding the temperature perturbation $\Theta(t, \vec{x}, \vec{\hat
 % \end{equation}
 % where
 % \begin{equation}
-%     \avg{a\ellm a\ellmp^*} = \deltasym{\ell \ell'} \deltasym{m m'} C(\ell)
+%     \avg{a\ellm a\ellmp^*} = \kroneckerdelta{\ell \ell'} \kroneckerdelta{m m'} C(\ell)
 % \end{equation}
 % defines the power spectrum $C(\ell)$ in this context. 
-The orthogonality of $Y_{\ell m}(\vec{\hat{p}})$\footnote{$\int \dOmg[n] Y\ellm(\vec{\hat{n}}) Y\ellmp^*(\vec{\hat{n}}) = \deltasym{\ell \ell'} \deltasym{m m'} $.} gives the coefficients
+The orthogonality of $Y_{\ell m}(\vec{\hat{p}})$\footnote{$\int \dOmg[n] Y\ellm(\vec{\hat{n}}) Y\ellmp^*(\vec{\hat{n}}) = \kroneckerdelta{\ell \ell'} \kroneckerdelta{m m'} $.} gives the coefficients
 \begin{equation}
     a\ellm = a\ellm(t,\vec{x}) = \int \dOmg[p] Y^*_{\ell m} (\vec{\hat{p}}) \Theta(t, \vec{x}, \vec{\hat{p}}),
 \end{equation}
@@ -156,8 +156,8 @@ In the second line, we used that $\mu=\vec{\hat{p}}\cdot\vec{\hat{k}}$ ($\vec{\h
 \begin{equation}\label{mil4:theo:eq:substitution_idk}
 \begin{split}
     \langle \Theta_\ell(x,\vec{k}) \Theta_{\ell'}^*(x,\vec{k'})\rangle \to \Theta_\ell(x,k) \Theta_{\ell'}^*(x,k') \langle \mathcal{R}(\vec{k}) \mathcal{R}^*(\vec{k'}) \rangle \,; \\
-    \quad \langle \mathcal{R}(\vec{k}) \mathcal{R}^*(\vec{k'}) \rangle = (2\pi)^3 \deltafunc{\vec{k}-\vec{k'}} P_\mathcal{R}(k) 
-    % &=  \Theta_\ell(x,k) \Theta_\ell^*(x,k')(2\pi)^3 \deltafunc{\vec{k}-\vec{k'}} \Delta^2_\mathcal{R}(k) %\\
+    \quad \langle \mathcal{R}(\vec{k}) \mathcal{R}^*(\vec{k'}) \rangle = (2\pi)^3 \diracdeltafunc{\vec{k}-\vec{k'}} P_\mathcal{R}(k) 
+    % &=  \Theta_\ell(x,k) \Theta_\ell^*(x,k')(2\pi)^3 \diracdeltafunc{\vec{k}-\vec{k'}} \Delta^2_\mathcal{R}(k) %\\
     % &= (2\pi)^3 \abs{\Theta_\ell(x,k)}^2 \Delta ^2_\mathcal{R}(k) 
 \end{split}
 \end{equation}
@@ -171,9 +171,9 @@ Writing it out, we get
 \end{equation} 
 where we used the Dirac-Delta function from~\cref{mil4:theo:eq:substitution_idk} to eliminate $\int \! d^3k' (2\pi)^{-3} \eu[\im (\vec{k}-\vec{k'})\cdot \vec{x}]$. The identity 
 \begin{equation}
-    \int \dOmg[p] Y\ellm (\vec{\hat{p}}) \mathcal{P}_{\ell'}(\vec{\hat{k}}\cdot \vec{\hat{p}}) = \deltasym{\ell \ell'} \frac{4\pi}{2\ell +1}Y\ellm (\vec{\hat{k}})
+    \int \dOmg[p] Y\ellm (\vec{\hat{p}}) \mathcal{P}_{\ell'}(\vec{\hat{k}}\cdot \vec{\hat{p}}) = \kroneckerdelta{\ell \ell'} \frac{4\pi}{2\ell +1}Y\ellm (\vec{\hat{k}})
 \end{equation}
-gives rise to factors $\deltasym{\ell \ell_1}$ and $\deltasym{\ell' \ell_2}$, killing the infinite sums in~\cref{mil4:theo:full_expr_idk}. We are left with
+gives rise to Kronecker deltas $\kroneckerdelta{\ell \ell_1}$ and $\kroneckerdelta{\ell' \ell_2}$, killing the infinite sums in~\cref{mil4:theo:full_expr_idk}. We are left with
 \begin{equation}
     \langle a\ellm a^*\ellmp \rangle =  (4\pi)^2 \int \dkkk Y_{\ell m}^*(\vec{\hat{k}}) Y_{\ell' m'}(\vec{\hat{k}})  \Theta_{\ell}(x,k) \Theta^{*}_{\ell'}(x,k) P_\mathcal{R}(k).
 \end{equation}
@@ -183,7 +183,7 @@ Spherical symmetry ($d^3k \to k^2 \, \dx{k} \,\dOmg[k]$) gives
 \end{equation}
 and we use the orthogonality relation of the spherical harmonics to find
 \begin{equation}
-    \langle a\ellm a^*\ellmp \rangle = \deltasym{\ell \ell'} \deltasym{m m'} \cross \frac{2}{\pi}\int \dx{k} k^2  \abs{\Theta_{\ell}(x,k)}^2P_\mathcal{R}(k).
+    \langle a\ellm a^*\ellmp \rangle = \kroneckerdelta{\ell \ell'} \kroneckerdelta{m m'} \cross \frac{2}{\pi}\int \dx{k} k^2  \abs{\Theta_{\ell}(x,k)}^2P_\mathcal{R}(k).
 \end{equation}
 Evaluated at $x=x_0=0$, we find the expression for the angular CMB power spectrum today (see~\cref{mil4:theo:eq:defining_angular_power_spectrum}). We can rewrite this in terms of the dimensionless primordial power spectrum $\Delta^2_\mathcal{R} = k^3/(2\pi^2) P_\mathcal{R}(k)$. Now, the angular CMB power spectrum is given by
 \begin{equation}\label{mil4:theo:eq:C_of_ell_final}
@@ -238,7 +238,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
         \text{(pol)} =  \frac{3}{4c^2k^2} \dv{}{x} \left(\Hp(x) \dv{}{x} \left[ \Hp(x) \gt(x) \Theta_2(x,k) \right] \right),
     \end{equation}
     \end{subequations}
-    for which we do not have a statisfying physical intuition. In any case, this term will not provide any new insights in our polarisation-free neutrino-neglecting model.
+    for which we do not have a satisfying physical intuition. In any case, this term will not provide any new insights in our polarisation-free neutrino-neglecting model.
 
 
 \subsubsection{Effective temperature perturbation}\label[sec]{mil4:theo:sec:eff_temp_pert}
@@ -261,9 +261,9 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \end{equation}
     if we keep neglecting the driving force. For fixed $x$, the $k$-modes that correspond to extrema follow a harmonic relationship $k_n= \pi/s(x)$. The crests and troughs in $\Theta_\ell(0,k)$ translate to odd and even peaks in the CMB power spectrum. A rough mapping from Fourier space to harmonic space, $k\mapsto \ell \cor k\chi_*$ (assuming no curvature), implies a coherent series of acoustic peaks in $C(\ell) \sim\cos^2{(k\sh)}$ at $\ell_n\approx n\ell\ped{pk}$, where $\ell\ped{pk}\equiv \pi \chi_*/\sh$. In the limit where $k\sh \ll 1$, the perturbation is frozen into its initial state. That is, for the largest scales in the CMB anisotropy where $\ell\ll \chi_*/\sh$, there should be no remnants of primordial acoustic oscillations. 
 
-    The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a $k$-mode has succumb to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decompressed at this time. 
+    The positions of these extrema reflects the state of the mode at recombination. With ``state'' is (loosly) meant whether a $k$-mode has succumbed to gravitational pressure (maximum compression) or if the radiation pressure managed to overtake (maximum decompression), or somewhere between these extrema. We stress that the onset of such acoustic oscillations occurs after a mode has entered the horizon. The first crest in the CMB spectrum represents the mode that reached maximum compression of the primordial photon-baryon plasma just as said plasma decoupled. The subsequent peak is then the mode that compressed once inside potential wells, then rarefied before recombination. The third peak represents the mode that underwent a complete cycle of compression and decompression before being caught at its maximal compression at the surface of last scattering. The troughs of the CMB power spectrum appear at modes that are neither compressed nor decompressed at this time. 
 
-    The peak locations are sensitive to the presence of curvature. We rewind a little in order to study the effect of curvature. The angular size $\theta$ of a spatial extent $\lambda\ped{phys}$ is $\theta\approx\lambda\ped{phys}/d_A$, where $d_A$ is the angular diameter distance from~\cref{mil1:theo:sec:distances}. The substitution $\lambda\ped{phys} \to \sfrac{a}{k}$ and~\cref{mil1:theo:eq:dA_of_x} gives $\theta \cor  k^{-1}/r(\chi) $, where $r(\chi)$ is defined in~\cref{mil1:theo:eq:r_of_chi}. Now, the angular size of the sound horizon is $\varsigma(x) = s(x)/(r\circ\chi )(x)$, and evaluated at decoupling gives $\varsigma_*\equiv \varsigma(x_*)=\sh/r(\chi_*)$. This angular scale describes the typical extent of a large clump in a CMB temperature map. Now, the lowest angular wavenumber to peak in the anisotropy spectrum should be close to $\ell\ped{pk}\equiv \sfrac{\pi}{\varsigma_*}$, hence $\ell\ped{pk}\propto r(\chi_*) $. Studying~\cref{mil1:theo:eq:r_of_chi} we can see that the this lenght is smaller in a closed universe ($\OmgK < 0$) than in a flat one ($\OmgK = 0$), and the opposite for an open universe ($\OmgK > 0$), i.e.~$\ell\ped{pk}\ap{closed}< \ell\ped{pk}\ap{flat}<\ell\ped{pk}\ap{open}$.\footnote{One arrives at the same conclusion from a geometrical analysis of the perturbation scales (angular size) in the three different realisations of the background geometry.} Thus, the position of the first peak (and second and third, for that matter) can be used to constrain the curvature density $\OmgK$. Since the Eucledian analysis predicts $\ell\ped{pk}\ap{flat} = \pi \chi_*/s_*$, if the actual (observed) peak is shifted e.g.~towards higher multipoles (usually to the left), one could argue that the universe must be hyperbolic. However, one need keep in mind the parameter degeneracy and the ambiguity of our mapping from Fourier space to spherical harmonic space.
+    The peak locations are sensitive to the presence of curvature. We rewind a little in order to study the effect of curvature. The angular size $\theta$ of a spatial extent $\lambda\ped{phys}$ is $\theta\approx\lambda\ped{phys}/d_A$, where $d_A$ is the angular diameter distance from~\cref{mil1:theo:sec:distances}. The substitution $\lambda\ped{phys} \to \sfrac{a}{k}$ and~\cref{mil1:theo:eq:dA_of_x} gives $\theta \cor  k^{-1}/r(\chi) $, where $r(\chi)$ is defined in~\cref{mil1:theo:eq:r_of_chi}. Now, the angular size of the sound horizon is $\varsigma(x) = s(x)/(r\circ\chi )(x)$, and evaluated at decoupling gives $\varsigma_*\equiv \varsigma(x_*)=\sh/r(\chi_*)$. This angular scale describes the typical extent of a large clump in a CMB temperature map. Now, the lowest angular wavenumber to peak in the anisotropy spectrum should be close to $\ell\ped{pk}\equiv \sfrac{\pi}{\varsigma_*}$, hence $\ell\ped{pk}\propto r(\chi_*) $. Studying~\cref{mil1:theo:eq:r_of_chi} we can see that this length is smaller in a closed universe ($\OmgK < 0$) than in a flat one ($\OmgK = 0$), and the opposite for an open universe ($\OmgK > 0$), i.e.~$\ell\ped{pk}\ap{closed}< \ell\ped{pk}\ap{flat}<\ell\ped{pk}\ap{open}$.\footnote{One arrives at the same conclusion from a geometrical analysis of the perturbation scales (angular size) in the three different realisations of the background geometry.} Thus, the position of the first peak (and second and third, for that matter) can be used to constrain the curvature density $\OmgK$. Since the Euclidean analysis predicts $\ell\ped{pk}\ap{flat} = \pi \chi_*/s_*$, if the actual (observed) peak is shifted e.g.~towards higher multipoles (usually to the left), one could argue that the universe must be hyperbolic. However, one need keep in mind the parameter degeneracy and the ambiguity of our mapping from Fourier space to spherical harmonic space.
     %It is advantageous to use the first few peaks 
     
 
@@ -301,12 +301,12 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     %     &- R(x_*)\Psi(x_*, k),
     % \end{split}
     % \end{equation}
-    where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$ as before. The offsat oscillations in the effective tempeature $\left[\Theta_0 +\Psi\right](x, k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed. 
+    where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$ as before. The offsat oscillations in the effective temperature $\left[\Theta_0 +\Psi\right](x, k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed. 
 
-    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligable compared to that of the dark matter. \colorbox{orange}{WHY IS THIS?} In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$). 
+    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligible compared to that of the dark matter. \colorbox{orange}{WHY IS THIS?} In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$). 
     
     \paragraph{Radiation driving} 
-    Radiation drives acoustic oscillations by introducing temporal variations in the gravitational potential. The always-decreasing background density will cause potentials to decay \emph{unless} there are unimpeded growth in the density perturbations in the dominant energy component. For a mode entering the horizon in the radiation dominated era, the radiation pressure begins fighting gravity at the first point of maximal fluid compression, and the gravitational potentials necessarily must decay. The subsequent phase of rarification does not include this fight and the amplitude is driven up. Thus, sub-horizon modes in the radiation dominated universe will be enhanced. This relates the power of the (average) CMB power spectrum at these scales ($\ell \ga 100$) to the ratio of dark matter and radiation in the universe. In eliminating gravitational potentials, acoustic oscillations in the photon-baryon plasma eliminate the heights in the alternating peaks from baryon loading. Note that it is separable from the baryonic effects with the first three peaks or more.
+    Radiation drives acoustic oscillations by introducing temporal variations in the gravitational potential. The always-decreasing background density will cause potentials to decay \emph{unless} there are unimpeded growth in the density perturbations in the dominant energy component. For a mode entering the horizon in the radiation dominated era, the radiation pressure begins fighting gravity at the first point of maximal fluid compression, and the gravitational potentials necessarily must decay. The subsequent phase of rarefication does not include this fight and the amplitude is driven up. Thus, sub-horizon modes in the radiation dominated universe will be enhanced. This relates the power of the (average) CMB power spectrum at these scales ($\ell \ga 100$) to the ratio of dark matter and radiation in the universe. In eliminating gravitational potentials, acoustic oscillations in the photon-baryon plasma eliminate the heights in the alternating peaks from baryon loading. Note that it is separable from the baryonic effects with the first three peaks or more.
 
 
 
@@ -343,7 +343,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}\label{mil4:theo:eq:matter_power_spectrum}
         P\ped{m}(x,k) = \abs{\Delta\ped{m}(x,k)}^2 P_\mathcal{R}(k).
     \end{equation}
-    We focus on this spectrum today, $P\ped{m0}(k) \equiv P\ped{m}(x\!=\!0,k)$. In short, this function is broad and has a turnover at $k\simeq k\ped{eq}$, i.e.~$\max{P\ped{m0}(k)} \simeq P\ped{m0}(k\ped{eq})$. As density perturbations hardly grow inside the horizon in the radiation-dominated era, the small-scale power spectrum is suppressed relative to its large-scale counterpart. The largest scale for which we get suppression is represented by the $k$-mode that enters the horizon at matter-radiation equality---hence the peak at the equality scale.
+    We focus on this spectrum today, $P\ped{m0}(k) \equiv P\ped{m}(x\!=\!0,k)$. In short, this function is broad and has a turnover at $k\simeq k\ped{eq}$, i.e.~$\max{P\ped{m0}(k)} \simeq P\ped{m0}(k\ped{eq})$. As density perturbations hardly grow inside the horizon in the radiation-dominated era, the small-scale power spectrum is suppressed relative to its large-scale counterpart. The largest scale for which we get suppression is represented by the $k$-mode that enters the horizon at radiation-matter equality---hence the peak at the equality scale.
 
     \citet{DodelsonBook} shows that at late times, the approximation
     \begin{equation}\label{mil4:theo:eq:dimless_matter_power_spectrum}
