@@ -48,8 +48,9 @@ We solved~\cref{mil4:theo:eq:C_of_ell_final} for $C(\ell\in L)$ using the trapez
 \end{equation}
 with a fixed step size $\Delta\!\ln{k}$, determined by the sampling
 \begin{equation}
-    \eta_0 \Delta k \stackrel{!}{=} \frac{2\pi}{n\ped{samp}} \leadsto N_k = \frac{k\ped{max}-k\ped{min}}{\Delta k}\stackrel{!}{=} N_{\ln{k}} = \frac{\ln{k\ped{max}}-\ln{k\ped{min}}}{\Delta \!\ln{k}}.
+    \eta_0 \Delta k = \frac{2\pi}{n\ped{samp}} \leadsto N_k = \frac{k\ped{max}-k\ped{min}}{\Delta k} = N_{\ln{k}} = \frac{\ln{k\ped{max}}-\ln{k\ped{min}}}{\Delta \!\ln{k}},
 \end{equation} 
+where we required $N_k=N_{\ln{k}}$.
 In this case, we used $n\ped{samp}=32$. We interpolated over $L$ to find $C(\ell \in \mathcal{L})$.
 
 

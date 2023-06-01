@@ -303,7 +303,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     % \end{equation}
     where $R(x) = \sfrac{3}{4}\Omega\ped{b0} \eu[x]/\Omega\ped{\gamma 0}$ as before. The offsat oscillations in the effective temperature $\left[\Theta_0 +\Psi\right](x, k)$ are visible in $C(\ell)$ as variations in the amplitudes of the peaks. The presence of baryons has the effect that odd peaks are enhanced, whilst even peaks are suppressed. 
 
-    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligible compared to that of the dark matter. \colorbox{orange}{WHY IS THIS?} In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$). 
+    The physical understanding is that more baryons loads down the plasma in a potential well, giving rise to asymmetric oscillations. For the effect to take place, the amount of baryons in the universe has to be such that their gravitational pull is non-negligible compared to that of the dark matter. Otherwise, the photon-baryon plasma would not be compressed further at the bottom of a dark matter potential well. In other words, the effect of baryon loading is strongly scaled with the relative composition of normal matter in the universe (e.g.~$\Omega\ped{b0}/\OmgM$). 
     
     \paragraph{Radiation driving} 
     Radiation drives acoustic oscillations by introducing temporal variations in the gravitational potential. The always-decreasing background density will cause potentials to decay \emph{unless} there are unimpeded growth in the density perturbations in the dominant energy component. For a mode entering the horizon in the radiation dominated era, the radiation pressure begins fighting gravity at the first point of maximal fluid compression, and the gravitational potentials necessarily must decay. The subsequent phase of rarefication does not include this fight and the amplitude is driven up. Thus, sub-horizon modes in the radiation dominated universe will be enhanced. This relates the power of the (average) CMB power spectrum at these scales ($\ell \ga 100$) to the ratio of dark matter and radiation in the universe. In eliminating gravitational potentials, acoustic oscillations in the photon-baryon plasma eliminate the heights in the alternating peaks from baryon loading. Note that it is separable from the baryonic effects with the first three peaks or more.
@@ -332,14 +332,14 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
     \begin{equation}\label{mil4:theo:eq:Delta_s_of_x_k}
         \Delta_s (x,k) = \delta_s(x,k) - \frac{3(1+w_s)\Hp(x)}{ck}u_s(x,k)
     \end{equation}
-    is a gauge-invariant density perturbation used to measure the linear power spectrum of species $s$ at time $x$ and comoving wavenumber $k$. For the total (linear) matter power spectrum $P\ped{m}(x,k)$, we use
+    is a gauge-invariant density perturbation used to measure the linear power spectrum of species $s$ at time $x$ and comoving wavenumber $k$. For the total (linear) matter power spectrum $P\ped{m}(x,k)$, we construct the weighted sums 
     \begin{equation}
     \begin{split}
-        \delta\ped{m}(x,k) &= \frac{\delta\ped{c}(x,k) \Omega\ped{c}(x) + \delta\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)} \\
-        u\ped{m}(x,k) &= \frac{u\ped{c}(x,k) \Omega\ped{c}(x) + u\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)}
+        \delta\ped{m}(x,k) &= \frac{\delta\ped{c}(x,k) \Omega\ped{c}(x) + \delta\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)}, \\
+        u\ped{m}(x,k) &= \frac{u\ped{c}(x,k) \Omega\ped{c}(x) + u\ped{b}(x,k) \Omega\ped{b}(x)}{\OmgM[](x)},
     \end{split}
     \end{equation}
-    in~\cref{mil4:theo:eq:Delta_s_of_x_k} to find
+    to use in~\cref{mil4:theo:eq:Delta_s_of_x_k}. The resulting dimensionless quantity $\Delta\ped{m}^2$ is combined with the primordial power spectrum to find the total matter power spectrum
     \begin{equation}\label{mil4:theo:eq:matter_power_spectrum}
         P\ped{m}(x,k) = \abs{\Delta\ped{m}(x,k)}^2 P_\mathcal{R}(k).
     \end{equation}
@@ -347,7 +347,7 @@ We usually relate the angular wavenumber $\ell$ to the angular scale $\theta$ by
 
     \citet{DodelsonBook} shows that at late times, the approximation
     \begin{equation}\label{mil4:theo:eq:dimless_matter_power_spectrum}
-        \Delta\ped{m}(x,k) = \frac{c^2k^2 \eu[x]}{\sfrac{3}{2} \OmgM H_0^2 } \Phi(x,k)\,; \quad x \ga x\ped{\Lambda} ,\quad  k \gg \Hp(x),
+        \Delta\ped{m}(x,k) \simeq \frac{c^2k^2 \eu[x]}{\sfrac{3}{2} \OmgM H_0^2 } \Phi(x,k)\,; \quad x \ga x\ped{\Lambda} ,\quad  k \gg \Hp(x),
     \end{equation}
     suffices when neglecting massive neutrinos. Thus, for the power spectrum today, we expect $P\ped{m0}(k\!\ll\!k\ped{eq}) \propto k^4P_\mathcal{R}(k) \propto k^{\ns}$. 
 
