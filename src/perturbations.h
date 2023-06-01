@@ -202,7 +202,7 @@ class Perturbations{
      * @param npts_x_source number of points in x-array for which to compute source function
      * @param npts_k_source number of points in k-array for which to compute source function
     */
-    void solve(int nsteps_x_perturbations=1e4, int npts_x_source=1e4+1, int npts_k_perturbations=100, int npts_k_source=100);
+    void solve(int nsteps_x_perturbations=1e4, int npts_x_source=1e4+1, int npts_k_perturbations=200, int npts_k_source=200);
 
 
     // >> get-methods:

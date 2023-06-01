@@ -45,7 +45,7 @@ int main(int narg, char **argv){
     bool print = false;
 
     
-    // Run which milestones?
+    // Stop at what milestone?
     bool milestone1 = false;
     bool milestone2 = false;
     bool milestone3 = false;
@@ -70,6 +70,7 @@ int main(int narg, char **argv){
         // Output background evolution quantities
         cosmo.output("background_cosmology.txt");
 
+        //  UNCOMMENT TO RUN MCMC ANALYSIS:
         // m1_MCMC();
         
     }
@@ -82,7 +83,7 @@ int main(int narg, char **argv){
     if(milestone2){
 
         BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, Neff, TCMB);
-        cosmo.solve(false, 1e5);
+        cosmo.solve();
 
         // Solve the recombination history
         RecombinationHistory rec(&cosmo, Yp);
@@ -92,6 +93,7 @@ int main(int narg, char **argv){
         // Output recombination quantities
         rec.output("recombination.txt");
 
+        //  UNCOMMENT TO RUN USING ONLY SAHA:
         // m2_Saha(cosmo);
     }
     
@@ -103,13 +105,13 @@ int main(int narg, char **argv){
 
     if(milestone3){
 
-        BackgroundCosmology cosmo2(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-        cosmo2.solve(false, 1e5);
-        RecombinationHistory rec2(&cosmo2, Yp);
-        rec2.solve(false, 1e5, 1e5, 1e5);
+        BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
+        cosmo.solve();
+        RecombinationHistory rec(&cosmo, Yp);
+        rec.solve();
 
         // Solve the perturbations
-        Perturbations pert(&cosmo2, &rec2);
+        Perturbations pert(&cosmo, &rec);
         pert.info();
         pert.solve();
         
@@ -132,16 +134,19 @@ int main(int narg, char **argv){
     if(milestone4){
 
         BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-        cosmo.solve(false, 1e5);
+        cosmo.solve();
         RecombinationHistory rec(&cosmo, Yp);
-        rec.solve(false, 1e5, 1e5, 1e5);
+        rec.solve();
         Perturbations pert(&cosmo, &rec);
-        pert.solve(5e3, 5e3, 100, 100);
+        pert.solve();
 
 
         PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
         power.solve();
         power.output("dells.txt");
+
+        //  UNCOMMENT TO FIND CONTRIUBUTIONS TO DELL:
+        // m4_decomp();
 
         std::vector<int> ellvalues{6, 100, 200, 500, 1000};
         power.output("power.txt", ellvalues);
@@ -150,45 +155,12 @@ int main(int narg, char **argv){
 
     }
 
-    // TESTING
-
-
-    // BackgroundCosmology cosmo(h, Omegab, Omegac, OmegaK, 0, TCMB);     // Same with Neff=0
-    // // cosmo.info();
-    // cosmo.solve(true, 1e4);
-    // RecombinationHistory rec(&cosmo, Yp);
-    // rec.solve(true, 1e5, 1e5, 1e5);
-
-
-
-    // std::cout << "k/Mpc = 0.1:   " << cosmo.find_horizon_entry(0.1, -13, -8) << std::endl;
-    // std::cout << "k/Mpc = 0.01:  " << cosmo.find_horizon_entry(0.01, -11, -6) << std::endl;
-    // std::cout << "k/Mpc = 0.001: " << cosmo.find_horizon_entry(0.001, -8, -3) << std::endl;
-
-
-
-    // // Solve the perturbations
-    // Perturbations pert(&cosmo, &rec);
-    // // pert.info();
-    // pert.solve();
-
-
-
-    // PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
-    // // power.info();
-    // // power.solve();
-
 
     std::cout << "-------------------------------------------" << std::endl;
     Utils::EndTiming("CMB");
 
     return 0;
 }
-
-
-
-
-
 
 
 

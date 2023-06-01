@@ -106,7 +106,7 @@ class BackgroundCosmology{
      * @param print_milestones whether to print the table showing the time positions of the milestones
      * @param nsteps number of steps in x-array
     */
-    void solve(bool print_milestones=true, int nsteps=1e4);
+    void solve(bool print_milestones=false, int nsteps=1e4);
 
 
     // >> get-methods:
